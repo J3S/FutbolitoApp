@@ -13,14 +13,13 @@
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <h1>
-                        @yield('contentHeaderTitle')
-                    </h1>
-                    <ol class="breadcrumb">
-                        @yield('contentHeaderBreadcrumb')
-                    </ol>
-                </section><!-- /.content-header -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ol class="breadcrumb">
+                            @yield('contentHeaderBreadcrumb')
+                        </ol>
+                    </div>
+                </div><!-- /.content-header -->
 
                 <!-- Main content -->
                 <section class="content">
