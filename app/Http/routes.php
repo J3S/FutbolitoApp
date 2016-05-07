@@ -26,3 +26,6 @@ Route::get('jugador/editar', function () {
 Route::get('jugador/desactivar', function () {
     return view('jugadord');
 });
+Route::get('equipo/crear', function () {
+    return view('equipoc');
+});

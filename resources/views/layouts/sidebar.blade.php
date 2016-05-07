@@ -22,9 +22,9 @@
                     <i class="fa fa-user"></i> <span>Jugador</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li {{ Request::is('jugador/crear') ? ' class=active' : '' }}><a href="crear"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('jugador/editar') ? ' class=active' : '' }}><a href="editar"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li {{ Request::is('jugador/desactivar') ? ' class=active' : '' }}><a href="desactivar"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('jugador/crear') ? ' class=active' : '' }}><a href="{{ url('jugador/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('jugador/editar') ? ' class=active' : '' }}><a href="{{ url('jugador/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('jugador/desactivar') ? ' class=active' : '' }}><a href="{{ url('jugador/desactivar') }}"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
             <li class="treeview
@@ -35,9 +35,9 @@
                     <i class="fa fa-users"></i> <span>Equipo</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li {{ Request::is('equipo/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('equipo/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li {{ Request::is('equipo/desactivar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('equipo/crear') ? ' class=active' : '' }}><a href="{{ url('equipo/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('equipo/editar') ? ' class=active' : '' }}><a href="{{ url('equipo/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('equipo/desactivar') ? ' class=active' : '' }}><a href="{{ url('equipo/desactivar') }}"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
             <li>
@@ -49,9 +49,9 @@
                     <i class="fa fa-calendar"></i> <span>Torneo</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li {{ Request::is('torneo/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('torneo/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li {{ Request::is('torneo/desactivar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('torneo/crear') ? ' class=active' : '' }}><a href="{{ url('torneo/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('torneo/editar') ? ' class=active' : '' }}><a href="{{ url('torneo/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('torneo/desactivar') ? ' class=active' : '' }}><a href="{{ url('torneo/desactivar') }}"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
             <li class="treeview
@@ -62,9 +62,9 @@
                     <i class="fa fa-futbol-o"></i> <span>Partido</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li {{ Request::is('partido/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('partido/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li {{ Request::is('partido/desactivar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('partido/crear') ? ' class=active' : '' }}><a href="{{ url('partido/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('partido/editar') ? ' class=active' : '' }}><a href="{{ url('partido/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('partido/desactivar') ? ' class=active' : '' }}><a href="{{ url('partido/desactivar') }}"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
             <li class="treeview
@@ -75,8 +75,8 @@
                     <i class="fa fa-book"></i> <span>Resultado</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li {{ Request::is('resultado/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('resultado/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('resultado/crear') ? ' class=active' : '' }}><a href="{{ url('resultado/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('resultado/editar') ? ' class=active' : '' }}><a href="{{ url('resultado/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
                 </ul>
             </li>
         </ul>
