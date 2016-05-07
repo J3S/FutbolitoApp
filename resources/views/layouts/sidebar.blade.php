@@ -14,54 +14,69 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li class="treeview active">
+            <li class="treeview 
+                @if(Request::is('jugador/crear') OR Request::is('jugador/editar') OR Request::is('jugador/desactivar'))
+                    active
+                @endif">
                 <a href="#">
                     <i class="fa fa-user"></i> <span>Jugador</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('jugador/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('jugador/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('jugador/desactivar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview
+                @if(Request::is('equipo/crear') OR Request::is('equipo/editar') OR Request::is('equipo/desactivar'))
+                    active
+                @endif">
                 <a href="#">
                     <i class="fa fa-users"></i> <span>Equipo</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('equipo/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('equipo/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('equipo/desactivar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
             <li>
-            <li class="treeview">
+            <li class="treeview
+                @if(Request::is('torneo/crear') OR Request::is('torneo/editar') OR Request::is('torneo/desactivar'))
+                    active
+                @endif">
                 <a href="#">
                     <i class="fa fa-calendar"></i> <span>Torneo</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('torneo/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('torneo/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('torneo/desactivar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview
+                @if(Request::is('partido/crear') OR Request::is('partido/editar') OR Request::is('partido/desactivar'))
+                    active
+                @endif">
                 <a href="#">
                     <i class="fa fa-futbol-o"></i> <span>Partido</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('partido/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('partido/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('partido/desactivar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview
+                @if(Request::is('resultado/crear') OR Request::is('resultado/editar'))
+                    active
+                @endif">
                 <a href="#">
                     <i class="fa fa-book"></i> <span>Resultado</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('resultado/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('resultado/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
                 </ul>
             </li>
         </ul>
