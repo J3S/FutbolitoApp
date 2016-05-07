@@ -29,3 +29,9 @@ Route::get('jugador/desactivar', function () {
 Route::get('equipo/crear', function () {
     return view('equipoc');
 });
+Route::get('equipo/editar', function () {
+    return view('equipoe');
+});
+Route::get('equipo/desactivar', function () {
+    return view('equipod');
+});

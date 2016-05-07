@@ -23,11 +23,11 @@
                 <div class="box-body">
                     <div class="form-group col-xs-12">
                         <label for="inputNombre">Nombre</label>
-                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre">
+                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre equipo">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputEntrenador">Entrenador</label>
-                        <input type="text" class="form-control" id="inputEntrenador" placeholder="Ingrese apellido">
+                        <input type="text" class="form-control" id="inputEntrenador" placeholder="Ingrese nombre entrenador">
                     </div>
                     <div class="form-group col-xs-12">
                         <div class="col-xs-2" style="padding-left: 0px;">
@@ -49,7 +49,7 @@
                         </select>
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="inputFile">Fecha de nacimiento</label>
+                        <label for="inputFile">Logo</label>
                         <input id="inputFile" type="file">
                     </div>
                 </div><!-- /.box-body -->

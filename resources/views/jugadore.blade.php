@@ -84,29 +84,30 @@
                             <label class="header-group">Informaci&oacute;n del jugador</label>
                         </div>
                     </div>
-                    <div class="form-group col-xs-12 col-sm-6">
-                        <label for="inputNombre">Nombres</label>
-                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre">
-                    </div>
-                    <hr>
-                    <div class="form-group col-xs-12 col-sm-6">
-                        <label for="inputApellido">Apellidos</label>
-                        <input type="text" class="form-control" id="inputApellido" placeholder="Ingrese apellido">
-                    </div>
-                    <div class="form-group col-xs-12 col-sm-6">
-                        <label for="inputCedula">C&eacute;dula</label>
-                        <input type="text" class="form-control" id="inputCedula" placeholder="Ingrese c&eacute;dula">
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="inputNumCam">N&uacute;mero de camiseta</label>
-                            <input type="number" min="0" class="form-control" id="inputNumCam" placeholder="Ingrese N&uacute;mero de camiseta">
+                    <div class="col-xs-12">
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="inputNombre">Nombres</label>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre">
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="inputPeso">Peso</label>
-                            <input type="number" min="0" step="any" class="form-control" id="inputPeso" placeholder="Ingrese peso">
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="inputApellido">Apellidos</label>
+                            <input type="text" class="form-control" id="inputApellido" placeholder="Ingrese apellido">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="inputCedula">C&eacute;dula</label>
+                            <input type="text" class="form-control" id="inputCedula" placeholder="Ingrese c&eacute;dula">
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="inputNumCam">N&uacute;mero de camiseta</label>
+                                <input type="number" min="0" class="form-control" id="inputNumCam" placeholder="Ingrese N&uacute;mero de camiseta">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="inputPeso">Peso</label>
+                                <input type="number" min="0" step="any" class="form-control" id="inputPeso" placeholder="Ingrese peso">
+                            </div>
                         </div>
                     </div>
                 </div><!-- /.box-body -->
