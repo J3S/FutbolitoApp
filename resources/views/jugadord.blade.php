@@ -11,7 +11,6 @@
 @endsection
 
 @section('content')
-    @section('sizeWrapper', 'style="min-height: 950px;"')
     <div class="col-xs-2"></div>
     <div class="col-xs-8">
         <!-- general form elements -->
