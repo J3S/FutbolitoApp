@@ -88,7 +88,7 @@
                         <button type="submit" class="btn btn-primary">Limpiar</button>
                     </div>
                     <div class="col-xs-4 pull-right">
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn btn-danger">Desactivar</button>
                     </div>
                 </div>
                 <div class="col-xs-2"></div>
