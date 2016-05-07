@@ -20,3 +20,6 @@ Route::get('login', function () {
 Route::get('jugador/crear', function () {
     return view('jugadorc');
 });
+Route::get('jugador/editar', function () {
+    return view('jugadore');
+});

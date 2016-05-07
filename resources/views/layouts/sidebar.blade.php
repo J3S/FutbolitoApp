@@ -22,9 +22,9 @@
                     <i class="fa fa-user"></i> <span>Jugador</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li {{ Request::is('jugador/crear') ? ' class=active' : '' }}><a href="#"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('jugador/editar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li {{ Request::is('jugador/desactivar') ? ' class=active' : '' }}><a href="#"><i class="fa fa-ban"></i> Desactivar</a></li>
+                    <li {{ Request::is('jugador/crear') ? ' class=active' : '' }}><a href="crear"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is('jugador/editar') ? ' class=active' : '' }}><a href="editar"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is('jugador/desactivar') ? ' class=active' : '' }}><a href="desactivar"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
             <li class="treeview

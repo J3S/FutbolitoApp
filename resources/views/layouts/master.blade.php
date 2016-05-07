@@ -27,7 +27,7 @@
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
 
-            <footer class="main-footer">
+            <footer class="main-footer col-xs-12">
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.3.0
                 </div>

@@ -17,5 +17,18 @@
     margin-right: 5px;
 }
 .breadcrumb > li + li:before {
-  content: '>\00a0';
+    content: '>\00a0';
+}
+.header-group {
+    margin: 10px 0 0 0;
+    font-size: 18px;
+}
+.header-group > small {
+    color: #666;
+    display: block;
+    margin-top: 5px;
+}
+.separador{
+    margin-bottom: 20px;
+    border-bottom: 1.5px solid #E5E5E7;
 }
