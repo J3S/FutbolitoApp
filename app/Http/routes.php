@@ -23,3 +23,6 @@ Route::get('jugador/crear', function () {
 Route::get('jugador/editar', function () {
     return view('jugadore');
 });
+Route::get('jugador/desactivar', function () {
+    return view('jugadord');
+});

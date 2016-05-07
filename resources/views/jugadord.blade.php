@@ -1,22 +1,23 @@
 @extends('layouts.master')
 
-@section('title', 'Editar Jugador')
+@section('title', 'Desactivar Jugador')
 
-@section('contentHeaderTitle', 'Editar Jugador')
+@section('contentHeaderTitle', 'Desactivar Jugador')
 
 @section('contentHeaderBreadcrumb')
     <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
     <li><a href="#">Jugador</a></li>
-    <li class="active">Editar</li>
+    <li class="active">Desactivar</li>
 @endsection
 
 @section('content')
+    @section('sizeWrapper', 'style="min-height: 950px;"')
     <div class="col-xs-2"></div>
     <div class="col-xs-8">
         <!-- general form elements -->
-        <div class="box box-warning">
+        <div class="box box-danger">
             <div class="box-header with-border">
-                <h3 class="box-title">Editar Jugador</h3>
+                <h3 class="box-title">Desactivar Jugador</h3>
             </div><!-- /.box-header -->
             <!-- search form -->
             <div class="box-body">
@@ -86,27 +87,31 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="inputNombre">Nombres</label>
-                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre">
+                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre" disabled>
                     </div>
                     <hr>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="inputApellido">Apellidos</label>
-                        <input type="text" class="form-control" id="inputApellido" placeholder="Ingrese apellido">
+                        <input type="text" class="form-control" id="inputApellido" placeholder="Ingrese apellido" disabled>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="inputCedula">C&eacute;dula</label>
-                        <input type="text" class="form-control" id="inputCedula" placeholder="Ingrese c&eacute;dula">
+                        <input type="text" class="form-control" id="inputCedula" placeholder="Ingrese c&eacute;dula" disabled>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6">
+                        <label for="inputFechaNac">Fecha de nacimiento</label>
+                        <input type="text" class="form-control" id="inputFechaNac" placeholder="Ingrese fecha de nacimiento" disabled>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="inputNumCam">N&uacute;mero de camiseta</label>
-                            <input type="number" min="0" class="form-control" id="inputNumCam" placeholder="Ingrese N&uacute;mero de camiseta">
+                            <input type="text" min="0" class="form-control" id="inputNumCam" placeholder="Ingrese N&uacute;mero de camiseta" disabled>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="inputPeso">Peso</label>
-                            <input type="number" min="0" step="any" class="form-control" id="inputPeso" placeholder="Ingrese peso">
+                            <input type="text" min="0" step="any" class="form-control" id="inputPeso" placeholder="Ingrese peso" disabled>
                         </div>
                     </div>
                 </div><!-- /.box-body -->
@@ -118,7 +123,7 @@
                         <button type="submit" class="btn btn-primary">Limpiar</button>
                     </div>
                     <div class="col-xs-4 pull-right">
-                        <button type="submit" class="btn btn-warning">Guardar</button>
+                        <button type="submit" class="btn btn-danger">Desactivar</button>
                     </div>
                 </div>
                 <div class="col-xs-2"></div>
