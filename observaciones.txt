@@ -1,0 +1,6 @@
+
+viernes/20-mayo Branny-Kevin-Johnny
+- en la tabla partidos se cambio score por dos enteros
+- cambio de notacion con mayusculas por subguion para variables(estaEsVariable - esta_es_variabe)
+- tabla usuarios palabras a español (user y pass)
+- agregamos los modelos con sus respectivos migracciones(tablas) de toda la BDD
