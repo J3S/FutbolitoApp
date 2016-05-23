@@ -35,3 +35,7 @@ Route::get('equipo/editar', function () {
 Route::get('equipo/desactivar', function () {
     return view('equipod');
 });
+
+Route::get('torneo', function () {
+    return view('torneo');
+});
