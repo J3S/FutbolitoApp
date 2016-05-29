@@ -5,13 +5,13 @@
 @section('contentHeaderTitle', 'Torneo')
 
 @section('contentHeaderBreadcrumb')
-    <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
-    <li><a href="active">Torneo</a></li>
+    <li><a href="/"><i class="fa fa-user"></i> Home</a></li>
+    <li class="active">Torneo</li>
 @endsection
 
 @section('content')
     <div class="col-xs-12" style="padding-bottom: 15px;">
-        <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Torneo</button>
+        <button type="button" class="btn btn-success" onclick="window.location='{{ route("torneo.create") }}'"><i class="fa fa-plus"></i> Nuevo Torneo</button>
     </div>
     <div class="col-xs-12">
     {{--*/ $widget = 0 /*--}}
@@ -26,10 +26,10 @@
                 <div class="widget-user-header bg-blue">
                     <div class="widget-user-image col-xs-4" style="padding-left: 0px;">
                         <div class="col-xs-6" style="padding-left: 0px;">
-                            <button type="button" class="btn btn-warning"><i class="fa fa-cog"></i></button>
+                            <button type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></button>
                         </div>
                         <div class="col-xs-6" style="padding-left: 0px;">
-                            <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i></button>
+                            <button type="button" class="btn btn-danger"><i class="fa fa-times"></i></button>
                         </div>
                     </div>
                     <h3 class="widget-torneo text-right">{!! $torneo['categoria'] !!}</h3>

@@ -29,7 +29,7 @@ class TorneoController extends Controller
      */
     public function create()
     {
-        //
+        return view('torneoc');
     }
 
     /**

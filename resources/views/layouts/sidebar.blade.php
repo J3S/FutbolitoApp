@@ -41,18 +41,10 @@
                 </ul>
             </li>
             <li>
-            <li class="treeview
-                @if(Request::is('torneo/crear') OR Request::is('torneo/editar') OR Request::is('torneo/desactivar'))
-                    active
-                @endif">
-                <a href="#">
-                    <i class="fa fa-calendar"></i> <span>Torneo</span> <i class="fa fa-angle-left pull-right"></i>
+            <li>
+                <a href="{{ url('torneo') }}">
+                    <i class="fa fa-calendar"></i> <span>Torneo</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li {{ Request::is('torneo/crear') ? ' class=active' : '' }}><a href="{{ url('torneo/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('torneo/editar') ? ' class=active' : '' }}><a href="{{ url('torneo/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li {{ Request::is('torneo/desactivar') ? ' class=active' : '' }}><a href="{{ url('torneo/desactivar') }}"><i class="fa fa-ban"></i> Desactivar</a></li>
-                </ul>
             </li>
             <li class="treeview
                 @if(Request::is('partido/crear') OR Request::is('partido/editar') OR Request::is('partido/desactivar'))
