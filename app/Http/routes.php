@@ -39,3 +39,6 @@ Route::get('equipo/desactivar', function () {
 Route::get('torneo', function () {
     return view('torneo');
 });
+
+Route::resource('torneo', 'TorneoController',
+    ['only' => ['index', 'store', 'update', 'destroy', 'show']]);

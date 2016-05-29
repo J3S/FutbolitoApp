@@ -10,107 +10,45 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-md-6">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-yellow">
-
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Categoría 1</h3>
-              <h5 class="widget-user-desc">Info del torneo</h5>
+    <div class="col-xs-12" style="padding-bottom: 15px;">
+        <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Torneo</button>
+    </div>
+    <div class="col-xs-12">
+    {{--*/ $widget = 0 /*--}}
+    @foreach($torneos as $torneo)
+        @if($widget % 3 == 0)
+            <div class="row">
+        @endif
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-blue">
+                    <div class="widget-user-image col-xs-4" style="padding-left: 0px;">
+                        <div class="col-xs-6" style="padding-left: 0px;">
+                            <button type="button" class="btn btn-warning"><i class="fa fa-cog"></i></button>
+                        </div>
+                        <div class="col-xs-6" style="padding-left: 0px;">
+                            <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i></button>
+                        </div>
+                    </div>
+                    <h3 class="widget-torneo text-right">{!! $torneo['categoria'] !!}</h3>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Equipos <span class="pull-right badge bg-blue">31</span></a></li>
+                        <li><a href="#">Partidos <span class="pull-right badge bg-aqua">5</span></a></li>
+                        <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">{!! $torneo['fechaInicio'] !!}</span></a></li>
+                        <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">{!! $torneo['fechaFin'] !!}</span></a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                <li><a href="#">Equipos <span class="pull-right badge bg-blue">31</span></a></li>
-                <li><a href="#">Partidos <span class="pull-right badge bg-aqua">5</span></a></li>
-                <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">12</span></a></li>
-                <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">842</span></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
         </div>
-        <!-- /.col -->
-
-        <div class="col-md-6">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-aqua">
-
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Categoría 2</h3>
-              <h5 class="widget-user-desc">Info del torneo</h5>
+        <!-- /.widget-user -->
+        @if($widget % 3 == 2)
             </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                <li><a href="#">Equipos <span class="pull-right badge bg-blue">31</span></a></li>
-                <li><a href="#">Partidos <span class="pull-right badge bg-aqua">5</span></a></li>
-                <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">12</span></a></li>
-                <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">842</span></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
-        <!-- /.col -->
-
-      </div>
-
-
-
-
-
-
-
-      <div class="row">
-        <div class="col-md-6">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-black">
-
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Categoría 3</h3>
-              <h5 class="widget-user-desc">Info del torneo</h5>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                <li><a href="#">Equipos <span class="pull-right badge bg-blue">31</span></a></li>
-                <li><a href="#">Partidos <span class="pull-right badge bg-aqua">5</span></a></li>
-                <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">12</span></a></li>
-                <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">842</span></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
-        <!-- /.col -->
-
-        <div class="col-md-6">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-maroon">
-
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Categoría 4</h3>
-              <h5 class="widget-user-desc">Info del torneo</h5>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                <li><a href="#">Equipos <span class="pull-right badge bg-blue">31</span></a></li>
-                <li><a href="#">Partidos <span class="pull-right badge bg-aqua">5</span></a></li>
-                <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">12</span></a></li>
-                <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">842</span></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
-        <!-- /.col -->
-
-      </div>
+        @endif
+        <?php $widget++; ?> 
+    @endforeach
+    </div>
 @endsection
