@@ -14,6 +14,8 @@ class CreateJugadorsTable extends Migration
     {
         Schema::create('jugadors', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombres', 50);
+            $table->string('apellidos', 50);
             $table->integer('edad');
             $table->string('identificacion', 10);
             $table->string('rol', 30);
@@ -22,7 +24,7 @@ class CreateJugadorsTable extends Migration
             $table->double('peso');
             $table->boolean('estado');
             $table->boolean('puedeJugar');
-            $table->integer('id_equipo')->unsigned();
+            $table->integer('id_equipo')->unsigned()->nullable();
             $table->foreign('id_equipo')->references('id')->on('equipos');
             $table->timestamps();
         });
@@ -35,7 +37,6 @@ class CreateJugadorsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('jugadors');
         Schema::dropIfExists('jugadors');
     }
 }
