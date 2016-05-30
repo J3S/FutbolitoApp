@@ -40,7 +40,19 @@ class TorneoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'categoria' => 'required',
+            'fechaInicio' => 'required|date',
+            'fechaFin' => 'required|date',
+        ]);
+
+        $torneo = new Torneo();
+        $torneo->categoria = $request->categoria;
+        $torneo->fechaInicio = $request->fechaInicio;
+        $torneo->fechaFin = $request->fechaFin;
+        $torneo->estado = 1;
+        $torneo->save();
+        return redirect('torneo');
     }
 
     /**

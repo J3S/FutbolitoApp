@@ -50,15 +50,16 @@
             <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!-- FastClick -->
-    <script src="../../plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script type="text/javascript" src="{!! asset('js/app.min.js') !!}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script type="text/javascript" src="{!! asset('js/demo.js') !!}"></script>
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <!-- FastClick -->
+        <script src="../../plugins/fastclick/fastclick.min.js"></script>
+        <!-- AdminLTE App -->
+        <script type="text/javascript" src="{!! asset('js/app.min.js') !!}"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script type="text/javascript" src="{!! asset('js/demo.js') !!}"></script>
+        @yield('scriptsPersonales')
     </body>
 </html>
