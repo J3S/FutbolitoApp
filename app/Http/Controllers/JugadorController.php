@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,7 @@ class JugadorController extends Controller
      */
     public function create()
     {
-        //
+        return view('jugadorc');
     }
 
     /**
@@ -37,7 +38,8 @@ class JugadorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input_jugador = $request->all();
+        var_dump($input_jugador);
     }
 
     /**

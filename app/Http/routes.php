@@ -14,9 +14,9 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Route::get('login', function () {
-//     return view('login');
-// });
+Route::get('login', function () {
+    return view('login');
+});
 // Route::get('jugador/crear', function () {
 //     return view('jugadorc');
 // });
@@ -44,6 +44,12 @@
 //-------------------Branny Rutas-----------------------
 
 //rutas RESTfull para jugador, ejecutar (php artisan route:list)
-Route::resource('jugador', 'JugadorController');
+// Route::resource('jugador', 'JugadorController');
+
+Route::post('jugador', 'JugadorController@store')->name('jugador.store');
+Route::match(['get', 'head'], 'jugador/crear', 'JugadorController@create')->name('jugador.create');
+
+Route::put('jugador/{jugador}', 'JugadorController@update')->name('jugador.update');
+Route::match(['get', 'head'], 'jugador/{jugador}/edit', 'JugadorController@edit')->name('jugador.edit');
 
 //------------------------------------------------------
