@@ -15,7 +15,7 @@ class CreateEquiposTable extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre', 50);
-            $table->string('directorTecnico', 50);
+            $table->string('director_tecnico', 50);
             $table->boolean('estado');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateEquiposTable extends Migration
      */
     public function down()
     {
-        Schema::drop('equipos');
+        Schema::dropIfExists('equipos');
     }
 }
