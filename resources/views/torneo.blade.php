@@ -36,13 +36,13 @@
                         <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">{!! $torneo['fechaFin'] !!}</span></a></li>
                     </ul>
                     <div class="col-md-6">
-                        <a href="{{ route('torneo.show', $torneo->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i>Editar</a>
+                        <a href="{{ route('torneo.edit', $torneo->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a>
                     </div>
                     <div class="col-md-6">
                         <form class="pull-right" action="/torneo/{{ $torneo->id }}" method="POST">
                             <input type="hidden" name="_method" value="DELETE">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger"><i class="fa fa-minus"></i> Desactivar</button>
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Desactivar</button>
                         </form>
                     </div>
                 </div>

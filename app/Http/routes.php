@@ -41,5 +41,5 @@ Route::get('torneo', function () {
 });
 
 Route::resource('torneo', 'TorneoController',
-    ['only' => ['index', 'create', 'store', 'update', 'destroy', 'show']]);
+    ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 

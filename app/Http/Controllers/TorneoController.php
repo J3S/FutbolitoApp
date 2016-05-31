@@ -32,7 +32,7 @@ class TorneoController extends Controller
     {
         $equipos = Equipo::where('estado', 1)
                         ->get(['id', 'nombre']);
-        return view('torneoc')->with('equipos', $equipos);;
+        return view('torneoc')->with('equipos', $equipos);
     }
 
     /**
@@ -66,7 +66,7 @@ class TorneoController extends Controller
      */
     public function show($id)
     {
-        dd($id);
+        //
     }
 
     /**
@@ -77,7 +77,10 @@ class TorneoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $torneo = Torneo::find($id);
+        $equipos = Equipo::where('estado', 1)
+                        ->get(['id', 'nombre']);
+        return view('torneoe')->with('torneo', $torneo)->with('equipos', $equipos);
     }
 
     /**
@@ -89,7 +92,7 @@ class TorneoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd("Actualizando");
     }
 
     /**
