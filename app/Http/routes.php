@@ -52,5 +52,13 @@ Route::match(['get', 'head'], 'jugador/crear', 'JugadorController@create')->name
 Route::put('jugador/{jugador}', 'JugadorController@update')->name('jugador.update');
 Route::match(['get', 'head'], 'jugador/{jugador}/edit', 'JugadorController@edit')->name('jugador.edit');
 
+
 Route::resource('torneo', 'TorneoController',
     ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+
+Route::get('torneo', function () {
+    return view('torneo');
+});
+
+Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
+Route::post('partido', 'PartidoController@store')->name('partido.store');

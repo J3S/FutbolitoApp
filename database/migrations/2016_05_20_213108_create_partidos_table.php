@@ -16,10 +16,13 @@ class CreatePartidosTable extends Migration
             $table->increments('id');
             $table->date('fecha');
             $table->string('lugar', 200);
-            $table->string('observacion', 150);
             $table->boolean('estado');
-            $table->integer('goles_local');//cambio por el score
-            $table->integer('goles_visitante'); //cambio por el score
+            $table->dateTime('fecha');
+            $table->string('arbitro', 150)->nullable();
+            $table->string('observacion', 150)->nullable();
+            $table->integer('gol_visitante'); //cambio por el score
+            $table->integer('gol_local');//cambio por el score
+            $table->integer('id_equipoV')->unsigned(); //visitante
             $table->integer('id_equipo')->unsigned();
             $table->integer('id_torneo')->unsigned();
             $table->integer('id_equipoV')->unsigned(); //visitante
