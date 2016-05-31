@@ -39,3 +39,6 @@ Route::get('equipo/desactivar', function () {
 Route::get('torneo', function () {
     return view('torneo');
 });
+
+Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
+Route::post('partido', 'PartidoController@store')->name('partido.store');

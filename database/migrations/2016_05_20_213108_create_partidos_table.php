@@ -15,7 +15,9 @@ class CreatePartidosTable extends Migration
         Schema::create('partidos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('lugar', 200);
-            $table->string('observacion', 150);
+            $table->dateTime('fecha');
+            $table->string('arbitro', 150)->nullable();
+            $table->string('observacion', 150)->nullable();
             $table->integer('gol_visitante'); //cambio por el score
             $table->integer('gol_local');//cambio por el score
             $table->integer('id_equipoV')->unsigned(); //visitante
