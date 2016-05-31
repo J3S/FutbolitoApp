@@ -92,7 +92,18 @@ class TorneoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd("Actualizando");
+        $this->validate($request, [
+            'categoria' => 'required',
+            'fechaInicio' => 'required|date',
+            'fechaFin' => 'required|date',
+        ]);
+
+        $torneo = Torneo::find($id);
+        $torneo->categoria = $request->categoria;
+        $torneo->fechaInicio = $request->fechaInicio;
+        $torneo->fechaFin = $request->fechaFin;
+        $torneo->save();
+        return redirect('torneo');
     }
 
     /**

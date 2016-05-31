@@ -105,22 +105,6 @@
                             <input type="date" class="form-control" id="fechaFin" name="fechaFin" placeholder="Ingrese fecha de inicio del torneo">
                         </div>
                     </div>
-                    <div class="form-group col-xs-12">
-                        <div class="col-md-4">
-                            <label for="equipos" style="vertical-align: center;">Equipos</label>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="col-sm-12" style="padding-left: 0px;">
-                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#equiposModal"><i class="fa fa-plus"></i> Agregar Equipo</button>
-                            </div>
-                            <div class="col-sm-12" style="padding-left: 0px;">
-                                <div id="equipoTorneo" style="padding-left: 0px;">
-<!--                                     <ul class="list-group">
-                                    </ul> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
@@ -135,76 +119,4 @@
         </div><!-- /.box -->
     </div><!--/.col (left) -->
     <div class="col-xs-2"></div>
-@endsection
-@section('scriptsPersonales')
-    <script>
-    $('#equiposModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget) // Button that triggered the modal
-      var modal = $(this)
-    })
-    document.getElementById("agregarEquipoToLista1").addEventListener("click", function(){
-        if($('#searchEquipoNombre').val() != "") {
-            if($('#equipoTorneo').children().length == 0 ) {
-                var table = document.createElement('table');
-                table.className += "table";
-                table.id = 'equiposTable';
-                var thead = document.createElement('thead');
-                var row = document.createElement('tr');
-                var th = document.createElement('th');
-                var textH = document.createTextNode('Equipo');
-                th.appendChild(textH);
-                row.appendChild(th);
-                th = document.createElement('th');
-                textH = document.createTextNode('Cambiar');
-                th.appendChild(textH);
-                row.appendChild(th);
-                th = document.createElement('th');
-                textH = document.createTextNode('Eliminar');
-                th.appendChild(textH);
-                row.appendChild(th);
-                thead.appendChild(row);
-                table.appendChild(thead);
-                var tbody = document.createElement('tbody');
-                table.appendChild(tbody);
-                $('#equipoTorneo').append(table);
-            }
-            $("#equiposTable tbody").append('<tr><td>'+$('#searchEquipoNombre').val()+'</td><td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#equiposModal"><i class="fa fa-exchange"></i></button></td><td><button type="button" class="btn btn-danger btn-xs" onclick="eliminarRow(this)"><i class="fa fa-minus"></i></button>3</td></tr>');
-        }
-        $('#equiposModal').modal('hide');
-    });
-    document.getElementById("agregarEquipoToLista2").addEventListener("click", function(){
-        var equipoAgregar = "";
-        if($('#listaEquipo').val() != "") {
-            if($('#equipoTorneo').children().length == 0 ) {
-                var table = document.createElement('table');
-                table.className += "table";
-                table.id = 'equiposTable';
-                var thead = document.createElement('thead');
-                var row = document.createElement('tr');
-                var th = document.createElement('th');
-                var textH = document.createTextNode('Equipo');
-                th.appendChild(textH);
-                row.appendChild(th);
-                th = document.createElement('th');
-                textH = document.createTextNode('Cambiar');
-                th.appendChild(textH);
-                row.appendChild(th);
-                th = document.createElement('th');
-                textH = document.createTextNode('Eliminar');
-                th.appendChild(textH);
-                row.appendChild(th);
-                thead.appendChild(row);
-                table.appendChild(thead);
-                var tbody = document.createElement('tbody');
-                table.appendChild(tbody);
-                $('#equipoTorneo').append(table);
-            }
-            $("#equiposTable tbody").append('<tr><td>'+$('#listaEquipo').val()+'</td><td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#equiposModal"><i class="fa fa-exchange"></i></button></td><td><button type="button" class="btn btn-danger btn-xs" onclick="eliminarRow(this)"><i class="fa fa-minus"></i></button></td></tr>');
-        }
-        $('#equiposModal').modal('hide');
-    });
-    function eliminarRow(buttonTriggered){
-        $(buttonTriggered).parent().parent().remove();
-    }
-    </script>
 @endsection
