@@ -17,6 +17,7 @@
 Route::get('login', function () {
     return view('login');
 });
+
 // Route::get('jugador/crear', function () {
 //     return view('jugadorc');
 // });
@@ -26,6 +27,7 @@ Route::get('login', function () {
 // Route::get('jugador/desactivar', function () {
 //     return view('jugadord');
 // });
+
 // Route::get('equipo/crear', function () {
 //     return view('equipoc');
 // });
