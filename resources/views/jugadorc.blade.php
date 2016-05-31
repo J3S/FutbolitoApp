@@ -19,11 +19,12 @@
                 <h3 class="box-title">Crear Jugador</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="{!!route('jugador.store')!!}" method="post">
+                {!! csrf_field() !!}
                 <div class="box-body">
                     <div class="form-group col-xs-12">
                         <label for="inputNombre">Nombres</label>
-                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre">
+                        <input type="text" class="form-control" id="inputNombre" name="nombres" placeholder="Ingrese nombre">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputApellido">Apellidos</label>
@@ -49,20 +50,32 @@
                             <input type="number" min="0" step="any" class="form-control" id="inputPeso" placeholder="Ingrese peso">
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputCorreo">Correo</label>
+                            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="ejemplo@gmail.com">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputPeso">Telefono</label>
+                            <input type="tel" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
+                        </div>
+                    </div>
                 </div><!-- /.box-body -->
 
-              <div class="box-footer">
-                <div class="col-xs-2"></div>
-                <div class="col-xs-8">
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary">Limpiar</button>
+                <div class="box-footer">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-8">
+                        <div class="col-xs-4">
+                            <button type="submit" class="btn btn-primary">Limpiar</button>
+                        </div>
+                        <div class="col-xs-4 pull-right">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                        </div>
                     </div>
-                    <div class="col-xs-4 pull-right">
-                        <button type="submit" class="btn btn-success">Guardar</button>
-                    </div>
+                    <div class="col-xs-2"></div>
                 </div>
-                <div class="col-xs-2"></div>
-              </div>
             </form>
         </div><!-- /.box -->
     </div><!--/.col (left) -->

@@ -15,8 +15,8 @@ class CreateTorneosTable extends Migration
         Schema::create('torneos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('categoria', 20);
-            $table->date('fechaInicio');
-            $table->date('fechaFin');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
             $table->boolean('estado');
             $table->timestamps();
         });
