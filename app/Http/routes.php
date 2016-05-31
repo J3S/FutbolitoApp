@@ -18,6 +18,7 @@ Route::get('login', function () {
     return view('login');
 });
 
+
 // Route::get('jugador/crear', function () {
 //     return view('jugadorc');
 // });

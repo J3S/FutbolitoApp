@@ -17,6 +17,7 @@ class CreateJugadorsTable extends Migration
             $table->string('nombres', 50);
             $table->string('apellidos', 50);
             $table->smallInteger('edad');
+            $table->integer('edad');
             $table->string('identificacion', 10);
             $table->string('rol', 30);
             $table->string('email', 80)->nullable();

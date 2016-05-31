@@ -76,6 +76,18 @@ V2.0 Branny
                             <input type="tel" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputCorreo">Correo</label>
+                            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="ejemplo@gmail.com">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputPeso">Telefono</label>
+                            <input type="tel" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
+                        </div>
+                    </div>
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
