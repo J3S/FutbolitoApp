@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Torneo;
+use App\Equipo;
 
 class TorneoController extends Controller
 {
@@ -18,7 +19,7 @@ class TorneoController extends Controller
     public function index()
     {
         $torneos = Torneo::where('estado', 1)
-                        ->get(['categoria', 'fechaInicio', 'fechaFin']);
+                        ->get(['id', 'categoria', 'fechaInicio', 'fechaFin']);
         return view('torneo')->with('torneos', $torneos);
     }
 
@@ -29,7 +30,9 @@ class TorneoController extends Controller
      */
     public function create()
     {
-        return view('torneoc');
+        $equipos = Equipo::where('estado', 1)
+                        ->get(['id', 'nombre']);
+        return view('torneoc')->with('equipos', $equipos);;
     }
 
     /**
@@ -63,7 +66,7 @@ class TorneoController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -97,6 +100,9 @@ class TorneoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $torneo = Torneo::find($id);
+        $torneo->estado = 0;
+        $torneo->save();
+        return $this->index();
     }
 }

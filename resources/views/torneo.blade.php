@@ -11,7 +11,9 @@
 
 @section('content')
     <div class="col-xs-12" style="padding-bottom: 15px;">
-        <button type="button" class="btn btn-success" onclick="window.location='{{ route("torneo.create") }}'"><i class="fa fa-plus"></i> Nuevo Torneo</button>
+        <form>
+            <button type="button" id="nuevoTorneoButton" class="btn btn-success" onclick="window.location='{{ route("torneo.create") }}'"><i class="fa fa-plus"></i> Nuevo Torneo</button>
+        </form>
     </div>
     <div class="col-xs-12">
     {{--*/ $widget = 0 /*--}}
@@ -24,15 +26,7 @@
             <div class="box box-widget widget-user-2">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-blue">
-                    <div class="widget-user-image col-xs-4" style="padding-left: 0px;">
-                        <div class="col-xs-6" style="padding-left: 0px;">
-                            <button type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></button>
-                        </div>
-                        <div class="col-xs-6" style="padding-left: 0px;">
-                            <button type="button" class="btn btn-danger"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                    <h3 class="widget-torneo text-right">{!! $torneo['categoria'] !!}</h3>
+                    <h3 class="widget-torneo">{!! $torneo['categoria'] !!}</h3>
                 </div>
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
@@ -41,6 +35,16 @@
                         <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">{!! $torneo['fechaInicio'] !!}</span></a></li>
                         <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">{!! $torneo['fechaFin'] !!}</span></a></li>
                     </ul>
+                    <div class="col-md-6">
+                        <a href="{{ route('torneo.show', $torneo->id) }}" class="btn btn-warning"><i class="fa fa-pencil"></i>Editar</a>
+                    </div>
+                    <div class="col-md-6">
+                        <form class="pull-right" action="/torneo/{{ $torneo->id }}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-minus"></i> Desactivar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
