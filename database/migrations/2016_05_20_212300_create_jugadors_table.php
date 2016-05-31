@@ -16,12 +16,14 @@ class CreateJugadorsTable extends Migration
             $table->increments('id');
             $table->string('nombres', 50);
             $table->string('apellidos', 50);
+            $table->smallInteger('edad');
             $table->integer('edad');
             $table->string('identificacion', 10);
             $table->string('rol', 30);
-            $table->string('email', 80);
-            $table->string('telefono', 30);
+            $table->string('email', 80)->nullable();
+            $table->string('telefono', 30)->nullable();
             $table->double('peso');
+            $table->smallInteger('num_camiseta');
             $table->boolean('estado');
             $table->boolean('puedeJugar');
             $table->integer('id_equipo')->unsigned()->nullable();

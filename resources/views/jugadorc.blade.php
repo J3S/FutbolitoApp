@@ -1,3 +1,11 @@
+<!--
+V2.0 Branny
+    -add atributo name a todos los campos para poderlos recibir en el servidor
+    -add campos al form: email, tefl
+    -add action al formulario apuntando a la ruta 'jugador.store'(ver lista de rutas)
+-->
+
+
 @extends('layouts.master')
 
 @section('title', 'Crear Jugador')
@@ -28,26 +36,44 @@
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputApellido">Apellidos</label>
-                        <input type="text" class="form-control" id="inputApellido" placeholder="Ingrese apellido">
+                        <input type="text" class="form-control" id="inputApellido" name="apellidos" placeholder="Ingrese apellido">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputCedula">C&eacute;dula</label>
-                        <input type="text" class="form-control" id="inputCedula" placeholder="Ingrese c&eacute;dula">
+                        <input type="text" class="form-control" id="inputCedula" name="identificacion" placeholder="Ingrese c&eacute;dula">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputFechaNac">Fecha de nacimiento</label>
-                        <input type="date" class="form-control" id="inputFechaNac" placeholder="Ingrese fecha de nacimiento">
+                        <input type="date" class="form-control" id="inputFechaNac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento">
                     </div>
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-4">
                         <div class="form-group">
                             <label for="inputNumCam">N&uacute;mero de camiseta</label>
-                            <input type="number" min="0" class="form-control" id="inputNumCam" placeholder="Ingrese N&uacute;mero de camiseta">
+                            <input type="number" min="0" class="form-control" id="inputNumCam" name="num_camiseta" placeholder="Ingrese N&uacute;mero">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                            <label for="inputPeso">Peso (Kg)</label>
+                            <input type="number" min="0" step="0.1" class="form-control" id="inputPeso" name="peso" placeholder="Ej: 70.5">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                            <label for="inputPeso">Rol</label>
+                            <input type="text" class="form-control" id="inputRol" name="rol" placeholder="Ej: Defensa">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="inputPeso">Peso</label>
-                            <input type="number" min="0" step="any" class="form-control" id="inputPeso" placeholder="Ingrese peso">
+                            <label for="inputCorreo">Correo</label>
+                            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="ejemplo@gmail.com">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputPeso">Telefono</label>
+                            <input type="tel" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">

@@ -25,6 +25,7 @@ class JugadorTableSeeder extends Seeder
             'email' => strtolower(str_random(10)).'@gmail.com',
             'telefono' => '09'.rand(),
             'peso' => mt_rand(2000, 15000)/100,
+            'num_camiseta' => rand(0, 99),
             'estado' => true,
             'puedeJugar' => true,
         ]);
