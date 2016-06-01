@@ -14,14 +14,10 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call(UserTableSeeder::class);
-
-        for ($i=0; $i < 30; $i++) {
-            $this->call(JugadorTableSeeder::class);
-        }
-
-
-        //   $this->call(UserTableSeeder::class);
+        $this->call(JugadorTableSeeder::class);
+        $this->call(TorneoTableSeeder::class);
+        $this->call(EquipoTableSeeder::class);
+        $this->call(PartidoTableSeeder::class);
             
         Model::reguard();
     }

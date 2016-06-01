@@ -14,7 +14,6 @@ class CreatePartidosTable extends Migration
     {
         Schema::create('partidos', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
             $table->string('lugar', 200);
             $table->boolean('estado');
             $table->dateTime('fecha');
@@ -25,7 +24,6 @@ class CreatePartidosTable extends Migration
             $table->integer('id_equipoV')->unsigned(); //visitante
             $table->integer('id_equipo')->unsigned();
             $table->integer('id_torneo')->unsigned();
-            $table->integer('id_equipoV')->unsigned(); //visitante
             $table->foreign('id_equipo')->references('id')->on('equipos');
             $table->foreign('id_equipoV')->references('id')->on('equipos');
             $table->foreign('id_torneo')->references('id')->on('torneos');
