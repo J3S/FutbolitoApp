@@ -29,7 +29,7 @@ class PartidoController extends Controller
      */
     public function create()
     {
-        $torneos = Torneo::where('estado', 1)->get(['categoria', 'fechaInicio']);
+        $torneos = Torneo::where('estado', 1)->get(['categoria', 'fecha_inicio']);
         $equipos = Equipo::where('estado', 1)->get(['nombre']);
         return view('partidoc')->withTorneos($torneos)->withEquipos($equipos);
     }

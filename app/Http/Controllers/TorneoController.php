@@ -19,7 +19,7 @@ class TorneoController extends Controller
     public function index()
     {
         $torneos = Torneo::where('estado', 1)
-                        ->get(['id', 'categoria', 'fechaInicio', 'fechaFin']);
+                        ->get(['id', 'categoria', 'fecha_inicio', 'fecha_fin']);
         return view('torneo')->with('torneos', $torneos);
     }
 
