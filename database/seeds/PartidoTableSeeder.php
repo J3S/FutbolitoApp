@@ -40,7 +40,9 @@ class PartidoTableSeeder extends Seeder
                 'id_equipo' => $equipo->id,
                 'id_equipoV' => $equipo2->id,
                 'id_torneo' => $torneo->id,
-                'estado' => 1
+                'estado' => 1,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
         }
 

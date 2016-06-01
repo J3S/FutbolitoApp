@@ -23,7 +23,9 @@ class TorneoTableSeeder extends Seeder
                 'categoria' => $categoria,
                 'fecha_inicio' => $date->format('Y-m-d H:i:s'),
                 'fecha_fin' => $date->addYear(1)->format('Y-m-d H:i:s'),
-                'estado' => 1
+                'estado' => 1,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
         }
 

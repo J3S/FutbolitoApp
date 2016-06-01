@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class EquipoTableSeeder extends Seeder
 {
@@ -23,7 +24,9 @@ class EquipoTableSeeder extends Seeder
             DB::table('equipos')->insert([
                 'nombre' => $equipo,
                 'director_tecnico' => $name,
-                'estado' => 1
+                'estado' => 1,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
         }
         

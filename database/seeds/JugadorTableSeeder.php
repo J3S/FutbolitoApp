@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class JugadorTableSeeder extends Seeder
 {
@@ -30,6 +31,8 @@ class JugadorTableSeeder extends Seeder
                 'num_camiseta' => rand(0, 99),
                 'estado' => true,
                 'puedeJugar' => true,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
         }
        
