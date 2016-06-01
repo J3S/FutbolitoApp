@@ -32,8 +32,8 @@
                     <ul class="nav nav-stacked">
                         <li><a href="#">Equipos <span class="pull-right badge bg-blue">31</span></a></li>
                         <li><a href="#">Partidos <span class="pull-right badge bg-aqua">5</span></a></li>
-                        <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">{!! $torneo['fechaInicio'] !!}</span></a></li>
-                        <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">{!! $torneo['fechaFin'] !!}</span></a></li>
+                        <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">{!! $torneo['fecha_inicio'] !!}</span></a></li>
+                        <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">{!! $torneo['fecha_fecha'] !!}</span></a></li>
                     </ul>
                     <div class="col-md-6">
                         <a href="{{ route('torneo.edit', $torneo->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a>
@@ -52,7 +52,7 @@
         @if($widget % 3 == 2)
             </div>
         @endif
-        <?php $widget++; ?> 
+        <?php $widget++; ?>
     @endforeach
     </div>
 @endsection
