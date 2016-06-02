@@ -6,7 +6,7 @@
 
 @section('contentHeaderBreadcrumb')
     <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
-    <li><a href="#">Partido</a></li>
+    <li><a href="{{ url('partido') }}">Partido</a></li>
     <li class="active">Crear</li>
 @endsection
 

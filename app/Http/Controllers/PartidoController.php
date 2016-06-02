@@ -20,6 +20,7 @@ class PartidoController extends Controller
     public function index()
     {
         //
+        return view('partido');
     }
 
     /**
@@ -70,7 +71,7 @@ class PartidoController extends Controller
         $partido->estado = 1;
         $partido->save();
 
-        return redirect()->route('partido.create');
+        return redirect('partido');
     }
 
     /**
@@ -116,5 +117,12 @@ class PartidoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function searchByDate(Request $request) {
+        $partidos = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))
+        ->get(['id', 'fecha']);
+
+        return view('partidos')->withPartidos($partidos);
     }
 }
