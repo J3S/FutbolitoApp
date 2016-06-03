@@ -38,9 +38,9 @@
 	                <ul class="nav nav-stacked">
 	                	<li><h3 class="widget-torneo bg-green" style="text-align:center">Torneo: {!! $torneoPartido['categoria'] !!}</h3></li>
 		                <li><a href="#">Resultado
-		                	<span class="pull-right badge bg-green">{!! $equipoLocal['nombre'] !!}</span>
-							<span class="pull-right badge bg-black">{!! $partido['gol_local'] !!} - {!! $partido['gol_visitante'] !!}</span>
 							<span class="pull-right badge bg-green">{!! $equipoVisit['nombre'] !!}</span>
+                            <span class="pull-right badge bg-black">{!! $partido['gol_local'] !!} - {!! $partido['gol_visitante'] !!}</span>
+                            <span class="pull-right badge bg-green">{!! $equipoLocal['nombre'] !!}</span>
 		                </a></li>
                         <li><a href="#">Fecha <span class="pull-right badge bg-black">{!! $partido['fecha'] !!}</span></a></li>
                         <li><a href="#">Lugar <span class="pull-right badge bg-black">{!! $partido['lugar'] !!}</span></a></li>

@@ -19,13 +19,11 @@ class CreatePartidosTable extends Migration
             $table->dateTime('fecha');
             $table->string('arbitro', 150)->nullable();
             $table->string('observacion', 150)->nullable();
-            $table->integer('gol_visitante'); //cambio por el score
-            $table->integer('gol_local');//cambio por el score
-            $table->integer('id_equipoV')->unsigned(); //visitante
-            $table->integer('id_equipo')->unsigned();
+            $table->string('equipo_local', 50);
+            $table->string('equipo_visitante', 50);
+            $table->integer('gol_visitante');
+            $table->integer('gol_local');
             $table->integer('id_torneo')->unsigned();
-            $table->foreign('id_equipo')->references('id')->on('equipos');
-            $table->foreign('id_equipoV')->references('id')->on('equipos');
             $table->foreign('id_torneo')->references('id')->on('torneos');
             $table->timestamps();
         });
@@ -38,6 +36,6 @@ class CreatePartidosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('partidos');
+        Schema::dropIfExists('partidos');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotificacionsTable extends Migration
+class CreateCategoriasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,9 @@ class CreateNotificacionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notificacions', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('mensaje', 200);
-            $table->dateTime('fecha');
-            $table->integer('id_admin')->unsigned();
-            $table->foreign('id_admin')->references('id')->on('administradors');
+            $table->string('nombre', 50);
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ class CreateNotificacionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notificacions');
+        Schema::dropIfExists('categorias');
     }
 }

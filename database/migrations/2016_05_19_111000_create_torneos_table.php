@@ -14,10 +14,10 @@ class CreateTorneosTable extends Migration
     {
         Schema::create('torneos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('categoria', 20);
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+            $table->integer('anio');
             $table->boolean('estado');
+            $table->integer('id_categoria')->unsigned();
+            $table->foreign('id_categoria')->references('id')->on('categorias');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateTorneosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('torneos');
+        Schema::dropIfExists('torneos');
     }
 }
