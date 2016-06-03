@@ -5,35 +5,46 @@ php:
   - 5.6
   - 7.0
   - hhvm
-
-env:
-  global:
-    - setup=basic
-    
-matrix:
-  include:
-    - php: 5.5
-      env: setup=lowest
-    - php: 5.6
-      env: setup=stable
-
-sudo: false
-
-services:
-  - redis-server
-  - mysql
-
-before_install:
-  - travis_retry composer self-update
-
-install:
-  - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist; fi
-  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable; fi
-  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
-
+  
 before_script:
-  - mysql -e 'create database CDJ_BD;'
-
+  - cp .env.travis .env
+  - mysql -e 'create database homestead_test;'
+  - composer self-update
+  - composer install --no-interaction
+  
 script:
-  - php artisan migrate --seed
   - vendor/bin/phpunit
+
+#sudo: false
+#
+#env:
+#  global:
+#    - setup=basic
+#    
+#matrix:
+#  include:
+#    - php: 5.5
+#      env: setup=lowest
+#  - php: 5.6
+#     env: setup=stable
+#
+#
+#
+#services:
+#  - redis-server
+#  - mysql
+#
+#before_install:
+#  - travis_retry composer self-update
+#
+#install:
+# - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist; fi
+#  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable; fi
+#  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
+#
+#before_script:
+#  - mysql -e 'create database CDJ_BD;'
+#
+#script:
+#  - php artisan migrate --seed
+#  - vendor/bin/phpunit
