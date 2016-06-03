@@ -55,18 +55,18 @@
                     </div>
                     <div class="form-group col-xs-12">
                         <div class="col-md-4">
-                            <label for="fechaInicio">Fecha de inicio</label>
+                            <label for="fecha_inicio">Fecha de inicio</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" placeholder="Ingrese fecha de inicio del torneo" value="{{ $torneo->fechaInicio }}">
+                            <input type="date" class="form-control" id="fechaInicio" name="fecha_inicio" placeholder="Ingrese fecha de inicio del torneo" value="{{ $torneo->fecha_inicio }}">
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
                         <div class="col-md-4">
-                            <label for="fechaFin">Fecha de finalizaci&oacute;n</label>
+                            <label for="fecha_fin">Fecha de finalizaci&oacute;n</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="date" class="form-control" id="fechaFin" name="fechaFin" placeholder="Ingrese fecha de inicio del torneo" value="{{ $torneo->fechaFin }}">
+                            <input type="date" class="form-control" id="fechaFin" name="fecha_fin" placeholder="Ingrese fecha de inicio del torneo" value="{{ $torneo->fecha_fin }}">
                         </div>
                     </div>
                 </div><!-- /.box-body -->

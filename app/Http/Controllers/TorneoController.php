@@ -56,14 +56,14 @@ class TorneoController extends Controller
     {
         $this->validate($request, [
             'categoria' => 'required',
-            'fechaInicio' => 'required|date',
-            'fechaFin' => 'required|date',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date',
         ]);
 
         $torneo = new Torneo();
         $torneo->categoria = $request->categoria;
-        $torneo->fechaInicio = $request->fechaInicio;
-        $torneo->fechaFin = $request->fechaFin;
+        $torneo->fecha_inicio = $request->fecha_inicio;
+        $torneo->fecha_fin = $request->fecha_fin;
         $torneo->estado = 1;
         $torneo->save();
         return redirect('torneo');
@@ -105,14 +105,14 @@ class TorneoController extends Controller
     {
         $this->validate($request, [
             'categoria' => 'required',
-            'fechaInicio' => 'required|date',
-            'fechaFin' => 'required|date',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date',
         ]);
 
         $torneo = Torneo::find($id);
         $torneo->categoria = $request->categoria;
-        $torneo->fechaInicio = $request->fechaInicio;
-        $torneo->fechaFin = $request->fechaFin;
+        $torneo->fecha_inicio = $request->fecha_inicio;
+        $torneo->fecha_fin = $request->fecha_fin;
         $torneo->save();
         return redirect('torneo');
     }

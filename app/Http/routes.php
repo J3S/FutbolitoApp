@@ -11,9 +11,9 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+	return view('welcome');
+ });
 Route::get('login', function () {
     return view('login');
 });
@@ -59,5 +59,10 @@ Route::match(['get', 'head'], 'jugador/{jugador}/edit', 'JugadorController@edit'
 Route::resource('torneo', 'TorneoController',
     ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 
-Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
-Route::post('partido', 'PartidoController@store')->name('partido.store');
+Route::resource('partido', 'PartidoController',
+	['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+
+Route::post('selectPartido', 'PartidoController@searchByDate');
+
+//Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
+//Route::post('partido', 'PartidoController@store')->name('partido.store');

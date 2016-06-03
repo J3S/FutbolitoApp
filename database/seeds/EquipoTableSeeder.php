@@ -12,8 +12,16 @@ class EquipoTableSeeder extends Seeder
      */
     public function run()
     {
-        $equipos = array("39A", "40B", "41C", "44C", "27A", "31C", "50B", "51C", "29B", 
-            "33A", "37B", "25A");
+        $letras = range('A', 'D');
+        $promocion = range('20', '50');
+        $equipos = array();
+        foreach($promocion as $promo){
+            foreach($letras as $letra){
+                $nombre = $promo.$letra;
+                $equipos[] = $nombre;
+            }
+        }
+
         $names = array( "Antonio", "Isaias", "Fabian", "Jesus", "Angel",
                         "Freddy", "Justin", "Josue", "Tobias", "Adrian",
                         "Jose", "Marco", "Pablo", "Carlos", "Mateo", "Edgar");

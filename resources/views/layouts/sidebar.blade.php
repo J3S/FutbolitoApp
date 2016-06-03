@@ -19,7 +19,7 @@
                     active
                 @endif">
                 <a href="#">
-                    <i class="fa fa-user"></i> <span>Jugador</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-user"></i> <span>Jugadores</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li {{ Request::is('jugador/crear') ? ' class=active' : '' }}><a href="{{ url('jugador/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
@@ -32,7 +32,7 @@
                     active
                 @endif">
                 <a href="#">
-                    <i class="fa fa-users"></i> <span>Equipo</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-users"></i> <span>Equipos</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li {{ Request::is('equipo/crear') ? ' class=active' : '' }}><a href="{{ url('equipo/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
@@ -43,28 +43,20 @@
             <li>
             <li>
                 <a href="{{ url('torneo') }}">
-                    <i class="fa fa-calendar"></i> <span>Torneo</span>
+                    <i class="fa fa-calendar"></i> <span>Torneos</span>
                 </a>
             </li>
-            <li class="treeview
-                @if(Request::is('partido/crear') OR Request::is('partido/editar') OR Request::is('partido/desactivar'))
-                    active
-                @endif">
-                <a href="#">
-                    <i class="fa fa-futbol-o"></i> <span>Partido</span> <i class="fa fa-angle-left pull-right"></i>
+             <li>
+                <a href="{{ url('partido') }}">
+                    <i class="fa fa-calendar"></i> <span>Partidos</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li {{ Request::is('partido/crear') ? ' class=active' : '' }}><a href="{{ url('partido/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('partido/editar') ? ' class=active' : '' }}><a href="{{ url('partido/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li {{ Request::is('partido/desactivar') ? ' class=active' : '' }}><a href="{{ url('partido/desactivar') }}"><i class="fa fa-ban"></i> Desactivar</a></li>
-                </ul>
             </li>
             <li class="treeview
                 @if(Request::is('resultado/crear') OR Request::is('resultado/editar'))
                     active
                 @endif">
                 <a href="#">
-                    <i class="fa fa-book"></i> <span>Resultado</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-book"></i> <span>Resultados</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li {{ Request::is('resultado/crear') ? ' class=active' : '' }}><a href="{{ url('resultado/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>

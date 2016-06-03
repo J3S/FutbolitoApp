@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\Equipo;
 use App\Torneo;
+use App\TorneoEquipo;
+
 
 class PartidoTableSeeder extends Seeder
 {
@@ -13,7 +15,7 @@ class PartidoTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {/*
         $names = array( "Antonio", "Isaias", "Fabian", "Jesus", "Angel",
                 "Freddy", "Justin", "Josue", "Tobias", "Adrian",
                 "Jose", "Marco", "Pablo", "Carlos", "Mateo", "Edgar");
@@ -26,25 +28,25 @@ class PartidoTableSeeder extends Seeder
             $day = rand(1, 28);
             $hour = rand(8, 16);
             $date = Carbon::create($year, $month, $day, $hour, 0, 0);
-            $equipo = Equipo::orderByRaw("RAND()")->first();
-            $equipo2 = Equipo::orderByRaw("RAND()")->first();
-            $torneo = Torneo::orderByRaw("RAND()")->first();
+            $torneo = Torneo::orderByRaw("RAND()")->get();
+            $torneoEquipo = TorneoEquipo::where('id_torneo', $torneo->id);
+           // $torneoEquipoRand = $torneoEquipo::orderByRaw("RAND()")->get();
+           // $equipoLocal = Equipo::where('estado', 1)
+           //    ->where('id', $torneoEquipoRand->id);
 
             DB::table('partidos')->insert([
-                'lugar' => strtoupper(str_random(15)),
+                'lugar' => strtoupper(str_random(10)),
                 'arbitro' => $name,
                 'fecha' => $date->format('Y-m-d H:i:s'),
                 'observacion' => str_random(50),
-                'gol_visitante' => rand(0,5),
-                'gol_local' => rand(0,5),
-                'id_equipo' => $equipo->id,
-                'id_equipoV' => $equipo2->id,
+                'gol_visitante' => rand(0,4),
+                'gol_local' => rand(0,4),
                 'id_torneo' => $torneo->id,
                 'estado' => 1,
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
         }
-
+    */
     }
 }

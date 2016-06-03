@@ -94,7 +94,7 @@
                             <label for="fechaInicio">Fecha de inicio</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" placeholder="Ingrese fecha de inicio del torneo">
+                            <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" placeholder="Ingrese fecha de inicio del torneo">
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
@@ -102,7 +102,7 @@
                             <label for="fechaFin">Fecha de finalizaci&oacute;n</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="date" class="form-control" id="fechaFin" name="fechaFin" placeholder="Ingrese fecha de inicio del torneo">
+                            <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" placeholder="Ingrese fecha de inicio del torneo">
                         </div>
                     </div>
                 </div><!-- /.box-body -->

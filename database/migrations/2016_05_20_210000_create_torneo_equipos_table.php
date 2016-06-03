@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSeguirEquiposTable extends Migration
+class CreateTorneoEquiposTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,12 @@ class CreateSeguirEquiposTable extends Migration
      */
     public function up()
     {
-        Schema::create('seguir_equipos', function (Blueprint $table) {
+        Schema::create('torneo_equipos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_usuario')->unsigned();
             $table->integer('id_equipo')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('usuarios');
             $table->foreign('id_equipo')->references('id')->on('equipos');
+            $table->integer('id_torneo')->unsigned();
+            $table->foreign('id_torneo')->references('id')->on('torneos');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateSeguirEquiposTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seguir_equipos');
+        Schema::dropIfExists('torneo_equipos');
     }
 }
