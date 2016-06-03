@@ -12,15 +12,18 @@ use App\Equipo;
 class TorneoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la vista principal de la opción torneo.
+     * Devuelve la vista torneo junto con los torneos del
+     * último año
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $torneos = Torneo::where('estado', 1)
-                        ->get(['id', 'categoria', 'fecha_inicio', 'fecha_fin']);
-        return view('torneo')->with('torneos', $torneos);
+                        ->get(['id', 'categoria', 'anio']);
+        $anioServer = date("Y");
+        return view('torneo')->with('torneos', $torneos)->with('anioServer', $anioServer);
     }
 
     /**

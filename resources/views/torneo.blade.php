@@ -1,58 +1,75 @@
+<!-- 
+    Vista principal de torneo.
+    Contiene el botón para crear un nuevo torneo
+    Muestra todos los torneos del año actual
+    Tiene opciones para buscar un torneo por categoría y por año
+-->
+
+<!-- Plantilla a usar -->
 @extends('layouts.master')
 
+<!-- Agregar el título de la página -->
 @section('title', 'Torneo')
 
-@section('contentHeaderTitle', 'Torneo')
-
+<!-- Agregar los elementos del breadcrumb -->
 @section('contentHeaderBreadcrumb')
     <li><a href="/"><i class="fa fa-user"></i> Home</a></li>
     <li class="active">Torneo</li>
 @endsection
 
+<!-- Agregar el contenido de la página -->
 @section('content')
-    <div class="col-xs-12" style="padding-bottom: 15px;">
-        <form>
-            <button type="button" id="nuevoTorneoButton" class="btn btn-success" onclick="window.location='{{ route("torneo.create") }}'"><i class="fa fa-plus"></i> Nuevo Torneo</button>
-        </form>
-    </div>
-    <div class="col-xs-12">
-    {{--*/ $widget = 0 /*--}}
-    @foreach($torneos as $torneo)
-        @if($widget % 3 == 0)
-            <div class="row">
-        @endif
-        <div class="col-md-4">
-            <!-- Widget: user widget style 1 -->
-            <div class="box box-widget widget-user-2">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-blue">
-                    <h3 class="widget-torneo">{!! $torneo['categoria'] !!}</h3>
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Equipos <span class="pull-right badge bg-blue">31</span></a></li>
-                        <li><a href="#">Partidos <span class="pull-right badge bg-aqua">5</span></a></li>
-                        <li><a href="#">Fecha de inicio <span class="pull-right badge bg-green">{!! $torneo['fecha_inicio'] !!}</span></a></li>
-                        <li><a href="#">Fecha de fin <span class="pull-right badge bg-red">{!! $torneo['fecha_fecha'] !!}</span></a></li>
-                    </ul>
-                    <div class="col-md-6">
-                        <a href="{{ route('torneo.edit', $torneo->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a>
-                    </div>
-                    <div class="col-md-6">
-                        <form class="pull-right" action="/torneo/{{ $torneo->id }}" method="POST">
-                            <input type="hidden" name="_method" value="DELETE">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Desactivar</button>
-                        </form>
-                    </div>
-                </div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Botón para crear un nuevo torneo -->
+            <div class="col-xs-12" style="padding-bottom: 15px;">
+                <form>
+                    <button type="button" id="nuevo-torneo-button" class="btn btn-success" onclick="window.location='{{ route("torneo.create") }}'"><i class="fa fa-plus"></i> Nuevo Torneo</button>
+                </form>
             </div>
         </div>
-        <!-- /.widget-user -->
-        @if($widget % 3 == 2)
+
+        <div class="row">
+            <!-- Tabla que contiene todos los torneos del año(actual) -->
+            <div class="col-xs-12">
+                <!-- Verificación de la existencia de torneos para el año actual -->
+                @if(!empty($torneos['id_categoria']))
+                    <!-- Creación de la tabla con los torneos del año actual -->
+                     <h4 class="text-center">Torneos del a&ntilde;o {{ $anioServer }}</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="torneos-anio">
+                            <thead>
+                                <tr>
+                                    <th>Categor&iacute;a</th>
+                                    <th>Modificar</th>
+                                    <th>Desactivar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($torneos as $torneo)
+                                    <tr>
+                                        <td>test</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <h4 class="text-center">Ning&uacute;n torneo ha sido creado para el a&ntilde;o {{ $anioServer }}</h4>
+                @endif
             </div>
-        @endif
-        <?php $widget++; ?>
-    @endforeach
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                
+            </div>
+        </div>
+            
+        
+
     </div>
+
 @endsection
