@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Torneo;
 use App\Equipo;
+use App\Categoria;
 
 class TorneoController extends Controller
 {
@@ -20,9 +21,16 @@ class TorneoController extends Controller
      */
     public function index()
     {
-        $torneos = Torneo::where('estado', 1)
-                        ->get(['id', 'categoria', 'anio']);
         $anioServer = date("Y");
+        $torneos = Torneo::where('estado', 1)
+                         ->where('anio', $anioServer)
+                         ->get(['id', 'id_categoria']);
+        $categorias = Categoria::all();
+        $torneosExistentes = [];
+        foreach ($torneos as $torneo) {
+            
+        }
+        
         return view('torneo')->with('torneos', $torneos)->with('anioServer', $anioServer);
     }
 
