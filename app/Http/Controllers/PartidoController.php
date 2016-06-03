@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Torneo;
 use App\Equipo;
 use App\Partido;
+use App\Categoria;
 
 class PartidoController extends Controller
 {
@@ -31,9 +32,13 @@ class PartidoController extends Controller
      */
     public function create()
     {
-        $torneos = Torneo::where('estado', 1)->get(['categoria', 'fecha_inicio']);
+        $categorias = Categoria::all();
+        $torneos = Torneo::where('estado', 1)->get(['anio', 'id_categoria']);
         $equipos = Equipo::where('estado', 1)->get(['nombre']);
-        return view('partidoc')->withTorneos($torneos)->withEquipos($equipos);
+
+        return view('partidoc')->withTorneos($torneos)
+            ->withEquipos($equipos)
+            ->withCategorias($categorias);
     }
 
     /**
@@ -58,16 +63,17 @@ class PartidoController extends Controller
 
         $partido->lugar = $request->lugar;
         $partido->fecha = $request->fecha;
-        $torneo = Torneo::where('categoria', $request->torneo)->first(); // corregir
+        $torneoString = explode(" : ", $request->torneo);
+        $categoria = Categoria::where('nombre', $torneoString[0])->first();
+        $torneo = Torneo::where('anio', $torneoString[1])
+            ->where('id_categoria', $categoria->id)->first();
         $partido->id_torneo = $torneo->id;
         $partido->arbitro = $request->arbitro;
         $partido->observacion = $request->observaciones;
         $partido->gol_local = $request->gol_local;
         $partido->gol_visitante = $request->gol_visitante;
-        $equipoLocal = Equipo::where('nombre', $request->equipo_local)->first();
-        $partido->id_equipo = $equipoLocal->id;
-        $equipoVisitante = Equipo::where('nombre', $request->equipo_visitante)->first();
-        $partido->id_equipoV = $equipoVisitante->id;
+        $partido->equipo_local = $request->equipo_local;
+        $partido->equipo_visitante = $request->equipo_visitante;
         $partido->estado = 1;
         $partido->save();
 
@@ -95,16 +101,18 @@ class PartidoController extends Controller
     {
         $partido = Partido::find($id);
         $date = date("Y-m-d\TH:i:s", strtotime($partido->fecha));
-        $torneos = Torneo::where('estado', 1)->get(['id', 'categoria']);
-        $torneo = Torneo::find($partido->id_torneo)->get(['id', 'categoria']);
+        $torneos = Torneo::where('estado', 1)->get();
+        $torneo = Torneo::find($partido->id_torneo);
+        $categoria = Categoria::find($torneo->id_categoria);
+        $categorias = Categoria::all();
         $equipos = Equipo::where('estado', 1)->get(['id', 'nombre']);
-        $equipo = Equipo::find($partido->id_equipo)->get(['id', 'nombre']);
-        $equipoV = Equipo::find($partido->id_equipoV)->get(['id', 'nombre']);
+        $equipo = Equipo::where('nombre', $partido->equipo_local)->get();
+        $equipoV = Equipo::where('nombre', $partido->equipo_visitante)->get();
         
-        return view('partidoe')->withTorneo($torneo)->withEquipo($equipo)
+        return view('partidoe')->withEquipo($equipo)
             ->withEquipoV($equipoV)->withPartido($partido)
             ->withTorneos($torneos)->withEquipos($equipos)
-            ->withDate($date);
+            ->withDate($date)->withCategorias($categorias);
     }
 
     /**
@@ -130,16 +138,17 @@ class PartidoController extends Controller
 
         $partido->lugar = $request->lugar;
         $partido->fecha = $request->fecha;
-        $torneo = Torneo::where('categoria', $request->torneo)->first(); // corregir
+        $torneoString = explode(" : ", $request->torneo);
+        $categoria = Categoria::where('nombre', $torneoString[0])->first();
+        $torneo = Torneo::where('anio', $torneoString[1])
+            ->where('id_categoria', $categoria->id)->first();
         $partido->id_torneo = $torneo->id;
         $partido->arbitro = $request->arbitro;
         $partido->observacion = $request->observaciones;
         $partido->gol_local = $request->gol_local;
         $partido->gol_visitante = $request->gol_visitante;
-        $equipoLocal = Equipo::where('nombre', $request->equipo_local)->first();
-        $partido->id_equipo = $equipoLocal->id;
-        $equipoVisitante = Equipo::where('nombre', $request->equipo_visitante)->first();
-        $partido->id_equipoV = $equipoVisitante->id;
+        $partido->equipo_local = $request->equipo_local;
+        $partido->equipo_visitante = $request->equipo_visitante;
         $partido->estado = 1;
         $partido->save();
 
@@ -163,16 +172,15 @@ class PartidoController extends Controller
 
     public function searchByDate(Request $request) {
         $partidos = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))
-            ->where('estado', 1)
-            ->get(['id', 'fecha', 'id_equipo', 'id_equipoV', 'id_torneo', 'gol_local', 'gol_visitante', 'lugar']);
-        $equipos = Equipo::where('estado', 1)
-            ->get(['id', 'nombre']);
-        $torneos = Torneo::where('estado', 1)
-            ->get(['id', 'categoria']);
+            ->where('estado', 1)->get();
+        $equipos = Equipo::where('estado', 1)->get();
+        $torneos = Torneo::where('estado', 1)->get();
+        $categorias = Categoria::all();
 
         return view('partidos')
             ->withPartidos($partidos)
             ->withEquipos($equipos)
-            ->withTorneos($torneos);
+            ->withTorneos($torneos)
+            ->withCategorias($categorias);
     }
 }
