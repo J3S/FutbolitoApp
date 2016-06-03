@@ -26,11 +26,11 @@
 				<div class="box-body">
 					<div class="form-group col-xs-12 col-sm-4">
 						<label for="iniPartido">Fecha inicio</label>
-						<input type="datetime-local" class="form-control" id="iniPartido" name="ini_partido">
+						<input type="date" class="form-control" id="iniPartido" name="ini_partido">
 					</div>
 					<div class="form-group col-xs-12 col-sm-4">
 						<label for="finPartido">Fecha fin</label>
-						<input type="datetime-local" class="form-control" id="finPartido" name="fin_partido">
+						<input type="date" class="form-control" id="finPartido" name="fin_partido">
 					</div>
 					<div class="col-xs-12" >
 	                    <button type="submit" class="btn btn-success">Buscar</button>

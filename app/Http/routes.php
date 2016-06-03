@@ -59,7 +59,8 @@ Route::match(['get', 'head'], 'jugador/{jugador}/edit', 'JugadorController@edit'
 Route::resource('torneo', 'TorneoController',
     ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 
-Route::resource('partido', 'PartidoController');
+Route::resource('partido', 'PartidoController',
+	['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 
 Route::post('selectPartido', 'PartidoController@searchByDate');
 
