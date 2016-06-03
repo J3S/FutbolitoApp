@@ -8,11 +8,12 @@ php:
   
 before_script:
   - cp .env.travis .env
-  - mysql -e 'create database homestead_test;'
+  - mysql -e 'create database CDJ_BD;'
   - composer self-update
   - composer install --no-interaction
   
 script:
+  - php artisan migrate --seed
   - vendor/bin/phpunit
 
 #sudo: false
