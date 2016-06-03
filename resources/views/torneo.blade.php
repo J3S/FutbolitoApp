@@ -24,7 +24,7 @@
             <!-- Botón para crear un nuevo torneo -->
             <div class="col-xs-12" style="padding-bottom: 15px;">
                 <form>
-                    <button type="button" id="nuevo-torneo-button" class="btn btn-success" onclick="window.location='{{ route("torneo.create") }}'"><i class="fa fa-plus"></i> Nuevo Torneo</button>
+                    <button type="button" id="nuevoTorneoButton" class="btn btn-success" onclick="window.location='{{ route("torneo.create") }}'"><i class="fa fa-plus"></i> Nuevo Torneo</button>
                 </form>
             </div>
         </div>
@@ -33,24 +33,35 @@
             <!-- Tabla que contiene todos los torneos del año(actual) -->
             <div class="col-xs-12">
                 <!-- Verificación de la existencia de torneos para el año actual -->
-                @if(!empty($torneos['id_categoria']))
+                @if($inexistentes != 7)
                     <!-- Creación de la tabla con los torneos del año actual -->
-                     <h4 class="text-center">Torneos del a&ntilde;o {{ $anioServer }}</h4>
+                    <h4 class="text-center">Torneos del a&ntilde;o {{ $anioServer }}</h4>
                     <div class="table-responsive">
-                        <table class="table table-hover" id="torneos-anio">
+                        <table class="table table-hover" id="torneosAnio">
                             <thead>
                                 <tr>
                                     <th>Categor&iacute;a</th>
-                                    <th>Modificar</th>
-                                    <th>Desactivar</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($torneos as $torneo)
                                     <tr>
-                                        <td>test</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $torneo['categoria'] }}</td>
+                                        @if($torneo['id'] == 0)
+                                            <td><b>No se ha creado un torneo</b></td>
+                                            <td></td>
+                                        @else
+                                            <td> <a href="{{ route('torneo.edit', $torneo['id']) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a></td>
+                                            <td>
+                                                <form action="/torneo/{{ $torneo['id'] }}" method="POST">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Desactivar</button>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -61,10 +72,37 @@
                 @endif
             </div>
         </div>
-
+        <hr>
         <div class="row">
             <div class="col-xs-12">
-                
+                <h4>Buscar torneos</h4>
+                <form>
+                    <div class="form-group">
+                        <div class="col-md-1">
+                            <label for="anio">A&ntilde;o</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" id="anio" placeholder="A&ntilde;o">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-1">
+                            <label for="categoria">Categor&iacute;a</label>
+                        </div>
+                        <div class="col-md-2" id="categoria">
+                            <select class="form-control">
+                                @if(count($categorias) != 0)
+                                    @foreach($categorias as $categoria)
+                                        <option>{{ $categoria->nombre }}</option>
+                                    @endforeach
+                                @else
+                                        <option>No se ha registrado ninguna categor&iacute;a</option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
             </div>
         </div>
             

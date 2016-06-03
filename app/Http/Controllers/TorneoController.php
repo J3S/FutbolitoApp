@@ -15,23 +15,49 @@ class TorneoController extends Controller
     /**
      * Muestra la vista principal de la opción torneo.
      * Devuelve la vista torneo junto con los torneos del
-     * último año
+     * año actual
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        // Año actual del servidor
         $anioServer = date("Y");
-        $torneos = Torneo::where('estado', 1)
-                         ->where('anio', $anioServer)
-                         ->get(['id', 'id_categoria']);
+        // Obtener todas las categorías de la base
         $categorias = Categoria::all();
+        // Torneos del año actual
         $torneosExistentes = [];
-        foreach ($torneos as $torneo) {
-            
+        // Información de torneo individual
+        $infoTorneo = [];
+        $contadorInexistentes = 0;
+
+        /**
+         * Recorro el arreglo de categorías y busco el torneo de esa categoría del año actual.
+         * Uniendo la información de ese torneo con el nombre de la categoría(si no existe el
+         * torneo el id será 0) y colocando esa información en el arreglo con todos los torneos. 
+         */
+        foreach($categorias as $categoria) {
+            $torneo = Torneo::where('id_categoria', $categoria->id)
+                            ->where('anio', $anioServer)
+                            ->first();
+            if(count($torneo) == 0) {
+                $contadorInexistentes++;
+                $infoTorneo = ['id' => 0, 'categoria' => $categoria->nombre];
+                array_push($torneosExistentes, $infoTorneo);
+            } else {
+                $infoTorneo = ['id' => $torneo->id, 'categoria' => $categoria->nombre];
+                array_unshift($torneosExistentes, $infoTorneo);
+            }
         }
-        
-        return view('torneo')->with('torneos', $torneos)->with('anioServer', $anioServer);
+
+        /**
+         * Retorno la vista con todos los torneos del año actual, con el año actual del servidor,
+         * el numero de torneos que no se han creado en el año, y todas las categorías
+         */
+        return view('torneo')->with('torneos', $torneosExistentes)
+                             ->with('anioServer', $anioServer)
+                             ->with('inexistentes', $contadorInexistentes)
+                             ->with('categorias', $categorias);
     }
 
     /**
