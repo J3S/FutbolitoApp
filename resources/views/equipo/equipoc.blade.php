@@ -6,7 +6,7 @@
 
 @section('contentHeaderBreadcrumb')
     <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
-    <li><a href="#">Equipo</a></li>
+    <li><a href="{!!route('equipo.index')!!}">Equipo</a></li>
     <li class="active">Crear</li>
 @endsection
 

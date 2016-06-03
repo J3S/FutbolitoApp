@@ -45,19 +45,20 @@ Route::get('login', function () {
 
 
 //-------------------Branny Rutas-----------------------
-
 //rutas RESTfull para jugador, ejecutar (php artisan route:list)
-// Route::resource('jugador', 'JugadorController');
-
-Route::post('jugador', 'JugadorController@store')->name('jugador.store');
-Route::match(['get', 'head'], 'jugador/crear', 'JugadorController@create')->name('jugador.create');
-
-Route::put('jugador/{jugador}', 'JugadorController@update')->name('jugador.update');
-Route::match(['get', 'head'], 'jugador/{jugador}/edit', 'JugadorController@edit')->name('jugador.edit');
+Route::resource('equipo', 'EquipoController');
+//-------------------Branny Rutas-----------------------
 
 
-Route::resource('torneo', 'TorneoController',
-    ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
-
-Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
-Route::post('partido', 'PartidoController@store')->name('partido.store');
+// Route::post('jugador', 'JugadorController@store')->name('jugador.store');
+// Route::match(['get', 'head'], 'jugador/crear', 'JugadorController@create')->name('jugador.create');
+//
+// Route::put('jugador/{jugador}', 'JugadorController@update')->name('jugador.update');
+// Route::match(['get', 'head'], 'jugador/{jugador}/edit', 'JugadorController@edit')->name('jugador.edit');
+//
+//
+// Route::resource('torneo', 'TorneoController',
+//     ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+//
+// Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
+// Route::post('partido', 'PartidoController@store')->name('partido.store');
