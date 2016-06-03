@@ -17,14 +17,19 @@
  		@foreach($torneos as $torneo)
  			@if($partido->id_torneo == $torneo->id)
  				{{--*/ $torneoPartido = $torneo /*--}}
+                @foreach($categorias as $categoria)
+                @if($torneoPartido->id_categoria == $categoria->id)
+                    {{--*/ $categoriaTorneo = $categoria /*--}}
+                @endif
+            @endforeach
 			@endif
  		@endforeach
  		@foreach($equipos as $equipo)
- 			@if($partido->id_equipoV == $equipo->id)
- 				{{--*/ $equipoVisit = $equipo /*--}}
-			@endif
- 			@if($partido->id_equipo == $equipo->id)	
+ 			@if($partido->equipo_local == $equipo->nombre)
  				{{--*/ $equipoLocal = $equipo /*--}}
+			@endif
+ 			@if($partido->equipo_visitante == $equipo->nombre)	
+ 				{{--*/ $equipoVisit = $equipo /*--}}
 			@endif
  		@endforeach
         @if($widget % 3 == 0)
@@ -36,7 +41,7 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="box-footer no-padding">
 	                <ul class="nav nav-stacked">
-	                	<li><h3 class="widget-torneo bg-green" style="text-align:center">Torneo: {!! $torneoPartido['categoria'] !!}</h3></li>
+	                	<li><h3 class="widget-torneo bg-green" style="text-align:center">{!! $categoriaTorneo['nombre'] !!} : {!! $torneoPartido['anio'] !!}</h3></li>
 		                <li><a href="#">Resultado
 							<span class="pull-right badge bg-green">{!! $equipoVisit['nombre'] !!}</span>
                             <span class="pull-right badge bg-black">{!! $partido['gol_local'] !!} - {!! $partido['gol_visitante'] !!}</span>
