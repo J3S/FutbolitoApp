@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Torneo;
 use App\Equipo;
 use App\Partido;
+use App\Categoria;
 
 class PartidoController extends Controller
 {
@@ -31,9 +32,13 @@ class PartidoController extends Controller
      */
     public function create()
     {
-        $torneos = Torneo::where('estado', 1)->get(['categoria', 'fecha_inicio']);
+        $categorias = Categoria::all();
+        $torneos = Torneo::where('estado', 1)->get(['anio', 'id_categoria']);
         $equipos = Equipo::where('estado', 1)->get(['nombre']);
-        return view('partidoc')->withTorneos($torneos)->withEquipos($equipos);
+
+        return view('partidoc')->withTorneos($torneos)
+            ->withEquipos($equipos)
+            ->withCategorias($categorias);
     }
 
     /**
@@ -58,16 +63,17 @@ class PartidoController extends Controller
 
         $partido->lugar = $request->lugar;
         $partido->fecha = $request->fecha;
-        $torneo = Torneo::where('categoria', $request->torneo)->first(); // corregir
+        $torneoString = explode(" : ", $request->torneo);
+        $categoria = Categoria::where('nombre', $torneoString[0])->first();
+        $torneo = Torneo::where('anio', $torneoString[1])
+            ->where('id_categoria', $categoria->id)->first();
         $partido->id_torneo = $torneo->id;
         $partido->arbitro = $request->arbitro;
         $partido->observacion = $request->observaciones;
         $partido->gol_local = $request->gol_local;
         $partido->gol_visitante = $request->gol_visitante;
-        $equipoLocal = Equipo::where('nombre', $request->equipo_local)->first();
-        $partido->id_equipo = $equipoLocal->id;
-        $equipoVisitante = Equipo::where('nombre', $request->equipo_visitante)->first();
-        $partido->id_equipoV = $equipoVisitante->id;
+        $partido->equipo_local = $request->equipo_local;
+        $partido->equipo_visitante = $request->equipo_visitante;
         $partido->estado = 1;
         $partido->save();
 
