@@ -13,7 +13,7 @@ class EquipoTableSeeder extends Seeder
     public function run()
     {
         $letras = range('A', 'D');
-        $promocion = range('20', '50');
+        $promocion = range('20', '60');
         $equipos = array();
         foreach($promocion as $promo){
             foreach($letras as $letra){
