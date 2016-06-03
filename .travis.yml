@@ -31,4 +31,9 @@ install:
   - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable; fi
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
 
-script: vendor/bin/phpunit
+before_script:
+  - mysql -e 'create database CDJ_BD;'
+
+script:
+  - php artisan migrate --seed
+  - vendor/bin/phpunit
