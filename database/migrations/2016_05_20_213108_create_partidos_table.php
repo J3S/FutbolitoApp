@@ -17,6 +17,7 @@ class CreatePartidosTable extends Migration
             $table->string('lugar', 200);
             $table->boolean('estado');
             $table->dateTime('fecha');
+            $table->integer('jornada');
             $table->string('arbitro', 150)->nullable();
             $table->string('observacion', 150)->nullable();
             $table->string('equipo_local', 50);
