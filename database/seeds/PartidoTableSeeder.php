@@ -42,6 +42,7 @@ class PartidoTableSeeder extends Seeder
                 'observacion' => str_random(50),
                 'gol_visitante' => rand(0,4),
                 'gol_local' => rand(0,4),
+                'jornada' => rand(1,22),
                 'equipo_local' => $equipoL->nombre,
                 'equipo_visitante' => $equipoV->nombre,
                 'id_torneo' => $torneo->id,

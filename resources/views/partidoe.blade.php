@@ -27,13 +27,23 @@
                         <label for="listaTorneo">Torneo</label>
                         <select class="form-control" id="listaTorneo" name="torneo">
                             @foreach($torneos as $torneo)
-                                @if($torneo->id == $partido->id_torneo)
-                                    <option selected="selected">{{ $torneo['categoria'] }}</option>
-                                @else
-                                    <option>{{ $torneo['categoria'] }}</option>
-                                @endif
+                                @foreach($categorias as $categoria)
+                                    @if($torneo->id == $partido->id_torneo)
+                                        @if($categoria->id == $torneo->id_categoria)
+                                            <option selected="selected">{{ $categoria['nombre'] }} : {{ $torneo['anio'] }}</option>
+                                        @else
+                                            <option>{{ $categoria['nombre'] }} : {{ $torneo['anio'] }}</option>
+                                        @endif
+                                    @endif
+                                @endforeach
                             @endforeach
                         </select>
+                    </div>
+                     <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputJornada">Jornada #</label>
+                            <input type="number" value="{{ $partido['jornada'] }}" min="0" class="form-control" id="inputJornada" name="jornada" placeholder="Ingrese jornada del partido">
+                        </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="inputArbitro">Arbitro</label>
@@ -49,7 +59,7 @@
                             <input type="text" value="{{ $partido['lugar'] }}" class="form-control" id="inputLugar" name="lugar" placeholder="Ingrese lugar del partido">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12">
+                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="inputObserv">Observaciones</label>
                             <input type="text" value="{{ $partido['observacion'] }}"  class="form-control" id="inputObserv" name="observaciones" placeholder="Ingrese observaciones del partido">
@@ -62,7 +72,7 @@
                         <label for="listaEquipo1">Equipo local</label>
                         <select class="form-control" id="listaEquipo1" name="equipo_local">
                             @foreach($equipos as $equipo)
-                                @if($equipo->id == $partido->id_equipo)
+                                @if($equipo->nombre == $partido->equipo_local)
                                     <option selected="selected">{{ $equipo['nombre'] }}</option>
                                 @else
                                     <option>{{ $equipo['nombre'] }}</option>
@@ -75,7 +85,7 @@
                         <label for="listaEquipo2">Equipo visitante</label>
                         <select class="form-control" id="listaEquipo2" name="equipo_visitante">
                             @foreach($equipos as $equipo)
-                                @if($equipo->id == $partido->id_equipoV)
+                                @if($equipo->nombre == $partido->equipo_visitante)
                                     <option selected="selected">{{ $equipo['nombre'] }}</option>
                                 @else
                                     <option>{{ $equipo['nombre'] }}</option>
