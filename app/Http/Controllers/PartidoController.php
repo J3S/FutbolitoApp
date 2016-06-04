@@ -175,7 +175,7 @@ class PartidoController extends Controller
         return $this->index();
     }
 
-    public function searchByDate(Request $request) {
+    public function searchPartido(Request $request) {
         $partidos = Partido::where('estado', 1)->get();
 
         if($request->ini_partido != "" && $request->fin_partido != ""){
