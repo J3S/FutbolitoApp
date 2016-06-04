@@ -175,17 +175,8 @@ class PartidoController extends Controller
         return $this->index();
     }
 
-<<<<<<< HEAD
-    public function searchByDate(Request $request) {
-        $partidos = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))
-            ->where('estado', 1)->get();
-        $equipos = Equipo::where('estado', 1)->get();
-        $torneos = Torneo::where('estado', 1)->get();
-        $categorias = Categoria::all();
-=======
     public function searchPartido(Request $request) {
         $partidos = Partido::where('estado', 1)->get();
->>>>>>> 04c91dd3b8306788b55adeedde8624de073a06f4
 
         if($request->ini_partido != "" && $request->fin_partido != ""){
             $partidosFecha = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))

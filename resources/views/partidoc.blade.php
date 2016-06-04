@@ -23,11 +23,7 @@
             {!! csrf_field() !!}
                 <div class="box-body">
                     <div class="form-group col-xs-12 col-sm-6">
-<<<<<<< HEAD
-                        <label for="listaAnio">A&ntilde;o</label>
-=======
                         <label for="listaAnio">Torneo</label>
->>>>>>> 04c91dd3b8306788b55adeedde8624de073a06f4
                         <select class="form-control" id="listaAnio" name="torneo">
                             @foreach($categorias as $categoria)
                                 @foreach($torneos as $torneo)
