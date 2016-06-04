@@ -39,6 +39,12 @@
                             @endforeach
                         </select>
                     </div>
+                     <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputJornada">Jornada #</label>
+                            <input type="number" value="{{ $partido['jornada'] }}" min="0" class="form-control" id="inputJornada" name="jornada" placeholder="Ingrese jornada del partido">
+                        </div>
+                    </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="inputArbitro">Arbitro</label>
                         <input type="text" value="{{ $partido['arbitro'] }}" class="form-control" id="inputArbitro" name="arbitro" placeholder="Ingrese arbitro">
@@ -53,7 +59,7 @@
                             <input type="text" value="{{ $partido['lugar'] }}" class="form-control" id="inputLugar" name="lugar" placeholder="Ingrese lugar del partido">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12">
+                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="inputObserv">Observaciones</label>
                             <input type="text" value="{{ $partido['observacion'] }}"  class="form-control" id="inputObserv" name="observaciones" placeholder="Ingrese observaciones del partido">

@@ -150,6 +150,7 @@ class PartidoController extends Controller
         $partido->id_torneo = $torneo->id;
         $partido->arbitro = $request->arbitro;
         $partido->observacion = $request->observaciones;
+        $partido->jornada = $request->jornada;
         $partido->gol_local = $request->gol_local;
         $partido->gol_visitante = $request->gol_visitante;
         $partido->equipo_local = $request->equipo_local;
