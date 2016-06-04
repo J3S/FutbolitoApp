@@ -24,7 +24,7 @@
             <!-- Botón para crear un nuevo torneo -->
             <div class="col-xs-12" style="padding-bottom: 15px;">
                 <form>
-                    <button type="button" id="nuevoTorneoButton" class="btn btn-success" onclick="window.location='{{ route("torneo.create") }}'"><i class="fa fa-plus"></i> Nuevo Torneo</button>
+                    <a class="btn btn-success" href="{{ route("torneo.create") }}"><i class="fa fa-plus"></i> Crear Torneo</a>
                 </form>
             </div>
         </div>

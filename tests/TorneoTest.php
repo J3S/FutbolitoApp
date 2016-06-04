@@ -7,19 +7,16 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class TorneoTest extends TestCase
 {
     /**
-     * A basic test example.
+     * Comprueba el funcionamiento del botón para crear un nuevo torneo
+     * Es exitoso si la página que se obtienen tiene la ruta /torneo/create
      *
      * @return void
      */
-    // public function testExample()
-    // {
-    //     $this->assertTrue(true);
-    // }
     public function testNuevoTorneoClick()
     {
-        $this->visit('/torneo')
-            ->press('nuevoTorneoButton')
-            ->seePageIs('/torneo');
+        $this->visit(route('torneo.index'))
+             ->click('Crear Torneo')
+             ->seePageIs(route('torneo.create'));
     }
     // public function testCrearTorneo()
     // {
