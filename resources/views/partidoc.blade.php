@@ -23,7 +23,7 @@
             {!! csrf_field() !!}
                 <div class="box-body">
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="listaAnio">A&ntilde;o</label>
+                        <label for="listaAnio">Torneo</label>
                         <select class="form-control" id="listaAnio" name="torneo">
                             @foreach($categorias as $categoria)
                                 @foreach($torneos as $torneo)
@@ -33,6 +33,12 @@
                                 @endforeach
                             @endforeach
                         </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputJornada">Jornada #</label>
+                            <input type="number" min="0" class="form-control" id="inputJornada" name="jornada" placeholder="Ingrese jornada del partido">
+                        </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="inputArbitro">Arbitro</label>
@@ -48,7 +54,7 @@
                             <input type="text" class="form-control" id="inputLugar" name="lugar" placeholder="Ingrese lugar del partido">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-12">
+                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="inputObserv">Observaciones</label>
                             <input type="text" class="form-control" id="inputObserv" name="observaciones" placeholder="Ingrese observaciones del partido">

@@ -21,8 +21,11 @@ class PartidoController extends Controller
      */
     public function index()
     {
-        //
-        return view('partido');
+        $categorias = Categoria::all();
+        $equipos = Equipo::where('estado', 1)->get();
+        $torneos = Torneo::where('estado', 1)->get();
+        return view('partido')->withCategorias($categorias)
+            ->withEquipos($equipos)->withTorneos($torneos);
     }
 
     /**
@@ -52,6 +55,7 @@ class PartidoController extends Controller
         $this->validate($request, array(
                 'torneo' => 'required',
                 'fecha' => 'required',
+                'jornada' => 'required',
                 'lugar' => 'required|max:200',
                 'equipo_local' => 'required',
                 'equipo_visitante' => 'required',
@@ -68,6 +72,7 @@ class PartidoController extends Controller
         $torneo = Torneo::where('anio', $torneoString[1])
             ->where('id_categoria', $categoria->id)->first();
         $partido->id_torneo = $torneo->id;
+        $partido->jornada = $request->jornada;
         $partido->arbitro = $request->arbitro;
         $partido->observacion = $request->observaciones;
         $partido->gol_local = $request->gol_local;
@@ -171,13 +176,43 @@ class PartidoController extends Controller
     }
 
     public function searchByDate(Request $request) {
-        $partidos = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))
+        $partidos = Partido::where('estado', 1)->get();
+
+        if($request->ini_partido != "" && $request->fin_partido != ""){
+            $partidosFecha = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))
             ->where('estado', 1)->get();
+            $partidos = $partidos->intersect($partidosFecha);
+        }
+        
+        if($request->torneo != ""){
+            $torneoString = explode(" : ", $request->torneo);
+            $categoria = Categoria::where('nombre', $torneoString[0])->first();
+            $torneo = Torneo::where('anio', $torneoString[1])
+                ->where('id_categoria', $categoria->id)->first();
+            $partidosTorneo = Partido::where('id_torneo', $torneo->id)->get();
+            $partidos = $partidos->intersect($partidosTorneo);
+        }
+
+        if($request->jornada != ""){
+            $partidosJornada = Partido::where('jornada', $request->jornada)->get();
+            $partidos = $partidos->intersect($partidosJornada);
+        }
+
+        if($request->equipo_local != ""){
+            $partidosEquipoLocal = Partido::where('equipo_local', $request->equipo_local)->get();
+            $partidos = $partidos->intersect($partidosEquipoLocal);
+        }
+
+        if($request->equipo_visitante != ""){
+            $partidosEquipoVisitante = Partido::where('equipo_visitante', $request->equipo_visitante)->get();
+            $partidos = $partidos->intersect($partidosEquipoVisitante);
+        }
+
         $equipos = Equipo::where('estado', 1)->get();
         $torneos = Torneo::where('estado', 1)->get();
         $categorias = Categoria::all();
 
-        return view('partidos')
+        return view('partido')
             ->withPartidos($partidos)
             ->withEquipos($equipos)
             ->withTorneos($torneos)
