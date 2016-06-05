@@ -49,6 +49,15 @@ Route::get('login', function () {
 Route::resource('equipo', 'EquipoController');
 //-------------------Branny Rutas-----------------------
 
+Route::post('jugador', 'JugadorController@store')->name('jugador.store');
+Route::match(['get', 'head'], 'jugador/crear', 'JugadorController@create')->name('jugador.create');
+
+Route::put('jugador/{jugador}', 'JugadorController@update')->name('jugador.update');
+Route::match(['get', 'head'], 'jugador/{jugador}/edit', 'JugadorController@edit')->name('jugador.edit');
+
+
+Route::resource('torneo', 'TorneoController',
+    ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 
 Route::resource('partido', 'PartidoController',
 	['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
