@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\Torneo;
 use App\Equipo;
+use App\Categoria;
 
 class TorneoEquipoTableSeeder extends Seeder
 {
@@ -15,15 +16,21 @@ class TorneoEquipoTableSeeder extends Seeder
     public function run()
     {
     	$equipos = Equipo::all();
-    	
+        $torneos = Torneo::all();
+    	$categorias = Categoria::all();
+
     	foreach($equipos as $equipo){
-			$torneo = Torneo::orderByRaw("RAND()")->where('estado', 1)->first();
-	        DB::table('torneo_equipos')->insert([
-	                'id_torneo' => $torneo->id,
-	                'id_equipo' => $equipo->id,
-	                'created_at' => Carbon::now()->toDateTimeString(),
-	                'updated_at' => Carbon::now()->toDateTimeString()
-	        ]);
+            foreach($torneos as $torneo){
+                $categoria = Categoria::find($torneo->id_categoria);
+                if($equipo->categoria == $categoria->nombre){
+                    DB::table('torneo_equipos')->insert([
+                        'id_torneo' => $torneo->id,
+                        'id_equipo' => $equipo->id,
+                        'created_at' => Carbon::now()->toDateTimeString(),
+                        'updated_at' => Carbon::now()->toDateTimeString()
+                    ]);
+                }
+            }
     	}
     }
 }
