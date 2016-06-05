@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Torneo;
 use App\Equipo;
 use App\Categoria;
+use App\TorneoEquipo;
 
 class TorneoController extends Controller
 {
@@ -95,23 +96,48 @@ class TorneoController extends Controller
      */
     public function store(Request $request)
     {
+        // Validación de los campos
         $this->validate($request, [
             'categoria' => 'required',
             'anio' => 'required|numeric',
         ]);
-        $arrayjj = [];
-        foreach ($request->all() as $test)  
-        {
-            array_push($arrayjj, [$test]); 
-        } 
-        dd($request->all());
-        // $torneo = new Torneo();
-        // $torneo->categoria = $request->categoria;
-        // $torneo->fecha_inicio = $request->fecha_inicio;
-        // $torneo->fecha_fin = $request->fecha_fin;
-        // $torneo->estado = 1;
-        // $torneo->save();
-        // return redirect('torneo');
+
+        // Controlador de los valores a guardar en la base
+        $contador = 0;
+        // Creación de un nuevo torneo
+        $torneo = new Torneo();
+        // Año actual del servidor
+        $anioServer = date("Y");
+
+        foreach ($request->all() as $valor) {
+            // Asignación del primer campo del torneo
+            if($contador == 1){
+                $torneo->anio = $valor;
+            }
+            // Asignación del segundo campo del torneo y guardar el torneo en la base
+            if($contador == 2){
+                $categoriaID = Categoria::where('nombre', $valor)->get(['id'])->toArray()[0]["id"];
+                $torneo->id_categoria = $categoriaID;
+                $torneo->estado = 1;
+                $torneo->save();
+            }
+            /**
+             * Crear y guardar los registros relacionados con los equipos participantes en el torneo
+             * en la tabla torneo_equipos.
+             */
+            if($contador > 2){
+                $torneoEquipo = new TorneoEquipo();
+                $torneoEquipo->id_torneo = $torneo->id;
+                $equipoID = Equipo::where('nombre', $valor)->get(['id'])->toArray()[0]["id"];
+                $torneoEquipo->id_equipo = $equipoID;
+                $torneoEquipo->save();
+            }
+
+            $contador++;
+        }
+
+        // Redirecciono a la ruta torneo
+        return redirect('torneo');
     }
 
     /**
