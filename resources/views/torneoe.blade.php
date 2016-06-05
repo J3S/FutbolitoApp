@@ -46,7 +46,7 @@
                 <h3 class="box-title">Editar Torneo</h3>
             </div><!-- /.box-header -->
             <form role="form" action="/torneo/{{ $torneo->id }}" method="POST" id="formCrearTorneo">
-                <input name="_method" type="hidden" value="PUT">
+                {{ method_field('PUT') }}
                 {{ csrf_field() }}
                 <div class="box-body">
                     <div class="row">
@@ -174,7 +174,9 @@
     }
 
     // Carga dinámica de los equipos dependiendo de la categoría seleccionada
-    document.getElementById("categoria").addEventListener("click", function(){
+    document.getElementById("categoria").addEventListener("click", llenarEquiposSelect);
+
+    function llenarEquiposSelect() {
         var equiposCategoria = <?php echo json_encode($equiposxcategorias); ?>;
         var categoria = $("#categoria option:selected").text();
         $('#equipos').find('option').remove().end();
@@ -182,6 +184,7 @@
         for (index = 0; index < equiposCategoria[categoria].length; ++index) {
             $('#equipos').append($('<option>' + equiposCategoria[categoria][index]['nombre'] + '</option>'));
         }
-    });
+      }
+    window.onload = llenarEquiposSelect;
     </script>
 @endsection

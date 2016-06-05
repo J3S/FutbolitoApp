@@ -40,6 +40,7 @@ class TorneoController extends Controller
         foreach($categorias as $categoria) {
             $torneo = Torneo::where('id_categoria', $categoria->id)
                             ->where('anio', $anioServer)
+                            ->where('estado',1)
                             ->first();
             if(count($torneo) == 0) {
                 $contadorInexistentes++;
@@ -117,7 +118,9 @@ class TorneoController extends Controller
             }
             // Asignación del segundo campo del torneo y guardar el torneo en la base.
             if($contador == 2){
-                $categoriaID = Categoria::where('nombre', $valor)->get(['id'])->toArray()[0]["id"];
+                $categoriaID = Categoria::where('nombre', $valor)
+                                        ->get(['id'])
+                                        ->toArray()[0]["id"];
                 $torneo->id_categoria = $categoriaID;
                 $torneo->estado = 1;
                 $torneo->save();
@@ -129,7 +132,9 @@ class TorneoController extends Controller
             if($contador > 2){
                 $torneoEquipo = new TorneoEquipo();
                 $torneoEquipo->id_torneo = $torneo->id;
-                $equipoID = Equipo::where('nombre', $valor)->get(['id'])->toArray()[0]["id"];
+                $equipoID = Equipo::where('nombre', $valor)
+                                  ->get(['id'])
+                                  ->toArray()[0]["id"];
                 $torneoEquipo->id_equipo = $equipoID;
                 $torneoEquipo->save();
             }
@@ -177,7 +182,8 @@ class TorneoController extends Controller
         // Búsqueda del torneo con el id = $id.
         $torneo = Torneo::find($id);
         // Búsqueda de los registros en la tabla torneo_equipos que tienen id_torneo = $id.
-        $torneoEquipos = TorneoEquipo::where('id_torneo',$id)->get();
+        $torneoEquipos = TorneoEquipo::where('id_torneo',$id)
+                                     ->get();
 
         // Búsqueda de los equipos que han sido agregados a ese torneo.
         $equiposAgregados = [];
@@ -225,12 +231,15 @@ class TorneoController extends Controller
             }
             // Asignación del segundo campo del torneo y guardar el torneo en la base
             if($contador == 3){
-                $categoriaID = Categoria::where('nombre', $valor)->get(['id'])->toArray()[0]["id"];
+                $categoriaID = Categoria::where('nombre', $valor)
+                                        ->get(['id'])
+                                        ->toArray()[0]["id"];
                 $torneo->id_categoria = $categoriaID;
                 $torneo->estado = 1;
                 $torneo->save();
                 // Eliminación de todos los registros relacionados a ese torneo en la tabla torneo_equipos
-                $torneosEquiposEliminados = TorneoEquipo::where('id_torneo', $torneo->id)->delete();
+                $torneosEquiposEliminados = TorneoEquipo::where('id_torneo', $torneo->id)
+                                                        ->delete();
             }
             /**
              * Crear y guardar los registros relacionados con los equipos participantes en el torneo
@@ -239,7 +248,9 @@ class TorneoController extends Controller
             if($contador > 3){
                 $torneoEquipo = new TorneoEquipo();
                 $torneoEquipo->id_torneo = $torneo->id;
-                $equipoID = Equipo::where('nombre', $valor)->get(['id'])->toArray()[0]["id"];
+                $equipoID = Equipo::where('nombre', $valor)
+                                  ->get(['id'])
+                                  ->toArray()[0]["id"];
                 $torneoEquipo->id_equipo = $equipoID;
                 $torneoEquipo->save();
             }
@@ -252,7 +263,7 @@ class TorneoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Cambia el estado a 0, del torneo seleccionado identificado por el $id.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
