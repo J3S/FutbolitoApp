@@ -1,8 +1,8 @@
 <!-- 
     Vista principal de torneo.
-    Contiene el botón para crear un nuevo torneo
-    Muestra todos los torneos del año actual
-    Tiene opciones para buscar un torneo por categoría y por año
+    Contiene el botón para crear un nuevo torneo.
+    Muestra todos los torneos del año actual.
+    Tiene opciones para buscar un torneo por categoría y por año.
 -->
 
 <!-- Plantilla a usar -->

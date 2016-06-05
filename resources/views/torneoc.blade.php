@@ -1,56 +1,28 @@
+<!-- 
+    Vista para crear un torneo.
+    Contiene el formulario para crear un nuevo torneo.
+    También muestra todos los equipos disponibles para agregar a un torneo
+    dependiendo de la categoría seleccionada.
+-->
+
+<!-- Plantilla a usar -->
 @extends('layouts.master')
 
+<!-- Agregar el título de la página -->
 @section('title', 'Crear Torneo')
 
-@section('contentHeaderTitle', 'Crear Torneo')
-
+<!-- Agregar los elementos del breadcrumb -->
 @section('contentHeaderBreadcrumb')
     <li><a href="/"><i class="fa fa-user"></i> Home</a></li>
     <li><a href="{{ url('torneo') }}">Torneo</a></li>
     <li class="active">Crear</li>
 @endsection
 
+<!-- Agregar el contenido de la página -->
 @section('content')
-    <div class="modal fade" id="equiposModal" tabindex="-1" role="dialog" aria-labelledby="equiposModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="equiposModalLabel">Agregar Equipos</h4>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="get">
-                        <div class="form-group">
-                            <label class="control-label" for="searchEquipoNombre">Buscar equipo</label>
-                            <div class="input-group">
-                                <input type="text" name="searchEquipoNombre" id="searchEquipoNombre" class="form-control" placeholder="Buscar por nombre">
-                                <span class="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-                                </span>
-                            </div>
-                            <button type="button" class="btn btn-primary" id="agregarEquipoToLista1">Agregar Equipo</button>    
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="listaEquipo">Buscar en la lista de equipos</label>
-                            <select class="form-control" id="listaEquipo">
-                                <option></option>
-                                @foreach($equipos as $equipo)
-                                    <option>{!! $equipo['nombre'] !!}</option>
-                                @endforeach
-                            </select>
-                            <button type="button" class="btn btn-primary" id="agregarEquipoToLista2">Agregar Equipo</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="col-xs-12">
         <div class="col-xs-2"></div>
+        <!-- Alert que muestra todos los errores en los campos si falla al hacer post -->
         <div class="col-xs-8">
             @if (count($errors) > 0)
                 <div class="alert alert-danger alert-dismissible">
@@ -65,48 +37,86 @@
         </div>
         <div class="col-xs-2"></div>
     </div>
+
     <div class="col-xs-2"></div>
     <div class="col-xs-8">
-        <!-- general form elements -->
+        <!-- Formulario -->
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Crear Torneo</h3>
             </div><!-- /.box-header -->
-            <!-- form start -->
-            <form role="form" action="/torneo" method="POST">
-                {{ csrf_field() }}
+            <form role="form" action="/torneo" method="POST" id="formCrearTorneo">
                 <div class="box-body">
-                    <div class="form-group col-xs-12">
-                        <div class="col-md-4">
-                            <label for="categoria">Categor&iacute;a</label>                        
-                        </div>
-                        <div class="col-md-8">
-                            <select class="form-control" id="categoria" name="categoria">
-                                <option></option>
-                                <option>Super Junior</option>
-                                <option>Junior</option>
-                                <option>Senior</option>
-                            </select>                            
+                    {{ csrf_field() }}
+                    <div class="row">
+                        <div class="form-group">
+                            <!-- Campo año -->
+                            <div class="col-md-1">
+                                <label for="anio">A&ntilde;o</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" class="form-control" id="anio" name="anio" placeholder="A&ntilde;o">
+                            </div>
+
+                            <!-- Campo categoría -->
+                            <div class="col-md-2">
+                                <label for="categoria">Categor&iacute;a</label>
+                            </div>
+                            <div class="col-md-3" id="categoria">
+                                <!-- Se carga las categorías recibidas del servidor -->
+                                <select class="form-control" id="categoria" name="categoria">
+                                    @if(count($categorias) != 0)
+                                        @foreach($categorias as $categoria)
+                                            <option>{{ $categoria->nombre }}</option>
+                                        @endforeach
+                                    @else
+                                            <option>No se ha registrado ninguna categor&iacute;a</option>
+                                    @endif
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group col-xs-12">
-                        <div class="col-md-4">
-                            <label for="fechaInicio">Fecha de inicio</label>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Equipos disponibles</label>
                         </div>
-                        <div class="col-md-8">
-                            <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" placeholder="Ingrese fecha de inicio del torneo">
+                        <!-- Equipos que pueden ser agregados al torneo dependiendo de la categoría -->
+                        <div class="col-md-3">
+                            <select class="form-control equipo-seleccionado" id="equipos">
+                                @if(count($equiposxcategorias[$categorias[0]->nombre]) != 0)
+                                    @foreach($equiposxcategorias[$categorias[0]->nombre] as $equipos)
+                                        <option>{{ $equipos->nombre }}</option>
+                                    @endforeach
+                                @else
+                                        <option>No se ha registrado ninguna categor&iacute;a</option>
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="agregarEquipo">Agregar Equipo</button>
                         </div>
                     </div>
-                    <div class="form-group col-xs-12">
-                        <div class="col-md-4">
-                            <label for="fechaFin">Fecha de finalizaci&oacute;n</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" placeholder="Ingrese fecha de inicio del torneo">
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Tabla que contiene a todos los equipos que van a ser agregados al torneo -->
+                            <h5><b>Equipos Agregados</b></h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="equiposAgregados">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="datosEquipo">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div><!-- /.box-body -->
-
                 <div class="box-footer">
                     <div class="col-xs-2"></div>
                     <div class="col-xs-8">
@@ -114,9 +124,46 @@
                         <button type="submit" class="btn btn-success pull-right">Guardar</button>
                     </div>
                     <div class="col-xs-2"></div>
-                </div>
+                </div><!-- /.box-footer -->
             </form>
         </div><!-- /.box -->
-    </div><!--/.col (left) -->
+    </div><!--/.col (middle) -->
     <div class="col-xs-2"></div>
+
+@endsection
+
+@section('scriptsPersonales')
+    <script>
+    document.getElementById("agregarEquipo").addEventListener("click", function(){
+        if($( "#equipos option:selected" ).text().length != 0){
+            // Verificación si el equipo ya está presente en la tabla de equipos para el torneo
+            if ($('#'+$( "#equipos option:selected" ).text()).length == 0) {
+                // Agregar el equipo en la tabla
+                $('#datosEquipo').append('<tr><td>' + $( "#equipos option:selected" ).text() + '<td><button type="button" class="btn btn-danger btn-xs" onclick="eliminarRow(this)" data-input="' + $( "#equipos option:selected" ).text() + '"><i class="fa fa-minus"></i> Quitar</button></td></tr>');
+                // Agregar el campo input que será enviado en el post(con el nombre del equipo)
+                $('#formCrearTorneo').append('<input type="hidden" id="' + $( "#equipos option:selected" ).text() + '" name="' + $( "#equipos option:selected" ).text() + '" value="' + $( "#equipos option:selected" ).text() + '"/>');
+            } else {
+                alert('Este equipo ya ha sido agregado');
+            } 
+        }
+    });
+
+    // Eliminación de la fila y del input que contiene al equipo que se desea quitar de la tabla de equipos para el torneo
+    function eliminarRow(buttonTriggered){
+        $(buttonTriggered).parent().parent().remove();
+        var inputElementID = $(buttonTriggered).data('input');      
+        $('#'+inputElementID).remove();
+    }
+
+    // Carga dinámica de los equipos dependiendo de la categoría seleccionada
+    document.getElementById("categoria").addEventListener("click", function(){
+        var equiposCategoria = <?php echo json_encode($equiposxcategorias); ?>;
+        var categoria = $("#categoria option:selected").text();
+        $('#equipos').find('option').remove().end();
+        var index;
+        for (index = 0; index < equiposCategoria[categoria].length; ++index) {
+            $('#equipos').append($('<option>' + equiposCategoria[categoria][index]['nombre'] + '</option>'));
+        }
+    });
+    </script>
 @endsection

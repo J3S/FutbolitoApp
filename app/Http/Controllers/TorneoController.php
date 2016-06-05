@@ -61,19 +61,34 @@ class TorneoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra la vista con el formulario para crear un
+     * nuevo torneo.
+     * Buscar todas las categorías creadas en la base devolviéndolas
+     * con la vista.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $equipos = Equipo::where('estado', 1)
-                        ->get(['id', 'nombre']);
-        return view('torneoc')->with('equipos', $equipos);
+        // Obtener todas las categorías de la base
+        $categorias = Categoria::all();
+        $equiposxcategorias = [];
+        foreach ($categorias as $categoria) {
+            $equipos = Equipo::where('categoria', $categoria->nombre)
+                             ->get();
+            $equiposxcategorias[$categoria->nombre] = $equipos;
+        }
+        // Retorno la vista con todas las categorías disponibles
+        return view('torneoc')->with('categorias', $categorias)
+                              ->with('equiposxcategorias', $equiposxcategorias);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crea un nuevo torneo en la base.
+     * Se verifica cuantos elementos tiene el $request para identificar
+     * si hay equipos a ser enlazados con el torneo que se va a crear.
+     * Si existe los equipos se los enlaza con el torneo usando la tabla
+     * torneo_equipos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -82,17 +97,21 @@ class TorneoController extends Controller
     {
         $this->validate($request, [
             'categoria' => 'required',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date',
+            'anio' => 'required|numeric',
         ]);
-
-        $torneo = new Torneo();
-        $torneo->categoria = $request->categoria;
-        $torneo->fecha_inicio = $request->fecha_inicio;
-        $torneo->fecha_fin = $request->fecha_fin;
-        $torneo->estado = 1;
-        $torneo->save();
-        return redirect('torneo');
+        $arrayjj = [];
+        foreach ($request->all() as $test)  
+        {
+            array_push($arrayjj, [$test]); 
+        } 
+        dd($request->all());
+        // $torneo = new Torneo();
+        // $torneo->categoria = $request->categoria;
+        // $torneo->fecha_inicio = $request->fecha_inicio;
+        // $torneo->fecha_fin = $request->fecha_fin;
+        // $torneo->estado = 1;
+        // $torneo->save();
+        // return redirect('torneo');
     }
 
     /**
