@@ -162,18 +162,17 @@ class PartidoController extends Controller
         $partido = Partido::find($id);
         $partido->lugar = $request->lugar;
         $partido->fecha = $request->fecha;
-        $torneoString = explode(" : ", $request->torneo);
-        $categoria = Categoria::where('nombre', $torneoString[0])->first();
-        $torneo = Torneo::where('anio', $torneoString[1])
-            ->where('id_categoria', $categoria->id)->first();
+        $torneo = Torneo::find($request->torneo);
         $partido->id_torneo = $torneo->id;
         $partido->arbitro = $request->arbitro;
         $partido->observacion = $request->observaciones;
         $partido->jornada = $request->jornada;
         $partido->gol_local = $request->gol_local;
         $partido->gol_visitante = $request->gol_visitante;
-        $partido->equipo_local = $request->equipo_local;
-        $partido->equipo_visitante = $request->equipo_visitante;
+        $equipoLocal = Equipo::find($request->equipo_local);
+        $partido->equipo_local = $equipoLocal->nombre;
+        $equipoVisitante = Equipo::find($request->equipo_visitante);
+        $partido->equipo_visitante = $equipoVisitante->nombre;
         $partido->estado = 1;
 
         /* Actualizo la información del partido en la base de datos */
@@ -218,10 +217,7 @@ class PartidoController extends Controller
 
         /* Filtro los partidos activos por torneo (si fue ingresado por el usuario) */
         if($request->torneo != ""){
-            $torneoString = explode(" : ", $request->torneo);
-            $categoria = Categoria::where('nombre', $torneoString[0])->first();
-            $torneo = Torneo::where('anio', $torneoString[1])
-                ->where('id_categoria', $categoria->id)->first();
+            $torneo = Torneo::find($request->torneo);
             $partidosTorneo = Partido::where('id_torneo', $torneo->id)->get();
             $partidos = $partidos->intersect($partidosTorneo);
         }
@@ -234,13 +230,15 @@ class PartidoController extends Controller
 
         /* Filtro los partidos activos por equipo local (si fue ingresado por el usuario) */
         if($request->equipo_local != ""){
-            $partidosEquipoLocal = Partido::where('equipo_local', $request->equipo_local)->get();
+            $equipo = Equipo::find($request->equipo_local);
+            $partidosEquipoLocal = Partido::where('equipo_local', $equipo->nombre)->get();
             $partidos = $partidos->intersect($partidosEquipoLocal);
         }
 
         /* Filtro los partidos activos por equipo visitante (si fue ingresado por el usuario) */
         if($request->equipo_visitante != ""){
-            $partidosEquipoVisitante = Partido::where('equipo_visitante', $request->equipo_visitante)->get();
+            $equipo = Equipo::find($request->equipo_visitante);
+            $partidosEquipoVisitante = Partido::where('equipo_visitante', $equipo->nombre)->get();
             $partidos = $partidos->intersect($partidosEquipoVisitante);
         }
 

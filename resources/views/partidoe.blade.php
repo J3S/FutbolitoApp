@@ -26,13 +26,13 @@
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="listaTorneo">Torneo</label>
                         <select class="form-control" id="listaTorneo" name="torneo">
-                            @foreach($torneos as $torneo)
-                                @foreach($categorias as $categoria)
-                                    @if($torneo->id == $partido->id_torneo)
-                                        @if($categoria->id == $torneo->id_categoria)
-                                            <option selected="selected">{{ $categoria['nombre'] }} : {{ $torneo['anio'] }}</option>
+                            @foreach($categorias as $categoria)
+                                @foreach($torneos as $torneo)
+                                    @if($categoria->id == $torneo->id_categoria)
+                                        @if($torneo->id == $partido->id_torneo)
+                                            <option selected="selected" value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
                                         @else
-                                            <option>{{ $categoria['nombre'] }} : {{ $torneo['anio'] }}</option>
+                                            <option value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
                                         @endif
                                     @endif
                                 @endforeach
@@ -73,9 +73,9 @@
                         <select class="form-control" id="listaEquipo1" name="equipo_local">
                             @foreach($equipos as $equipo)
                                 @if($equipo->nombre == $partido->equipo_local)
-                                    <option selected="selected">{{ $equipo['nombre'] }}</option>
+                                    <option selected="selected" value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
                                 @else
-                                    <option>{{ $equipo['nombre'] }}</option>
+                                    <option value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
                                 @endif
                             @endforeach
 
@@ -86,9 +86,9 @@
                         <select class="form-control" id="listaEquipo2" name="equipo_visitante">
                             @foreach($equipos as $equipo)
                                 @if($equipo->nombre == $partido->equipo_visitante)
-                                    <option selected="selected">{{ $equipo['nombre'] }}</option>
+                                    <option selected="selected" value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
                                 @else
-                                    <option>{{ $equipo['nombre'] }}</option>
+                                    <option value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
                                 @endif
                             @endforeach
                         </select>
