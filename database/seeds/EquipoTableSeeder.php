@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use App\Categoria;
 
 class EquipoTableSeeder extends Seeder
 {
@@ -33,6 +34,7 @@ class EquipoTableSeeder extends Seeder
                 'nombre' => $equipo,
                 'director_tecnico' => $name,
                 'estado' => 1,
+                'categoria' => Categoria::orderByRaw("RAND()")->first()->nombre,
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);

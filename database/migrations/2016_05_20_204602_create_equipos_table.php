@@ -17,6 +17,7 @@ class CreateEquiposTable extends Migration
             $table->string('nombre', 50);
             $table->string('director_tecnico', 50)->nullable();
             $table->boolean('estado');
+            $table->string('categoria');
             $table->timestamps();
         });
     }
