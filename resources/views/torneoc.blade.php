@@ -51,10 +51,10 @@
                     <div class="row">
                         <div class="form-group">
                             <!-- Campo año -->
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <label for="anio">A&ntilde;o</label>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <input type="number" class="form-control" id="anio" name="anio" placeholder="A&ntilde;o">
                             </div>
 
@@ -139,7 +139,7 @@
             // Verificación si el equipo ya está presente en la tabla de equipos para el torneo
             if ($('#'+$( "#equipos option:selected" ).text()).length == 0) {
                 // Agregar el equipo en la tabla
-                $('#datosEquipo').append('<tr><td>' + $( "#equipos option:selected" ).text() + '<td><button type="button" class="btn btn-danger btn-xs" onclick="eliminarRow(this)" data-input="' + $( "#equipos option:selected" ).text() + '"><i class="fa fa-minus"></i> Quitar</button></td></tr>');
+                $('#datosEquipo').append('<tr><td>' + $( "#equipos option:selected" ).text() + '</td><td><button type="button" class="btn btn-danger btn-xs" onclick="eliminarRow(this)" data-input="' + $( "#equipos option:selected" ).text() + '"><i class="fa fa-minus"></i> Quitar</button></td></tr>');
                 // Agregar el campo input que será enviado en el post(con el nombre del equipo)
                 $('#formCrearTorneo').append('<input type="hidden" id="' + $( "#equipos option:selected" ).text() + '" name="' + $( "#equipos option:selected" ).text() + '" value="' + $( "#equipos option:selected" ).text() + '"/>');
             } else {

@@ -159,10 +159,27 @@ class TorneoController extends Controller
      */
     public function edit($id)
     {
+        // Obtener todas las categorías de la base
+        $categorias = Categoria::all();
+        $equiposxcategorias = [];
+        foreach ($categorias as $categoria) {
+            $equipos = Equipo::where('categoria', $categoria->nombre)
+                             ->get();
+            $equiposxcategorias[$categoria->nombre] = $equipos;
+        }
         $torneo = Torneo::find($id);
-        $equipos = Equipo::where('estado', 1)
-                        ->get(['id', 'nombre']);
-        return view('torneoe')->with('torneo', $torneo)->with('equipos', $equipos);
+        $torneoEquipos = TorneoEquipo::where('id_torneo',$id)->get();
+        $equiposAgregados = [];
+        foreach ($torneoEquipos as $torneoEquipo) {
+            $infoEquipo = Equipo::where('id', $torneoEquipo->id_equipo)
+                                ->get();
+            array_push($equiposAgregados, $infoEquipo[0]);
+        }
+
+        return view('torneoe')->with('torneo', $torneo)
+                              ->with('equiposxcategorias', $equiposxcategorias)
+                              ->with('categorias', $categorias)
+                              ->with('equiposAgregados', $equiposAgregados);
     }
 
     /**

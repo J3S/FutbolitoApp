@@ -28,84 +28,106 @@
                 </form>
             </div>
         </div>
-
         <div class="row">
-            <!-- Tabla que contiene todos los torneos del año(actual) -->
-            <div class="col-xs-12">
-                <!-- Verificación de la existencia de torneos para el año actual -->
-                @if($inexistentes != 7)
-                    <!-- Creación de la tabla con los torneos del año actual -->
-                    <h4 class="text-center">Torneos del a&ntilde;o {{ $anioServer }}</h4>
-                    <div class="table-responsive">
-                        <table class="table table-hover" id="torneosAnio">
-                            <thead>
-                                <tr>
-                                    <th>Categor&iacute;a</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($torneos as $torneo)
-                                    <tr>
-                                        <td>{{ $torneo['categoria'] }}</td>
-                                        @if($torneo['id'] == 0)
-                                            <td><b>No se ha creado un torneo</b></td>
-                                            <td></td>
-                                        @else
-                                            <td> <a href="{{ route('torneo.edit', $torneo['id']) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a></td>
-                                            <td>
-                                                <form action="/torneo/{{ $torneo['id'] }}" method="POST">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Desactivar</button>
-                                                </form>
-                                            </td>
-                                        @endif
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @else
-                    <h4 class="text-center">Ning&uacute;n torneo ha sido creado para el a&ntilde;o {{ $anioServer }}</h4>
-                @endif
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-xs-12">
-                <h4>Buscar torneos</h4>
-                <form>
-                    <div class="form-group">
-                        <div class="col-md-1">
-                            <label for="anio">A&ntilde;o</label>
-                        </div>
-                        <div class="col-md-2">
-                            <input type="number" class="form-control" id="anio" placeholder="A&ntilde;o">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-1">
-                            <label for="categoria">Categor&iacute;a</label>
-                        </div>
-                        <div class="col-md-2" id="categoria">
-                            <select class="form-control">
-                                @if(count($categorias) != 0)
-                                    @foreach($categorias as $categoria)
-                                        <option>{{ $categoria->nombre }}</option>
-                                    @endforeach
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Torneos del a&ntilde;o {{ $anioServer }}</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <!-- Tabla que contiene todos los torneos del año(actual) -->
+                            <div class="col-xs-12">
+                                <!-- Verificación de la existencia de torneos para el año actual -->
+                                @if($inexistentes != 7)
+                                    <!-- Creación de la tabla con los torneos del año actual -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="torneosAnio">
+                                            <thead>
+                                                <tr>
+                                                    <th>Categor&iacute;a</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($torneos as $torneo)
+                                                    <tr>
+                                                        <td>{{ $torneo['categoria'] }}</td>
+                                                        @if($torneo['id'] == 0)
+                                                            <td><b>No se ha creado un torneo</b></td>
+                                                            <td></td>
+                                                        @else
+                                                            <td> <a href="{{ route('torneo.edit', $torneo['id']) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Editar</a></td>
+                                                            <td>
+                                                                <form action="/torneo/{{ $torneo['id'] }}" method="POST">
+                                                                    <input type="hidden" name="_method" value="DELETE">
+                                                                    {{ csrf_field() }}
+                                                                    <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Desactivar</button>
+                                                                </form>
+                                                            </td>
+                                                        @endif
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 @else
-                                        <option>No se ha registrado ninguna categor&iacute;a</option>
+                                    <h4 class="text-center">Ning&uacute;n torneo ha sido creado para el a&ntilde;o {{ $anioServer }}</h4>
                                 @endif
-                            </select>
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Buscar</button>
-                </form>
-            </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!--/.col (middle) -->
+            <div class="col-xs-2"></div>
         </div>
-            
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Buscar torneos</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <form>
+                                    <div class="form-group">
+                                        <div class="col-lg-1">
+                                            <label for="anio">A&ntilde;o</label>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <input type="number" class="form-control" id="anio" placeholder="A&ntilde;o">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-2">
+                                            <label for="categoria">Categor&iacute;a</label>
+                                        </div>
+                                        <div class="col-lg-3" id="categoria">
+                                            <select class="form-control">
+                                                @if(count($categorias) != 0)
+                                                    @foreach($categorias as $categoria)
+                                                        <option>{{ $categoria->nombre }}</option>
+                                                    @endforeach
+                                                @else
+                                                        <option>No se ha registrado ninguna categor&iacute;a</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Buscar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!--/.col (middle) -->
+            <div class="col-xs-2"></div>
+        </div>
+        
         
 
     </div>
