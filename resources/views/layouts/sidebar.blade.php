@@ -14,7 +14,7 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li class="treeview 
+            <li class="treeview
                 @if(Request::is('jugador/crear') OR Request::is('jugador/editar') OR Request::is('jugador/desactivar'))
                     active
                 @endif">
@@ -28,15 +28,15 @@
                 </ul>
             </li>
             <li class="treeview
-                @if(Request::is('equipo/crear') OR Request::is('equipo/editar') OR Request::is('equipo/desactivar'))
+                @if(Request::is(route('equipo.create')) OR Request::is(route('equipo.edit')) OR Request::is('equipo/desactivar'))
                     active
                 @endif">
                 <a href="#">
                     <i class="fa fa-users"></i> <span>Equipos</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li {{ Request::is('equipo/crear') ? ' class=active' : '' }}><a href="{{ url('equipo/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('equipo/editar') ? ' class=active' : '' }}><a href="{{ url('equipo/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
+                    <li {{ Request::is(route('equipo.create')) ? ' class=active' : '' }}><a href="{!!route('equipo.create')!!}"><i class="fa fa-plus"></i> Crear</a></li>
+                    <li {{ Request::is(route('equipo.edit')) ? ' class=active' : '' }}><a href="{{ route('equipo.edit') }}"><i class="fa fa-cog"></i> Editar</a></li>
                     <li {{ Request::is('equipo/desactivar') ? ' class=active' : '' }}><a href="{{ url('equipo/desactivar') }}"><i class="fa fa-ban"></i> Desactivar</a></li>
                 </ul>
             </li>
