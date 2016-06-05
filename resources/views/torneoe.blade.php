@@ -68,7 +68,11 @@
                                 <select class="form-control" id="categoria" name="categoria">
                                     @if(count($categorias) != 0)
                                         @foreach($categorias as $categoria)
-                                            <option>{{ $categoria->nombre }}</option>
+                                            @if($categoria->id == $torneo->id_categoria)
+                                                <option selected="selected">{{ $categoria->nombre }}</option>
+                                            @else
+                                                <option>{{ $categoria->nombre }}</option>
+                                            @endif
                                         @endforeach
                                     @else
                                             <option>No se ha registrado ninguna categor&iacute;a</option>
