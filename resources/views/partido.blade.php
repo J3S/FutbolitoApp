@@ -10,6 +10,7 @@
 @endsection
 
 @section('content')
+
     <div class="col-xs-12" style="padding-bottom: 15px;">
         <form>
             <button type="button" id="nuevoPartidoButton" class="btn btn-success" onclick="window.location='{{ route("partido.create") }}'"><i class="fa fa-plus"></i> Nuevo Partido</button>
@@ -33,12 +34,12 @@
 					</div>
 					<div class="form-group col-xs-12 col-sm-4">
                         <label for="listaAnio">Torneo</label>
-                        <select class="form-control" id="listaAnio" name="torneo">
+                        <select class="form-control input" id="torneo" name="torneo">
                         	<option selected="selected"></option>
                             @foreach($categorias as $categoria)
                                 @foreach($torneos as $torneo)
                                     @if($categoria->id == $torneo->id_categoria)
-                                        <option>{{ $categoria['nombre'] }} : {{ $torneo['anio'] }}</option>
+                                        <option value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
                                     @endif
                                 @endforeach
                             @endforeach
@@ -55,7 +56,7 @@
                         <select class="form-control" id="listaEquipo1" name="equipo_local">
                         	<option selected="selected"></option>
                             @foreach($equipos as $equipo)
-                            	<option>{{ $equipo['nombre'] }}</option>
+                            	<option value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -64,7 +65,7 @@
                         <select class="form-control" id="listaEquipo2" name="equipo_visitante">
                         	<option selected="selected"></option>
                             @foreach($equipos as $equipo)
-                            	<option>{{ $equipo['nombre'] }}</option>
+                            	<option value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -106,7 +107,7 @@
 	                <!-- Add the bg color to the header using any of the bg-* classes -->
 	                <div class="box-footer no-padding">
 		                <ul class="nav nav-stacked">
-		                	<li><h4 class="bg-green" style="text-align:center">{!! $categoriaTorneo['nombre'] !!} : {!! $torneoPartido['anio'] !!} - Jornada # {!! $partido['jornada'] !!}</h4></li>
+		                	<li><h4 class="bg-green" style="text-align:center">{!! $categoriaTorneo['nombre'] !!} {!! $torneoPartido['anio'] !!} - Jornada # {!! $partido['jornada'] !!}</h4></li>
 			                <li><a href="#">Resultado
 								<span class="pull-right badge bg-green">{!! $equipoVisit['nombre'] !!}</span>
 	                            <span class="pull-right badge bg-black">{!! $partido['gol_local'] !!} - {!! $partido['gol_visitante'] !!}</span>
