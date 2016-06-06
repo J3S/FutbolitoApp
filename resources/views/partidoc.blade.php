@@ -1,3 +1,10 @@
+<!-- 
+    Vista para crear un partido.
+    Contiene el formulario para crear un nuevo partido.
+    También muestra todos los equipos disponibles para agregar equipo local
+    y visitante dependiendo del torneo seleccionado.
+-->
+
 @extends('layouts.master')
 
 @section('title', 'Crear Partido')
