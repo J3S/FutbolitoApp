@@ -45,9 +45,20 @@
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputCategoria">Jugadores</label>
-                        <ul class="list-group"  id="JugadoresElegidos">
-                        </ul>
                     </div>
+                    <!-- Lista de jugadores seleccionados -->
+                    <div class="form-group col-xs-12">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Jugadores </h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-group"  id="JugadoresElegidos">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
                     <!-- Lista de jugadores para elegir -->
                     <div class="form-group col-xs-12">
                         <div class="panel panel-success">
@@ -61,8 +72,8 @@
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="inputFile">Logo</label>
-                        <input id="inputFile" type="file">
+                        <label for="file">Logo</label>
+                        <input type="file" name="file" id="inputFile" class="btn btn-default" />
                     </div>
                 </div><!-- /.box-body -->
 

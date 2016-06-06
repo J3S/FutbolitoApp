@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Crear Equipo')
+@section('title', 'Equipos')
 
-@section('contentHeaderTitle', 'Crear Equipo')
+@section('contentHeaderTitle', 'Equipos')
 
 @section('contentHeaderBreadcrumb')
     <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
@@ -24,6 +24,7 @@
                 <th>Nombre</th>
                 <th>Entrenador</th>
                 <th>Categoria</th>
+                <th>Perfil</th>
                 <th>Acci&oacute;n</th>
             </tr>
             @foreach ($equipos as $equipo)
@@ -32,12 +33,15 @@
                 <td>{{ $equipo->nombre }}</td>
                 <td>{{ $equipo->director_tecnico }}</td>
                 <td>{{ $equipo->categoria }}</td>
+                <td><a href="{!! route('equipo.show', ['equipo' => $equipo->id]) !!}">Ver Jugadores</a></td>
                 <td>
-                    <a class="btn btn-primary" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}">Editar</a>
+                    <a class="btn btn-warning btn-sm" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+                    <!-- <a class="btn btn-warning btn-sm" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil"></i> Editar</a> -->
                     <form style="display:inline-block" action="{!!route('equipo.destroy', ['equipo' => $equipo->id])!!}" method="POST">
                         <input name="_method" type="hidden" value="DELETE">
                         {{ csrf_field() }}
-                        <button class="btn btn-danger" type="submit" >Desactivar</button>
+                        <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa fa-times fa-lg"></i></button>
+                        <!-- <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa-minus"></i> Desactivar</button> -->
                     </form>
                 </td>
             </tr>

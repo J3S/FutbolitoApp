@@ -44,17 +44,18 @@ class EquipoController extends Controller
      */
     public function store(Request $request)
     {
-        $equipo = new Equipo();
-        $equipo->nombre = $request->nombre;
-        $equipo->director_tecnico = $request->entrenador;
-        $equipo->categoria = $request->categoria;
-
-        if ($equipo->save()) {
-            return response()->json([
-                "mensaje"=>"guardado con exito",
-                "idEquipo"=>$equipo->id,
-            ]);
-        }
+        // $equipo = new Equipo();
+        // $equipo->nombre = $request->nombre;
+        // $equipo->director_tecnico = $request->entrenador;
+        // $equipo->categoria = $request->categoria;
+        //
+        // if ($equipo->save()) {
+        //     return response()->json([
+        //         "mensaje"=>"guardado con exito",
+        //         "idEquipo"=>$equipo->id,
+        //     ]);
+        // }
+        return "al store";
     }
 
     /**
@@ -65,7 +66,8 @@ class EquipoController extends Controller
      */
     public function show($id)
     {
-        echo "show con id";
+        $equipo = Equipo::findOrFail($id);
+        return view('equipo.equiposhow')->with(compact('equipo'));
     }
 
     /**
@@ -96,9 +98,13 @@ class EquipoController extends Controller
      */
     public function edit($id)
     {
+        $jugadores = Jugador::where('estado', 1)
+                        ->get(['id', 'nombres', 'categoria']);
+        $categorias = Categoria::all();
         $equipo = Equipo::find($id);
-        echo "Forumulario para editar los datos del equipo: ".$equipo->id.' '.$equipo->nombre;
-        //return view('equipo.equipoe');
+        return view('equipo.equipoe')->with('equipo', $equipo)
+                                     ->with('categorias', $categorias)
+                                     ->with('jugadores', $jugadores);
     }
 
     /**
@@ -110,7 +116,18 @@ class EquipoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $equipoNew = Equipo::find($id);
+        $equipoNew->nombre = $request->nombre;
+        $equipoNew->director_tecnico = $request->entrenador;
+        $equipoNew->categoria = $request->categoria;
+        if ($equipoNew->save()) {
+            return response()->json([
+                "mensaje"=>"actualizado con exito",
+                "idEquipo"=>$equipoNew->id,
+            ]);
+            return "save error";
+        }
+
     }
 
     /**
