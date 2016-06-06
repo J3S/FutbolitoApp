@@ -20,6 +20,7 @@
             </div><!-- /.box-header -->
             <!-- form start -->
             <form role="form">
+                <input type="hidden" name="_token" value="{!! csrf_token() !!}" id="token">
                 <div class="box-body">
                     <div class="form-group col-xs-12">
                         <label for="inputNombre">Nombre</label>
@@ -29,24 +30,35 @@
                         <label for="inputEntrenador">Entrenador</label>
                         <input type="text" class="form-control" id="inputEntrenador" placeholder="Ingrese nombre entrenador">
                     </div>
+                    <!-- Select para elegir la categoria del equipo -->
                     <div class="form-group col-xs-12">
-                        <div class="col-xs-2" style="padding-left: 0px;">
-                            <label for="inputJugadores" style="vertical-align: center;">Jugadores</label>
-                        </div>
-                        <div class="col-xs-8"></div>
-                        <div class="col-xs-1">
-                                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                        </div>
-                        <div class="col-xs-1">
-                                <button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
-                        </div>
-                        <select multiple="" size="11" class="form-control" id="inputJugadores">
-                            <option>Cras justo odio</option>
-                            <option>Dapibus ac facilisis in</option>
-                            <option>Morbi leo risus</option>
-                            <option>Porta ac consectetur ac</option>
-                            <option>Vestibulum at eros</option>
+                        <label for="inputCategoria">Categoria</label>
+                        <select class="form-control" id="inputCategoriaSelect">
+                            @if(count($categorias) != 0)
+                                @foreach($categorias as $categoria)
+                                    <option value="{!! $categoria->nombre !!}">{{ $categoria->nombre }}</option>
+                                @endforeach
+                            @else
+                                <option>No se ha registrado ninguna categor&iacute;a</option>
+                            @endif
                         </select>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="inputCategoria">Jugadores</label>
+                        <ul class="list-group"  id="JugadoresElegidos">
+                        </ul>
+                    </div>
+                    <!-- Lista de jugadores para elegir -->
+                    <div class="form-group col-xs-12">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Jugadores Disponibles</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-group"  id="inputJugadores">
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputFile">Logo</label>
@@ -54,20 +66,24 @@
                     </div>
                 </div><!-- /.box-body -->
 
-              <div class="box-footer">
-                <div class="col-xs-2"></div>
-                <div class="col-xs-8">
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary">Limpiar</button>
-                    </div>
-                    <div class="col-xs-4 pull-right">
-                        <button type="submit" class="btn btn-success">Guardar</button>
-                    </div>
+                <div class="box-footer">
+                    <div class="col-xs-2"></div>
+                        <div class="col-xs-8">
+                            <div class="col-xs-4">
+                                <button id="idlimp" type="submit" class="btn btn-primary">Limpiar</button>
+                            </div>
+                            <div class="col-xs-4 pull-right">
+                                <button type="button" id="btn_guardar" class="btn btn-success">Guardar</button>
+                            </div>
+                        </div>
+                    <div class="col-xs-2"></div>
                 </div>
-                <div class="col-xs-2"></div>
-              </div>
             </form>
         </div><!-- /.box -->
     </div><!--/.col (left) -->
     <div class="col-xs-2"></div>
+@endsection
+
+@section('scriptsPersonales')
+    <script src="{!! asset('js/script-equipo.js') !!}" charset="utf-8"></script>
 @endsection

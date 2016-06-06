@@ -18,7 +18,7 @@ class JugadorTableSeeder extends Seeder
                         "Freddy", "Justin", "Josue", "Tobias", "Adrian",
                         "Jose", "Marco", "Pablo", "Carlos", "Mateo", "Edgar");
 
-        foreach(range(1,200) as $index){
+        foreach(range(1,15) as $index){
             $equipo = Equipo::orderByRaw("RAND()")->where('estado', 1)->first();
             shuffle($names);
             $name = $names[0]." ".$names[1];
@@ -41,6 +41,6 @@ class JugadorTableSeeder extends Seeder
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
         }
-       
+
     }
 }

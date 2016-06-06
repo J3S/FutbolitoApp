@@ -47,6 +47,8 @@ Route::get('login', function () {
 //-------------------Branny Rutas-----------------------
 //rutas RESTfull para jugador, ejecutar (php artisan route:list)
 Route::resource('equipo', 'EquipoController');
+// Route::get('equipo/{categoria}', 'EquipoController@showJugadoresCatergoria')->name('equipo.showJugadores');
+Route::get('jugadores/{categoria}', 'EquipoController@getJugadoresCategoria');
 //-------------------Branny Rutas-----------------------
 
 Route::post('jugador', 'JugadorController@store')->name('jugador.store');
