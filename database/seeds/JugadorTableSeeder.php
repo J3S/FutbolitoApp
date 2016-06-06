@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\Equipo;
+use App\Categoria;
 
 class JugadorTableSeeder extends Seeder
 {
@@ -13,34 +14,35 @@ class JugadorTableSeeder extends Seeder
      */
     public function run()
     {
-        $categorias = array("Rey Master", "Super Master", "Master", "Super Senior", "Senior", "Super Junior", "Junior");
-        $names = array( "Antonio", "Isaias", "Fabian", "Jesus", "Angel",
-                        "Freddy", "Justin", "Josue", "Tobias", "Adrian",
-                        "Jose", "Marco", "Pablo", "Carlos", "Mateo", "Edgar");
+        $names = array("ANTONIO", "ISAIAS", "FABIAN", "JESUS", "ANGEL","DANIEL","ALBERTO","IGNACIO","ISRAEL","PEDRO",
+                        "FREDDY", "JUSTIN", "JOSUE", "TOBIAS", "ADRIAN","RAUL","EDISON","FAUSTO","ADRIANO",
+                        "JOSE", "MARCO", "PABLO", "CARLOS", "MATEO", "EDGAR", "ROBERTO", "PATRICIO", "WILLIAM","BAUTISTA","SEBASTIAN","ANDRES","JORGE","ALEJANDRO","RAMIRO","DAVID","JULIO","JUAN","RAFAEL","GUILLERMO","JAIME");
+        $apellidos = array('GARCIA','GONZALEZ','RODRIGUEZ','FERNANDEZ','LOPEZ','MARTINEZ','SANCHEZ','PEREZ','GOMEZ','MARTIN','JIMENEZ','RUIZ','HERNANDEZ','DIAZ','MORENO','MUÑOZ','ALVAREZ','ROMERO','ALONSO','GUTIERREZ','NAVARRO','TORRES','DOMINGUEZ','VAZQUEZ','RAMOS','RAMIREZ','SERRANO','BLANCO','MOLINA','MORALES','SUAREZ','ORTEGA','DELGADO','CASTRO','ORTIZ','RUBIO','MARIN','SANZ','NUÑEZ',"VACA","ACOSTA","CEDENO","LOOR","BRAVO","FLORES");
+        $equipos = Equipo::all();
 
-        foreach(range(1,200) as $index){
-            $equipo = Equipo::orderByRaw("RAND()")->where('estado', 1)->first();
+        foreach($equipos as $equipo){
+            foreach(range(1,11) as $index){
             shuffle($names);
+            shuffle($apellidos);
             $name = $names[0]." ".$names[1];
-            shuffle($categorias);
-            $categoria = $categorias[0];
+            $apellido = $apellidos[0]." ".$apellidos[1];
             DB::table('jugadors')->insert([
-                'nombres' => $name,
-                'apellidos' => strtoupper(str_random(15)),
-                'edad' => rand(18, 40),
-                'identificacion' => (string)rand(1000000000, 9999999999),
-                'rol' => strtolower(str_random(10)),
-                'email' => strtolower(str_random(15)).'@gmail.com',
-                'telefono' => '09'.rand(),
-                'peso' => mt_rand(5500, 10000)/100,
-                'categoria' => $categoria,
-                'num_camiseta' => rand(1, 99),
-                'id_equipo' => $equipo->id,
-                'estado' => true,
-                'created_at' => Carbon::now()->toDateTimeString(),
-                'updated_at' => Carbon::now()->toDateTimeString()
-            ]);
+                    'nombres' => $name,
+                    'apellidos' => $apellido,
+                    'edad' => rand(18, 40),
+                    'identificacion' => (string)rand(1000000000, 9999999999),
+                    'rol' => strtolower(str_random(10)),
+                    'email' => strtolower(str_random(15)).'@gmail.com',
+                    'telefono' => '09'.rand(),
+                    'peso' => mt_rand(5500, 10000)/100,
+                    'categoria' => $equipo->categoria,
+                    'num_camiseta' => rand(1, 23),
+                    'id_equipo' => $equipo->id,
+                    'estado' => true,
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString()
+                ]);
+            }
         }
-       
     }
 }

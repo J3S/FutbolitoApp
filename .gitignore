@@ -5,3 +5,7 @@ Homestead.json
 .env
 .DS_Store
 .idea/
+public/css/bootstrap.min.css
+public/css/font-awesome.min.css
+public/js/bootstrap.min.js
+public/js/jquery-1.12.4.min.js
