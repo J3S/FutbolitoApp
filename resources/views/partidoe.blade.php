@@ -1,3 +1,11 @@
+<!-- 
+    Vista para editar un partido.
+    Contiene el formulario para editar un partido.
+    Carga los datos que están registrados en la base de datos.
+    También muestra todos los equipos disponibles para modificar
+    equipo local o visitante dependiendo del torneo seleccionado.
+-->
+
 @extends('layouts.master')
 
 @section('title', 'Editar Partido')
