@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Torneo;
+use App\TorneoEquipo;
 use App\Equipo;
 use App\Partido;
 use App\Categoria;
@@ -25,11 +26,17 @@ class PartidoController extends Controller
         $categorias = Categoria::all();
         $equipos = Equipo::where('estado', 1)->get();
         $torneos = Torneo::where('estado', 1)->get();
+        $torneoEquipos = TorneoEquipo::all();
+        // $equiposTorneo = [];
+        // foreach ($torneos as $torneo) {
+        //     $torneoEquipo = TorneoEquipo::where('id_torneo', $torneo->id)->get();
+        //     $equiposTorneo[$categoria->nombre] = $equipos;
+        // }
 
         /* Retorno a la vista principal Partido con los siguientes parámetros: listas de categorias, equipos y torneos presentes en la base de datos.
         */
         return view('partido')->withCategorias($categorias)
-            ->withEquipos($equipos)->withTorneos($torneos);
+            ->withEquipos($equipos)->withTorneos($torneos)->with('torneoEquipos', $torneoEquipos);
     }
 
     /**
@@ -246,12 +253,14 @@ class PartidoController extends Controller
         $equipos = Equipo::where('estado', 1)->get();
         $torneos = Torneo::where('estado', 1)->get();
         $categorias = Categoria::all();
+        $torneoEquipos = TorneoEquipo::all();
 
         /* Retorno a vista principal de partido con los partidos activos filtrados, lista de equipos activos, lista de torneos activos y lista de categorias */
         return view('partido')
             ->withPartidos($partidos)
             ->withEquipos($equipos)
             ->withTorneos($torneos)
-            ->withCategorias($categorias);
+            ->withCategorias($categorias)
+            ->with('torneoEquipos', $torneoEquipos);
     }
 }

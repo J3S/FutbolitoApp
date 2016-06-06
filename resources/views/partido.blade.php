@@ -52,8 +52,8 @@
                         </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="listaEquipo1">Equipo local</label>
-                        <select class="form-control" id="listaEquipo1" name="equipo_local">
+                        <label for="equipo_local">Equipo local</label>
+                        <select class="form-control" id="equipo_local" name="equipo_local">
                         	<option selected="selected"></option>
                             @foreach($equipos as $equipo)
                             	<option value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
@@ -61,8 +61,8 @@
                         </select>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="listaEquipo2">Equipo visitante</label>
-                        <select class="form-control" id="listaEquipo2" name="equipo_visitante">
+                        <label for="equipo_visitante">Equipo visitante</label>
+                        <select class="form-control" id="equipo_visitante" name="equipo_visitante">
                         	<option selected="selected"></option>
                             @foreach($equipos as $equipo)
                             	<option value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
@@ -138,4 +138,30 @@
 	    @endforeach
 	    </div>
     @endif
+    <script>
+	    // Carga dinámica de los equipos dependiendo del torneo seleccionado
+	    document.getElementById("torneo").addEventListener("change", llenarEquiposSelect);
+
+	    function llenarEquiposSelect() {
+	        var equipos = <?php echo json_encode($equipos); ?>;
+	        var torneos = <?php echo json_encode($torneos); ?>;
+	        var torneoEquipos = <?php echo json_encode($torneoEquipos); ?>;
+	        var torneo = $("#torneo option:selected").attr("value");
+	        $('#equipo_local').find('option').remove().end();
+	        $('#equipo_visitante').find('option').remove().end();
+	        $('#equipo_local').append($('<option></option>'));
+	        $('#equipo_visitante').append($('<option></option>'));
+	        for (var i = 0; i < torneoEquipos.length; ++i){
+	        	if(torneoEquipos[i]['id_torneo'] == torneo){
+	        		for(var j = 0; j < equipos.length; ++j){
+	        			if(equipos[j]['id'] == torneoEquipos[i]['id_equipo']){
+	        				$('#equipo_local').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
+							$('#equipo_visitante').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
+	        			}
+	        		}
+	        	}
+	        }
+		}
+    </script>
 @endsection
+
