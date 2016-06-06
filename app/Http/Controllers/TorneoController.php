@@ -129,7 +129,7 @@ class TorneoController extends Controller
              * Crear y guardar los registros relacionados con los equipos participantes en el torneo
              * en la tabla torneo_equipos.
              */
-            if($contador > 2){
+            if($contador > 3){
                 $torneoEquipo = new TorneoEquipo();
                 $torneoEquipo->id_torneo = $torneo->id;
                 $equipoID = Equipo::where('nombre', $valor)

@@ -83,7 +83,7 @@
                         </div>
                         <!-- Equipos que pueden ser agregados al torneo dependiendo de la categoría -->
                         <div class="col-md-3">
-                            <select class="form-control equipo-seleccionado" id="equipos">
+                            <select class="form-control equipo-seleccionado" id="equipos" name="equipos">
                                 @if(count($equiposxcategorias[$categorias[0]->nombre]) != 0)
                                     @foreach($equiposxcategorias[$categorias[0]->nombre] as $equipos)
                                         <option>{{ $equipos->nombre }}</option>
@@ -94,7 +94,7 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-primary" id="agregarEquipo">Agregar Equipo</button>
+                            <a type="button" class="btn btn-primary" id="agregarEquipo">Agregar Equipo</a>
                         </div>
                     </div>
                     <hr>
