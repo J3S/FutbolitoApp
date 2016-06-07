@@ -19,11 +19,10 @@
 
 <!-- Contenido de la pagina -->
 @section('content')
-
     <div class="col-xs-12" style="padding-bottom: 15px;">
         <form><!--  -->
         	<!-- Boton para crear un nuevo partido -->
-            <button type="button" id="nuevoPartidoButton" class="btn btn-success" onclick="window.location='{{ route("partido.create") }}'"><i class="fa fa-plus"></i> Nuevo Partido</button>
+            <button type="button" id="nuevoPartidoButton" class="btn btn-success" onclick="window.location='{{ route("partido.create") }}'"><i class="fa fa-plus"></i> Crear Partido</button>
         </form>
     </div>
 	<div class="col-xs-12">
@@ -132,9 +131,9 @@
 			                </a></li>
 	                        <li><a href="#">Fecha <span class="pull-right badge bg-black">{!! $partido['fecha'] !!}</span></a></li>
 	                        <li><a href="#">Lugar <span class="pull-right badge bg-black">{!! $partido['lugar'] !!}</span></a></li>
-	                         <div class="col-md-6">
-	                        <a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a>
-	                    </div>
+	                        <div class="col-md-6">
+	                        	<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a>
+                    		</div>
 	                    <div class="col-md-6">
 	                        <form class="pull-right" action="/partido/{{ $partido->id }}" method="POST">
 	                            <input type="hidden" name="_method" value="DELETE">
@@ -144,7 +143,6 @@
 	                    </div>
 	                    </ul>
 	                </div>
-
 	            </div>
 	        </div>
 	        <!-- /.widget-user -->
@@ -161,22 +159,30 @@
 	    // Funcion que filtra los equipos locales y visitantes dependiendo del torneo seleccionado
 	    function llenarEquiposSelect() {
 	        var equipos = <?php echo json_encode($equipos); ?>;
-	        var torneos = <?php echo json_encode($torneos); ?>;
 	        var torneoEquipos = <?php echo json_encode($torneoEquipos); ?>;
 	        var torneo = $("#torneo option:selected").attr("value");
-	        $('#equipo_local').find('option').remove().end();
+        	$('#equipo_local').find('option').remove().end();
 	        $('#equipo_visitante').find('option').remove().end();
 	        $('#equipo_local').append($('<option></option>'));
 	        $('#equipo_visitante').append($('<option></option>'));
-	        // Agrego solo los partidos que participan en el torneo seleccionado
-	        for (var i = 0; i < torneoEquipos.length; ++i){
-	        	if(torneoEquipos[i]['id_torneo'] == torneo){
-	        		for(var j = 0; j < equipos.length; ++j){
-	        			if(equipos[j]['id'] == torneoEquipos[i]['id_equipo']){
-	        				$('#equipo_local').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
-							$('#equipo_visitante').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
-	        			}
-	        		}
+	        if($("#torneo option:selected").val() == ""){
+	        	for(var j = 0; j < equipos.length; ++j){
+    				$('#equipo_local').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
+					$('#equipo_visitante').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
+        		}
+	        }
+	        else{
+
+		        // Agrego solo los partidos que participan en el torneo seleccionado
+		        for (var i = 0; i < torneoEquipos.length; ++i){
+		        	if(torneoEquipos[i]['id_torneo'] == torneo){
+		        		for(var j = 0; j < equipos.length; ++j){
+		        			if(equipos[j]['id'] == torneoEquipos[i]['id_equipo']){
+		        				$('#equipo_local').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
+								$('#equipo_visitante').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
+		        			}
+		        		}
+		        	}
 	        	}
 	        }
 		}
