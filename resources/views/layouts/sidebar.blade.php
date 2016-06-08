@@ -40,7 +40,7 @@
             </li>
              <li>
                 <a href="{{ url('partido') }}">
-                    <i class="fa fa-calendar"></i> <span>Partidos</span>
+                    <i class="fa fa-futbol-o"></i> <span>Partidos</span>
                 </a>
             </li>
             <li class="treeview

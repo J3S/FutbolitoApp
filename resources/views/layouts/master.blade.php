@@ -11,7 +11,7 @@
             @include('layouts.sidebar')
 
             <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
+            <div class="content-wrapper" style="overflow:auto">
                 <!-- Content Header (Page header) -->
                 <div class="row">
                     <div class="col-xs-12">
