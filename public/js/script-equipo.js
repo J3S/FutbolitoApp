@@ -73,3 +73,21 @@ $("#btn_actualizar").on('click', function() {
         window.location="http://localhost:8000/equipo/"+data.idEquipo;
     });
 });
+
+function cargarJugadores() {
+    var inputCategoria = $("#inputCategoriaSelect").val();
+    var listaJugadoresTag = $('#JugadoresElegidos');
+    var route = "http://localhost:8000/jugadores/" + inputCategoria;
+    listaJugadoresTag.empty();
+
+    $.get(route, function (jugadoresCategoriaResp) {
+        $(jugadoresCategoriaResp).each(function(key, value) {
+            var $liElement = $('<li class="list-group-item"></li>');
+            var $checkLiBtn = $('<button type="button" '+' class="btn btn-success btn-xs"><i class="fa fa-times"></i></button>');
+            var contentLi = " " + value.nombres+" - "+value.categoria;
+            $checkLiBtn.attr("id", value.id);
+            $liElement.append($checkLiBtn, contentLi);
+            listaJugadoresTag.append($liElement);
+        });
+    })
+}
