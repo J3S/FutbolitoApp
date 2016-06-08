@@ -14,7 +14,7 @@ V2.0 Branny
 
 @section('contentHeaderBreadcrumb')
     <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
-    <li><a href="#">Jugador</a></li>
+    <li><a href="{{ url('jugador') }}">Jugador</a></li>
     <li class="active">Crear</li>
 @endsection
 
@@ -30,7 +30,7 @@ V2.0 Branny
             <form role="form" action="{!!route('jugador.store')!!}" method="post">
                 {!! csrf_field() !!}
                 <div class="box-body">
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-12">s
                         <label for="inputNombre">Nombres</label>
                         <input type="text" class="form-control" id="inputNombre" name="nombres" placeholder="Ingrese nombre">
                     </div>
@@ -39,24 +39,12 @@ V2.0 Branny
                         <input type="text" class="form-control" id="inputApellido" name="apellidos" placeholder="Ingrese apellido">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="inputCedula">C&eacute;dula</label>
-                        <input type="text" class="form-control" id="inputCedula" name="identificacion" placeholder="Ingrese c&eacute;dula">
+                        <label for="fecha_nac">Fecha Nacimiento</label>
+                        <input type="datetime-local" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="inputFechaNac">Fecha de nacimiento</label>
-                        <input type="date" class="form-control" id="inputFechaNac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento">
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="form-group">
-                            <label for="inputNumCam">N&uacute;mero de camiseta</label>
-                            <input type="number" min="0" class="form-control" id="inputNumCam" name="num_camiseta" placeholder="Ingrese N&uacute;mero">
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="form-group">
-                            <label for="inputPeso">Peso (Kg)</label>
-                            <input type="number" min="0" step="0.1" class="form-control" id="inputPeso" name="peso" placeholder="Ej: 70.5">
-                        </div>
+                        <label for="inputCedula">C&eacute;dula</label>
+                        <input type="text" class="form-control" id="inputCedula" name="identificacion" placeholder="Ingrese c&eacute;dula">
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <div class="form-group">
@@ -66,27 +54,47 @@ V2.0 Branny
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="inputCorreo">Correo</label>
+                            <label for="inputCorreo">Email</label>
                             <input type="email" class="form-control" id="inputEmail" name="email" placeholder="ejemplo@gmail.com">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="inputPeso">Telefono</label>
-                            <input type="tel" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
+                            <label for="inputPeso">Tel&eacute;fono</label>
+                            <input type="text" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-4">
                         <div class="form-group">
-                            <label for="inputCorreo">Correo</label>
-                            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="ejemplo@gmail.com">
+                            <label for="peso">Peso (Kg)</label>
+                            <input type="number" min="0" step="0.1" class="form-control" id="peso" name="peso" placeholder="Ej: 70.5">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-4">
                         <div class="form-group">
-                            <label for="inputPeso">Telefono</label>
-                            <input type="tel" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
+                            <label for="inputNumCam">N&uacute;mero de camiseta</label>
+                            <input type="number" min="0" class="form-control" id="inputNumCam" name="num_camiseta" placeholder="Ingrese N&uacute;mero">
                         </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-4">
+                        <label for="categoria">Categor&iacute;a</label>
+                        <!-- Campo para seleccionar la categoría del jugador -->
+                        <select class="form-control input" id="categoria" name="categoria">
+                            <option selected="selected"></option>
+                            @foreach($categorias as $categoria)
+                               <option value="{{ $categoria['nombre'] }}">{{ $categoria->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-4">
+                        <label for="equipo">Equipo</label>
+                        <!-- Campo para seleccionar el equipo para busqueda del jugador -->
+                        <select class="form-control input" id="equipo" name="equipo">
+                            <option selected="selected"></option>
+                            @foreach($equipos as $equipo)
+                               <option value="{{ $equipo['id'] }}">{{ $equipo->nombre}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div><!-- /.box-body -->
 

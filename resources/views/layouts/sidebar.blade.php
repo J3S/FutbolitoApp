@@ -18,14 +18,9 @@
                 @if(Request::is('jugador/crear') OR Request::is('jugador/editar') OR Request::is('jugador/desactivar'))
                     active
                 @endif">
-                <a href="#">
-                    <i class="fa fa-user"></i> <span>Jugadores</span> <i class="fa fa-angle-left pull-right"></i>
+                <a href="{{ url('jugador') }}">
+                    <i class="fa fa-user"></i> <span>Jugadores</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li {{ Request::is('jugador/crear') ? ' class=active' : '' }}><a href="{{ url('jugador/crear') }}"><i class="fa fa-plus"></i> Crear</a></li>
-                    <li {{ Request::is('jugador/editar') ? ' class=active' : '' }}><a href="{{ url('jugador/editar') }}"><i class="fa fa-cog"></i> Editar</a></li>
-                    <li {{ Request::is('jugador/desactivar') ? ' class=active' : '' }}><a href="{{ url('jugador/desactivar') }}"><i class="fa fa-ban"></i> Desactivar</a></li>
-                </ul>
             </li>
             <li>
                 <a href="{!!route('equipo.index')!!}">
@@ -40,7 +35,7 @@
             </li>
              <li>
                 <a href="{{ url('partido') }}">
-                    <i class="fa fa-calendar"></i> <span>Partidos</span>
+                    <i class="fa fa-futbol-o"></i> <span>Partidos</span>
                 </a>
             </li>
             <li class="treeview
