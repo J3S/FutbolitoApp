@@ -3,7 +3,7 @@
     <head>
         @include('layouts.head')
     </head>
-    <body class="hold-transition skin-green sidebar-mini">
+    <body class="hold-transition skin-green sidebar-mini fixed">
         <div class="wrapper">
 
             @include('layouts.header')
@@ -11,7 +11,7 @@
             @include('layouts.sidebar')
 
             <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
+            <div class="content-wrapper" style="overflow:auto">
                 <!-- Content Header (Page header) -->
                 <div class="row">
                     <div class="col-xs-12">
