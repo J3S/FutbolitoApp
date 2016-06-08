@@ -1,4 +1,4 @@
-<?php namespace Partido;
+<?php
 
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
