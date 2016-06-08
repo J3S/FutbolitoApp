@@ -29,7 +29,7 @@ class JugadorTableSeeder extends Seeder
             DB::table('jugadors')->insert([
                     'nombres' => $name,
                     'apellidos' => $apellido,
-                    'edad' => rand(18, 40),
+                    'fecha_nac' => Carbon::now()->toDateTimeString(),
                     'identificacion' => (string)rand(1000000000, 9999999999),
                     'rol' => strtolower(str_random(10)),
                     'email' => strtolower(str_random(15)).'@gmail.com',
