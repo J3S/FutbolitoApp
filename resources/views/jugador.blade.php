@@ -101,7 +101,11 @@
 		                <td>{{ $jugador->nombres}}</td>
 		                <td>{{ $jugador->apellidos}}</td>
 		                <td>{{ $jugador->categoria}}</td>
-		                <td>{{ $jugador->id_equipo}}</td>	
+		                @foreach($equipos as $equipo)
+		                	@if($jugador->id_equipo == $equipo->id)
+		                		<td>{{ $equipo->nombre}}</td>
+		                	@endif
+		                @endforeach
 		                <td>{{ $jugador->rol}}</td>
 		                <td>{{ $jugador->num_camiseta}}</td>
 		                <td>{{ $jugador->email}}</td>

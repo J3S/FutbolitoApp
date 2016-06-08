@@ -178,7 +178,7 @@ class JugadorController extends Controller
      */
     public function searchJugador(Request $request) {
         /* Encuentro todos los jugadores */
-        $jugadores = Jugador::all();
+        $jugadores = Jugador::where('estado', 1)->get();
         //$equipos_jugadores = $jugadores->join('equipos', 'equipos.id', '=', 'jugadores.id_equipo');
         /* Busco equipos*/
         $equipos = Equipo::where('estado', 1)->get();
@@ -187,27 +187,32 @@ class JugadorController extends Controller
 
         /* Filtro los jugadores por nombre (si es que el filtro fue ingresado por el usuario) */
         if($request->nombJug != ""){
-            $jugadores = Jugador::where('nombres', 'like', '%' . $request->nombJug . '%')->get();
+            $jugadoresNombre = Jugador::where('nombres', 'like', '%' . $request->nombJug . '%')->get();
+            $jugadores = $jugadores->intersect($jugadoresNombre);
         }
 
         /* Filtro los jugadores por apellidos (si es que el filtro fue ingresado por el usuario) */
         if($request->apellJug != ""){
-            $jugadores = Jugador::where('apellidos', 'like', '%' . $request->apellJug . '%')->get();
+            $jugadoresApellido = Jugador::where('apellidos', 'like', '%' . $request->apellJug . '%')->get();
+            $jugadores = $jugadores->intersect($jugadoresApellido);
         }
 
         /* Filtro los jugadores por cedula (si es que el filtro fue ingresado por el usuario) */
         if($request->cedJug != ""){
-            $jugadores = Jugador::where('identificacion', 'like', '%' . $cedJug->apellJug . '%')->get();
+            $jugadoresCedula = Jugador::where('identificacion', 'like', '%' . $cedJug->apellJug . '%')->get();
+            $jugadores = $jugadores->intersect($jugadoresCedula);
         }
 
         if($request->equipo != ""){
             $equipo = Equipo::find($request->equipo);
-            $jugadores = Jugador::where('id_equipo', $equipo->id)->get();
+            $jugadoresEquipo = Jugador::where('id_equipo', $equipo->id)->get();
+            $jugadores = $jugadores->intersect($jugadoresEquipo);
         }
 
         if($request->categoria != ""){
             $categoria = Categoria::find($request->categoria);
-            $jugadores = Jugador::where('categoria', $categoria->nombre)->get();
+            $jugadoresCategoria = Jugador::where('categoria', $categoria->nombre)->get();
+            $jugadores = $jugadores->intersect($jugadoresCategoria);
         }
        
         /* Retorno a vista principal de jugador con los jugadores filtrados y lista de equipos activos*/
