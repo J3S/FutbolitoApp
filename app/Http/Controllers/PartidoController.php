@@ -80,11 +80,7 @@ class PartidoController extends Controller
         $partido = new Partido();
         $partido->lugar = $request->lugar;
         $partido->fecha = $request->fecha;
-        $torneoString = explode(' : ', $request->torneo);
-        $categoria = Categoria::where('nombre', $torneoString[0])->first();
-        $torneo = Torneo::where('anio', $torneoString[1])
-            ->where('id_categoria', $categoria->id)->first();
-        $partido->id_torneo = $torneo->id;
+        $partido->id_torneo = $request->torneo;
         $partido->jornada = $request->jornada;
         $partido->arbitro = $request->arbitro;
         $partido->observacion = $request->observaciones;
@@ -272,6 +268,4 @@ class PartidoController extends Controller
             ->with('torneoEquipos', $torneoEquipos);
 
     }//end searchPartido()
-
-
 }//end class

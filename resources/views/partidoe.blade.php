@@ -134,6 +134,7 @@
     </div><!--/.col (left) -->
     <div class="col-xs-2"></div>
     <script>
+    
         function init(){
             
             llenarEquiposSelect();
@@ -198,7 +199,6 @@
                 }
 
                 llenarEquiposSelect();
-
                 $('#gol_local').val(partido['gol_local']);
                 $('#gol_visitante').val(partido['gol_visitante']);
                 $('#observaciones').val(partido['observacion']);
@@ -209,8 +209,9 @@
                 $('#arbitro').val(partido['arbitro']);
             });//end reestablecerBtn listener
 
-        }
+        }//end init()
 
         window.onload = init;
+
     </script>
 @endsection
