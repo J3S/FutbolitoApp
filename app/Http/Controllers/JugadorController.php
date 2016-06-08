@@ -58,7 +58,33 @@ class JugadorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    
+     {
+        /* Validación de datos requeridos para la creacion de un jugador */
+        $this->validate($request, array(
+                'nombres' => 'required',
+                'apellidos' => 'required',
+                'fecha_nac' => 'required',
+                'equipo' => 'required'
+            ));
+        /* Creo nueva instancia de jugador y le asigno todos los valores ingresados por el usuario desde la vista 'jugadorc' */
+        $jugador = new Jugador;
+        $jugador->nombres = $request->nombres;
+        $jugador->apellidos = $request->apellidos;
+        $jugador->fecha_nac = $request->fecha_nac;
+        $jugador->identificacion = $request->identificacion;
+        $jugador->rol = $request->rol;
+        $jugador->email = $request->email;
+        $jugador->telefono = $request->telefono;
+        $jugador->peso = $request->peso;
+        $jugador->num_camiseta = $request->num_camiseta;
+        $jugador->categoria = $request->categoria;
+        $jugador->estado = 1;
+        $jugador->id_equipo =  $request->equipo;
+        /* Guardo el jugador creado en la base de datos */
+        $jugador->save();
+        /* Retorno a la vista principal de la opcion partido */
+        return $this->index();
+    }
 
     /**
      * Display the specified Jugador.
@@ -101,7 +127,37 @@ class JugadorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         /* Validación de datos requeridos para la creacion de un jugador */
+        $this->validate($request, array(
+                'nombres' => 'required',
+                'apellidos' => 'required',
+                'fecha_nac' => 'required',
+                'equipo' => 'required'
+            ));
+        
+        /* Creo nueva instancia de jugador y le asigno todos los valores ingresados por el usuario desde la vista 'jugadorc' */
+        $jugador = Jugador::find($id);;
+        $jugador->nombres = $request->nombres;
+        $jugador->apellidos = $request->apellidos;
+        $jugador->fecha_nac = $request->fecha_nac;
+        $jugador->identificacion = $request->identificacion;
+        $jugador->rol = $request->rol;
+        $jugador->email = $request->email;
+        $jugador->telefono = $request->telefono;
+        $jugador->peso = $request->peso;
+        $jugador->num_camiseta = $request->num_camiseta;
+        $jugador->categoria = $request->categoria->nombre;
+        $jugador->estado = 1;
+        Log::info('Showing user profile for user: '.$jugador->nombres);
+        $equipo = Equipo::find($request->equipo);
+        $jugador->id_equipo = $equipo->id;
+        
+
+        /* Guardo el partido creado en la base de datos */
+        $jugador->save();
+
+        /* Retorno a la vista principal de la opcion partido */
+        return $this->index();
     }
 
     /**

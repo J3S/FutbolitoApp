@@ -14,7 +14,7 @@ V2.0 Branny
 
 @section('contentHeaderBreadcrumb')
     <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
-    <li><a href="#">Jugador</a></li>
+    <li><a href="{{ url('jugador') }}">Jugador</a></li>
     <li class="active">Crear</li>
 @endsection
 
@@ -30,7 +30,7 @@ V2.0 Branny
             <form role="form" action="{!!route('jugador.store')!!}" method="post">
                 {!! csrf_field() !!}
                 <div class="box-body">
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-12">s
                         <label for="inputNombre">Nombres</label>
                         <input type="text" class="form-control" id="inputNombre" name="nombres" placeholder="Ingrese nombre">
                     </div>
@@ -39,8 +39,8 @@ V2.0 Branny
                         <input type="text" class="form-control" id="inputApellido" name="apellidos" placeholder="Ingrese apellido">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="inputCedula">Fecha Nacimiento</label>
-                        <input type="text" class="form-control datepicker" id="fechaNac" name="fechaNac">
+                        <label for="fecha_nac">Fecha Nacimiento</label>
+                        <input type="datetime-local" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputCedula">C&eacute;dula</label>
@@ -61,7 +61,7 @@ V2.0 Branny
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="inputPeso">Tel&eacute;fono</label>
-                            <input type="tel" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
+                            <input type="text" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
@@ -76,18 +76,18 @@ V2.0 Branny
                             <input type="number" min="0" class="form-control" id="inputNumCam" name="num_camiseta" placeholder="Ingrese N&uacute;mero">
                         </div>
                     </div>
-                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="listCategorias">Categor&icute;a</label>
+                    <div class="form-group col-xs-12 col-sm-4">
+                        <label for="categoria">Categor&iacute;a</label>
                         <!-- Campo para seleccionar la categoría del jugador -->
                         <select class="form-control input" id="categoria" name="categoria">
                             <option selected="selected"></option>
                             @foreach($categorias as $categoria)
-                               <option value="{{ $categoria['id'] }}">{{ $categoria->nombre}}</option>
+                               <option value="{{ $categoria['nombre'] }}">{{ $categoria->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="listEquipo">Equipo</label>
+                        <label for="equipo">Equipo</label>
                         <!-- Campo para seleccionar el equipo para busqueda del jugador -->
                         <select class="form-control input" id="equipo" name="equipo">
                             <option selected="selected"></option>
