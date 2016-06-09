@@ -1,1 +1,5 @@
 ﻿a
+
+@foreach($jugadores as $jugador)
+    <option>{{ $jugador->id.' - '.$jugador->nombres.' - '.$jugador->categoria }}</option>
+@endforeach
