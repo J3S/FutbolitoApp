@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TorneoTest extends TestCase
 {
+    use DatabaseMigrations;
+
 
     /**
      * Comprueba el funcionamiento del botón para crear un nuevo torneo
@@ -13,12 +15,12 @@ class TorneoTest extends TestCase
      *
      * @return void
      */
-    public function testNuevoTorneoClick()
-    {
-        $this->visit(route('torneo.index'))
-             ->click('Crear Torneo')
-             ->seePageIs(route('torneo.create'));
-    }
+    // public function testNuevoTorneoClick()
+    // {
+    //     $this->visit(route('torneo.index'))
+    //          ->click('Crear Torneo')
+    //          ->seePageIs(route('torneo.create'));
+    // }
 
     /**
      * Comprueba el funcionamiento para crear un torneo
@@ -27,14 +29,14 @@ class TorneoTest extends TestCase
      *
      * @return void
      */
-    // public function testCrearTorneo1()
-    // {
-    //     $this->visit(route('torneo.create'))
-    //          ->type('2016', 'anio')
-    //          ->select('Junior', 'categoria')
-    //          ->press('Guardar')
-    //          ->seePageIs(route('torneo.index'));
-    // }
+    public function testCrearTorneo1()
+    {
+        $this->visit(route('torneo.create'))
+             ->type('2016', 'anio')
+             ->select('Junior', 'categoria')
+             ->press('Guardar')
+             ->seePageIs(route('torneo.index'));
+    }
 
     /**
      * Comprueba el funcionamiento para crear un torneo
@@ -48,14 +50,14 @@ class TorneoTest extends TestCase
         // Se inicia una sesión para esta prueba
         Session::start();
         $parametros = [
-            '_token' => csrf_token(), // Onteniendo el csrf token
+            '_token' => csrf_token(), // Obteniendo el csrf token
             'anio' => '2016',
             'categoria' => 'Super Junior',
-            'Equipo Prueba' => 'Equipo Prueba',
+            'Equipo Prueba' => 'equipo16',
         ];
         $response = $this->call('POST', 'torneo', $parametros);
 
-        $this->assertRedirectedToRoute('torneo.index');
+        $this->assertRedirectedToRoute('torneo.create');
     }
 
     /**

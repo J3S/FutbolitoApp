@@ -135,6 +135,22 @@ class TorneoController extends Controller
             ]
         );
 
+        try {
+            $categoriaID = Categoria::where('nombre', $request->categoria)
+                                    ->get(['id'])
+                                    ->toArray()[0]['id'];
+        } catch (\Exception $e) {
+            return redirect()->route('torneo.create')->withErrors('La categoría que le asignó a este torneo no se encuentra registrada.');
+        }
+
+        $torneoExistente = Torneo::where('anio', $request->anio)
+                                 ->where('id_categoria', $categoriaID)
+                                 ->where('estado', 1)
+                                 ->get();
+        if (count($torneoExistente) !== 0) {
+            return redirect()->route('torneo.create')->withErrors('Ya existe un torneo creado con ese año y categoría.');
+        }
+
         // Variable contador - Controla que la información recibida sea asignado en el lugar correcto.
         // Variable torneo   - Nuevo torneo que se va a guardar en la base.
         $contador = 0;
@@ -149,7 +165,7 @@ class TorneoController extends Controller
             // Asignación del segundo campo del torneo y guardar el torneo en la base.
             if ($contador === 2) {
                 try {
-                    $categoriaID          = Categoria::where('nombre', '$valor')
+                    $categoriaID          = Categoria::where('nombre', $valor)
                                                      ->get(['id'])
                                                      ->toArray()[0]['id'];
                     $torneo->id_categoria = $categoriaID;
