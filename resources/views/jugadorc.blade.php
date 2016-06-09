@@ -30,7 +30,7 @@ V2.0 Branny
             <form role="form" action="{!!route('jugador.store')!!}" method="post">
                 {!! csrf_field() !!}
                 <div class="box-body">
-                    <div class="form-group col-xs-12">s
+                    <div class="form-group col-xs-12">
                         <label for="inputNombre">Nombres</label>
                         <input type="text" class="form-control" id="inputNombre" name="nombres" placeholder="Ingrese nombre">
                     </div>
