@@ -13,12 +13,12 @@ class TorneoTest extends TestCase
      *
      * @return void
      */
-    // public function testNuevoTorneoClick()
-    // {
-    //     $this->visit(route('torneo.index'))
-    //          ->click('Crear Torneo')
-    //          ->seePageIs(route('torneo.create'));
-    // }
+    public function testNuevoTorneoClick()
+    {
+        $this->visit(route('torneo.index'))
+             ->click('Crear Torneo')
+             ->seePageIs(route('torneo.create'));
+    }
 
     /**
      * Comprueba el funcionamiento para crear un torneo
@@ -52,7 +52,6 @@ class TorneoTest extends TestCase
             'anio' => '2016',
             'categoria' => 'Super Junior',
             'Equipo Prueba' => 'Equipo Prueba',
-            'Equipo Prueba' => 'Equipo Prueba',
         ];
         $response = $this->call('POST', 'torneo', $parametros);
 
@@ -74,4 +73,5 @@ class TorneoTest extends TestCase
              ->press('Guardar')
              ->seePageIs(route('torneo.create'));
     }
+
 }
