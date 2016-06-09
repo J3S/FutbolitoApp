@@ -131,7 +131,6 @@ class JugadorController extends Controller
         $this->validate($request, array(
                 'nombres' => 'required',
                 'apellidos' => 'required',
-                'fecha_nac' => 'required',
                 'equipo' => 'required'
             ));
         
@@ -146,9 +145,8 @@ class JugadorController extends Controller
         $jugador->telefono = $request->telefono;
         $jugador->peso = $request->peso;
         $jugador->num_camiseta = $request->num_camiseta;
-        $jugador->categoria = $request->categoria->nombre;
+        $jugador->categoria = $request->categoria;
         $jugador->estado = 1;
-        Log::info('Showing user profile for user: '.$jugador->nombres);
         $equipo = Equipo::find($request->equipo);
         $jugador->id_equipo = $equipo->id;
         

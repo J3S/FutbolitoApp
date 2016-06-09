@@ -34,7 +34,7 @@ class JugadorTableSeeder extends Seeder
                     'rol' => strtolower(str_random(10)),
                     'email' => strtolower(str_random(15)).'@gmail.com',
                     'telefono' => '09'.rand(),
-                    'peso' => mt_rand(5500, 10000)/100,
+                    'peso' => round((mt_rand(5500, 10000)/100), 1),
                     'categoria' => $equipo->categoria,
                     'num_camiseta' => rand(1, 23),
                     'id_equipo' => $equipo->id,
