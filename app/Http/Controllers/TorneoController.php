@@ -156,7 +156,7 @@ class TorneoController extends Controller
                     $torneo->estado       = 1;
                     $torneo->save();
                 } catch (\Exception $e) {
-                    return redirect()->route('torneo.create')->withErrors('No se ha encontrado la categoría que ha enviado');
+                    return redirect()->route('torneo.create')->withErrors('La categoría que le asignó a este torneo no se encuentra registrada.');
                 }
             }
 
@@ -165,11 +165,15 @@ class TorneoController extends Controller
             if ($contador > 2) {
                 $torneoEquipo            = new TorneoEquipo();
                 $torneoEquipo->id_torneo = $torneo->id;
-                $equipoID = Equipo::where('nombre', $valor)
-                                                 ->get(['id'])
-                                                 ->toArray()[0]['id'];
-                $torneoEquipo->id_equipo = $equipoID;
-                $torneoEquipo->save();
+                try {
+                    $equipoID = Equipo::where('nombre', $valor)
+                                      ->get(['id'])
+                                      ->toArray()[0]['id'];
+                    $torneoEquipo->id_equipo = $equipoID;
+                    $torneoEquipo->save();
+                } catch (\Exception $e) {
+                    return redirect()->route('torneo.create')->withErrors('El equipo que desea agregar no se encuentra registrado.');
+                }
             }
 
             ++$contador;
@@ -223,6 +227,9 @@ class TorneoController extends Controller
         $torneo        = Torneo::find($id);
         $torneoEquipos = TorneoEquipo::where('id_torneo', $id)
                                      ->get();
+        if (count($torneo) === 0) {
+            return redirect()->route('torneo.index')->withErrors('El torneo al que desea modificar no se encuentra registrado.');
+        }
 
         // Búsqueda de los equipos que han sido agregados a ese torneo.
         $equiposAgregados = [];
@@ -274,12 +281,16 @@ class TorneoController extends Controller
 
             // Asignación del segundo campo del torneo y guardar el torneo en la base.
             if ($contador === 2) {
-                $categoriaID          = Categoria::where('nombre', $valor)
-                                                 ->get(['id'])
-                                                 ->toArray()[0]['id'];
-                $torneo->id_categoria = $categoriaID;
-                $torneo->estado       = 1;
-                $torneo->save();
+                try {
+                    $categoriaID          = Categoria::where('nombre', $valor)
+                                                    ->get(['id'])
+                                                    ->toArray()[0]['id'];
+                    $torneo->id_categoria = $categoriaID;
+                    $torneo->estado       = 1;
+                    $torneo->save();
+                } catch (\Exception $e) {
+                    return redirect()->route('torneo.edit')->withErrors('La categoría que le asignó a este torneo no se encuentra registrada.');
+                }
 
                 // Eliminación de todos los registros relacionados a ese torneo en la tabla torneo_equipos.
                 $torneosEquiposEliminados = TorneoEquipo::where('id_torneo', $torneo->id)
@@ -289,11 +300,15 @@ class TorneoController extends Controller
             // Crear y guardar los registros relacionados con los equipos participantes en el torneo
             // en la tabla torneo_equipos.
             if ($contador > 2) {
-                $torneoEquipo            = new TorneoEquipo();
-                $torneoEquipo->id_torneo = $torneo->id;
-                $equipoID = Equipo::where('nombre', $valor)->get(['id'])->toArray()[0]['id'];
-                $torneoEquipo->id_equipo = $equipoID;
-                $torneoEquipo->save();
+                try {
+                    $torneoEquipo            = new TorneoEquipo();
+                    $torneoEquipo->id_torneo = $torneo->id;
+                    $equipoID = Equipo::where('nombre', $valor)->get(['id'])->toArray()[0]['id'];
+                    $torneoEquipo->id_equipo = $equipoID;
+                    $torneoEquipo->save();
+                } catch (\Exception $e) {
+                    return redirect()->route('torneo.edit').withErrors('El equipo que desea agregar no se encuentra registrado.');
+                }
             }
 
             ++$contador;
@@ -314,11 +329,14 @@ class TorneoController extends Controller
      */
     public function destroy($id)
     {
-        $torneo         = Torneo::find($id);
-        $torneo->estado = 0;
-        $torneo->save();
-
-        return $this->index();
+        try {
+            $torneo         = Torneo::find($id);
+            $torneo->estado = 0;
+            $torneo->save();
+            return $this->index();
+        } catch (\Exception $e) {
+            return reditect()->route('torneo.index')->withErrors('El torneo al que desea desactivar no se encuentra registrado.');
+        }
 
     }//end destroy()
 
