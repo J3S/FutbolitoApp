@@ -40,7 +40,7 @@ V2.0 Branny
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="fecha_nac">Fecha Nacimiento</label>
-                        <input type="datetime-local" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento">
+                        <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputCedula">C&eacute;dula</label>

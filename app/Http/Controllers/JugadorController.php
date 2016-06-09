@@ -199,7 +199,7 @@ class JugadorController extends Controller
 
         /* Filtro los jugadores por cedula (si es que el filtro fue ingresado por el usuario) */
         if($request->cedJug != ""){
-            $jugadoresCedula = Jugador::where('identificacion', 'like', '%' . $cedJug->apellJug . '%')->get();
+            $jugadoresCedula = Jugador::where('identificacion', 'like', '%' . $request->cedJug . '%')->get();
             $jugadores = $jugadores->intersect($jugadoresCedula);
         }
 

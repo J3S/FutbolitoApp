@@ -165,15 +165,18 @@
 	        $('#equipo_visitante').find('option').remove().end();
 	        $('#equipo_local').append($('<option></option>'));
 	        $('#equipo_visitante').append($('<option></option>'));
+
+	        // Si usuario no ha seleccionado un torneo, se cargan todos los equipos
 	        if($("#torneo option:selected").val() == ""){
 	        	for(var j = 0; j < equipos.length; ++j){
     				$('#equipo_local').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
 					$('#equipo_visitante').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
         		}
 	        }
+	        // Si el usuario selecciono un torneo
 	        else{
 
-		        // Agrego solo los partidos que participan en el torneo seleccionado
+		        // Agrego solo los equipos que participan en el torneo seleccionado
 		        for (var i = 0; i < torneoEquipos.length; ++i){
 		        	if(torneoEquipos[i]['id_torneo'] == torneo){
 		        		for(var j = 0; j < equipos.length; ++j){
