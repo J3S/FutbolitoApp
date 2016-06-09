@@ -42,14 +42,14 @@ class PartidoController extends Controller
         /* Recorro listas de categorias, torneos y equipos para mandarlos como parametros a la vista.
         */
         $categorias = Categoria::all();
-        $torneos = Torneo::where('estado', 1)->get(['anio', 'id_categoria']);
-        $equipos = Equipo::where('estado', 1)->get(['nombre']);
-
+        $torneos = Torneo::where('estado', 1)->get();
+        $equipos = Equipo::where('estado', 1)->get();
+        $torneoEquipos = TorneoEquipo::all();
         /* Retorno la vista para crear partido con la lista de torneos, equipos y categorias
         */
         return view('partidoc')->withTorneos($torneos)
-            ->withEquipos($equipos)
-            ->withCategorias($categorias);
+            ->withEquipos($equipos)->withCategorias($categorias)
+            ->with('torneoEquipos', $torneoEquipos);
 
     }//end create()
 
@@ -86,8 +86,10 @@ class PartidoController extends Controller
         $partido->observacion = $request->observaciones;
         $partido->gol_local = $request->gol_local;
         $partido->gol_visitante = $request->gol_visitante;
-        $partido->equipo_local = $request->equipo_local;
-        $partido->equipo_visitante = $request->equipo_visitante;
+        $equipoLocal = Equipo::find($request->equipo_local);
+        $partido->equipo_local = $equipoLocal->nombre;
+        $equipoVisitante = Equipo::find($request->equipo_visitante);
+        $partido->equipo_visitante = $equipoVisitante->nombre;
         $partido->estado = 1;
 
         /* Guardo el partido creado en la base de datos */
@@ -171,8 +173,7 @@ class PartidoController extends Controller
         $partido = Partido::find($id);
         $partido->lugar = $request->lugar;
         $partido->fecha = $request->fecha;
-        $torneo = Torneo::find($request->torneo);
-        $partido->id_torneo = $torneo->id;
+        $partido->id_torneo = $request->torneo;
         $partido->arbitro = $request->arbitro;
         $partido->observacion = $request->observaciones;
         $partido->jornada = $request->jornada;
