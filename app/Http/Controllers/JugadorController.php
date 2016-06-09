@@ -115,7 +115,7 @@ class JugadorController extends Controller
         
         
         /* Retorno vista para editar partido con la información del partido seleccionado, lista de equipos, lista de torneos y lista de categorias */
-        return view('jugadore')->withEquipos($equipos)->withCategorias($categorias);
+        return view('jugadore')->withEquipos($equipos)->withCategorias($categorias)->withJugador($jugador);
     }
 
     /**
