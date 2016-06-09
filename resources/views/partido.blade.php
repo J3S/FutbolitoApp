@@ -92,7 +92,7 @@
 		</div>
 	</div>
 	<!-- Seccion para mostrar los resultados de la busqueda de partidos -->
-	@if(!empty($partidos) && count($partidos) != 0)
+	@if(!empty($partidos) and count($partidos) != 0)
 			<div class="col-xs-12">
 	    {{--*/ $widget = 0 /*--}}
 	    @foreach($partidos as $partido)
@@ -153,7 +153,7 @@
 	    @endforeach
 	    </div>
     @endif
-    @if(!empty($partidos) && count($partidos) == 0)
+    @if(!empty($partidos) and count($partidos) == 0)
     	<h4 class="text-center">La búsqueda no ha coincidido con ning&uacute;n partido.</h4>
     	<h5 class="text-center">Seleccione opciones m&aacute;s generales e intente de nuevo.</h4>
     @endif

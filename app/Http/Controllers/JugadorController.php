@@ -63,7 +63,6 @@ class JugadorController extends Controller
         $this->validate($request, array(
                 'nombres' => 'required',
                 'apellidos' => 'required',
-                'fecha_nac' => 'required',
                 'equipo' => 'required'
             ));
         /* Creo nueva instancia de jugador y le asigno todos los valores ingresados por el usuario desde la vista 'jugadorc' */
@@ -133,9 +132,9 @@ class JugadorController extends Controller
                 'apellidos' => 'required',
                 'equipo' => 'required'
             ));
-        
+
         /* Creo nueva instancia de jugador y le asigno todos los valores ingresados por el usuario desde la vista 'jugadorc' */
-        $jugador = Jugador::find($id);;
+        $jugador = Jugador::find($id);
         $jugador->nombres = $request->nombres;
         $jugador->apellidos = $request->apellidos;
         $jugador->fecha_nac = $request->fecha_nac;
@@ -149,7 +148,7 @@ class JugadorController extends Controller
         $jugador->estado = 1;
         $equipo = Equipo::find($request->equipo);
         $jugador->id_equipo = $equipo->id;
-        
+
 
         /* Guardo el partido creado en la base de datos */
         $jugador->save();

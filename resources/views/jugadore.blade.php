@@ -21,6 +21,23 @@
 @endsection
 
 @section('content')
+    <div class="col-xs-12">
+        <div class="col-xs-2"></div>
+        <!-- Alert que muestra todos los errores en los campos si falla al hacer post -->
+        <div class="col-xs-8">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
    <div class="col-xs-2"></div>
     <div class="col-xs-8">
         <!-- general form elements -->
