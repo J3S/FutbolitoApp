@@ -80,7 +80,7 @@
 	
 <!-- Seccion para mostrar los resultadsos de la busqueda de jugadores -->
 	
-	@if(!empty($jugadores))
+	@if(!empty($jugadores) and count($jugadores) != 0)
 		<div class="col-xs-1"></div>
 		    <div class="col-xs-15">
 		        <h3 style="margin-top:0;">Lista de Jugadores</h3>
@@ -89,27 +89,22 @@
 		                <!-- <th>id</th> -->
 		                <th>Nombres</th>
 		                <th>Apellidos</th>
-		                <th>Categoria</th>
 		                <th>Equipo</th>
-		                <th>Rol</th>
-		                <th>Camiseta</th>
-		                <th>Email</th>
-		                <th>Teléfono</th>
+		                <th>Categor&iacute;a</th>
+		                <th>C&eacute;dula</th>
+		                <th>Acci&oacute;n</th>
 		            </tr>
 		            @foreach ($jugadores as $jugador)
 		            <tr>
 		                <td>{{ $jugador->nombres}}</td>
 		                <td>{{ $jugador->apellidos}}</td>
-		                <td>{{ $jugador->categoria}}</td>
 		                @foreach($equipos as $equipo)
 		                	@if($jugador->id_equipo == $equipo->id)
 		                		<td>{{ $equipo->nombre}}</td>
 		                	@endif
 		                @endforeach
-		                <td>{{ $jugador->rol}}</td>
-		                <td>{{ $jugador->num_camiseta}}</td>
-		                <td>{{ $jugador->email}}</td>
-		                <td>{{ $jugador->telefono}}</td>
+		                <td>{{ $jugador->categoria}}</td>
+		                <td>{{ $jugador->identificacion}}</td>
 		                <td>
 		                    <a class="btn btn-warning btn-sm" href="{!! route('jugador.edit', ['jugador' => $jugador->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
 		                    <!-- <a class="btn btn-warning btn-sm" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil"></i> Editar</a> -->
@@ -126,6 +121,10 @@
 		    </div>
 	    <div class="col-xs-1"></div>
 	@endif  
+    @if(!empty($jugadores) and count($jugadores) == 0)
+    	<h4 class="text-center">La búsqueda no ha coincidido con ning&uacute;n jugador.</h4>
+    	<h5 class="text-center">Seleccione opciones m&aacute;s generales e intente de nuevo.</h4>
+    @endif
 @endsection
 
 
