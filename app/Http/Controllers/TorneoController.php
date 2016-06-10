@@ -125,7 +125,6 @@ class TorneoController extends Controller
      */
     public function store(Request $request)
     {
-
         // Validación de los campos.
         $this->validate(
             $request,
@@ -135,6 +134,7 @@ class TorneoController extends Controller
             ]
         );
 
+        // Verificación si la categoría recibida está registrada.
         try {
             $categoriaID = Categoria::where('nombre', $request->categoria)
                                     ->get(['id'])
@@ -143,6 +143,7 @@ class TorneoController extends Controller
             return redirect()->route('torneo.create')->withErrors('La categoría que le asignó a este torneo no se encuentra registrada.');
         }
 
+        // Verificación si existe un torneo con el mismo año y categoría.
         $torneoExistente = Torneo::where('anio', $request->anio)
                                  ->where('id_categoria', $categoriaID)
                                  ->where('estado', 1)
@@ -151,49 +152,44 @@ class TorneoController extends Controller
             return redirect()->route('torneo.create')->withErrors('Ya existe un torneo creado con ese año y categoría.');
         }
 
-        // Variable contador - Controla que la información recibida sea asignado en el lugar correcto.
-        // Variable torneo   - Nuevo torneo que se va a guardar en la base.
-        $contador = 0;
-        $torneo   = new Torneo();
+        // Variable contador           - Controla que se empiece a buscar a los equipos
+        // desde la 4ta iteración.
+        // Variable equiposAgregadosID - Contiene el ID de todos los equipos que van a
+        // ser agregados al torneo.
+        $contador           = 0;
+        $equiposAgregadosID = [];
 
+        // Verificación para que los equipos agregados sean de la misma categoría del torneo.
         foreach ($request->all() as $valor) {
-            // Asignación del primer campo del torneo.
-            if ($contador === 1) {
-                $torneo->anio = $valor;
-            }
-
-            // Asignación del segundo campo del torneo y guardar el torneo en la base.
-            if ($contador === 2) {
-                try {
-                    $categoriaID          = Categoria::where('nombre', $valor)
-                                                     ->get(['id'])
-                                                     ->toArray()[0]['id'];
-                    $torneo->id_categoria = $categoriaID;
-                    $torneo->estado       = 1;
-                    $torneo->save();
-                } catch (\Exception $e) {
-                    return redirect()->route('torneo.create')->withErrors('La categoría que le asignó a este torneo no se encuentra registrada.');
-                }
-            }
-
-            // Crear y guardar los registros relacionados con los equipos participantes en el torneo.
-            // en la tabla torneo_equipos.
             if ($contador > 2) {
-                $torneoEquipo            = new TorneoEquipo();
-                $torneoEquipo->id_torneo = $torneo->id;
-                try {
-                    $equipoID = Equipo::where('nombre', $valor)
-                                      ->get(['id'])
-                                      ->toArray()[0]['id'];
-                    $torneoEquipo->id_equipo = $equipoID;
-                    $torneoEquipo->save();
-                } catch (\Exception $e) {
-                    return redirect()->route('torneo.create')->withErrors('El equipo que desea agregar no se encuentra registrado.');
+                $equipo = Equipo::where('nombre', $valor)
+                                ->where('categoria', $request->categoria)
+                                ->where('estado', 1)
+                                ->first();
+                if (count($equipo) === 1) {
+                    array_push($equiposAgregadosID, $equipo->id);
+                } else {
+                    return redirect()->route('torneo.create')->withErrors('Se trató de agregar a un equipo que no tiene la misma categoría del torneo.');
                 }
             }
 
-            ++$contador;
-        }//end foreach
+            $contador++;
+        }
+
+        // Creación del torneo.
+        $torneo       = new Torneo();
+        $torneo->anio = $request->anio;
+        $torneo->id_categoria = $categoriaID;
+        $torneo->estado       = 1;
+        $torneo->save();
+
+        // Asignación de ese equipo al torneo recién creado.
+        foreach ($equiposAgregadosID as $equipoAgregadoID) {
+            $torneoEquipo            = new TorneoEquipo();
+            $torneoEquipo->id_torneo = $torneo->id;
+            $torneoEquipo->id_equipo = $equipoAgregadoID;
+            $torneoEquipo->save();
+        }
 
         // Redirecciono a la ruta torneo.
         return redirect('torneo');

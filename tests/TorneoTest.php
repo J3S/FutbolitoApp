@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TorneoTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTransactions;
 
 
     /**
@@ -24,7 +24,7 @@ class TorneoTest extends TestCase
 
     /**
      * Comprueba el funcionamiento para crear un torneo
-     * Es exitoso si la página que se obtienen tiene la ruta /torneo/create
+     * Es exitoso si la página que se obtienen tiene la ruta /torneo
      * Corresponde al caso de prueba testCrearTorneo: post-condition 1
      *
      * @return void
@@ -32,7 +32,7 @@ class TorneoTest extends TestCase
     public function testCrearTorneo1()
     {
         $this->visit(route('torneo.create'))
-             ->type('2016', 'anio')
+             ->type('1980', 'anio')
              ->select('Junior', 'categoria')
              ->press('Guardar')
              ->seePageIs(route('torneo.index'));
@@ -40,7 +40,7 @@ class TorneoTest extends TestCase
 
     /**
      * Comprueba el funcionamiento para crear un torneo
-     * Es exitoso si la página que se obtienen tiene la ruta /torneo/create
+     * Es exitoso si la página que se obtienen tiene la ruta /torneo
      * Corresponde al caso de prueba testCrearTorneo: post-condition 2
      *
      * @return void
@@ -51,13 +51,13 @@ class TorneoTest extends TestCase
         Session::start();
         $parametros = [
             '_token' => csrf_token(), // Obteniendo el csrf token
-            'anio' => '2016',
+            'anio' => '1980',
             'categoria' => 'Super Junior',
-            'Equipo Prueba' => 'equipo16',
+            '23C' => '23C',
         ];
         $response = $this->call('POST', 'torneo', $parametros);
 
-        $this->assertRedirectedToRoute('torneo.create');
+        $this->assertRedirectedToRoute('torneo.index');
     }
 
     /**
@@ -74,6 +74,53 @@ class TorneoTest extends TestCase
              ->select('Super Master', 'categoria')
              ->press('Guardar')
              ->seePageIs(route('torneo.create'));
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un torneo
+     * Es exitoso si la página que se obtienen tiene la ruta /torneo
+     * Corresponde al caso de prueba testCrearTorneo: post-condition 4
+     *
+     * @return void
+     */
+    public function testCrearTorneo4()
+    {
+        // Se inicia una sesión para esta prueba
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1980',
+            'categoria' => 'Rey Master',
+            '23A' => '23A',
+        ];
+
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        $this->assertRedirectedToRoute('torneo.index');
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un torneo
+     * Es exitoso si la página que se obtienen tiene la ruta /torneo/create
+     * Corresponde al caso de prueba testCrearTorneo: post-condition 5
+     *
+     * @return void
+     */
+    public function testCrearTorneo5()
+    {
+        // Se inicia una sesión para esta prueba
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1980',
+            'categoria' => 'Super Senior',
+            '20A' => '20A',
+            '23D' => '23D',
+        ];
+
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        $this->assertRedirectedToRoute('torneo.create');
     }
 
 }
