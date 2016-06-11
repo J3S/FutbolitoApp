@@ -29,7 +29,6 @@ class CreateSeguirEquiposTable extends Migration
      */
     public function down()
     {
-        dd('Cae aquí');
         Schema::dropIfExists('seguir_equipos');
     }
 }
