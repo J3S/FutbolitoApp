@@ -43,7 +43,7 @@
         <!-- Formulario -->
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Crear Torneo</h3>
+                <h3 class="box-title">Crear torneo</h3>
             </div><!-- /.box-header -->
             <form role="form" action="/torneo" method="POST" id="formCrearTorneo">
                 <div class="box-body">
@@ -94,14 +94,18 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <a type="button" class="btn btn-primary" id="agregarEquipo">Agregar Equipo</a>
+                            <a type="button" class="btn btn-primary" id="agregarEquipo">Agregar equipo</a>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <a type="button" class="btn btn-primary" id="agregarTodos">Agregar a todos</a>
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-12">
                             <!-- Tabla que contiene a todos los equipos que van a ser agregados al torneo -->
-                            <h5><b>Equipos Agregados</b></h5>
+                            <h5><b>Equipos agregados</b></h5>
                             <div class="table-responsive">
                                 <table class="table table-hover" id="equiposAgregados">
                                     <thead>
@@ -120,7 +124,7 @@
                 <div class="box-footer">
                     <div class="col-xs-2"></div>
                     <div class="col-xs-8">
-                        <button type="submit" class="btn btn-primary">Limpiar</button>
+                        <a class="btn btn-primary" href="{{ route("torneo.index") }}">Cancelar</a>
                         <button type="submit" class="btn btn-success pull-right">Guardar</button>
                     </div>
                     <div class="col-xs-2"></div>
@@ -134,36 +138,71 @@
 
 @section('scriptsPersonales')
     <script>
-    document.getElementById("agregarEquipo").addEventListener("click", function(){
-        if($( "#equipos option:selected" ).text().length != 0){
-            // Verificación si el equipo ya está presente en la tabla de equipos para el torneo
-            if ($('#'+$( "#equipos option:selected" ).text()).length == 0) {
-                // Agregar el equipo en la tabla
-                $('#datosEquipo').append('<tr><td>' + $( "#equipos option:selected" ).text() + '</td><td><button type="button" class="btn btn-danger btn-xs" onclick="eliminarRow(this)" data-input="' + $( "#equipos option:selected" ).text() + '"><i class="fa fa-minus"></i> Quitar</button></td></tr>');
-                // Agregar el campo input que será enviado en el post(con el nombre del equipo)
-                $('#formCrearTorneo').append('<input type="hidden" id="' + $( "#equipos option:selected" ).text() + '" name="' + $( "#equipos option:selected" ).text() + '" value="' + $( "#equipos option:selected" ).text() + '"/>');
-            } else {
-                alert('Este equipo ya ha sido agregado');
-            } 
-        }
-    });
+        document.getElementById("agregarEquipo").addEventListener("click", agregarEquipoTabla);
+        document.getElementById("agregarTodos").addEventListener("click", agregarTodosTabla);
+        document.getElementById("categoria").addEventListener("click", llenarEquiposSelect);
 
-    // Eliminación de la fila y del input que contiene al equipo que se desea quitar de la tabla de equipos para el torneo
-    function eliminarRow(buttonTriggered){
-        $(buttonTriggered).parent().parent().remove();
-        var inputElementID = $(buttonTriggered).data('input');      
-        $('#'+inputElementID).remove();
-    }
-
-    // Carga dinámica de los equipos dependiendo de la categoría seleccionada
-    document.getElementById("categoria").addEventListener("click", function(){
-        var equiposCategoria = <?php echo json_encode($equiposxcategorias); ?>;
-        var categoria = $("#categoria option:selected").text();
-        $('#equipos').find('option').remove().end();
-        var index;
-        for (index = 0; index < equiposCategoria[categoria].length; ++index) {
-            $('#equipos').append($('<option>' + equiposCategoria[categoria][index]['nombre'] + '</option>'));
+        function crearRowEquipoTabla(valor) {
+            // Agregar el equipo en la tabla
+            $('#datosEquipo').append('<tr><td>' + valor + '</td><td><button type="button" class="btn btn-danger btn-xs" onclick="eliminarRow(this)" data-input="' + valor + '"><i class="fa fa-minus"></i> Quitar</button></td></tr>');
         }
-    });
+
+        function crearInputEquipo(valor) {
+            // Agregar el campo input que será enviado en el post(con el nombre del equipo).
+            $('#formCrearTorneo').append('<input type="hidden" id="' + valor + '" name="' + valor + '" value="' + valor + '"/>');
+        }
+
+        // Agrega el equipo seleccionado a la tabla.
+        function agregarEquipoTabla() {
+            if($( "#equipos option:selected" ).text().length != 0){
+                // Verificación si el equipo ya está presente en la tabla de equipos para el torneo.
+                if ($('#'+$( "#equipos option:selected" ).text()).length == 0) {
+                    crearRowEquipoTabla($( "#equipos option:selected" ).text());
+                    crearInputEquipo($( "#equipos option:selected" ).text());
+                } else {
+                    alert('Este equipo ya ha sido agregado');
+                } 
+            }
+        }
+
+        // Agrega a todos los equipos de la categoría seleccionada a la tabla.
+        function agregarTodosTabla() {
+            //Si hay equipos agregados los elimino.
+            $('#equiposAgregados > tbody  > tr').each(function() {
+                $this = $(this)
+                var inputElementID = $this.children().eq(1).children().data('input');
+                $('#'+inputElementID).remove();
+            });
+            $("#equiposAgregados > tbody").html("");
+            // Obtención de todos los equipos divididos por categorías.
+            var equiposCategoria = <?php echo json_encode($equiposxcategorias); ?>;
+            var categoria = $("#categoria option:selected").text();
+            var index;
+            // Llenado de la tabla y creación de los campos input ocultos.
+            for (index = 0; index < equiposCategoria[categoria].length; ++index) {
+                crearRowEquipoTabla(equiposCategoria[categoria][index]['nombre']);
+                crearInputEquipo(equiposCategoria[categoria][index]['nombre']);
+            }
+        }
+
+        // Carga dinámica de los equipos dependiendo de la categoría seleccionada.
+        function llenarEquiposSelect() {
+            // Obtención de todos los equipos divididos por categorías.
+            var equiposCategoria = <?php echo json_encode($equiposxcategorias); ?>;
+            var categoria = $("#categoria option:selected").text();
+            $('#equipos').find('option').remove().end();
+            var index;
+            // LLenado del select de equipos.
+            for (index = 0; index < equiposCategoria[categoria].length; ++index) {
+                $('#equipos').append($('<option>' + equiposCategoria[categoria][index]['nombre'] + '</option>'));
+            }
+        }
+
+        // Eliminación de la fila y del input que contiene al equipo que se desea quitar de la tabla de equipos para el torneo
+        function eliminarRow(buttonTriggered) {
+            $(buttonTriggered).parent().parent().remove();
+            var inputElementID = $(buttonTriggered).data('input');      
+            $('#'+inputElementID).remove();
+        }
     </script>
 @endsection

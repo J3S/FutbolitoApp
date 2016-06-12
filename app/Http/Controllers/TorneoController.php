@@ -91,10 +91,10 @@ class TorneoController extends Controller
             * año, y todas las categorías.
         */
 
-        return view('torneo')->with('torneos', $torneosExistentes)
-                             ->with('anioServer', $anioServer)
-                             ->with('inexistentes', $contadorInexistentes)
-                             ->with('categorias', $categorias);
+        return view('torneo.index')->with('torneos', $torneosExistentes)
+                                   ->with('anioServer', $anioServer)
+                                   ->with('inexistentes', $contadorInexistentes)
+                                   ->with('categorias', $categorias);
 
     }//end index()
 
@@ -127,7 +127,7 @@ class TorneoController extends Controller
         }
 
         // Retorno la vista con todas las categorías disponibles.
-        return view('torneoc')->with('categorias', $categorias)
+        return view('torneo.create')->with('categorias', $categorias)
                               ->with('equiposxcategorias', $equiposxcategorias);
 
     }//end create()
@@ -283,6 +283,7 @@ class TorneoController extends Controller
         $torneo        = Torneo::find($id);
         $torneoEquipos = TorneoEquipo::where('id_torneo', $id)
                                      ->get();
+        // Verificación de la existencia del torneo
         if (count($torneo) === 0) {
             return redirect()->route('torneo.index')->withErrors(
                 'El torneo al que desea modificar no se encuentra registrado.'
@@ -303,10 +304,10 @@ class TorneoController extends Controller
             * con los equipos que están agregados a ese torneo.
         */
 
-        return view('torneoe')->with('torneo', $torneo)
-                              ->with('equiposxcategorias', $equiposxcategorias)
-                              ->with('categorias', $categorias)
-                              ->with('equiposAgregados', $equiposAgregados);
+        return view('torneo.edit')->with('torneo', $torneo)
+                                  ->with('equiposxcategorias', $equiposxcategorias)
+                                  ->with('categorias', $categorias)
+                                  ->with('equiposAgregados', $equiposAgregados);
 
     }//end edit()
 
@@ -336,7 +337,10 @@ class TorneoController extends Controller
                                     ->get(['id'])
                                     ->toArray()[0]['id'];
         } catch (\Exception $e) {
-            return redirect()->route('torneo.create')->withErrors(
+            // return redirect()->route('torneo.edit')->withErrors(
+            //     'La categoría asignada a este torneo no se encuentra registrada.'
+            // );
+            return back()->withInput()->withErrors(
                 'La categoría asignada a este torneo no se encuentra registrada.'
             );
         }
@@ -357,7 +361,7 @@ class TorneoController extends Controller
         */
 
         foreach ($request->all() as $valor) {
-            if ($contador > 2) {
+            if ($contador > 3) {
                 $equipo = Equipo::where('nombre', $valor)
                                 ->where('categoria', $request->categoria)
                                 ->where('estado', 1)
@@ -365,7 +369,11 @@ class TorneoController extends Controller
                 if (count($equipo) === 1) {
                     array_push($equiposAgregadosID, $equipo->id);
                 } else {
-                    return redirect()->route('torneo.create')->withErrors(
+                    // return redirect()->route('torneo.edit')->withErrors(
+                    //     'Se trató de agregar a un equipo que no tiene la misma
+                    //     categoría del torneo.'
+                    // );
+                    return back()->withInput()->withErrors(
                         'Se trató de agregar a un equipo que no tiene la misma
                         categoría del torneo.'
                     );
@@ -373,6 +381,18 @@ class TorneoController extends Controller
             }
 
             $contador++;
+        }
+
+        // Verificación si existe un torneo con el mismo año y categoría.
+        $torneoExistente = Torneo::where('anio', $request->anio)
+                                 ->where('id_categoria', $categoriaID)
+                                 ->where('estado', 1)
+                                 ->get();
+
+        if ($torneoExistente[0]['id'] !== intval($id)) {
+            return back()->withInput()->withErrors(
+                'Ya existe un torneo creado con ese año y categoría.'
+            );
         }
 
         /*
