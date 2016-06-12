@@ -110,13 +110,14 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-xs-12">
-                                <form>
+                                <form role="form" action="/buscarTorneos" method="post">
+                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <div class="col-lg-1">
                                             <label for="anio">A&ntilde;o</label>
                                         </div>
                                         <div class="col-lg-2">
-                                            <input type="number" class="form-control" id="anio" placeholder="A&ntilde;o">
+                                            <input type="number" class="form-control" id="anio" name="anio"placeholder="A&ntilde;o">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -124,7 +125,8 @@
                                             <label for="categoria">Categor&iacute;a</label>
                                         </div>
                                         <div class="col-lg-3" id="categoria">
-                                            <select class="form-control">
+                                            <select class="form-control" name="categoria">
+                                                <option></option>
                                                 @if(count($categorias) != 0)
                                                     @foreach($categorias as $categoria)
                                                         <option>{{ $categoria->nombre }}</option>
@@ -135,8 +137,47 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Buscar</button>
+                                    <button type="submit" class="btn btn-primary" id="buscar">Buscar</button>
                                 </form>
+                                <div class="table-responsive">
+                                    @if (session()->has('torneosEncontrados'))
+                                        <hr>
+                                        <h5><b>Equipos encontrados</b></h5>
+                                        <table class="table table-hover" id="torneosEncontrados">
+                                            <thead>
+                                                <tr>
+                                                    <th>Categor&iacute;a</th>
+                                                    <th>A&ntilde;o</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (count(session()->get('torneosEncontrados')) == 0)
+                                                    <tr>
+                                                        <td><b>No se ha encontrado ningún torneo</b></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @else
+                                                    @foreach(session()->get('torneosEncontrados') as $torneoEncontrado)
+                                                        <tr>
+                                                            <td>{{ $torneoEncontrado[2] }}</td>
+                                                            <td>{{ $torneoEncontrado[1] }}</td>
+                                                            <td> <a href="{{ route('torneo.edit', $torneoEncontrado[0]) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Editar</a></td>
+                                                            <td>
+                                                                <form action="/torneo/{{ $torneoEncontrado[0] }}" method="POST">
+                                                                    <input type="hidden" name="_method" value="DELETE">
+                                                                    {{ csrf_field() }}
+                                                                    <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Desactivar</button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div><!-- /.box-body -->
@@ -149,4 +190,7 @@
 
     </div>
 
+@endsection
+
+@section('scriptsPersonales')
 @endsection

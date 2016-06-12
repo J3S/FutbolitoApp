@@ -68,6 +68,8 @@ Route::post('selectJugador', 'JugadorController@searchJugador');
 Route::resource('torneo', 'TorneoController',
     ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 
+Route::post('buscarTorneos', 'TorneoController@searchTorneo');
+
 Route::resource('partido', 'PartidoController',
 	['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 

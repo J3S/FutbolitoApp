@@ -337,9 +337,6 @@ class TorneoController extends Controller
                                     ->get(['id'])
                                     ->toArray()[0]['id'];
         } catch (\Exception $e) {
-            // return redirect()->route('torneo.edit')->withErrors(
-            //     'La categoría asignada a este torneo no se encuentra registrada.'
-            // );
             return back()->withInput()->withErrors(
                 'La categoría asignada a este torneo no se encuentra registrada.'
             );
@@ -369,10 +366,6 @@ class TorneoController extends Controller
                 if (count($equipo) === 1) {
                     array_push($equiposAgregadosID, $equipo->id);
                 } else {
-                    // return redirect()->route('torneo.edit')->withErrors(
-                    //     'Se trató de agregar a un equipo que no tiene la misma
-                    //     categoría del torneo.'
-                    // );
                     return back()->withInput()->withErrors(
                         'Se trató de agregar a un equipo que no tiene la misma
                         categoría del torneo.'
@@ -443,7 +436,7 @@ class TorneoController extends Controller
             $torneo         = Torneo::find($id);
             $torneo->estado = 0;
             $torneo->save();
-            return $this->index();
+            return redirect()->back();
         } catch (\Exception $e) {
             return reditect()->route('torneo.index')->withErrors(
                 'El torneo al que desea desactivar no se encuentra registrado.'
@@ -451,6 +444,56 @@ class TorneoController extends Controller
         }
 
     }//end destroy()
+
+
+    public function searchTorneo(Request $request)
+    {
+        // Validación de los campos.
+        $this->validate(
+            $request,
+            [
+             'anio'      => 'numeric',
+            ]
+        );
+
+        // Verificación si la categoría recibida está registrada.
+        if ($request->categoria !== "") {
+            try {
+                $categoriaID = Categoria::where('nombre', $request->categoria)
+                                        ->get(['id'])
+                                        ->toArray()[0]['id'];
+            } catch (\Exception $e) {
+                return back()->withInput()->withErrors(
+                    'La categoría asignada a este torneo no se encuentra registrada.'
+                );
+            }
+        }
+
+        $torneosBuscados;
+        if ($request->anio !== "" && $request->categoria !== "") {
+            $torneosBuscados = Torneo::where('anio', $request->anio)
+                                     ->where('id_categoria', $categoriaID)
+                                     ->where('estado', 1)
+                                     ->get();
+        } elseif ($request->anio !== "") {
+            $torneosBuscados = Torneo::where('anio', $request->anio)
+                                     ->where('estado', 1)
+                                     ->get();
+        } elseif ($request->categoria !== "") {
+            $torneosBuscados = Torneo::where('id_categoria', $categoriaID)
+                                     ->where('estado', 1)
+                                     ->get();
+        } else {
+            $torneosBuscados = [];
+        }
+        $torneosEncontrados = [];
+        foreach ($torneosBuscados as $torneoBuscado) {
+            $categoria = Categoria::where('id', $torneoBuscado['id_categoria'])
+                                  ->first();
+            array_push($torneosEncontrados, [$torneoBuscado['id'], $torneoBuscado['anio'], $categoria->nombre]);
+        }
+        return redirect()->back()->with('torneosEncontrados', $torneosEncontrados);
+    }
 
 
 }//end class
