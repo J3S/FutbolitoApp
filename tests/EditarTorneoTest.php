@@ -350,6 +350,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo7()
     {
-        $this->visit('torneo/1049/edit')->seePageIs(route('torneo.index'));
+        $torneoUltimoRegistro = Torneo::orderBy('id', 'desc')->first();
+        $idUltimoRegistro = $torneoUltimoRegistro->id+1;
+        $this->visit('torneo/' . $idUltimoRegistro . '/edit')->seePageIs(route('torneo.index'));
     }
 }

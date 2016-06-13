@@ -440,7 +440,7 @@ class TorneoController extends Controller
             $torneo->save();
             return redirect()->back();
         } catch (\Exception $e) {
-            return reditect()->route('torneo.index')->withErrors(
+            return back()->withInput()->withErrors(
                 'El torneo al que desea desactivar no se encuentra registrado.'
             );
         }
