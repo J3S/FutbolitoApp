@@ -40,7 +40,7 @@ class JugadorController extends Controller
     public function create()
 
     {
-
+    
        /* Recorro listas de equipos para que sean escogidos por el jugador.
         */
         $equipos = Equipo::where('estado', 1)->get();
@@ -63,7 +63,11 @@ class JugadorController extends Controller
         $this->validate($request, array(
                 'nombres' => 'required',
                 'apellidos' => 'required',
-                'equipo' => 'required'
+                'equipo' => 'required',
+                'identificacion' => 'required',
+                'categoria' => 'required',
+                'identificacion'=> 'unique:jugadors,identificacion',
+                'num_camiseta' => 'unique:jugadors,num_camiseta, equipo'
             ));
         /* Creo nueva instancia de jugador y le asigno todos los valores ingresados por el usuario desde la vista 'jugadorc' */
         $jugador = new Jugador;
