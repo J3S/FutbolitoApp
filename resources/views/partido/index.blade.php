@@ -91,72 +91,67 @@
 			</form>
 		</div>
 	</div>
+
 	<!-- Seccion para mostrar los resultados de la busqueda de partidos -->
 	@if(!empty($partidos) and count($partidos) != 0)
-			<div class="col-xs-12">
-	    {{--*/ $widget = 0 /*--}}
-	    @foreach($partidos as $partido)
-	 		@foreach($torneos as $torneo)
-	 			@if($partido->id_torneo == $torneo->id)
-	 				{{--*/ $torneoPartido = $torneo /*--}}
-	                @foreach($categorias as $categoria)
-	                    @if($torneoPartido->id_categoria == $categoria->id)
-	                        {{--*/ $categoriaTorneo = $categoria /*--}}
-	                    @endif
-	                @endforeach
-				@endif
-	 		@endforeach
-	 		@foreach($equipos as $equipo)
-	 			@if($partido->equipo_local == $equipo->nombre)
-	 				{{--*/ $equipoLocal = $equipo /*--}}
-				@endif
-	 			@if($partido->equipo_visitante == $equipo->nombre)	
-	 				{{--*/ $equipoVisit = $equipo /*--}}
-				@endif
-	 		@endforeach
-	        @if($widget % 3 == 0)
-	            <div class="row">
-	        @endif
-	        <div class="col-md-4">
-	            <!-- Widget: user widget style 1 -->
-	            <div class="box box-widget widget-user-2">
-	                <!-- Add the bg color to the header using any of the bg-* classes -->
-	                <div class="box-footer no-padding">
-		                <ul class="nav nav-stacked">
-		                	<li><h4 class="bg-green" style="text-align:center">{!! $categoriaTorneo['nombre'] !!} {!! $torneoPartido['anio'] !!} - Jornada # {!! $partido['jornada'] !!}</h4></li>
-			                <li><a href="#">Resultado
-								<span class="pull-right badge bg-green">{!! $equipoVisit['nombre'] !!}</span>
-	                            <span class="pull-right badge bg-black">{!! $partido['gol_local'] !!} - {!! $partido['gol_visitante'] !!}</span>
-	                            <span class="pull-right badge bg-green">{!! $equipoLocal['nombre'] !!}</span>
-			                </a></li>
-	                        <li><a href="#">Fecha <span class="pull-right badge bg-black">{!! $partido['fecha'] !!}</span></a></li>
-	                        <li><a href="#">Lugar <span class="pull-right badge bg-black">{!! $partido['lugar'] !!}</span></a></li>
-	                        <div class="col-md-6">
-	                        	<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a>
-                    		</div>
-	                    <div class="col-md-6">
-	                        <form class="pull-right" action="/partido/{{ $partido->id }}" method="POST">
-	                            <input type="hidden" name="_method" value="DELETE">
-	                            {{ csrf_field() }}
-	                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Desactivar</button>
-	                        </form>
-	                    </div>
-	                    </ul>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- /.widget-user -->
-	        @if($widget % 3 == 2)
-	            </div>
-	        @endif
-	        <?php $widget++; ?>
-	    @endforeach
-	    </div>
-    @endif
+		@foreach($torneos as $torneo)
+			@foreach($categorias as $categoria)
+				@if($torneo->id_categoria == $categoria->id)
+					@if($contienePartidos[$torneo->id-1]['partidos'] != 0)
+					<div class="col-xs-12" style="padding-bottom: 15px;">
+						<div class="box box-primary">
+			            	<div class="box-header with-border">
+								<h3 class="box-title">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</h3>
+								<div class="table-responsive">
+									<table class="table table-hover">
+							            <thead>
+							                <tr>
+							                    <th>Jornada</th>
+							                    <th>Fecha</th>
+							                    <th>Lugar</th>
+							                    <th>Resultado</th>
+							                    <th>Editar</th>
+							                    <th>Desactivar</th>
+							                </tr>
+							            </thead>  
+										@foreach($partidos as $partido)
+											@if($partido->id_torneo == $torneo->id)
+											<tbody>
+												<tr>
+													<td><span class="badge bg-black">{{ $partido['jornada'] }}</span></td>
+													<td><span class="label label-default">{{ $partido['fecha'] }}</span></td>
+													<td><span class="label label-default">{{ $partido['lugar'] }}</span></td>
+													<td><span class="badge bg-green">{{ $partido['equipo_local'] }}</span> <span class="label label-default">{{ $partido['gol_local'] }} - {{ $partido['gol_visitante'] }}</span> <span class="badge bg-green">{{ $partido['equipo_visitante'] }}</span></td>
+													<td>
+														<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+													</td>
+													<td>
+														<form action="/partido/{{ $partido->id }} => " method="POST">
+							                            <input type="hidden" name="_method" value="DELETE">
+							                            {{ csrf_field() }}
+
+							                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa fa-times fa-lg"></i></button>
+							                        	</form>
+						                        	</td>
+												</tr>
+											</tbody>
+											@endif<!-- endif partido.id = torneo.id -->
+										@endforeach<!-- endforeach partidos -->
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					@endif<!-- endif contienePartidos -->
+				@endif<!-- endif torneo.id = categoria.id -->
+			@endforeach<!-- endforeach categorias -->
+		@endforeach<!-- endforeach torneos -->
+    @endif<!-- endif busqueda no vacia -->
+
     @if(!empty($partidos) and count($partidos) == 0)
     	<h4 class="text-center">La búsqueda no ha coincidido con ning&uacute;n partido.</h4>
     	<h5 class="text-center">Seleccione opciones m&aacute;s generales e intente de nuevo.</h4>
-    @endif
+    @endif<!-- endif busqueda vacia -->
     <script>
 	    // Carga dinámica de los equipos dependiendo del torneo seleccionado
 	    document.getElementById("torneo").addEventListener("change", llenarEquiposSelect);
