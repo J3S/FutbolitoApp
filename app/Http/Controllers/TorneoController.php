@@ -283,7 +283,7 @@ class TorneoController extends Controller
         $torneo        = Torneo::find($id);
         $torneoEquipos = TorneoEquipo::where('id_torneo', $id)
                                      ->get();
-        // Verificación de la existencia del torneo
+        // Verificación de la existencia del torneo.
         if (count($torneo) === 0) {
             return redirect()->route('torneo.index')->withErrors(
                 'El torneo al que desea modificar no se encuentra registrado.'
@@ -382,10 +382,12 @@ class TorneoController extends Controller
                                  ->where('estado', 1)
                                  ->get();
 
-        if ($torneoExistente[0]['id'] !== intval($id)) {
-            return back()->withInput()->withErrors(
-                'Ya existe un torneo creado con ese año y categoría.'
-            );
+        if(count($torneoExistente) !== 0){
+            if ($torneoExistente[0]['id'] !== intval($id)) {
+                return back()->withInput()->withErrors(
+                    'Ya existe un torneo creado con ese año y categoría.'
+                );
+            }
         }
 
         /*
@@ -446,14 +448,19 @@ class TorneoController extends Controller
     }//end destroy()
 
 
+    /**
+     * Busca torneos de acuerdo al año o categoría.
+     *
+     * @param \Illuminate\Http\Request $request Filtros para buscar.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function searchTorneo(Request $request)
     {
         // Validación de los campos.
         $this->validate(
             $request,
-            [
-             'anio'      => 'numeric',
-            ]
+            ['anio' => 'numeric']
         );
 
         // Verificación si la categoría recibida está registrada.
@@ -464,36 +471,49 @@ class TorneoController extends Controller
                                         ->toArray()[0]['id'];
             } catch (\Exception $e) {
                 return back()->withInput()->withErrors(
-                    'La categoría asignada a este torneo no se encuentra registrada.'
+                    'La categoría seleccionada no se encuentra registrada.'
                 );
             }
         }
 
+        // Búsqueda de los torneos de acuerdo a los datos recibidos.
         $torneosBuscados;
         if ($request->anio !== "" && $request->categoria !== "") {
             $torneosBuscados = Torneo::where('anio', $request->anio)
                                      ->where('id_categoria', $categoriaID)
                                      ->where('estado', 1)
                                      ->get();
-        } elseif ($request->anio !== "") {
+        } else if ($request->anio !== "") {
             $torneosBuscados = Torneo::where('anio', $request->anio)
                                      ->where('estado', 1)
                                      ->get();
-        } elseif ($request->categoria !== "") {
+        } else if ($request->categoria !== "") {
             $torneosBuscados = Torneo::where('id_categoria', $categoriaID)
                                      ->where('estado', 1)
                                      ->get();
         } else {
             $torneosBuscados = [];
         }
+
+        // Datos de los torneos encontrados.
         $torneosEncontrados = [];
         foreach ($torneosBuscados as $torneoBuscado) {
             $categoria = Categoria::where('id', $torneoBuscado['id_categoria'])
                                   ->first();
-            array_push($torneosEncontrados, [$torneoBuscado['id'], $torneoBuscado['anio'], $categoria->nombre]);
+            array_push(
+                $torneosEncontrados,
+                [
+                 $torneoBuscado['id'],
+                 $torneoBuscado['anio'],
+                 $categoria->nombre,
+                ]
+            );
         }
+
+        // Retorno a la vista principal de torneo con los torneos encontrados.
         return redirect()->back()->with('torneosEncontrados', $torneosEncontrados);
-    }
+
+    }//end searchTorneo()
 
 
 }//end class
