@@ -21,11 +21,11 @@ class PartidoTableSeeder extends Seeder
                 "Jose", "Marco", "Pablo", "Carlos", "Mateo", "Edgar");
 
         foreach ($torneos as $torneo) {
-            foreach (range(1, 13) as $jornada) {
+            foreach (range(1, 12) as $jornada) {
                 shuffle($names);
                 $name = $names[0];
-                $year = rand(2008, 2016);
-                $month = rand(1, 3);
+                $year = $torneo->anio;
+                $month = $jornada;
                 $day = rand(1, 28);
                 $hour = rand(8, 16);
                 $date = Carbon::create($year, $month, $day, $hour, 0, 0);

@@ -157,5 +157,7 @@
             }
             
         }
+
+        window.onload = llenarEquiposSelect;
     </script>
 @endsection
