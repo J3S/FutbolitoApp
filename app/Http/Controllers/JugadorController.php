@@ -158,17 +158,22 @@ class JugadorController extends Controller
     }
 
     /**
-     * Remove the specified Jugador from storage.
+     * Función que se encarga de desactivar un jugador en la base de datos.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        /* Encuentro al jugador que el usuario desea desactivar y cambio su estado a 0 (desactivado) */
+        $jugador = Jugador::find($id);
+        $jugador->estado = 0;
+
+        /* Actualizo los datos del partido en la base de datos */
+        $jugador->save();
+
+        return $this->index();
     }
-
-
     /**
      * Función que se encarga de filtrar los jugadores utilizando los parámetros ingresados por el
      * usuario en el formulario de búsqueda.
