@@ -18,6 +18,8 @@ use App\TorneoEquipo;
 use App\Equipo;
 use App\Partido;
 use App\Categoria;
+use Carbon\Carbon;
+
 /**
  * Clase PartidoController
  *
@@ -41,7 +43,7 @@ class PartidoController extends Controller
     {
         $categorias    = Categoria::all();
         $equipos       = Equipo::where('estado', 1)->get();
-        $torneos       = Torneo::where('estado', 1)->get();
+        $torneos       = Torneo::where('estado', 1)->orderBy('anio', 'desc')->get();
         $torneoEquipos = TorneoEquipo::all();
 
         /*
@@ -49,7 +51,7 @@ class PartidoController extends Controller
             * torneos presentes en la base de datos.
         */
 
-        return view('partido')->withCategorias($categorias)
+        return view('partido.index')->withCategorias($categorias)
             ->withEquipos($equipos)->withTorneos($torneos)->with('torneoEquipos', $torneoEquipos);
 
     }//end index()
@@ -67,7 +69,7 @@ class PartidoController extends Controller
         */
 
         $categorias    = Categoria::all();
-        $torneos       = Torneo::where('estado', 1)->get();
+        $torneos       = Torneo::where('estado', 1)->orderBy('anio', 'desc')->get();
         $equipos       = Equipo::where('estado', 1)->get();
         $torneoEquipos = TorneoEquipo::all();
 
@@ -75,7 +77,7 @@ class PartidoController extends Controller
             * Retorno la vista para crear partido con la lista de torneos, equipos y categorias
         */
 
-        return view('partidoc')->withTorneos($torneos)
+        return view('partido.create')->withTorneos($torneos)
             ->withEquipos($equipos)->withCategorias($categorias)
             ->with('torneoEquipos', $torneoEquipos);
 
@@ -159,7 +161,7 @@ class PartidoController extends Controller
 
         // Preparo los datos que seran enviados a la vista.
         $date          = date("Y-m-d\TH:i:s", strtotime($partido->fecha));
-        $torneos       = Torneo::where('estado', 1)->get();
+        $torneos       = Torneo::where('estado', 1)->orderBy('anio', 'desc')->get();
         $torneo        = Torneo::find($partido->id_torneo);
         $categoria     = Categoria::find($torneo->id_categoria);
         $categorias    = Categoria::all();
@@ -169,7 +171,7 @@ class PartidoController extends Controller
         $torneoEquipos = TorneoEquipo::all();
 
         // Retorno vista para editar partido con la información del partido seleccionado, lista de equipos, lista de torneos y lista de categorias.
-        return view('partidoe')->withEquipo($equipo)
+        return view('partido.edit')->withEquipo($equipo)
             ->withEquipoV($equipoV)->withPartido($partido)
             ->withTorneos($torneos)->withEquipos($equipos)
             ->withDate($date)->withCategorias($categorias)
@@ -259,6 +261,9 @@ class PartidoController extends Controller
      */
     public function searchPartido(Request $request)
     {
+        // Arreglo que guardara la cantidad de partidos que contiene cada torneo.
+        $contienePartidos = [];
+
         // Encuentro todos los partidos activos.
         $partidos = Partido::where('estado', 1)->get();
 
@@ -266,6 +271,8 @@ class PartidoController extends Controller
         if ($request->ini_partido !== '' && $request->fin_partido !== '') {
             $partidosFecha = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))
             ->where('estado', 1)->get();
+            $iniDate       = Carbon::parse($request->ini_partido);
+            $finDate       = Carbon::parse($request->fin_partido);
             $partidos      = $partidos->intersect($partidosFecha);
         }
 
@@ -302,13 +309,29 @@ class PartidoController extends Controller
         $categorias    = Categoria::all();
         $torneoEquipos = TorneoEquipo::all();
 
-        // Retorno a vista principal de partido con los partidos activos filtrados, lista de equipos activos, lista de torneos activos y lista de categorias.
-        return view('partido')
+        // Recorro los torneos, cuento el numero de partidos asignados a cada torneo y los guardo en un arreglo.
+        foreach ($torneos as $torneo) {
+            $contador = 0;
+            foreach ($partidos as $partido) {
+                if ($partido->id_torneo === $torneo->id)
+                    $contador++;
+            }
+
+            $info = [
+                     'id'       => $torneo->id,
+                     'partidos' => $contador,
+                    ];
+            array_push($contienePartidos, $info);
+        }
+
+        // Retorno a vista principal de partido con los partidos activos filtrados, lista de equipos activos, lista de torneos activos, lista de categorias y numero de partidos por torneo.
+        return view('partido.index')
             ->withPartidos($partidos)
             ->withEquipos($equipos)
             ->withTorneos($torneos)
             ->withCategorias($categorias)
-            ->with('torneoEquipos', $torneoEquipos);
+            ->with('torneoEquipos', $torneoEquipos)
+            ->with('contienePartidos', $contienePartidos);
 
     }//end searchPartido()
 
