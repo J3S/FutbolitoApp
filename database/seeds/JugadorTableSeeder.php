@@ -36,7 +36,7 @@ class JugadorTableSeeder extends Seeder
                     'telefono' => '09'.rand(),
                     'peso' => round((mt_rand(5500, 10000)/100), 1),
                     'categoria' => $equipo->categoria,
-                    'num_camiseta' => rand(1, 23),
+                    'num_camiseta' => $index,
                     'id_equipo' => $equipo->id,
                     'estado' => true,
                     'created_at' => Carbon::now()->toDateTimeString(),

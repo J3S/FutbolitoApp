@@ -4,7 +4,13 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class PartidoTest extends TestCase
+use App\Categoria;
+use App\Equipo;
+use App\Torneo;
+use App\Partido;
+use App\TorneoEquipo;
+
+class EditarPartidoTest extends TestCase
 {
     /**
      * A basic test example.

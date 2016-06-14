@@ -98,7 +98,7 @@
 			@foreach($categorias as $categoria)
 				@if($torneo->id_categoria == $categoria->id)
 					@if($contienePartidos[$torneo->id-1]['partidos'] != 0)
-					<div class="col-xs-12" style="padding-bottom: 15px;">
+					<div class="col-xs-12">
 						<div class="box box-primary">
 			            	<div class="box-header with-border">
 								<h3 class="box-title">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</h3>

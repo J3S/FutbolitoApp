@@ -265,14 +265,12 @@ class PartidoController extends Controller
         $contienePartidos = [];
 
         // Encuentro todos los partidos activos.
-        $partidos = Partido::where('estado', 1)->get();
+        $partidos = Partido::where('estado', 1)->orderBy('jornada', 'asc')->get();
 
         // Filtro los partidos activos por fecha inicial y final (si fueron ingresados por el usuario).
         if ($request->ini_partido !== '' && $request->fin_partido !== '') {
             $partidosFecha = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))
             ->where('estado', 1)->get();
-            $iniDate       = Carbon::parse($request->ini_partido);
-            $finDate       = Carbon::parse($request->fin_partido);
             $partidos      = $partidos->intersect($partidosFecha);
         }
 
