@@ -303,7 +303,7 @@ class PartidoController extends Controller
 
         // Busco equipos, torneos y categorias.
         $equipos       = Equipo::where('estado', 1)->get();
-        $torneos       = Torneo::where('estado', 1)->get();
+        $torneos       = Torneo::all();
         $categorias    = Categoria::all();
         $torneoEquipos = TorneoEquipo::all();
 
