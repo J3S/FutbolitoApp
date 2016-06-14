@@ -14,10 +14,8 @@ class JugadorTableSeeder extends Seeder
      */
     public function run()
     {
-        $names = array("ANTONIO", "ISAIAS", "FABIAN", "JESUS", "ANGEL","DANIEL","ALBERTO","IGNACIO","ISRAEL","PEDRO",
-                        "FREDDY", "JUSTIN", "JOSUE", "TOBIAS", "ADRIAN","RAUL","EDISON","FAUSTO","ADRIANO",
-                        "JOSE", "MARCO", "PABLO", "CARLOS", "MATEO", "EDGAR", "ROBERTO", "PATRICIO", "WILLIAM","BAUTISTA","SEBASTIAN","ANDRES","JORGE","ALEJANDRO","RAMIRO","DAVID","JULIO","JUAN","RAFAEL","GUILLERMO","JAIME");
-        $apellidos = array('GARCIA','GONZALEZ','RODRIGUEZ','FERNANDEZ','LOPEZ','MARTINEZ','SANCHEZ','PEREZ','GOMEZ','MARTIN','JIMENEZ','RUIZ','HERNANDEZ','DIAZ','MORENO','MUÑOZ','ALVAREZ','ROMERO','ALONSO','GUTIERREZ','NAVARRO','TORRES','DOMINGUEZ','VAZQUEZ','RAMOS','RAMIREZ','SERRANO','BLANCO','MOLINA','MORALES','SUAREZ','ORTEGA','DELGADO','CASTRO','ORTIZ','RUBIO','MARIN','SANZ','NUÑEZ',"VACA","ACOSTA","CEDENO","LOOR","BRAVO","FLORES");
+        $names = array("ANTONIO", "ISAIAS", "FABIAN", "JESUS", "ANGEL","DANIEL","ALBERTO","IGNACIO","ISRAEL","PEDRO","FREDDY", "JUSTIN", "JOSUE", "TOBIAS", "ADRIAN","RAUL","EDISON","FAUSTO","ADRIANO","JOSE", "MARCO", "PABLO", "CARLOS", "MATEO", "EDGAR", "ROBERTO", "PATRICIO", "WILLIAM", "BAUTISTA", "SEBASTIAN", "ANDRES", "JORGE", "ALEJANDRO", "RAMIRO", "DAVID", "JULIO", "JUAN", "RAFAEL", "GUILLERMO", "JAIME", 'CHRISTIAN', 'JOHNNY', 'JEFFERSON', 'ALFONSO', 'DIEGO', 'SIXTO', 'BORIS', 'DENNIS', 'GUSTAVO');
+        $apellidos = array('GARCIA', 'GONZALEZ', 'RODRIGUEZ', 'FERNANDEZ', 'LOPEZ', 'MARTINEZ', 'SANCHEZ', 'PEREZ', 'GOMEZ', 'MARTIN', 'JIMENEZ', 'RUIZ', 'HERNANDEZ', 'DIAZ', 'MORENO', 'MUÑOZ', 'ALVAREZ', 'ROMERO', 'ALONSO', 'GUTIERREZ', 'NAVARRO', 'TORRES', 'DOMINGUEZ', 'VAZQUEZ', 'RAMOS', 'RAMIREZ', 'SERRANO', 'BLANCO', 'MOLINA', 'MORALES', 'SUAREZ', 'ORTEGA', 'DELGADO', 'CASTRO', 'ORTIZ', 'RUBIO', 'MARIN', 'SANZ', 'NUÑEZ', "VACA", "ACOSTA", "CEDENO", "LOOR", "BRAVO", "FLORES");
         $equipos = Equipo::all();
 
         foreach($equipos as $equipo){
@@ -36,7 +34,7 @@ class JugadorTableSeeder extends Seeder
                     'telefono' => '09'.rand(),
                     'peso' => round((mt_rand(5500, 10000)/100), 1),
                     'categoria' => $equipo->categoria,
-                    'num_camiseta' => rand(1, 23),
+                    'num_camiseta' => $index,
                     'id_equipo' => $equipo->id,
                     'estado' => true,
                     'created_at' => Carbon::now()->toDateTimeString(),

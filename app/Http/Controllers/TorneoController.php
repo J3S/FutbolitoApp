@@ -382,7 +382,7 @@ class TorneoController extends Controller
                                  ->where('estado', 1)
                                  ->get();
 
-        if(count($torneoExistente) !== 0){
+        if (count($torneoExistente) !== 0) {
             if ($torneoExistente[0]['id'] !== intval($id)) {
                 return back()->withInput()->withErrors(
                     'Ya existe un torneo creado con ese año y categoría.'
