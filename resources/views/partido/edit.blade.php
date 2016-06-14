@@ -121,6 +121,9 @@
                 <div class="col-xs-2"></div>
                 <div class="col-xs-12">
                     <div class="col-xs-4">
+                        <a class="btn btn-primary" href="{{ route("partido.index") }}">Cancelar</a>
+                    </div>
+                    <div class="col-xs-4">
                         <button type="button" id="reestablecerBtn" class="btn btn-primary">Reestablecer</button>
                     </div>
                     <div class="col-xs-4 pull-right">

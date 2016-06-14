@@ -121,7 +121,7 @@
                 <div class="col-xs-2"></div>
                 <div class="col-xs-8">
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary">Limpiar</button>
+                        <a class="btn btn-primary" href="{{ route("partido.index") }}">Cancelar</a>
                     </div>
                     <div class="col-xs-4 pull-right">
                         <button type="submit" class="btn btn-success">Guardar</button>
