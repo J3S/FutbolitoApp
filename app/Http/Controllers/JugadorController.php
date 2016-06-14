@@ -61,13 +61,17 @@ class JugadorController extends Controller
      {
         /* Validación de datos requeridos para la creacion de un jugador */
         $this->validate($request, array(
-                'nombres' => 'required',
-                'apellidos' => 'required',
+                'nombres' => 'required|regex:/([A-Z a-z])+/',
+                'apellidos' => 'required|regex:/([A-Z a-z])+/',
                 'equipo' => 'required',
-                'identificacion' => 'required',
+                'identificacion' => 'required|numeric|unique:jugadors,identificacion|digits_between:10,13',
                 'categoria' => 'required',
-                'identificacion'=> 'unique:jugadors,identificacion',
-                'num_camiseta' => 'unique:jugadors,num_camiseta, equipo'
+                'num_camiseta' => 'numeric|unique:jugadors,num_camiseta, equipo|between:01,99',
+                'rol' => 'alpha',
+                'peso' => 'numeric',
+                'telefono' => 'numeric',
+                'email' => 'email',
+                'fecha_nac' => 'date'
             ));
         /* Creo nueva instancia de jugador y le asigno todos los valores ingresados por el usuario desde la vista 'jugadorc' */
         $jugador = new Jugador;
@@ -130,15 +134,23 @@ class JugadorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $jugador = Jugador::find($id);
          /* Validación de datos requeridos para la creacion de un jugador */
         $this->validate($request, array(
-                'nombres' => 'required',
-                'apellidos' => 'required',
-                'equipo' => 'required'
+                'nombres' => 'required|regex:/([A-Z a-z])+/',
+                'apellidos' => 'required|regex:/([A-Z a-z])+/',
+                'equipo' => 'required',
+                'identificacion' => 'required|numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
+                'categoria' => 'required',
+                'num_camiseta' => 'numeric|between:01,99',
+                'rol' => 'alpha',
+                'peso' => 'numeric',
+                'telefono' => 'numeric',
+                'email' => 'email',
+                'fecha_nac' => 'date'
             ));
 
         /* Creo nueva instancia de jugador y le asigno todos los valores ingresados por el usuario desde la vista 'jugadorc' */
-        $jugador = Jugador::find($id);
         $jugador->nombres = $request->nombres;
         $jugador->apellidos = $request->apellidos;
         $jugador->fecha_nac = $request->fecha_nac;
