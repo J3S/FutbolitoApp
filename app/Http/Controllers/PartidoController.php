@@ -265,7 +265,7 @@ class PartidoController extends Controller
         $contienePartidos = [];
 
         // Encuentro todos los partidos activos.
-        $partidos = Partido::where('estado', 1)->orderBy('jornada', 'asc')->get();
+        $partidos = Partido::where('estado', 1)->orderBy('jornada', 'asc')->orderBy('fecha', 'asc')->get();
 
         // Filtro los partidos activos por fecha inicial y final (si fueron ingresados por el usuario).
         if ($request->ini_partido !== '' && $request->fin_partido !== '') {
@@ -311,8 +311,9 @@ class PartidoController extends Controller
         foreach ($torneos as $torneo) {
             $contador = 0;
             foreach ($partidos as $partido) {
-                if ($partido->id_torneo === $torneo->id)
+                if ($partido->id_torneo === $torneo->id) {
                     $contador++;
+                }
             }
 
             $info = [
