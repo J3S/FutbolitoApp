@@ -130,7 +130,7 @@
                 <div class="col-xs-2"></div>
                 <div class="col-xs-8">
                     <div class="col-xs-4">
-                        <button type="button" class="btn btn-primary">Reestablecer</button>
+                        <button type="button" id="reestablecerBtn" class="btn btn-primary">Reestablecer</button>
                     </div>
                     <div class="col-xs-4 pull-right">
                         <button type="submit" class="btn btn-success">Actualizar</button>
@@ -142,8 +142,46 @@
         </div><!-- /.box -->
     </div><!--/.col (left) -->
     <div class="col-xs-2"></div>
+
+<!-- inicio de la sección de scripts -->
+<script>
+ function init(){
+ // Listener 'click' para boton Reestablecer. Se encarga de asignar los valores originales del partido en todos los campos del formulario.
+            $('#reestablecerBtn').click(function(){
+                var equipos = <?php echo json_encode($equipos); ?>;
+                var jugador = <?php echo json_encode($jugador); ?>;
+                var categorias = <?php echo json_encode($categorias); ?>;
+
+                for (var j=0; j<equipos.length; j++) {
+                    if (jugador['id_equipo'] == equipos[j]['id']) {
+                        $('#equipo option:contains('+equipos[j]['nombre']+')').prop({selected: true});
+                    }
+                }
+
+                for (var j=0; j<categorias.length; j++) {
+                    if (jugador['categoria'] == categorias[j]['id']) {
+                        $('#categoria option:contains('+categoria[j]['nombre']+')').prop({selected: true});
+                    }
+                }
+                    
+               // llenarEquiposSelect();
+                $('#inputNombre').val(jugador['nombres']);
+                $('#inputApellido').val(jugador['apellidos']);
+                var fecha = jugador['fecha_nac'].replace(" ", "T");
+                $('#fecha_nac').val(fecha);
+                $('#inputCedula').val(jugador['identificacion']);
+                $('#inputRol').val(jugador['rol']);
+                $('#inputEmail').val(jugador['email']);
+                $('#inputTelefono').val(jugador['telefono']);
+                $('#peso').val(jugador['peso']);
+                $('#inputNumCam').val(jugador['num_camiseta']);
+                $('#categoria').val(jugador['categoria']);
+
+            });//end listener de botón de reestablecer datos de jugador
+
+}//end init()
+
+        window.onload = init;
+
+</script>
 @endsection
-
-
-
-
