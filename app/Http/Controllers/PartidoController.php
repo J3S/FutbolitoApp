@@ -98,31 +98,60 @@ class PartidoController extends Controller
         $this->validate(
             $request,
             array(
-             'torneo'           => 'required',
-             'fecha'            => 'required',
-             'jornada'          => 'required',
+             'torneo'           => 'required|numeric|min:1',
+             'fecha'            => 'required|date',
+             'jornada'          => 'required|numeric|min:1',
              'lugar'            => 'required|max:200',
-             'equipo_local'     => 'required',
-             'equipo_visitante' => 'required',
-             'gol_local'        => 'required',
-             'gol_visitante'    => 'required',
+             'equipo_local'     => 'required|numeric|min:1',
+             'equipo_visitante' => 'required|numeric|min:1',
+             'gol_local'        => 'required|numeric|min:0',
+             'gol_visitante'    => 'required|numeric|min:0',
             )
         );
+
+        // Verificación si el torneo recibido está registrado.
+        try {
+            $torneoID = Torneo::find($request->torneo)->id;
+        } catch (\Exception $e) {
+            return redirect()->route('partido.create')->withErrors(
+                'El torneo seleccionado no se encuentra registrado.'
+            );
+        }
+
+        // Verificación si el equipo local recibido está registrado y pertenece a la categoria del torneo.
+        try {
+            $torneo            = Torneo::find($request->torneo);
+            $categoria         = Categoria::find($torneo->id_categoria);
+            $equipoLocal       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_local)->first();
+            $equipoLocalNombre = $equipoLocal->nombre;
+        } catch (\Exception $e) {
+            return redirect()->route('partido.create')->withErrors(
+                'El equipo local seleccionado no se encuentra registrado en el torneo seleccionado.'
+            );
+        }
+
+        // Verificación si el equipo visitante recibido está registrado y pertenece a la categoria del torneo.
+        try {
+            $equipoVisitante       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_visitante)->first();
+            $equipoVisitanteNombre = $equipoVisitante->nombre;
+        } catch (\Exception $e) {
+            return redirect()->route('partido.create')->withErrors(
+                'El equipo visitante seleccionado no se encuentra registrado en el torneo seleccionado.'
+            );
+        }
 
         // Creo nueva instancia de partido y le asigno todos los valores ingresados por el usuario desde la vista 'partidoc'.
         $partido            = new Partido();
         $partido->lugar     = $request->lugar;
         $partido->fecha     = $request->fecha;
-        $partido->id_torneo = $request->torneo;
+        $partido->id_torneo = $torneoID;
         $partido->jornada   = $request->jornada;
         $partido->arbitro   = $request->arbitro;
-        $partido->observacion   = $request->observaciones;
-        $partido->gol_local     = $request->gol_local;
-        $partido->gol_visitante = $request->gol_visitante;
-        $equipoLocal            = Equipo::find($request->equipo_local);
-        $partido->equipo_local  = $equipoLocal->nombre;
-        $equipoVisitante        = Equipo::find($request->equipo_visitante);
-        $partido->equipo_visitante = $equipoVisitante->nombre;
+        $partido->observacion      = $request->observaciones;
+        $partido->gol_local        = $request->gol_local;
+        $partido->gol_visitante    = $request->gol_visitante;
+        $partido->equipo_local     = $equipoLocalNombre;
+        $partido->equipo_visitante = $equipoVisitanteNombre;
         $partido->estado           = 1;
 
         // Guardo el partido creado en la base de datos.
@@ -195,30 +224,60 @@ class PartidoController extends Controller
         $this->validate(
             $request,
             array(
-             'torneo'           => 'required',
-             'fecha'            => 'required',
+             'torneo'           => 'required|numeric|min:1',
+             'fecha'            => 'required|date',
+             'jornada'          => 'required|numeric|min:1',
              'lugar'            => 'required|max:200',
-             'equipo_local'     => 'required',
-             'equipo_visitante' => 'required',
-             'gol_local'        => 'required',
-             'gol_visitante'    => 'required',
+             'equipo_local'     => 'required|numeric|min:1',
+             'equipo_visitante' => 'required|numeric|min:1',
+             'gol_local'        => 'required|numeric|min:0',
+             'gol_visitante'    => 'required|numeric|min:0',
             )
         );
+
+        // Verificación si el torneo recibido está registrado.
+        try {
+            $torneoID = Torneo::find($request->torneo)->id;
+        } catch (\Exception $e) {
+            return redirect()->route('partido.create')->withErrors(
+                'El torneo seleccionado no se encuentra registrado.'
+            );
+        }
+
+        // Verificación si el equipo local recibido está registrado y pertenece a la categoria del torneo.
+        try {
+            $torneo            = Torneo::find($request->torneo);
+            $categoria         = Categoria::find($torneo->id_categoria);
+            $equipoLocal       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_local)->first();
+            $equipoLocalNombre = $equipoLocal->nombre;
+        } catch (\Exception $e) {
+            return redirect()->route('partido.create')->withErrors(
+                'El equipo local seleccionado no se encuentra registrado en el torneo seleccionado.'
+            );
+        }
+
+        // Verificación si el equipo visitante recibido está registrado y pertenece a la categoria del torneo.
+        try {
+            $equipoVisitante       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_visitante)->first();
+            $equipoVisitanteNombre = $equipoVisitante->nombre;
+        } catch (\Exception $e) {
+            return redirect()->route('partido.create')->withErrors(
+                'El equipo visitante seleccionado no se encuentra registrado en el torneo seleccionado.'
+            );
+        }
 
         // Encuentro el partido seleccionado por el usuario y modifico todos sus valores por los valores ingresados por el usuario desde la vista 'partidoe'.
         $partido            = Partido::find($id);
         $partido->lugar     = $request->lugar;
         $partido->fecha     = $request->fecha;
-        $partido->id_torneo = $request->torneo;
+        $partido->id_torneo = $torneoID;
         $partido->arbitro   = $request->arbitro;
-        $partido->observacion   = $request->observaciones;
-        $partido->jornada       = $request->jornada;
-        $partido->gol_local     = $request->gol_local;
-        $partido->gol_visitante = $request->gol_visitante;
-        $equipoLocal            = Equipo::find($request->equipo_local);
-        $partido->equipo_local  = $equipoLocal->nombre;
-        $equipoVisitante        = Equipo::find($request->equipo_visitante);
-        $partido->equipo_visitante = $equipoVisitante->nombre;
+        $partido->observacion      = $request->observaciones;
+        $partido->jornada          = $request->jornada;
+        $partido->gol_local        = $request->gol_local;
+        $partido->gol_visitante    = $request->gol_visitante;
+        $partido->equipo_local     = $equipoLocalNombre;
+        $partido->equipo_visitante = $equipoVisitanteNombre;
         $partido->estado           = 1;
 
         // Actualizo la información del partido en la base de datos.
