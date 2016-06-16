@@ -163,7 +163,19 @@
         document.getElementById("agregarTodos").addEventListener("click", agregarTodosTabla);
         document.getElementById("categoria").addEventListener("click", llenarEquiposSelect);
         document.getElementById("reestablecer").addEventListener("click", reestablecerCampos);
+        document.getElementById("categoria").addEventListener("change", vaciarTablaEquipos);
+
         window.onload = llenarEquiposSelect;
+
+        function vaciarTablaEquipos(){
+            //Si hay equipos agregados los elimino.
+            $('#equiposAgregados > tbody  > tr').each(function() {
+                $this = $(this)
+                var inputElementID = $this.children().eq(1).children().data('input');
+                $('#'+inputElementID).remove();
+            });
+            $("#equiposAgregados > tbody").html("");
+        }
 
         function crearRowEquipoTabla(valor) {
             // Agregar el equipo en la tabla
@@ -214,7 +226,6 @@
 
         // Carga dinámica de los equipos dependiendo de la categoría seleccionada.
         function llenarEquiposSelect() {
-            // Obtención de todos los equipos divididos por categorías.
             var equiposCategoria = <?php echo json_encode($equiposxcategorias); ?>;
             var categoria = $("#categoria option:selected").text();
             $('#equipos').find('option').remove().end();
