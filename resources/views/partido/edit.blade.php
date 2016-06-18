@@ -44,8 +44,8 @@
                 <h3 class="box-title">Editar Partido</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="/partido/{{ $partido->id }}" method="POST">
-                <input name="_method" type="hidden" value="PUT">
+            <form role="form" action="/partido/{{ $partido->id }}" method="POST" id="formEditarTorneo">
+                {{ method_field('PUT') }}
                 {!! csrf_field() !!}
                 <div class="box-body">
                     <div class="form-group col-xs-12 col-sm-6">
