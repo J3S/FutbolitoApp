@@ -284,7 +284,7 @@ class PartidoController extends Controller
         $partido->save();
 
         // Retorno a la vista principal de la opción partido.
-        return $this->index();
+        return redirect('partido');
 
     }//end update()
 
@@ -305,7 +305,7 @@ class PartidoController extends Controller
         // Actualizo los datos del partido en la base de datos.
         $partido->save();
 
-        return $this->index();
+        return redirect('partido');
 
     }//end destroy()
 
