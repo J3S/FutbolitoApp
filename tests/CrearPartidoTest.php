@@ -459,4 +459,39 @@ class CrearPartidoTest extends TestCase
         $this->assertRedirectedToRoute('partido.create');
     }
 
+    /**
+     * Comprueba el funcionamiento para crear un partido.
+     * Se ingresan los datos del partido. Solo con datos requeridos.
+     * Se ingresa el mismo equipo como local y visitante (no permitido).
+     * Es exitoso si el sistema se mantiene en la pagina partido/create.
+     * Corresponde al caso de prueba testCrearPartido: post-condition 12.
+     *
+     * @return void
+     */
+    public function testCrearPartido12()
+    {
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
+        $date = Carbon::create(2014, 1, 3, 12, 0, 0);
+        $jornada = 1;
+        $lugar = "Cancha #3";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0];
+        $equipoV = $equipos[0];
+        $golLocal = 1;
+        $golVisitante = 0;
+
+        $this->visit(route('partido.create'))
+            ->select($torneo->id, 'torneo')
+            ->type($jornada, 'jornada')
+            ->select($date, 'fecha')
+            ->type($lugar, 'lugar')
+            ->select($equipoL->id, 'equipo_local')
+            ->select($equipoV->id, 'equipo_visitante')
+            ->type($golLocal, 'gol_local')
+            ->type($golVisitante, 'gol_visitante')
+            ->press('Guardar')
+            ->seePageIs(route('partido.create'));
+    }
+
 }

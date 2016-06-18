@@ -140,6 +140,13 @@ class PartidoController extends Controller
             );
         }
 
+        // Verificación si el equipo local y visitante son iguales.
+        if ($request->equipo_local === $request->equipo_visitante) {
+            return redirect()->route('partido.create')->withErrors(
+                'Equipo local y equipo visitante no pueden ser iguales.'
+            );
+        }
+
         // Creo nueva instancia de partido y le asigno todos los valores ingresados por el usuario desde la vista 'partidoc'.
         $partido            = new Partido();
         $partido->lugar     = $request->lugar;
@@ -239,7 +246,7 @@ class PartidoController extends Controller
         try {
             $torneoID = Torneo::find($request->torneo)->id;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return back()->withInput()->withErrors(
                 'El torneo seleccionado no se encuentra registrado.'
             );
         }
@@ -251,7 +258,7 @@ class PartidoController extends Controller
             $equipoLocal       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_local)->first();
             $equipoLocalNombre = $equipoLocal->nombre;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return back()->withInput()->withErrors(
                 'El equipo local seleccionado no se encuentra registrado en el torneo seleccionado.'
             );
         }
@@ -261,8 +268,15 @@ class PartidoController extends Controller
             $equipoVisitante       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_visitante)->first();
             $equipoVisitanteNombre = $equipoVisitante->nombre;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return back()->withInput()->withErrors(
                 'El equipo visitante seleccionado no se encuentra registrado en el torneo seleccionado.'
+            );
+        }
+
+        // Verificación si el equipo local y visitante son iguales.
+        if ($request->equipo_local === $request->equipo_visitante) {
+            return back()->withInput()->withErrors(
+                'Equipo local y equipo visitante no pueden ser iguales.'
             );
         }
 
