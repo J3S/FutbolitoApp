@@ -313,13 +313,16 @@ class PartidoController extends Controller
     public function destroy($id)
     {
         // Encuentro el partido que el usuario desea desactivar y cambio su estado a 0 (desactivado).
-        $partido         = Partido::find($id);
-        $partido->estado = 0;
-
-        // Actualizo los datos del partido en la base de datos.
-        $partido->save();
-
-        return redirect('partido');
+        try {
+            $partido         = Partido::find($id);
+            $partido->estado = 0;
+            $partido->save();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(
+                'El partido que desea desactivar no se encuentra registrado.'
+            );
+        }
 
     }//end destroy()
 

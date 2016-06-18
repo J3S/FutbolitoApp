@@ -97,8 +97,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->seeInDatabase(
                 'partidos',
@@ -200,8 +200,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -302,8 +302,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -404,8 +404,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -507,8 +507,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -609,8 +609,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -711,8 +711,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -813,8 +813,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -916,8 +916,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -1019,8 +1019,8 @@ class EditarPartidoTest extends TestCase
 			'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
@@ -1121,8 +1121,8 @@ class EditarPartidoTest extends TestCase
             'gol_visitante'    => $golVisitante2,
         ];
 
-        $url = "/partido/".$partidoCreado->id;
-        $response = $this->call('POST', $url, $parametros2);
+        $uri = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $uri, $parametros2);
 
         $this->assertEquals(302, $response->getStatusCode());
 
