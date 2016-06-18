@@ -16,6 +16,7 @@ use App\Torneo;
 use App\Equipo;
 use App\Categoria;
 use App\TorneoEquipo;
+use App\Partido;
 
 /**
  * TorneoController Class Doc Comment
@@ -438,9 +439,16 @@ class TorneoController extends Controller
             $torneo         = Torneo::find($id);
             $torneo->estado = 0;
             $torneo->save();
+            $partidosTorneo = Partido::where('id_torneo', $torneo->id)
+                               ->get();
+            foreach ($partidosTorneo as $partidoTorneo) {
+                $partidoTorneo->estado = 0;
+                $partidoTorneo->save();
+            }
+
             return redirect()->back();
         } catch (\Exception $e) {
-            return reditect()->route('torneo.index')->withErrors(
+            return back()->withInput()->withErrors(
                 'El torneo al que desea desactivar no se encuentra registrado.'
             );
         }
