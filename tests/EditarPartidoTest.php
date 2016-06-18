@@ -1037,5 +1037,107 @@ class EditarPartidoTest extends TestCase
                  'gol_visitante' => $golVisitante,
                 ]
             );
-    }    
+    }
+
+    /**
+     * Comprueba el funcionamiento para editar un partido.
+     * Se crea un partido con datos predeterminados.
+     * Se edita ese partido recién creado modificándole los campos obligatorios
+     * (torneo, jornada, equipos, lugar, fecha y goles) y se manda a actualizar.
+     * Se ingresa el mismo equipo como local y visitante (no permitido).
+     * Es exitoso si en la base de datos se encuentra el partido con los datos
+     * originales sin ser modificados y se mantiene en la misma pagina.
+     * Corresponde al caso de prueba testEditarPartido: post-condition 11.
+     *
+     * @return void
+     */
+    public function testEditarPartido11()
+    {
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
+        $date = Carbon::create(2014, 1, 3, 12, 0, 0);
+        $jornada = 1;
+        $lugar = "Cancha #3";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0];
+        $equipoV = $equipos[1];
+        $golLocal = 1;
+        $golVisitante = 0;
+
+        // Si existe algun partido con los mismos datos que el partido que vamos a crear, se lo elimina.
+        $registrosEliminados = Partido::where('id_torneo', $torneo->id)
+                                ->where('fecha', $date->format('Y-m-d H:i:s'))
+                                ->where('jornada', $jornada)
+                                ->where('lugar', $lugar)
+                                ->where('equipo_local', $equipoL->nombre)
+                                ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('gol_local', $golLocal)
+                                ->where('gol_visitante', $golVisitante)->delete();
+
+        Session::start();
+        $parametros = [
+                        '_token'           => csrf_token(),
+                        'torneo'           => $torneo->id,
+                        'fecha'            => $date->format('Y-m-d H:i:s'),
+                        'jornada'          => $jornada,
+                        'lugar'            => $lugar,
+                        'equipo_local'     => $equipoL->id,
+                        'equipo_visitante' => $equipoV->id,
+                        'gol_local'        => $golLocal,
+                        'gol_visitante'    => $golVisitante,
+                    ];
+        $response = $this->call('POST', 'partido', $parametros);
+
+        $partidoCreado = Partido::where('id_torneo', $torneo->id)
+                                ->where('fecha', $date->format('Y-m-d H:i:s'))
+                                ->where('jornada', $jornada)
+                                ->where('lugar', $lugar)
+                                ->where('equipo_local', $equipoL->nombre)
+                                ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('gol_local', $golLocal)
+                                ->where('gol_visitante', $golVisitante)
+                                ->first();
+
+        $categoria2 = Categoria::where('nombre', "Master")->first();
+        $torneo2 = Torneo::where('id_categoria', $categoria2->id)->where('anio', 2016)->first();
+        $date2 = Carbon::create(2016, 2, 2, 10, 0, 0);
+        $jornada2 = 2;
+        $lugar2 = "Cancha #2";
+        $equipos2 = Equipo::where('estado', 1)->where('categoria', $categoria2->nombre)->get();
+        $equipoL2 = $equipos2[0];
+        $equipoV2 = $equipos2[0];
+        $golLocal2 = 3;
+        $golVisitante2 = 1;
+        $parametros2 = [
+            '_method'          => 'PUT',
+            '_token'           => csrf_token(),
+            'torneo'           => $torneo2->id,
+            'fecha'            => $date2->format('Y-m-d H:i:s'),
+            'jornada'          => $jornada2,
+            'lugar'            => $lugar2,
+            'equipo_local'     => $equipoL2->id,
+            'equipo_visitante' => $equipoV2->id,
+            'gol_local'        => $golLocal2,
+            'gol_visitante'    => $golVisitante2,
+        ];
+
+        $url = "/partido/".$partidoCreado->id;
+        $response = $this->call('POST', $url, $parametros2);
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->seeInDatabase(
+                'partidos',
+                [
+                 'id_torneo' => $torneo->id,
+                 'jornada' => $jornada,
+                 'fecha' => $date->format('Y-m-d H:i:s'),
+                 'lugar' => $lugar,
+                 'equipo_local' => $equipoL->nombre,
+                 'equipo_visitante' => $equipoV->nombre,
+                 'gol_local' => $golLocal,
+                 'gol_visitante' => $golVisitante,
+                ]
+        );
+    }
 }
