@@ -89,12 +89,14 @@
                         <!-- Equipos que pueden ser agregados al torneo dependiendo de la categoría -->
                         <div class="col-md-3">
                             <select class="form-control equipo-seleccionado" id="equipos">
-                                @if(count($equiposxcategorias[$categorias[0]->nombre]) != 0)
-                                    @foreach($equiposxcategorias[$categorias[0]->nombre] as $equipos)
-                                        <option>{{ $equipos->nombre }}</option>
-                                    @endforeach
-                                @else
-                                        <option>No se ha registrado ninguna categor&iacute;a</option>
+                                @if(count($categorias) != 0)
+                                    @if(count($equiposxcategorias[$categorias[0]->nombre]) != 0)
+                                        @foreach($equiposxcategorias[$categorias[0]->nombre] as $equipos)
+                                            <option>{{ $equipos->nombre }}</option>
+                                        @endforeach
+                                    @else
+                                            <option>No se ha registrado ninguna categor&iacute;a</option>
+                                    @endif
                                 @endif
                             </select>
                         </div>
