@@ -18,7 +18,7 @@ function loadCatJugadors(element) {
                 $("#JugadoresElegidos").empty();
                 $(jugadoresCategoriaResp).each(function(key, value) {
                     var $liElement = $('<li class="list-group-item"></li>').css("padding", "5px 15px");
-                    var contentLi = " " + value.nombres + " - " + value.categoria;
+                    var contentLi = " " + value.nombres + " - " + value.categoria + " - " + value.id_equipo;
                     var $checkBtn = $("<button/>");
                     $checkBtn.attr({
                         type: "button",

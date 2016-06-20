@@ -40,12 +40,38 @@
                         </div>
                         <div class="panel-body">
                             <ul class="list-group"  id="inputJugadores">
-                                <li class="list-group-item">jugadores par mostrar</li>
-                                <li class="list-group-item">jugadores par mostrar</li>
-                                <li class="list-group-item">jugadores par mostrar</li>
-                                <li class="list-group-item">jugadores par mostrar</li>
-                                <li class="list-group-item">jugadores par mostrar</li>
-                                <li class="list-group-item">jugadores par mostrar</li>
+                                <li class="list-group-item" style="text-align:center">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Nombres
+                                        </div>
+                                        <div class="col-sm-4">
+                                            Apellidos
+                                        </div>
+                                        <div class="col-sm-4">
+                                            Num Camiseta
+                                        </div>
+                                    </div>
+                                </li>
+                                @if(count($jugadors) != 0)
+                                    @foreach($jugadors as $jugador)
+                                        <li class="list-group-item" style="text-align:center">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    {{ $jugador->nombres }}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ $jugador->apellidos }}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ $jugador->num_camiseta }}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li>No se ha registrado ningun jugador</li>
+                                @endif
                             </ul>
                         </div>
                     </div>

@@ -12,40 +12,82 @@
 @section('content')
     <div class="col-xs-12" style="padding-bottom: 15px;">
         <form>
-            <button type="button" id="nuevoEquipoButton" class="btn btn-success" onclick="window.location='{{ route("equipo.create") }}'"><i class="fa fa-plus"></i> Nuevo Equipo</button>
+            <button type="button" id="nuevoEquipoButton" class="btn btn-success" onclick="window.location='{{ route("equipo.create") }}'"><i class="fa fa-plus"></i> Crear Equipo</button>
         </form>
     </div>
-    <div class="col-xs-1"></div>
-    <div class="col-xs-10">
-        <h3 style="margin-top:0;">Lista de Equipos</h3>
-        <table class="table table-striped">
-            <tr>
-                <!-- <th>id</th> -->
-                <th>Nombre</th>
-                <th>Entrenador</th>
-                <th>Categoria</th>
-                <th>Perfil</th>
-                <th>Acci&oacute;n</th>
-            </tr>
-            @foreach ($equipos as $equipo)
-            <tr>
-                <!-- <td>{{ $equipo->id }}</td> -->
-                <td>{{ $equipo->nombre }}</td>
-                <td>{{ $equipo->director_tecnico }}</td>
-                <td>{{ $equipo->categoria }}</td>
-                <td><a href="{!! route('equipo.show', ['equipo' => $equipo->id]) !!}">Ver Jugadores</a></td>
-                <td>
-                    <a class="btn btn-success btn-sm" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
-                    <form style="display:inline-block" action="{!!route('equipo.destroy', ['equipo' => $equipo->id])!!}" method="POST">
-                        <input name="_method" type="hidden" value="DELETE">
-                        {{ csrf_field() }}
-                        <button class="btn btn-success btn-sm" type="submit" ><i class="fa fa-times fa-lg"></i></button>
-                    </form>
-                    <!-- <a class="btn btn-danger btn-sm" href="{!! route('equipo.index') !!}"><i class="fa fa-times fa-lg"></i></a> -->
-                </td>
-            </tr>
-            @endforeach
-        </table>
+
+    <div class="col-xs-12">
+        <div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">Buscar Equipo</h3>
+			</div><!-- /.box-header -->
+            <form role="form" action="{!!route('equipo.search')!!}" method="post">
+            {!! csrf_field() !!}
+				<div class="box-body">
+					<div class="form-group col-xs-12 col-sm-6">
+						<label for="nombEquipo">Nombre: </label>
+						<!-- Campo para ingresar nombre para busqueda del equipo -->
+						<input type="text" class="form-control" id="nombEquipo" name="nombEquipo">
+					</div>
+					<div class="form-group col-xs-12 col-sm-6">
+                        <label for="listEquipo">Categoria</label>
+                        <!-- Campo para seleccionar el equipo para busqueda del equipo -->
+                        <select class="form-control input" id="categoria" name="categoria">
+                        	<option selected="selected"></option>
+                            @foreach($categorias as $categoria)
+                               <option value="{{ $categoria['id'] }}">{{ $categoria->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-xs-12" >
+	                    <button type="submit" class="btn btn-success">Buscar</button>
+	                </div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Lista de Jugadores</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Entrenador</th>
+                                <th>Categoria</th>
+                                <th>Perfil</th>
+                                <th>Editar</th>
+                                <th>Desactivar</th>
+                            </tr>
+                        </thead>
+                        @foreach($equipos as $equipo)
+                            <tbody>
+                                <tr>
+                                    <td>{{ $equipo->nombre }}</td>
+                                    <td>{{ $equipo->director_tecnico }}</td>
+                                    <td>{{ $equipo->categoria }}</td>
+                                    <td><a href="{!! route('equipo.show', ['equipo' => $equipo->id]) !!}">Ver Jugadores</a></td>
+                                    <td>
+                                        <a class="btn btn-warning btn-sm" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+                                    </td>
+                                    <td>
+                                        <form style="display:inline-block" action="{!!route('equipo.destroy', ['equipo' => $equipo->id])!!}" method="POST">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            {{ csrf_field() }}
+                                            <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa-times fa-lg"></i></button>
+                                        </form>
+                                        <!-- <a class="btn btn-danger btn-sm" href="{!! route('equipo.index') !!}"><i class="fa fa-times fa-lg"></i></a> -->
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        @endforeach<!-- endforeach partidos -->
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-xs-1"></div>
 @endsection

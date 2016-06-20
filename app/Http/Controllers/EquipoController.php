@@ -16,21 +16,46 @@ class EquipoController extends Controller
 
 
     /**
-     * Display a listing of the 'Equipo'.
+     * Display a form of the 'Equipo'.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $equipos = Equipo::where('estado', '1')
-                        ->orderBy('categoria', 'ASC')
-                        ->orderBy('nombre', 'ASC')
-                        ->take(15)
-                        ->get();
-        return view('equipo.equipo-index')->with(compact('equipos'));
+        $categorias = Categoria::all();
+        return view('equipo.search')->with(compact('categorias'));
 
     }//end index()
 
+    /**
+     * Filter 'Equipo' by nombre y/o categoria.
+     *
+     * @param \Illuminate\Http\Request $request equipo
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $equipos = Equipo::where('estado', '1')
+                         ->orderBy('Categoria', 'ASC')
+                         ->orderBy('nombre', 'ASC')
+                         ->get();
+        $categorias = Categoria::all();
+        /* Filtro los equipos por nombre (si es que el filtro fue ingresado por el usuario) */
+        if($request->nombEquipo != ""){
+            $equiposNombre = Equipo::where('nombre', 'like', '%' . $request->nombEquipo . '%')->get();
+            $equipos = $equipos->intersect($equiposNombre);
+        }
+
+        /* Filtro los equipos por categoria (si es que el filtro fue ingresado por el usuario) */
+        if($request->categoria != ""){
+            $categoria = Categoria::find($request->categoria);
+            $equiposCategoria = Equipo::where('categoria', $categoria->nombre)->get();
+            $equipos = $equipos->intersect($equiposCategoria);
+        }
+        return view('equipo.equipo-index')->with(compact('equipos', 'categorias'));
+
+    }//end search()
 
     /**
      * Show the form for creating a new 'Equipo'.
@@ -108,7 +133,9 @@ class EquipoController extends Controller
     public function show($id)
     {
         $equipo = Equipo::findOrFail($id);
-        return view('equipo.equiposhow')->with(compact('equipo'));
+        $jugadors = Jugador::where('id_equipo', $id)->get(['nombres', 'apellidos', 'identificacion', 'num_camiseta']);
+        return view('equipo.equiposhow')->with(compact('equipo', 'jugadors'));
+                                        // ->with('equipo', $equipo);
 
     }//end show()
 
@@ -123,7 +150,8 @@ class EquipoController extends Controller
     public function getJugadoresCategoria($categoria)
     {
         $jugadoresCategoria = Jugador::where('categoria', $categoria)
-                                       ->get(['id', 'nombres', 'categoria']);
+                                    //  ->where('id_equipo', 0)
+                                     ->get(['id', 'nombres', 'categoria', 'id_equipo']);
         $arr = $jugadoresCategoria->toArray();
         if (empty($jugadoresCategoria->toArray()) === false) {
             return response()->json(
