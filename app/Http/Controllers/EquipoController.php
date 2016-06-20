@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
+
 use Illuminate\Http\Request;
 use App\Equipo;
 use App\Categoria;
@@ -56,23 +58,41 @@ class EquipoController extends Controller
         $this->validate(
             $request,
             array(
-             'nombre'    => 'required',
-             'categoria' => 'required',
+                'nombre'    => 'required|unique:equipos,nombre',
+                'categoria' => 'required|exists:categorias,nombre',
             )
         );
+
+        if (count($request->ids) < 2 ) {
+            $mensaje = array("Cantida de jugadores insuficiente: ".count($request->ids));
+            return response()->json(['ids' => $mensaje], 422);
+        } else {
+            $mensaje1  = array("Jugador jugador no identificado");
+            foreach ($request->ids as $value) {
+                if (Jugador::find($value) === null) {
+                    return response()->json(['ids' => $mensaje], 422);
+                }elseif (Jugador::find($value)->estado == 1) {
+                    $mensaje = array("Jugador jugador ya pertenece a un equipo");
+                    return response()->json(['ids' => $mensaje], 422);
+                }
+            }
+        }
 
         $equipo         = new Equipo();
         $equipo->nombre = $request->nombre;
         $equipo->director_tecnico = $request->entrenador;
         $equipo->categoria        = $request->categoria;
-
-        if ($equipo->save() === true) {
+        if ($equipo->save() == true){
             return response()->json(
                 [
                  "mensaje"  => "guardado con exito",
                  "idEquipo" => $equipo->id,
                 ]
             );
+        }
+        foreach ($request->ids as $value) {
+            $jugadorEquipo = Jugador::find($value);
+            $jugadorEquipo->id_equipo = $equipo->id;
         }
 
     }//end store()
@@ -110,7 +130,7 @@ class EquipoController extends Controller
                 $jugadoresCategoria->toArray()
             );
         } else {
-            return "Error al guardar";
+            return "No hay jugadores disponibles para esta categoria";
         }
 
     }//end getJugadoresCategoria()

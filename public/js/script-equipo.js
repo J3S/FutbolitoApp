@@ -1,93 +1,161 @@
-$(document).ready(function() {
-    $('#inputCategoriaSelect ').change(function() {
-        var inputCategoria = $(this).val();
-        var listaJugadoresTag = $('#inputJugadores');
-        var route = "http://localhost:8000/jugadores/" + inputCategoria;
-        listaJugadoresTag.empty();
+function loadCatJugadors(element) {
+    var inputCategoria = element.val();
+    var listaJugadoresTag = $('#inputJugadores');
+    var route = "http://localhost:8000/jugadores/" + inputCategoria;
+    var dame = ['primero'];
+    if (inputCategoria.length === "noSelected") {
+        listaJugadoresTag.html('<li class="list-group-item">Ninguna Categoria selecionada</li>');
+    } else {
+        var ajaxRequest = $.ajax({
+            url: route,
+            async:false
+        });
+        ajaxRequest.done(function (jugadoresCategoriaResp) {
+            if ($.type(jugadoresCategoriaResp) === "string") { //getAjax response has not jugadors
+                listaJugadoresTag.html('<li class="list-group-item">' + jugadoresCategoriaResp + '</li>')
+            } else {
+                listaJugadoresTag.empty();
+                $("#JugadoresElegidos").empty();
+                $(jugadoresCategoriaResp).each(function(key, value) {
+                    var $liElement = $('<li class="list-group-item"></li>').css("padding", "5px 15px");
+                    var contentLi = " " + value.nombres + " - " + value.categoria;
+                    var $checkBtn = $("<button/>");
+                    $checkBtn.attr({
+                        type: "button",
+                        class: "btn btn-success btn-xs",
+                        id: value.id
+                    })
+                    $checkBtn.append($("<i/>").addClass("fa fa-check"));
+                    $liElement.append($checkBtn, contentLi);
+                    listaJugadoresTag.append($liElement);
+                });
+            }
+        });
+    }
+}
 
-        $.get(route, function (jugadoresCategoriaResp) {
-            $(jugadoresCategoriaResp).each(function(key, value) {
-                var $liElement = $('<li class="list-group-item"></li>');
-                var contentLi = " " + value.nombres+" - "+value.categoria;
-                var $checkLiBtn = $('<button type="button" '+' class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>');
-                $checkLiBtn.attr("id", value.id);
-                $liElement.append($checkLiBtn, contentLi);
-                listaJugadoresTag.append($liElement);
-            });
-        })
-    });
-
-});
-
-
-$("#btn_guardar").on('click', function() {
+function saveEquipo() {
     var route = "http://localhost:8000/equipo";
     var token = $("#token").val();
     var inputNombre = $('#inputNombre').val();
     var inputEntrenador = $('#inputEntrenador').val();
     var inputCategoriaSelect = $('#inputCategoriaSelect').val();
-
+    alert('ya esta');
     // envia los datos al servidor en Json
     var ajaxRequest = $.ajax({
         url: route,
-        headers: {'X-CSRF-TOKEN': token},
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
         type: 'POST',
         data: {
             entrenador: inputEntrenador,
             nombre: inputNombre,
-            categoria: inputCategoriaSelect
+            categoria: inputCategoriaSelect,
+
         },
         dataType: 'json'
     });
 
     // se recibe si hay una respuesta (est caso vien del controller@create)
-    ajaxRequest.done(function (data) {
-        window.location="http://localhost:8000/equipo/"+data.idEquipo;
+    ajaxRequest.done(function(data) {
+        window.location = "http://localhost:8000/equipo/" + data.idEquipo;
     });
-});
-
-$("#btn_actualizar").on('click', function() {
-    var equipo = $("#idEquipo").val();
-    var token = $("#token").val();
-    var metodo = $("#method").val();
-    var route = "http://localhost:8000/equipo/"+equipo;
-    var inputNombre = $('#inputNombre').val();
-    var inputEntrenador = $('#inputEntrenador').val();
-    var inputCategoriaSelect = $('#inputCategoriaSelect').val();
-
-    // envia los datos al servidor en Json
-    var ajaxRequest = $.ajax({
-        url: route,
-        headers: {'X-CSRF-TOKEN': token},
-        type: 'PUT',
-        data: {
-            entrenador: inputEntrenador,
-            nombre: inputNombre,
-            categoria: inputCategoriaSelect
-        },
-        dataType: 'json'
-    });
-
-    // se recibe si hay una respuesta (est caso vien del controller@create)
-    ajaxRequest.done(function (data) {
-        window.location="http://localhost:8000/equipo/"+data.idEquipo;
-    });
-});
-
-function cargarJugadores() {
-    var inputCategoria = $("#inputCategoriaSelect").val();
-    var listaJugadoresTag = $('#JugadoresElegidos');
-    var route = "http://localhost:8000/jugadores/" + inputCategoria;
-    listaJugadoresTag.empty();
-
-    $.get(route, function (jugadoresCategoriaResp) {
-        $(jugadoresCategoriaResp).each(function(key, value) {
-            var $liElement = $('<li class="list-group-item"></li>');
-            var $checkLiBtn = $('<button type="button" '+' class="btn btn-success btn-xs"><i class="fa fa-times"></i></button>');
-            var contentLi = " " + value.nombres+" - "+value.categoria;
-            $checkLiBtn.attr("id", value.id);
-            $liElement.append($checkLiBtn, contentLi);
-            listaJugadoresTag.append($liElement);
-        });
-    })
 }
+
+$(document).ready(function() {
+    $('#inputCategoriaSelect ').change(function() {
+        loadCatJugadors($(this));
+        $(document).on("click", "#inputJugadores li button", function(event) {
+            $(this).addClass("btn-danger").removeClass("btn-success");
+            $(this).html($("<i/>").addClass("fa fa-times"));
+            $("#JugadoresElegidos").append($(this).parent());
+
+        });
+
+        $(document).on("click", "#JugadoresElegidos li button", function(event) {
+            $(this).addClass("btn-success").removeClass("btn-danger");
+            $(this).html($("<i/>").addClass("fa fa-check"));
+            $("#inputJugadores").append($(this).parent());
+        });
+    });
+
+    // $("#logo").click(function(event) {
+    //     console.log($("#JugadoresElegidos").parent().html());
+    // });
+
+    $("#btn_guardar").on('click', function() {
+        var route = "http://localhost:8000/equipo";
+        var token = $("#token").val();
+        var inputNombre = $('#inputNombre').val();
+        var inputEntrenador = $('#inputEntrenador').val();
+        var inputCategoriaSelect = $('#inputCategoriaSelect').val();
+        var elegidos = [];
+        $("#JugadoresElegidos li").each(function(index, el) {
+            elegidos.push($(el).children("button").attr("id"));
+        });
+        // elegidos[0] = 20000; para validar jugador desconocido
+        // envia los datos al servidor en Json
+        var ajaxRequest = $.ajax({
+            url: route,
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            type: 'POST',
+            data: {
+                entrenador: inputEntrenador,
+                nombre: inputNombre,
+                categoria: inputCategoriaSelect,
+                ids: elegidos
+            },
+            dataType: 'json',
+            error: function (xhr) {
+                var alMjs = xhr.responseJSON;
+                console.log(alMjs);
+                $(".alert.alert-danger").css("display", "block");
+                $("#alerts").empty();
+                $.each(alMjs, function(key, value) {
+                    console.log(value[0]);
+                    $("#alerts").append($("<li/>").text(value[0]));
+                });
+                window.location = "#";
+            }
+        });
+
+        // se recibe si hay una respuesta (est caso vien del controller@create)
+        ajaxRequest.done(function(data) {
+            alert('guardado perfecto');
+            // window.location = "http://localhost:8000/equipo/" + data.idEquipo;
+        });
+    });
+
+    $("#btn_actualizar").on('click', function() {
+        var equipo = $("#idEquipo").val();
+        var token = $("#token").val();
+        var metodo = $("#method").val();
+        var route = "http://localhost:8000/equipo/" + equipo;
+        var inputNombre = $('#inputNombre').val();
+        var inputEntrenador = $('#inputEntrenador').val();
+        var inputCategoriaSelect = $('#inputCategoriaSelect').val();
+
+        // envia los datos al servidor en Json
+        var ajaxRequest = $.ajax({
+            url: route,
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            type: 'PUT',
+            data: {
+                entrenador: inputEntrenador,
+                nombre: inputNombre,
+                categoria: inputCategoriaSelect
+            },
+            dataType: 'json'
+        });
+
+        // se recibe si hay una respuesta (est caso vien del controller@create)
+        ajaxRequest.done(function(data) {
+            window.location = "http://localhost:8000/equipo/" + data.idEquipo;
+        });
+    });
+});

@@ -8,6 +8,11 @@
     <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
     <li><a href="{!!route('equipo.index')!!}">Equipo</a></li>
     <li class="active">Crear</li>
+    <style media="screen">
+    .list-group-item {
+        /*padding: 5px 15px;*/
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -15,9 +20,15 @@
     <div class="col-xs-8">
         <!-- general form elements -->
         <div class="box box-primary">
+            <!-- mensajes de errro de validacion -->
+            <div class="alert alert-danger" style="display: none">
+                <ul id="alerts">
+                </ul>
+            </div>
             <div class="box-header with-border">
                 <h3 class="box-title">Crear Equipo</h3>
             </div><!-- /.box-header -->
+
             <!-- form start -->
             <form role="form">
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}" id="token">
@@ -34,6 +45,7 @@
                     <div class="form-group col-xs-12">
                         <label for="inputCategoria">Categoria</label>
                         <select class="form-control" id="inputCategoriaSelect">
+                            <option value="noSelected">-Selecionar-</option>
                             @if(count($categorias) != 0)
                                 @foreach($categorias as $categoria)
                                     <option value="{!! $categoria->nombre !!}">{{ $categoria->nombre }}</option>
@@ -72,7 +84,7 @@
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="file">Logo</label>
+                        <label id="logo" for="file">Logo</label>
                         <input type="file" name="file" id="inputFile" class="btn btn-default" />
                     </div>
                 </div><!-- /.box-body -->
