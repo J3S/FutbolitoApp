@@ -2,6 +2,15 @@
 <html>
     <head>
         @include('layouts.head')
+        <style media="screen">
+            html, body{height: 100% !important;}
+            .content-wrapper{
+                height: 100%;
+            }
+            .wrapper{
+                /*height: 100%;*/
+            }
+        </style>
     </head>
     <body class="hold-transition skin-green sidebar-mini fixed">
         <div class="wrapper">
@@ -40,9 +49,9 @@
                 <div class="tab-content">
                     <!-- Home tab content -->
                     <div class="tab-pane" id="control-sidebar-home-tab">
-                    
+
                     </div><!-- /.tab-pane -->
-                  
+
                 </div>
             </aside><!-- /.control-sidebar -->
             <!-- Add the sidebar's background. This div must be placed

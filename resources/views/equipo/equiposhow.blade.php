@@ -31,15 +31,7 @@
                     <label for="inputCategoria">Categoria</label>
                     <li class="list-group-item">{!! $equipo->categoria !!}</li>
                 </div>
-                <div class="form-group col-xs-12">
-                    <label for="inputCategoria">Estado</label>
-                    <?php if ($equipo->estado): ?>
-                        <li class="list-group-item">Activo</li>
-                    <?php else: ?>
-                        <li class="list-group-item">Desactivado</li>
-                    <?php endif; ?>
 
-                </div>
                 <!-- Lista de jugadores para elegir -->
                 <div class="form-group col-xs-12">
                     <div class="panel panel-success">
@@ -48,7 +40,12 @@
                         </div>
                         <div class="panel-body">
                             <ul class="list-group"  id="inputJugadores">
-                                <li class="list-group-item">No hay jugadores par mostrar</li>
+                                <li class="list-group-item">jugadores par mostrar</li>
+                                <li class="list-group-item">jugadores par mostrar</li>
+                                <li class="list-group-item">jugadores par mostrar</li>
+                                <li class="list-group-item">jugadores par mostrar</li>
+                                <li class="list-group-item">jugadores par mostrar</li>
+                                <li class="list-group-item">jugadores par mostrar</li>
                             </ul>
                         </div>
                     </div>
@@ -57,7 +54,7 @@
                     <label for="inputFile">Logo</label>
                 </div>
                 <div class="form-group col-xs-12 col-sm-7">
-                    <i class="fa fa fa-futbol-o fa-5x"></i>
+                    <i class="fa fa fa-futbol-o fa-3x"></i>
                 </div>
             </div><!-- /.box-body -->
 
@@ -70,9 +67,11 @@
                             </a>
                         </div>
                         <div class="col-xs-4 pull-right">
-                            <a class="btn btn-danger" href="{!!route('equipo.destroy', ['equipo' => $equipo->id])!!}">
-                                <i class="fa fa-trash-o fa-lg"></i> Desacitivar
-                            </a>
+                            <form style="display:inline-block" action="{!!route('equipo.destroy', ['equipo' => $equipo->id])!!}" method="POST">
+                                <input name="_method" type="hidden" value="DELETE">
+                                {{ csrf_field() }}
+                                <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa-times fa-lg"> Desactivar</i></button>
+                            </form>
                         </div>
                     </div>
                 <div class="col-xs-2"></div>
