@@ -164,6 +164,7 @@ class PartidoController extends Controller
 
         // Guardo el partido creado en la base de datos.
         $partido->save();
+        flash()->info('Partido ha sido creado con éxito.');
 
         // Retorno a la vista principal de la opcion partido.
         return $this->index();
@@ -297,6 +298,7 @@ class PartidoController extends Controller
 
         // Actualizo la información del partido en la base de datos.
         $partido->save();
+        flash()->info('Partido ha sido modificado con éxito.');
 
         // Retorno a la vista principal de la opción partido.
         return redirect('partido');
