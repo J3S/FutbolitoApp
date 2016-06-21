@@ -65,18 +65,18 @@ function saveEquipo() {
 $(document).ready(function() {
     $('#inputCategoriaSelect ').change(function() {
         loadCatJugadors($(this));
-        $(document).on("click", "#inputJugadores li button", function(event) {
-            $(this).addClass("btn-danger").removeClass("btn-success");
-            $(this).html($("<i/>").addClass("fa fa-times"));
-            $("#JugadoresElegidos").append($(this).parent());
+    });
+    $(document).on("click", "#inputJugadores li button", function(event) {
+        $(this).addClass("btn-danger").removeClass("btn-success");
+        $(this).html($("<i/>").addClass("fa fa-times"));
+        $("#JugadoresElegidos").append($(this).parent());
 
-        });
+    });
 
-        $(document).on("click", "#JugadoresElegidos li button", function(event) {
-            $(this).addClass("btn-success").removeClass("btn-danger");
-            $(this).html($("<i/>").addClass("fa fa-check"));
-            $("#inputJugadores").append($(this).parent());
-        });
+    $(document).on("click", "#JugadoresElegidos li button", function(event) {
+        $(this).addClass("btn-success").removeClass("btn-danger");
+        $(this).html($("<i/>").addClass("fa fa-check"));
+        $("#inputJugadores").append($(this).parent());
     });
 
     // $("#logo").click(function(event) {
@@ -123,8 +123,8 @@ $(document).ready(function() {
 
         // se recibe si hay una respuesta (est caso vien del controller@create)
         ajaxRequest.done(function(data) {
-            alert('Euqipo guardado exitosamente');
-            window.location = "http://localhost:8000/equipo/" + data.idEquipo;
+            alert(data.mensaje);
+            window.location = "http://localhost:8000/equipo/";
         });
     });
 
@@ -170,7 +170,7 @@ $(document).ready(function() {
         // se recibe si hay una respuesta (est caso vien del controller@create)
         ajaxRequest.done(function(data) {
             alert('Equipo actualizado exitosamente');
-            window.location = "http://localhost:8000/equipo/" + data.idEquipo;
+            window.location = "http://localhost:8000/equipo/";
         });
     });
 });

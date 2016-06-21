@@ -54,21 +54,44 @@ class JugadorTableSeeder extends Seeder
             $name = $names[0]." ".$names[1];
             $apellido = $apellidos[0]." ".$apellidos[1];
             DB::table('jugadors')->insert([
-                    'nombres' => $name,
-                    'apellidos' => $apellido,
-                    'fecha_nac' => Carbon::now()->toDateTimeString(),
-                    'identificacion' => (string)rand(1000000000, 9999999999),
-                    'rol' => strtolower(str_random(10)),
-                    'email' => strtolower(str_random(15)).'@gmail.com',
-                    'telefono' => '09'.rand(),
-                    'peso' => round((mt_rand(5500, 10000)/100), 1),
-                    'categoria' => $categoriaNombres[0],
-                    'num_camiseta' => $index,
-                    // 'id_equipo' => $equipo->id,
-                    'estado' => true,
-                    'created_at' => Carbon::now()->toDateTimeString(),
-                    'updated_at' => Carbon::now()->toDateTimeString()
-                ]);
+                'nombres' => $name,
+                'apellidos' => $apellido,
+                'fecha_nac' => Carbon::now()->toDateTimeString(),
+                'identificacion' => (string)rand(1000000000, 9999999999),
+                'rol' => strtolower(str_random(10)),
+                'email' => strtolower(str_random(15)).'@gmail.com',
+                'telefono' => '09'.rand(),
+                'peso' => round((mt_rand(5500, 10000)/100), 1),
+                'categoria' => $categoriaNombres[0],
+                'num_camiseta' => $index,
+                // 'id_equipo' => $equipo->id,
+                'estado' => true,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+        }
+        foreach (range(1, 100) as $index) {
+            shuffle($names);
+            shuffle($apellidos);
+            shuffle($categoriaNombres);
+            $name = $names[0]." ".$names[1];
+            $apellido = $apellidos[0]." ".$apellidos[1];
+            DB::table('jugadors')->insert([
+                'nombres' => $name,
+                'apellidos' => $apellido,
+                'fecha_nac' => Carbon::now()->toDateTimeString(),
+                'identificacion' => (string)rand(1000000000, 9999999999),
+                'rol' => strtolower(str_random(10)),
+                'email' => strtolower(str_random(15)).'@gmail.com',
+                'telefono' => '09'.rand(),
+                'peso' => round((mt_rand(5500, 10000)/100), 1),
+                // 'categoria' => $categoriaNombres[0],
+                'num_camiseta' => $index,
+                // 'id_equipo' => $equipo->id,
+                'estado' => true,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
         }
     }
 }

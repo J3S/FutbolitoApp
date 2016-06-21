@@ -15,6 +15,11 @@
     <div class="col-xs-8">
         <!-- general form elements -->
         <div class="box box-primary">
+            <!-- mensajes de errro de validacion -->
+            <div class="alert alert-danger" style="display: none">
+                <ul id="alerts">
+                </ul>
+            </div>
             <div class="box-header with-border">
                 <h3 class="box-title">Editar Equipo</h3>
             </div><!-- /.box-header -->

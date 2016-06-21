@@ -23,7 +23,7 @@ class CreateJugadorsTable extends Migration
             $table->string('telefono', 30)->nullable();
             $table->double('peso')->nullable();
             $table->smallInteger('num_camiseta')->nullable();
-            $table->string('categoria', 50);
+            $table->string('categoria', 50)->nullable();
             $table->boolean('estado');
             $table->integer('id_equipo')->unsigned()->nullable();
             $table->foreign('id_equipo')->references('id')->on('equipos');
