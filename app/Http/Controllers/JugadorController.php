@@ -65,7 +65,7 @@ class JugadorController extends Controller
                 'nombres' => 'required|regex:/([A-Z a-z])+/',
                 'apellidos' => 'required|regex:/([A-Z a-z])+/',
                 'identificacion' => 'numeric|unique:jugadors,identificacion|digits_between:10,13',
-                'num_camiseta' => 'numeric|unique:jugadors,num_camiseta, equipo|between:01,99',
+                'num_camiseta' => 'numeric|between:01,99',
                 'rol' => 'alpha',
                 'peso' => 'numeric',
                 'telefono' => 'numeric',
