@@ -93,7 +93,6 @@ class JugadorController extends Controller
             array(
             'nombres' => 'required|regex:/([A-Z a-z])+/',
             'apellidos' => 'required|regex:/([A-Z a-z])+/',
-            'equipo' => 'required',
             'identificacion' => 'required|numeric|unique:jugadors,identificacion|digits_between:10,13',
             'rol' => 'alpha',
             'peso' => 'numeric',
@@ -187,7 +186,6 @@ class JugadorController extends Controller
            array(
             'nombres' => 'required|regex:/([A-Z a-z])+/',
             'apellidos' => 'required|regex:/([A-Z a-z])+/',
-            'equipo' => 'required',
             'identificacion' => 'required|numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
             'rol' => 'alpha',
             'peso' => 'numeric',
