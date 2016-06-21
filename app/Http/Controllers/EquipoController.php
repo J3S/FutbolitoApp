@@ -126,7 +126,7 @@ class EquipoController extends Controller
                 if ( $jugadorDB === null) {
                     $mensaje = array("Jugador(s) no identificado(s)");
                     return response()->json(['ids' => $mensaje], 422);
-                } else if ($jugadorDB->id_equipo !== NULL) {
+                } else if ($jugadorDB->id_equipo !== null) {
                     $mensaje = array("Jugador ".$jugadorDB->nombres."ya pertenece a un equipo");
                     return response()->json(['ids' => $mensaje], 422);
                 }
@@ -138,18 +138,23 @@ class EquipoController extends Controller
         $equipo->director_tecnico = $request->entrenador;
         $equipo->categoria        = $request->categoria;
         if ($equipo->save() === true) {
+            // set id_equipo a los jugadores selecionados en el nuevo equipo!
+            foreach ($request->ids as $value) {
+                $jugadorEquipo            = Jugador::find($value);
+                $jugadorEquipo->id_equipo = $equipo->id;
+                $jugadorEquipo->save();
+            }
             return response()->json(
                 [
                  "mensaje"  => "guardado con exito",
                  "idEquipo" => $equipo->id,
                 ]
             );
+        }else {
+            return response()->json(["mensaje" => "Error al guardar en la BDD"]
+            );
         }
 
-        foreach ($request->ids as $value) {
-            $jugadorEquipo            = Jugador::find($value);
-            $jugadorEquipo->id_equipo = $equipo->id;
-        }
 
     }//end store()
 
@@ -180,7 +185,7 @@ class EquipoController extends Controller
     public function getJugadoresCategoria($categoria)
     {
         $jugadoresCategoria = Jugador::where('categoria', $categoria)
-                                     ->where('id_equipo', null)
+                                     ->whereNull('id_equipo')
                                      ->get(
                                          [
                                           'id',
@@ -232,10 +237,11 @@ class EquipoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $equipoNew         = Equipo::find($id);
         $this->validate(
             $request,
             array(
-             'nombre'    => 'required|unique:equipos,nombre',
+             'nombre'    => 'required',
              'categoria' => 'required|exists:categorias,nombre',
             )
         );
@@ -243,34 +249,44 @@ class EquipoController extends Controller
             $mensaje = array("Cantida de jugadores insuficiente: ".count($request->ids));
             return response()->json(['ids' => $mensaje], 422);
         } else {
-            $mensaje1 = array("Jugador jugador no identificado");
             foreach ($request->ids as $value) {
-                if (Jugador::find($value) === null) {
+                $jugadorDB = Jugador::find($value);
+                // id del jugador del request existe en la BDD?
+                if ( $jugadorDB === null) {
+                    $mensaje = array("Jugador(s) no identificado(s)");
                     return response()->json(['ids' => $mensaje], 422);
-                } else if (Jugador::find($value)->estado === 1) {
-                    $mensaje = array("Jugador jugador ya pertenece a un equipo");
+                }else if ($jugadorDB->id_equipo !== null && $jugadorDB->id_equipo !== $equipoNew->id) {
+                    $mensaje = array("Jugador ".$jugadorDB->nombres."ya pertenece a un equipo");
                     return response()->json(['ids' => $mensaje], 422);
                 }
             }
         }
 
-        $equipoNew         = Equipo::find($id);
+
         $equipoNew->nombre = $request->nombre;
         $equipoNew->director_tecnico = $request->entrenador;
         $equipoNew->categoria        = $request->categoria;
         if ($equipoNew->save() === true) {
+            // $oldJugadors = Jugador::where('id_equipo', $equipoNew->id);
+            // foreach ($oldJugadors as $oldJug) {
+            //     $oldJug->id_equipo = null;
+            //     $jugadorEquipo->save();
+            // }
+            // set id_equipo a los jugadores selecionados en el nuevo equipo!
+            foreach ($request->ids as $value) {
+                $jugadorEquipo            = Jugador::find($value);
+                $jugadorEquipo->id_equipo = $equipoNew->id;
+                $jugadorEquipo->save();
+            }
             return response()->json(
                 [
-                 "mensaje"  => "actualizado con exito",
+                 "mensaje"  => "guardado con exito",
                  "idEquipo" => $equipoNew->id,
                 ]
             );
-            return "save error";
-        }
-
-        foreach ($request->ids as $value) {
-            $jugadorEquipo            = Jugador::find($value);
-            $jugadorEquipo->id_equipo = $equipo->id;
+        }else {
+            return response()->json(["mensaje" => "Error al guardar en la BDD"]
+            );
         }
 
     }//end update()
@@ -288,7 +304,7 @@ class EquipoController extends Controller
         $equipo         = Equipo::find($id);
         $equipo->estado = 0;
         $equipo->save();
-        return redirect()->route('equipo.show', [$equipo->id]);
+        return redirect()->route('equipo.index');
 
     }//end destroy()
 
