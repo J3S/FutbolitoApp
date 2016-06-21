@@ -197,6 +197,12 @@ class PartidoController extends Controller
         // Encuentro el partido seleccionado por el usuario.
         $partido = Partido::find($id);
 
+        // Verifico si existe algun partido con ese ID.
+        if (count($partido) === 0) {
+            flash()->error('El partido que desea modificar no se encuentra registrado.');
+            return redirect()->route('partido.index');
+        }
+
         // Preparo los datos que seran enviados a la vista.
         $date          = date("Y-m-d\TH:i:s", strtotime($partido->fecha));
         $torneos       = Torneo::where('estado', 1)->orderBy('anio', 'desc')->get();
@@ -323,9 +329,8 @@ class PartidoController extends Controller
             flash()->info('Partido ha sido borrado con éxito.');
             return redirect('partido');
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(
-                'El partido que desea desactivar no se encuentra registrado.'
-            );
+            flash()->error('El partido que desea borrar no se encuentra registrado.');
+            return redirect()->route('partido.index');
         }
 
     }//end destroy()
