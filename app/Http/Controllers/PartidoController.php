@@ -317,7 +317,7 @@ class PartidoController extends Controller
             $partido         = Partido::find($id);
             $partido->estado = 0;
             $partido->save();
-            return redirect()->back();
+
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(
                 'El partido que desea desactivar no se encuentra registrado.'

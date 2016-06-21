@@ -126,7 +126,7 @@
 														<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o fa-lg"></i></a>
 													</td>
 													<td>
-														<form action="/partido/{{ $partido->id }} => " method="POST">
+														<form action="/partido/{{ $partido->id }}" method="POST">
 							                            <input type="hidden" name="_method" value="DELETE">
 							                            {{ csrf_field() }}
 
