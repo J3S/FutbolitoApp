@@ -93,7 +93,7 @@ class JugadorController extends Controller
             array(
             'nombres' => 'required|regex:/([A-Z a-z])+/',
             'apellidos' => 'required|regex:/([A-Z a-z])+/',
-            'identificacion' => 'required|numeric|unique:jugadors,identificacion|digits_between:10,13',
+            'identificacion' => 'numeric|unique:jugadors,identificacion|digits_between:10,13',
             'rol' => 'alpha',
             'peso' => 'numeric',
             'telefono' => 'numeric',
@@ -186,7 +186,7 @@ class JugadorController extends Controller
            array(
             'nombres' => 'required|regex:/([A-Z a-z])+/',
             'apellidos' => 'required|regex:/([A-Z a-z])+/',
-            'identificacion' => 'required|numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
+            'identificacion' => 'numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
             'rol' => 'alpha',
             'peso' => 'numeric',
             'telefono' => 'numeric',
@@ -232,7 +232,13 @@ class JugadorController extends Controller
     public function destroy($id)
     {
         //Encuentro al jugador que el usuario desea desactivar y cambio su estado a 0 (desactivado) 
-        $jugador = Jugador::find($id);
+        try {
+            $jugadorID = Jugador::find($id)->id;
+            $jugador = Jugador::find($id);
+        } catch (\Exception $e) {
+            flash()->error('El jugador no se encuentra registrada.');
+            return redirect()->route('jugador.index');
+        }
         $jugador->estado = 0;
 
         //Actualizo los datos del jugador en la base de datos 
