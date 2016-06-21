@@ -142,7 +142,7 @@
                                 <div class="table-responsive">
                                     @if (session()->has('torneosEncontrados'))
                                         <hr>
-                                        <h5><b>Equipos encontrados</b></h5>
+                                        <h5><b>Torneos encontrados</b></h5>
                                         <table class="table table-hover" id="torneosEncontrados">
                                             <thead>
                                                 <tr>

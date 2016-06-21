@@ -63,7 +63,6 @@ class JugadorController extends Controller
         $this->validate($request, array(
                 'nombres' => 'required|regex:/([A-Z a-z])+/',
                 'apellidos' => 'required|regex:/([A-Z a-z])+/',
-                'equipo' => 'required',
                 'identificacion' => 'required|numeric|unique:jugadors,identificacion|digits_between:10,13',
                 'categoria' => 'required',
                 'num_camiseta' => 'numeric|unique:jugadors,num_camiseta, equipo|between:01,99',
@@ -139,7 +138,6 @@ class JugadorController extends Controller
         $this->validate($request, array(
                 'nombres' => 'required|regex:/([A-Z a-z])+/',
                 'apellidos' => 'required|regex:/([A-Z a-z])+/',
-                'equipo' => 'required',
                 'identificacion' => 'required|numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
                 'categoria' => 'required',
                 'num_camiseta' => 'numeric|between:01,99',

@@ -23,7 +23,7 @@
     <div class="col-xs-12" style="padding-bottom: 15px;">
         <form><!--  -->
         	<!-- Boton para crear un nuevo jugador -->
-            <button type="button" id="nuevoJugadorButton" class="btn btn-success" onclick="window.location='{{ route("jugador.create") }}'"><i class="fa fa-plus"></i> Nuevo Jugador</button>
+            <button type="button" id="nuevoJugadorButton" class="btn btn-success" onclick="window.location='{{ route("jugador.create") }}'"><i class="fa fa-plus"></i> Crear Jugador</button>
         </form>
     </div>
 	<div class="col-xs-12">
@@ -95,14 +95,19 @@
 		                <th>Acci&oacute;n</th>
 		            </tr>
 		            @foreach ($jugadores as $jugador)
+		            {{--*/ $tieneEquipo = 0 /*--}}
 		            <tr>
 		                <td>{{ $jugador->nombres}}</td>
 		                <td>{{ $jugador->apellidos}}</td>
 		                @foreach($equipos as $equipo)
 		                	@if($jugador->id_equipo == $equipo->id)
-		                		<td>{{ $equipo->nombre}}</td>
+		                		<td>{{ $equipo->nombre }}</td>
+		                		{{--*/ $tieneEquipo = 1 /*--}}
 		                	@endif
 		                @endforeach
+	                	@if($tieneEquipo == 0)
+	                		<td>No asignado</td>
+	                	@endif
 		                <td>{{ $jugador->categoria}}</td>
 		                <td>{{ $jugador->identificacion}}</td>
 		                <td>
