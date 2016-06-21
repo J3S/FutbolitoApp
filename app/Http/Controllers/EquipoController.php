@@ -116,16 +116,18 @@ class EquipoController extends Controller
             )
         );
 
-        if (count($request->ids) < 2) {
+        if (count($request->ids) < 5) {
             $mensaje = array("Cantida de jugadores insuficiente: ".count($request->ids));
             return response()->json(['ids' => $mensaje], 422);
         } else {
-            $mensaje1 = array("Jugador jugador no identificado");
             foreach ($request->ids as $value) {
-                if (Jugador::find($value) === null) {
+                $jugadorDB = Jugador::find($value);
+                // id del jugador del request existe en la BDD?
+                if ( $jugadorDB === null) {
+                    $mensaje = array("Jugador(s) no identificado(s)");
                     return response()->json(['ids' => $mensaje], 422);
-                } else if (Jugador::find($value)->estado === 1) {
-                    $mensaje = array("Jugador jugador ya pertenece a un equipo");
+                } else if ($jugadorDB->id_equipo !== NULL) {
+                    $mensaje = array("Jugador ".$jugadorDB->nombres."ya pertenece a un equipo");
                     return response()->json(['ids' => $mensaje], 422);
                 }
             }
@@ -178,12 +180,13 @@ class EquipoController extends Controller
     public function getJugadoresCategoria($categoria)
     {
         $jugadoresCategoria = Jugador::where('categoria', $categoria)
+                                     ->where('id_equipo', null)
                                      ->get(
                                          [
                                           'id',
                                           'nombres',
                                           'categoria',
-                                          'id_equipo',
+                                          'apellidos',
                                          ]
                                      );
         $arr = $jugadoresCategoria->toArray();
@@ -207,13 +210,14 @@ class EquipoController extends Controller
      */
     public function edit($id)
     {
-        $jugadores  = Jugador::where('estado', 1)
-                               ->get(['id', 'nombres', 'categoria']);
+        $jugadors  = Jugador::where('estado', 1)
+                            ->where('id_equipo', $id)
+                            ->get(['id', 'nombres', 'apellidos', 'num_camiseta', 'categoria']);
         $categorias = Categoria::all();
         $equipo     = Equipo::find($id);
         return view('equipo.equipoe')->with('equipo', $equipo)
                                      ->with('categorias', $categorias)
-                                     ->with('jugadores', $jugadores);
+                                     ->with('jugadors', $jugadors);
 
     }//end edit()
 
@@ -231,10 +235,25 @@ class EquipoController extends Controller
         $this->validate(
             $request,
             array(
-             'nombre'    => 'required',
-             'categoria' => 'required',
+             'nombre'    => 'required|unique:equipos,nombre',
+             'categoria' => 'required|exists:categorias,nombre',
             )
         );
+        if (count($request->ids) < 5) {
+            $mensaje = array("Cantida de jugadores insuficiente: ".count($request->ids));
+            return response()->json(['ids' => $mensaje], 422);
+        } else {
+            $mensaje1 = array("Jugador jugador no identificado");
+            foreach ($request->ids as $value) {
+                if (Jugador::find($value) === null) {
+                    return response()->json(['ids' => $mensaje], 422);
+                } else if (Jugador::find($value)->estado === 1) {
+                    $mensaje = array("Jugador jugador ya pertenece a un equipo");
+                    return response()->json(['ids' => $mensaje], 422);
+                }
+            }
+        }
+
         $equipoNew         = Equipo::find($id);
         $equipoNew->nombre = $request->nombre;
         $equipoNew->director_tecnico = $request->entrenador;
@@ -247,6 +266,11 @@ class EquipoController extends Controller
                 ]
             );
             return "save error";
+        }
+
+        foreach ($request->ids as $value) {
+            $jugadorEquipo            = Jugador::find($value);
+            $jugadorEquipo->id_equipo = $equipo->id;
         }
 
     }//end update()

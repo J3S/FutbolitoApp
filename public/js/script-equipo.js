@@ -2,7 +2,6 @@ function loadCatJugadors(element) {
     var inputCategoria = element.val();
     var listaJugadoresTag = $('#inputJugadores');
     var route = "http://localhost:8000/jugadores/" + inputCategoria;
-    var dame = ['primero'];
     if (inputCategoria.length === "noSelected") {
         listaJugadoresTag.html('<li class="list-group-item">Ninguna Categoria selecionada</li>');
     } else {
@@ -18,7 +17,7 @@ function loadCatJugadors(element) {
                 $("#JugadoresElegidos").empty();
                 $(jugadoresCategoriaResp).each(function(key, value) {
                     var $liElement = $('<li class="list-group-item"></li>').css("padding", "5px 15px");
-                    var contentLi = " " + value.nombres + " - " + value.categoria + " - " + value.id_equipo;
+                    var contentLi =" " + value.nombres + " - " +value.apellidos+ " - " + value.categoria;
                     var $checkBtn = $("<button/>");
                     $checkBtn.attr({
                         type: "button",
@@ -124,8 +123,8 @@ $(document).ready(function() {
 
         // se recibe si hay una respuesta (est caso vien del controller@create)
         ajaxRequest.done(function(data) {
-            alert('guardado perfecto');
-            // window.location = "http://localhost:8000/equipo/" + data.idEquipo;
+            alert('Euqipo guardado exitosamente');
+            window.location = "http://localhost:8000/equipo/" + data.idEquipo;
         });
     });
 
@@ -137,7 +136,10 @@ $(document).ready(function() {
         var inputNombre = $('#inputNombre').val();
         var inputEntrenador = $('#inputEntrenador').val();
         var inputCategoriaSelect = $('#inputCategoriaSelect').val();
-
+        var elegidos = [];
+        $("#JugadoresElegidos li").each(function(index, el) {
+            elegidos.push($(el).children("button").attr("id"));
+        });
         // envia los datos al servidor en Json
         var ajaxRequest = $.ajax({
             url: route,
@@ -146,15 +148,28 @@ $(document).ready(function() {
             },
             type: 'PUT',
             data: {
-                entrenador: inputEntrenador,
-                nombre: inputNombre,
-                categoria: inputCategoriaSelect
+                entrenador : inputEntrenador,
+                nombre     : inputNombre,
+                categoria  : inputCategoriaSelect,
+                ids        : elegidos
             },
-            dataType: 'json'
+            dataType: 'json',
+            error: function (xhr) {
+                var alMjs = xhr.responseJSON;
+                console.log(alMjs);
+                $(".alert.alert-danger").css("display", "block");
+                $("#alerts").empty();
+                $.each(alMjs, function(key, value) {
+                    console.log(value[0]);
+                    $("#alerts").append($("<li/>").text(value[0]));
+                });
+                window.location = "#";
+            }
         });
 
         // se recibe si hay una respuesta (est caso vien del controller@create)
         ajaxRequest.done(function(data) {
+            alert('Equipo actualizado exitosamente');
             window.location = "http://localhost:8000/equipo/" + data.idEquipo;
         });
     });

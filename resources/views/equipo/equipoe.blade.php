@@ -55,6 +55,16 @@
                             </div>
                             <div class="panel-body">
                                 <ul class="list-group"  id="JugadoresElegidos">
+                                    @if(count($jugadors) != 0)
+                                        @foreach($jugadors as $jugador)
+                                            <li class="list-group-item" style="padding: 5px 15px">
+                                                <button class="btn btn-danger btn-xs" id="{!!$jugador->id!!}" type="button" name="button"><i class="fa fa-times"aria-hidden="true"></i></button>
+                                                {{ $jugador->nombres }} - {!!$jugador->apellidos!!}
+                                            </li>
+                                        @endforeach
+                                    @else
+                                        <li>No se ha registrado ningun jugador</li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>

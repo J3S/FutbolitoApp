@@ -25,7 +25,7 @@ class CreateJugadorsTable extends Migration
             $table->smallInteger('num_camiseta')->nullable();
             $table->string('categoria', 50);
             $table->boolean('estado');
-            $table->integer('id_equipo')->unsigned();
+            $table->integer('id_equipo')->unsigned()->nullable();
             $table->foreign('id_equipo')->references('id')->on('equipos');
             $table->timestamps();
         });
