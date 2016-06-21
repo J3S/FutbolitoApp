@@ -17,6 +17,7 @@ use App\Categoria;
 use App\Jugador;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Flash;
 
 /**
  * EquipoController Class Doc Comment
@@ -288,7 +289,8 @@ class EquipoController extends Controller
         $equipo         = Equipo::find($id);
         $equipo->estado = 0;
         $equipo->save();
-        return redirect()->route('equipo.show', [$equipo->id]);
+        flash()->info('Equipo borrado con éxito');
+        return redirect('equipo');
 
     }//end destroy()
 

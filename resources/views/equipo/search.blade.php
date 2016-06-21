@@ -11,6 +11,7 @@
 
 @section('content')
     <div class="col-xs-12" style="padding-bottom: 15px;">
+    @include('flash::message')
         <form>
             <button type="button" id="nuevoEquipoButton" class="btn btn-success" onclick="window.location='{{ route("equipo.create") }}'"><i class="fa fa-plus"></i> Crear Equipo</button>
         </form>
