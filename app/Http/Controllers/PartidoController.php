@@ -19,6 +19,7 @@ use App\Equipo;
 use App\Partido;
 use App\Categoria;
 use Carbon\Carbon;
+use Flash;
 
 /**
  * Clase PartidoController
@@ -317,6 +318,7 @@ class PartidoController extends Controller
             $partido         = Partido::find($id);
             $partido->estado = 0;
             $partido->save();
+            flash()->info('Partido ha sido borrado con éxito.');
             return redirect('partido');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(

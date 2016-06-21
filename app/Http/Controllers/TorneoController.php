@@ -17,6 +17,7 @@ use App\Equipo;
 use App\Categoria;
 use App\TorneoEquipo;
 use App\Partido;
+use Flash;
 
 /**
  * TorneoController Class Doc Comment
@@ -218,6 +219,7 @@ class TorneoController extends Controller
         $torneo->id_categoria = $categoriaID;
         $torneo->estado       = 1;
         $torneo->save();
+        flash()->info('Torneo ha sido creado con éxito.');
 
         // Asignación de ese equipo al torneo recién creado.
         foreach ($equiposAgregadosID as $equipoAgregadoID) {
@@ -403,6 +405,7 @@ class TorneoController extends Controller
         $torneo->id_categoria = $categoriaID;
         $torneo->estado       = 1;
         $torneo->save();
+        flash()->info('Torneo ha sido modificado con éxito.');
 
         /*
             *Eliminación de todos los registros relacionados a ese torneo en la
@@ -439,12 +442,14 @@ class TorneoController extends Controller
             $torneo         = Torneo::find($id);
             $torneo->estado = 0;
             $torneo->save();
+            flash()->info('Torneo ha sido borrado con éxito.');
             $partidosTorneo = Partido::where('id_torneo', $torneo->id)
                                ->get();
             foreach ($partidosTorneo as $partidoTorneo) {
                 $partidoTorneo->estado = 0;
                 $partidoTorneo->save();
             }
+
             return redirect()->back();
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(

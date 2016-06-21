@@ -21,6 +21,7 @@
 @section('content')
 
     <div class="col-xs-12" style="padding-bottom: 15px;">
+    @include('flash::message')
         <form><!--  -->
         	<!-- Boton para crear un nuevo jugador -->
             <button type="button" id="nuevoJugadorButton" class="btn btn-success" onclick="window.location='{{ route("jugador.create") }}'"><i class="fa fa-plus"></i> Crear Jugador</button>

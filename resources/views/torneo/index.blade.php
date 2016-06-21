@@ -23,6 +23,7 @@
         <div class="row">
             <!-- Botón para crear un nuevo torneo -->
             <div class="col-xs-12" style="padding-bottom: 15px;">
+            @include('flash::message')
                 <form>
                     <a class="btn btn-success" href="{{ route("torneo.create") }}"><i class="fa fa-plus"></i> Crear Torneo</a>
                 </form>

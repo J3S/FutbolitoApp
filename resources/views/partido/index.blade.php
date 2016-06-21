@@ -20,6 +20,7 @@
 <!-- Contenido de la pagina -->
 @section('content')
     <div class="col-xs-12" style="padding-bottom: 15px;">
+    @include('flash::message')
         <form><!--  -->
         	<!-- Boton para crear un nuevo partido -->
             <button type="button" id="nuevoPartidoButton" class="btn btn-success" onclick="window.location='{{ route("partido.create") }}'"><i class="fa fa-plus"></i> Crear Partido</button>

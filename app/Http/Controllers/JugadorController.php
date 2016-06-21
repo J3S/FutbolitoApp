@@ -15,6 +15,7 @@ use App\Equipo;
 use App\Partido;
 use App\Categoria;
 use App\Jugador;
+use Flash;
 
 class JugadorController extends Controller
 {
@@ -88,6 +89,8 @@ class JugadorController extends Controller
         $jugador->id_equipo =  $request->equipo;
         /* Guardo el jugador creado en la base de datos */
         $jugador->save();
+        flash()->info('Jugador ha sido creado con éxito.');
+
         /* Retorno a la vista principal de la opcion partido */
         return $this->index();
     }
@@ -166,6 +169,7 @@ class JugadorController extends Controller
 
         /* Guardo el partido creado en la base de datos */
         $jugador->save();
+        flash()->info('Jugador ha sido modificado con éxito.');
 
         /* Retorno a la vista principal de la opcion partido */
         return $this->index();
@@ -185,6 +189,7 @@ class JugadorController extends Controller
 
         /* Actualizo los datos del partido en la base de datos */
         $jugador->save();
+        flash()->info('Jugador ha sido borrado con éxito.');
 
         return $this->index();
     }
