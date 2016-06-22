@@ -70,7 +70,7 @@
                                         </li>
                                     @endforeach
                                 @else
-                                    <li>No se ha registrado ningun jugador</li>
+                                    <li class="list-group-item">No se ha registrado ningun jugador para este equipo</li>
                                 @endif
                             </ul>
                         </div>
