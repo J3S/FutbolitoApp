@@ -91,11 +91,12 @@ class JugadorController extends Controller
         $this->validate(
             $request, 
             array(
-            'nombres' => 'required|regex:/([A-Z a-z])+/',
-            'apellidos' => 'required|regex:/([A-Z a-z])+/',
+            'nombres' => 'required|regex:/^[\pL\s\-]+$/u',
+            'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
             'identificacion' => 'numeric|unique:jugadors,identificacion|digits_between:10,13',
             'rol' => 'alpha',
             'peso' => 'numeric',
+            'num_camiseta' => 'numeric',
             'telefono' => 'numeric',
             'email' => 'email',
             'fecha_nac' => 'date'
@@ -184,13 +185,14 @@ class JugadorController extends Controller
         $this->validate(
            $request, 
            array(
-            'nombres' => 'required|regex:/([A-Z a-z])+/',
-            'apellidos' => 'required|regex:/([A-Z a-z])+/',
+            'nombres' => 'required|regex:/^[\pL\s\-]+$/u',
+            'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
             'identificacion' => 'numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
             'rol' => 'alpha',
             'peso' => 'numeric',
             'telefono' => 'numeric',
             'email' => 'email',
+            'num_camiseta' => 'numeric',
             'fecha_nac' => 'date'
             )
         );
