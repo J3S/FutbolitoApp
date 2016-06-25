@@ -17,7 +17,6 @@ use App\Categoria;
 use App\Jugador;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Flash;
 
 /**
  * EquipoController Class Doc Comment
@@ -216,6 +215,7 @@ class EquipoController extends Controller
      */
     public function edit($id)
     {
+        
         $jugadors  = Jugador::where('estado', 1)
                             ->where('id_equipo', $id)
                             ->get(['id', 'nombres', 'apellidos', 'num_camiseta', 'categoria']);
@@ -305,9 +305,7 @@ class EquipoController extends Controller
         $equipo         = Equipo::find($id);
         $equipo->estado = 0;
         $equipo->save();
-
-        flash()->info('Equipo borrado con éxito');
-        return redirect('equipo');
+        return redirect()->route('equipo.index');
 
     }//end destroy()
 

@@ -89,7 +89,6 @@ class CrearPartidoTest extends TestCase
         $equipoV = $equipos[1];
         $golLocal = 1;
         $golVisitante = 0;
-
         Session::start();
         $parametros = [
 				        '_token' 		   => csrf_token(),
