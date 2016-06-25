@@ -18,11 +18,11 @@
 @endsection
 <style>
     .form-group .required:after {
-    position:absolute;
-    content:'*';
-    color:red;
-    margin-left: 5px;
-    top:0;
+        position:absolute;
+        content:'*';
+        color:red;
+        margin-left: 5px;
+        top:0;
     }
 
     .campoRequerido {
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
-                        <label class="campoRequerido">* Campo requerido</label>
+                        <label class="campoRequerido">(*) Campo requerido</label>
                     </div>
                 </div><!-- /.box-body -->
 

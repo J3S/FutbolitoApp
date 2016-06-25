@@ -153,7 +153,9 @@
     	<h4 class="text-center">La búsqueda no ha coincidido con ning&uacute;n partido.</h4>
     	<h5 class="text-center">Seleccione opciones m&aacute;s generales e intente de nuevo.</h4>
     @endif<!-- endif busqueda vacia -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script>
+    	$('div.alert').not('.alert-important').delay(3000).slideUp(500);
 	    // Carga dinámica de los equipos dependiendo del torneo seleccionado
 	    document.getElementById("torneo").addEventListener("change", llenarEquiposSelect);
 	    // Funcion que filtra los equipos locales y visitantes dependiendo del torneo seleccionado

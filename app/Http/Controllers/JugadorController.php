@@ -108,22 +108,22 @@ class JugadorController extends Controller
         *ingresados por el usuario desde la vista 'jugadorc' 
         *Verificación si el jugador recibido está registrado
         */
-            $jugador = new Jugador;
-            $jugador->nombres = $request->nombres;
-            $jugador->apellidos = $request->apellidos;
-            $jugador->fecha_nac = $request->fecha_nac;
-            $jugador->identificacion = $request->identificacion;
-            $jugador->rol = $request->rol;
-            $jugador->email = $request->email;
-            $jugador->telefono = $request->telefono;
-            $jugador->peso = $request->peso;
-            $jugador->num_camiseta = $request->num_camiseta;
-            $jugador->categoria = $request->categoria;
-            $jugador->estado = 1;
-            $jugador->id_equipo =  $request->equipo;
+        $jugador = new Jugador;
+        $jugador->nombres = $request->nombres;
+        $jugador->apellidos = $request->apellidos;
+        $jugador->fecha_nac = $request->fecha_nac;
+        $jugador->identificacion = $request->identificacion;
+        $jugador->rol = $request->rol;
+        $jugador->email = $request->email;
+        $jugador->telefono = $request->telefono;
+        $jugador->peso = $request->peso;
+        $jugador->num_camiseta = $request->num_camiseta;
+        $jugador->categoria = $request->categoria;
+        $jugador->estado = 1;
+        $jugador->id_equipo =  $request->equipo;
 
         // Guardo el jugador creado en la base de datos 
-            $jugador->save();
+        $jugador->save();
         flash()->info('Jugador ha sido creado con éxito.');
 
         /* Retorno a la vista principal de la opcion jugador */       
@@ -155,7 +155,7 @@ class JugadorController extends Controller
             $jugadorID = Jugador::find($id)->id;
             $jugador = Jugador::find($id);
         } catch (\Exception $e) {
-            flash()->error('El jugador no se encuentra registrada.');
+            flash()->error('El jugador que desea modificar no se encuentra registrado.');
             return redirect()->route('jugador.index');
         }
 
@@ -211,9 +211,7 @@ class JugadorController extends Controller
         $jugador->num_camiseta = $request->num_camiseta;
         $jugador->categoria = $request->categoria;
         $jugador->estado = 1;
-        $equipo = Equipo::find($request->equipo);
-        $jugador->id_equipo = $equipo->id;
-
+        $jugador->id_equipo = $request->equipo;
 
         // Guardo el jugador creado en la base de datos 
         $jugador->save();
@@ -238,7 +236,7 @@ class JugadorController extends Controller
             $jugadorID = Jugador::find($id)->id;
             $jugador = Jugador::find($id);
         } catch (\Exception $e) {
-            flash()->error('El jugador no se encuentra registrada.');
+            flash()->error('El jugador que desea borrar no se encuentra registrado.');
             return redirect()->route('jugador.index');
         }
         $jugador->estado = 0;

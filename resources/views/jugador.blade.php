@@ -113,7 +113,6 @@
 		                <td>{{ $jugador->identificacion}}</td>
 		                <td>
 		                    <a class="btn btn-warning btn-sm" href="{!! route('jugador.edit', ['jugador' => $jugador->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
-		                    <!-- <a class="btn btn-warning btn-sm" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil"></i> Editar</a> -->
 		                    <form style="display:inline-block" action="{!!route('jugador.destroy', ['jugador' => $jugador->id])!!}" method="POST">
 		                        <input name="_method" type="hidden" value="DELETE">
 		                        {{ csrf_field() }}
@@ -131,6 +130,10 @@
     	<h4 class="text-center">La búsqueda no ha coincidido con ning&uacute;n jugador.</h4>
     	<h5 class="text-center">Seleccione opciones m&aacute;s generales e intente de nuevo.</h4>
     @endif
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script>
+	    $('div.alert').not('.alert-important').delay(3000).slideUp(500);
+	</script>
 @endsection
 
 

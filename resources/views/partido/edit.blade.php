@@ -19,11 +19,11 @@
 @endsection
 <style>
     .form-group .required:after {
-    position:absolute;
-    content:'*';
-    color:red;
-    margin-left: 5px;
-    top:0;
+        position:absolute;
+        content:'*';
+        color:red;
+        margin-left: 5px;
+        top:0;
     }
 
     .campoRequerido {
