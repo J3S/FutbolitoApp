@@ -13,6 +13,7 @@ use Carbon\Carbon;
 
 class CrearPartidoTest extends TestCase
 {
+
 	use DatabaseTransactions;
 
     /**
@@ -494,4 +495,189 @@ class CrearPartidoTest extends TestCase
             ->seePageIs(route('partido.create'));
     }
 
+    /**
+     * Comprueba el funcionamiento para crear un partido.
+     * Se ingresan los datos del partido. Solo con datos requeridos.
+     * Se ingresa una fecha no permitida (anterior al año del torneo seleccionado).
+     * Es exitoso si el sistema se mantiene en la pagina partido/create.
+     * Corresponde al caso de prueba testCrearPartido: post-condition 13.
+     *
+     * @return void
+     */
+    public function testCrearPartido13()
+    {
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2016)->first();
+        $date = Carbon::create(2014, 1, 3, 12, 0, 0);
+        $jornada = 1;
+        $lugar = "Cancha #3";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0]['id'];
+        $equipoV = $equipos[1]['id'];
+        $golLocal = 1;
+        $golVisitante = 0;
+
+        Session::start();
+        $parametros = [
+                        '_token'           => csrf_token(),
+                        'torneo'           => $torneo->id,
+                        'fecha'            => $date->format('Y-m-d H:i:s'),
+                        'jornada'          => $jornada,
+                        'lugar'            => $lugar,
+                        'equipo_local'     => $equipoL,
+                        'equipo_visitante' => $equipoV,
+                        'gol_local'        => $golLocal,
+                        'gol_visitante'    => $golVisitante,
+                    ];
+
+        $response = $this->call('POST', 'partido', $parametros);
+
+        $this->assertRedirectedToRoute('partido.create');
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un partido.
+     * Se ingresan los datos del partido. Solo con datos requeridos.
+     * Se ingresa una fecha no permitida (posterior al año del torneo seleccionado).
+     * Es exitoso si el sistema se mantiene en la pagina partido/create.
+     * Corresponde al caso de prueba testCrearPartido: post-condition 14.
+     *
+     * @return void
+     */
+    public function testCrearPartido14()
+    {
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
+        $date = Carbon::create(2016, 1, 3, 12, 0, 0);
+        $jornada = 1;
+        $lugar = "Cancha #3";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0]['id'];
+        $equipoV = $equipos[1]['id'];
+        $golLocal = 1;
+        $golVisitante = 0;
+
+        Session::start();
+        $parametros = [
+                        '_token'           => csrf_token(),
+                        'torneo'           => $torneo->id,
+                        'fecha'            => $date->format('Y-m-d H:i:s'),
+                        'jornada'          => $jornada,
+                        'lugar'            => $lugar,
+                        'equipo_local'     => $equipoL,
+                        'equipo_visitante' => $equipoV,
+                        'gol_local'        => $golLocal,
+                        'gol_visitante'    => $golVisitante,
+                    ];
+
+        $response = $this->call('POST', 'partido', $parametros);
+
+        $this->assertRedirectedToRoute('partido.create');
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un partido.
+     * Se ingresan los datos del partido. Solo con datos requeridos.
+     * Se ingresa una jornada inválida, mayor al límite establecido (100).
+     * Es exitoso si el sistema se mantiene en la pagina partido/create.
+     * Corresponde al caso de prueba testCrearPartido: post-condition 15.
+     *
+     * @return void
+     */
+    public function testCrearPartido15()
+    {
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
+        $date = Carbon::create(2014, 1, 3, 12, 0, 0);
+        $jornada = 5000;
+        $lugar = "Cancha #3";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0]['id'];
+        $equipoV = $equipos[1]['id'];
+        $golLocal = 1;
+        $golVisitante = 0;
+
+        $this->visit(route('partido.create'))
+            ->select($torneo->id, 'torneo')
+            ->type($jornada, 'jornada')
+            ->select($date, 'fecha')
+            ->type($lugar, 'lugar')
+            ->select($equipoL, 'equipo_local')
+            ->select($equipoV, 'equipo_visitante')
+            ->type($golLocal, 'gol_local')
+            ->type($golVisitante, 'gol_visitante')
+            ->press('Guardar')
+            ->seePageIs(route('partido.create'));
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un partido.
+     * Se ingresan los datos del partido. Solo con datos requeridos.
+     * Se ingresa goles local inválido, mayor al límite establecido (100).
+     * Es exitoso si el sistema se mantiene en la pagina partido/create.
+     * Corresponde al caso de prueba testCrearPartido: post-condition 16.
+     *
+     * @return void
+     */
+    public function testCrearPartido16()
+    {
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
+        $date = Carbon::create(2014, 1, 3, 12, 0, 0);
+        $jornada = 1;
+        $lugar = "Cancha #3";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0]['id'];
+        $equipoV = $equipos[1]['id'];
+        $golLocal = 5000;
+        $golVisitante = 0;
+
+        $this->visit(route('partido.create'))
+            ->select($torneo->id, 'torneo')
+            ->type($jornada, 'jornada')
+            ->select($date, 'fecha')
+            ->type($lugar, 'lugar')
+            ->select($equipoL, 'equipo_local')
+            ->select($equipoV, 'equipo_visitante')
+            ->type($golLocal, 'gol_local')
+            ->type($golVisitante, 'gol_visitante')
+            ->press('Guardar')
+            ->seePageIs(route('partido.create'));
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un partido.
+     * Se ingresan los datos del partido. Solo con datos requeridos.
+     * Se ingresa goles visitante inválido, mayor al límite establecido (100).
+     * Es exitoso si el sistema se mantiene en la pagina partido/create.
+     * Corresponde al caso de prueba testCrearPartido: post-condition 17.
+     *
+     * @return void
+     */
+    public function testCrearPartido17()
+    {
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
+        $date = Carbon::create(2014, 1, 3, 12, 0, 0);
+        $jornada = 1;
+        $lugar = "Cancha #3";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0]['id'];
+        $equipoV = $equipos[1]['id'];
+        $golLocal = 1;
+        $golVisitante = 5000;
+
+        $this->visit(route('partido.create'))
+            ->select($torneo->id, 'torneo')
+            ->type($jornada, 'jornada')
+            ->select($date, 'fecha')
+            ->type($lugar, 'lugar')
+            ->select($equipoL, 'equipo_local')
+            ->select($equipoV, 'equipo_visitante')
+            ->type($golLocal, 'gol_local')
+            ->type($golVisitante, 'gol_visitante')
+            ->press('Guardar')
+            ->seePageIs(route('partido.create'));
+    }
 }
+

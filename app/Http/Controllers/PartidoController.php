@@ -136,6 +136,18 @@ class PartidoController extends Controller
             );
         }
 
+        // Verificación si fecha del partido está en el rango adecuado.
+        // Rango: (año del torneo)-enero-1 00:00:00 hasta (año del torneo)-diciembre-31 23:59:59.
+        $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
+        $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
+        $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+
+        if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
+            return redirect()->route('partido.create')->withInput()->withErrors(
+                'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
+            );
+        }
+
         // Creo nueva instancia de partido y le asigno todos los valores ingresados por el usuario desde la vista 'partidoc'.
         $partido            = new Partido();
         $partido->lugar     = $request->lugar;
@@ -259,6 +271,18 @@ class PartidoController extends Controller
         if ($request->equipo_local === $request->equipo_visitante) {
             return back()->withInput()->withErrors(
                 'Equipo local y equipo visitante no pueden ser iguales.'
+            );
+        }
+
+        // Verificación si fecha del partido está en el rango adecuado.
+        // Rango: (año del torneo)-enero-1 00:00:00 hasta (año del torneo)-diciembre-31 23:59:59.
+        $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
+        $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
+        $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+
+        if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
+            return back()->withInput()->withErrors(
+                'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
             );
         }
 
