@@ -12,7 +12,9 @@
 namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PartidoRequest;
 use App\Torneo;
 use App\TorneoEquipo;
 use App\Equipo;
@@ -93,28 +95,14 @@ class PartidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PartidoRequest $request)
     {
-        // Validación de datos requeridos para la creacion de un partido.
-        $this->validate(
-            $request,
-            array(
-             'torneo'           => 'required|numeric|min:1',
-             'fecha'            => 'required|date',
-             'jornada'          => 'required|numeric|min:1',
-             'lugar'            => 'required|max:200',
-             'equipo_local'     => 'required|numeric|min:1',
-             'equipo_visitante' => 'required|numeric|min:1',
-             'gol_local'        => 'required|numeric|min:0',
-             'gol_visitante'    => 'required|numeric|min:0',
-            )
-        );
 
         // Verificación si el torneo recibido está registrado.
         try {
             $torneoID = Torneo::find($request->torneo)->id;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return redirect()->route('partido.create')->withInput()->withErrors(
                 'El torneo seleccionado no se encuentra registrado.'
             );
         }
@@ -126,7 +114,7 @@ class PartidoController extends Controller
             $equipoLocal       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_local)->first();
             $equipoLocalNombre = $equipoLocal->nombre;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return redirect()->route('partido.create')->withInput()->withErrors(
                 'El equipo local seleccionado no se encuentra registrado en el torneo seleccionado.'
             );
         }
@@ -136,14 +124,14 @@ class PartidoController extends Controller
             $equipoVisitante       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_visitante)->first();
             $equipoVisitanteNombre = $equipoVisitante->nombre;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return redirect()->route('partido.create')->withInput()->withErrors(
                 'El equipo visitante seleccionado no se encuentra registrado en el torneo seleccionado.'
             );
         }
 
         // Verificación si el equipo local y visitante son iguales.
         if ($request->equipo_local === $request->equipo_visitante) {
-            return redirect()->route('partido.create')->withErrors(
+            return redirect()->route('partido.create')->withInput()->withErrors(
                 'Equipo local y equipo visitante no pueden ser iguales.'
             );
         }
@@ -233,22 +221,8 @@ class PartidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PartidoRequest $request, $id)
     {
-        // Validación de datos requeridos para la modificación de un partido.
-        $this->validate(
-            $request,
-            array(
-             'torneo'           => 'required|numeric|min:1',
-             'fecha'            => 'required|date',
-             'jornada'          => 'required|numeric|min:1',
-             'lugar'            => 'required|max:200',
-             'equipo_local'     => 'required|numeric|min:1',
-             'equipo_visitante' => 'required|numeric|min:1',
-             'gol_local'        => 'required|numeric|min:0',
-             'gol_visitante'    => 'required|numeric|min:0',
-            )
-        );
 
         // Verificación si el torneo recibido está registrado.
         try {

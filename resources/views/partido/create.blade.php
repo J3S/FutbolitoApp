@@ -16,7 +16,21 @@
     <li><a href="{{ url('partido') }}">Partido</a></li>
     <li class="active">Crear</li>
 @endsection
+<style>
+    .form-group .required:after {
+    position:absolute;
+    content:'*';
+    color:red;
+    margin-left: 5px;
+    top:0;
+    }
 
+    .campoRequerido {
+        color:red; 
+        font-style:italic; 
+        font-size:0.9em;
+    }
+</style>
 @section('content')
     <div class="col-xs-12">
         <div class="col-xs-2"></div>
@@ -47,12 +61,13 @@
             {!! csrf_field() !!}
                 <div class="box-body">
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="torneo">Torneo</label>
+                        <label class="required" for="torneo">Torneo</label>
                         <select class="form-control" id="torneo" name="torneo">
+                            <option selected="selected"></option>
                             @foreach($categorias as $categoria)
                                 @foreach($torneos as $torneo)
                                     @if($categoria->id == $torneo->id_categoria)
-                                        <option value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
+                                        <option value="{{ $torneo['id'] }}" id="{{ $torneo['anio'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
                                     @endif
                                 @endforeach
                             @endforeach
@@ -60,35 +75,35 @@
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="jornada">Jornada #</label>
-                            <input type="number" min="0" class="form-control" id="jornada" name="jornada" placeholder="Ingrese jornada del partido">
+                            <label class="required" for="jornada">Jornada #</label>
+                            <input type="number" class="form-control" id="jornada" value="{{ old('jornada') }}" name="jornada" min="1" max="100" placeholder="Ingrese jornada del partido">
                         </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="arbitro">Arbitro</label>
-                        <input type="text" class="form-control" id="arbitro" name="arbitro" placeholder="Ingrese arbitro">
+                        <input type="text" class="form-control" id="arbitro" value="{{ old('arbitro') }}" name="arbitro" placeholder="Ingrese arbitro">
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="fecha">Fecha del partido</label>
-                        <input type="datetime-local" class="form-control" id="fecha" name="fecha" placeholder="Ingrese fecha del partido">
+                        <label class="required" for="fecha">Fecha del partido</label>
+                        <input type="datetime-local" class="form-control" id="fecha" value="{{ old('fecha') }}" name="fecha" placeholder="Ingrese fecha del partido">
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="lugar">Lugar</label>
-                            <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Ingrese lugar del partido">
+                            <label class="required" for="lugar">Lugar</label>
+                            <input type="text" class="form-control" id="lugar" name="lugar" value="{{ old('lugar') }}" placeholder="Ingrese lugar del partido">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="observaciones">Observaciones</label>
-                            <input type="text" class="form-control" id="observaciones" name="observaciones" placeholder="Ingrese observaciones del partido">
+                            <input type="text" class="form-control" id="observaciones" value="{{ old('observaciones') }}" name="observaciones" placeholder="Ingrese observaciones del partido">
                         </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-12 separador text-center">
                         <label class="header-group" for="listaEquipo">Equipos</label>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="equipo_local">Equipo local</label>
+                        <label class="required" for="equipo_local">Equipo local</label>
                         <select class="form-control" id="equipo_local" name="equipo_local">
                             @foreach($equipos as $equipo)
                             <option value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
@@ -96,7 +111,7 @@
                         </select>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="equipo_visitante">Equipo visitante</label>
+                        <label class="required" for="equipo_visitante">Equipo visitante</label>
                         <select class="form-control" id="equipo_visitante" name="equipo_visitante">
                             @foreach($equipos as $equipo)
                             <option value="{{ $equipo['id'] }}">{{ $equipo['nombre'] }}</option>
@@ -105,15 +120,18 @@
                     </div>
                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="gol_local">Goles local</label>
-                            <input type="number" min="0" class="form-control" id="gol_local" name="gol_local" placeholder="Ingrese goles de equipo local">
+                            <label class="required" for="gol_local">Goles local</label>
+                            <input type="number" class="form-control" value="{{ old('gol_local') }}" id="gol_local" name="gol_local" min="0" max="100" placeholder="Ingrese goles de equipo local">
                         </div>
                     </div>
                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="gol_visitante">Goles visitante</label>
-                            <input type="number" min="0" class="form-control" id="gol_visitante" name="gol_visitante" placeholder="Ingrese goles de equipo visitante">
+                            <label class="required" for="gol_visitante">Goles visitante</label>
+                            <input type="number" class="form-control" value="{{ old('gol_visitante') }}" id="gol_visitante" min="0" max="100" name="gol_visitante" placeholder="Ingrese goles de equipo visitante">
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <label class="campoRequerido">* Campo requerido</label>
                     </div>
                 </div><!-- /.box-body -->
 
@@ -141,6 +159,11 @@
             var equipos = <?php echo json_encode($equipos); ?>;
             var torneoEquipos = <?php echo json_encode($torneoEquipos); ?>;
             var torneo = $("#torneo option:selected").attr("value");
+            var anio = $("#torneo option:selected").attr("id");
+            var fechaInicial = anio+"-01-01T00:00:00";
+            var fechaFinal = anio+"-12-31T23:59:59";
+            $('#fecha').attr('min', fechaInicial);
+            $('#fecha').attr('max', fechaFinal);
             $('#equipo_local').find('option').remove().end();
             $('#equipo_visitante').find('option').remove().end();
 
