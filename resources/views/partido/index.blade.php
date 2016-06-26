@@ -51,8 +51,10 @@
                         	<option selected="selected"></option>
                             @foreach($categorias as $categoria)
                                 @foreach($torneos as $torneo)
-                                    @if($categoria->id == $torneo->id_categoria)
-                                        <option value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
+                                	@if($torneo->estado == 1)
+	                                    @if($categoria->id == $torneo->id_categoria)
+	                                        <option value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
+	                                    @endif
                                     @endif
                                 @endforeach
                             @endforeach
@@ -100,10 +102,10 @@
 				@if($torneo->id_categoria == $categoria->id)
 					@if($contienePartidos[$torneo->id-1]['partidos'] != 0 and $torneo['estado'] == 1)
 					<div class="col-xs-12">
-						<div class="box box-primary">
-			            	<div class="box-header with-border">
-								<h3 class="box-title">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</h3>
-								<div class="table-responsive">
+						<div class="panel panel-default">
+			            	<div class="box-header with-border"><i href="#expand{{ $torneo['id'] }}" data-toggle="collapse"  class="glyphicon glyphicon-chevron-down pull-right"></i>
+								<a href="#expand{{ $torneo['id'] }}" data-toggle="collapse"><h3 class="box-title">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</h3></a>
+								<div id="expand{{ $torneo['id'] }}" class="collapse table-responsive">
 									<table class="table table-hover">
 							            <thead>
 							                <tr>

@@ -494,14 +494,17 @@ class TorneoController extends Controller
             $torneosBuscados = Torneo::where('anio', $request->anio)
                                      ->where('id_categoria', $categoriaID)
                                      ->where('estado', 1)
+                                     ->orderBy('anio', 'desc')
                                      ->get();
         } else if ($request->anio !== "") {
             $torneosBuscados = Torneo::where('anio', $request->anio)
                                      ->where('estado', 1)
+                                     ->orderBy('anio', 'desc')
                                      ->get();
         } else if ($request->categoria !== "") {
             $torneosBuscados = Torneo::where('id_categoria', $categoriaID)
                                      ->where('estado', 1)
+                                     ->orderBy('anio', 'desc')
                                      ->get();
         } else {
             $torneosBuscados = [];
