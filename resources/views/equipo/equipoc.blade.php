@@ -75,11 +75,17 @@
                     <div class="form-group col-xs-12">
                         <div class="panel panel-success">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Jugadores Disponibles</h3>
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapseListJug" aria-expanded="true" aria-controls="collapseOne">
+                                        Jugadores Disponibles
+                                    </a>
+                                </h3>
                             </div>
-                            <div class="panel-body">
-                                <ul class="list-group"  id="inputJugadores">
-                                </ul>
+                            <div id="collapseListJug" class="panel-collapse collapse in" role="contenido" aria-labelledby="cabecera de lista">
+                                <div class="panel-body">
+                                    <ul class="list-group"  id="inputJugadores">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
