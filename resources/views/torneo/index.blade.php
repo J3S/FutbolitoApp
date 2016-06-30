@@ -23,6 +23,7 @@
         <div class="row">
             <!-- Botón para crear un nuevo torneo -->
             <div class="col-xs-12" style="padding-bottom: 15px;">
+            @include('modals.delete')
             @include('flash::message')
                 <form>
                     <a class="btn btn-success" href="{{ route("torneo.create") }}"><i class="fa fa-plus"></i> Crear Torneo</a>
@@ -79,10 +80,10 @@
                                                         @else
                                                             <td> <a href="{{ route('torneo.edit', $torneo['id']) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Editar</a></td>
                                                             <td>
-                                                                <form action="/torneo/{{ $torneo['id'] }}" method="POST">
+                                                                <form class="deleteForm" action="/torneo/{{ $torneo['id'] }}" method="POST">
                                                                     <input type="hidden" name="_method" value="DELETE">
                                                                     {{ csrf_field() }}
-                                                                    <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Desactivar</button>
+                                                                    <button type="submit" class="deleteBtn btn btn-danger btn-xs"><i class="fa fa-minus"></i> Desactivar</button>
                                                                 </form>
                                                             </td>
                                                         @endif
@@ -166,10 +167,10 @@
                                                             <td>{{ $torneoEncontrado[1] }}</td>
                                                             <td> <a href="{{ route('torneo.edit', $torneoEncontrado[0]) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Editar</a></td>
                                                             <td>
-                                                                <form action="/torneo/{{ $torneoEncontrado[0] }}" method="POST">
+                                                                <form class="deleteForm" action="/torneo/{{ $torneoEncontrado[0] }}" method="POST">
                                                                     <input type="hidden" name="_method" value="DELETE">
                                                                     {{ csrf_field() }}
-                                                                    <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Desactivar</button>
+                                                                    <button type="submit" class="deleteBtn btn btn-danger btn-xs"><i class="fa fa-minus"></i> Desactivar</button>
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -193,6 +194,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script>
     $('div.alert').not('.alert-important').delay(3000).slideUp(500);
+    $('.deleteForm').on('click', '.deleteBtn', function(e){
+        e.preventDefault();
+        var $form=$(this.closest('form'));
+        $('#confirm').modal({ keyboard: false })
+            .on('click', '#delete-btn', function(){
+                console.log($form);
+                $form.submit();
+        });
+    });
 </script>
 @endsection
 

@@ -82,6 +82,7 @@
 <!-- Seccion para mostrar los resultadsos de la busqueda de jugadores -->
 	
 	@if(!empty($jugadores) and count($jugadores) != 0)
+	@include('modals.delete')
 		<div class="col-xs-1"></div>
 		    <div class="col-xs-15">
 		        <h3 style="margin-top:0;">Lista de Jugadores</h3>
@@ -113,10 +114,10 @@
 		                <td>{{ $jugador->identificacion}}</td>
 		                <td>
 		                    <a class="btn btn-warning btn-sm" href="{!! route('jugador.edit', ['jugador' => $jugador->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
-		                    <form style="display:inline-block" action="{!!route('jugador.destroy', ['jugador' => $jugador->id])!!}" method="POST">
+		                    <form class="deleteForm" style="display:inline-block" action="{!!route('jugador.destroy', ['jugador' => $jugador->id])!!}" method="POST">
 		                        <input name="_method" type="hidden" value="DELETE">
 		                        {{ csrf_field() }}
-		                        <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa fa-times fa-lg"></i></button>
+		                        <button class="deleteBtn btn btn-danger btn-sm" type="submit" ><i class="fa fa fa-times fa-lg"></i></button>
 		                        <!-- <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa-minus"></i> Desactivar</button> -->
 		                    </form>
 		                </td>
@@ -133,6 +134,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 	<script>
 	    $('div.alert').not('.alert-important').delay(3000).slideUp(500);
+		$('.deleteForm').on('click', '.deleteBtn', function(e){
+		    e.preventDefault();
+		    var $form=$(this.closest('form'));
+		    $('#confirm').modal({ keyboard: false })
+		        .on('click', '#delete-btn', function(){
+		        	console.log($form);
+		            $form.submit();
+	        });
+		});
 	</script>
 @endsection
 

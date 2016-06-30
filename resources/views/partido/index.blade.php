@@ -17,6 +17,10 @@
     <li class="active">Partido</li>
 @endsection
 <style>
+.modal-header .panel-heading {
+    border-top-left-radius: inherit; 
+    border-top-right-radius: inherit;
+}
 .panel-heading.accordion-toggle.collapsed:after {
     /* symbol for "collapsed" panels */
     content:"\e080";
@@ -125,6 +129,7 @@
 
 	<!-- Seccion para mostrar los resultados de la busqueda de partidos -->
 	<div class="col-xs-12">
+	@include('modals.delete')
 		<div class="panel-group" id="accordion">
 		@if(!empty($partidos) and count($partidos) != 0)
 			<h4 style="text-align:center;">Se encontraron {{ count($partidos) }} partidos.</h4>
@@ -161,11 +166,11 @@
 													<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o fa-lg"></i></a>
 												</td>
 												<td>
-													<form action="/partido/{{ $partido->id }}" method="POST">
+													<form class="deleteForm" action="/partido/{{ $partido->id }}" method="POST">
 						                            <input type="hidden" name="_method" value="DELETE">
 						                            {{ csrf_field() }}
 
-						                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa fa-times fa-lg"></i></button>
+						                            <button type="submit" class="deleteBtn btn btn-danger btn-sm"><i class="fa fa fa-times fa-lg"></i></button>
 						                        	</form>
 					                        	</td>
 											</tr>
@@ -190,6 +195,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script>
     	$('div.alert').not('.alert-important').delay(3000).slideUp(500);
+
+		$('.deleteForm').on('click', '.deleteBtn', function(e){
+		    e.preventDefault();
+		    var $form=$(this.closest('form'));
+		    $('#confirm').modal({ keyboard: false })
+		        .on('click', '#delete-btn', function(){
+		        	console.log($form);
+		            $form.submit();
+		        });
+		});
 
 	    // Carga dinámica de los equipos dependiendo del torneo (categoria y año) seleccionado.
 	    document.getElementById("categoria").addEventListener("change", llenarEquiposSelect);
