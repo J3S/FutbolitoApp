@@ -452,9 +452,8 @@ class TorneoController extends Controller
 
             return redirect()->back();
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(
-                'El torneo al que desea desactivar no se encuentra registrado.'
-            );
+            flash()->error('El torneo que desea borrar no se encuentra registrado.');
+            return back()->withInput();
         }
 
     }//end destroy()
@@ -482,9 +481,8 @@ class TorneoController extends Controller
                                         ->get(['id'])
                                         ->toArray()[0]['id'];
             } catch (\Exception $e) {
-                return back()->withInput()->withErrors(
-                    'La categoría seleccionada no se encuentra registrada.'
-                );
+                flash()->error('La categoría seleccionada no se encuentra registrada.');
+                return back()->withInput();
             }
         }
 

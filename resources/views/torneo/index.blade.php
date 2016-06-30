@@ -16,6 +16,9 @@
     <li><a href="/"><i class="fa fa-user"></i> Home</a></li>
     <li class="active">Torneo</li>
 @endsection
+
+<!-- Agregar el contenido de la página -->
+@section('content')
 <style>
 .alert {
     z-index: 99; 
@@ -23,8 +26,6 @@
     left: 65%;
 }
 </style>
-<!-- Agregar el contenido de la página -->
-@section('content')
     <div class="container-fluid">
         <div class="row">
             <!-- Botón para crear un nuevo torneo -->
