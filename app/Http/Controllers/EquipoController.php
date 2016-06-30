@@ -108,11 +108,18 @@ class EquipoController extends Controller
      */
     public function store(Request $request)
     {
+        //test request - response zone------------------/
+        // $jugs = Jugador::whereIn('id', $request->ids)
+        //                 ->whereNull('categoria')->get();
+        //     //    ->update(['categoria' => $equipo->categoria])->get();
+        // return var_dump($jugs->toArray());
+        //test request - response zone------------------|/
+
         $this->validate(
             $request,
             array(
              'nombre'     => 'required|unique:equipos,nombre',
-             'entrenador' => 'required|alpha|in:foo,bar',
+             'entrenador' => 'alpha',
              'categoria'  => 'required|exists:categorias,nombre',
             )
         );
@@ -136,13 +143,14 @@ class EquipoController extends Controller
         $equipo->director_tecnico = $request->entrenador;
         $equipo->categoria        = $request->categoria;
         if ($equipo->save() === true) {
-            // Set id_equipo a los jugadores selecionados en el nuevo equipo!
             if (count($request->ids) > 0) {
-                foreach ($request->ids as $value) {
-                    $jugadorEquipo            = Jugador::find($value);
-                    $jugadorEquipo->id_equipo = $equipo->id;
-                    $jugadorEquipo->save();
-                }
+                // Set id_equipo a jugadors selecionados en el nuevo equipo!
+                Jugador::whereIn('id', $request->ids)
+                       ->update(['id_equipo' => $equipo->id]);
+                // Set categoria a jugadors selecionados en el nuevo equipo!
+                Jugador::whereIn('id', $request->ids)
+                       ->whereNull('categoria')
+                       ->update(['categoria' => $equipo->categoria]);
             }
 
             return response()->json(
@@ -191,6 +199,10 @@ class EquipoController extends Controller
     {
         $jugadoresCategoria = Jugador::where('categoria', $categoria)
                                      ->whereNull('id_equipo')
+                                     ->orWhere(function ($query){
+                                        $query->where('categoria', null)
+                                              ->whereNull('id_equipo');
+                                     })
                                      ->get(
                                          [
                                           'id',
@@ -199,11 +211,10 @@ class EquipoController extends Controller
                                           'apellidos',
                                          ]
                                      );
-        $arr = $jugadoresCategoria->toArray();
-        if (empty($jugadoresCategoria->toArray()) === false) {
-            return response()->json(
-                $jugadoresCategoria->toArray()
-            );
+        $arrJugs = $jugadoresCategoria->toArray();
+        // return var_dump($arrJugs);
+        if (empty($arrJugs) === false) {
+            return response()->json( $arrJugs);
         } else {
             return "No hay jugadores disponibles para esta categoria";
         }

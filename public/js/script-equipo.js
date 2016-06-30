@@ -16,50 +16,35 @@ function loadCatJugadors(element) {
                 listaJugadoresTag.empty();
                 $("#JugadoresElegidos").empty();
                 $(jugadoresCategoriaResp).each(function(key, value) {
-                    var $liElement = $('<li class="list-group-item"></li>').css("padding", "5px 15px");
-                    var contentLi =" " + value.nombres + " - " +value.apellidos+ " - " + value.categoria;
+                    var $liElement = $('<li/>').addClass("list-group-item");
+                    $liElement.css({
+                        "padding": "5px 15px",
+                        "text-align": "center",
+                    });
+                    var $contentLi = $("<div/>").addClass("row");
+                    var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
+                    var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
+                    var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);
+                    // creando el contendo de li
+                    $contentLi.append($divNom, $divApe, $divCat);
                     var $checkBtn = $("<button/>");
                     $checkBtn.attr({
                         type: "button",
                         class: "btn btn-success btn-xs",
                         id: value.id
-                    })
+                    });
                     $checkBtn.append($("<i/>").addClass("fa fa-check"));
-                    $liElement.append($checkBtn, contentLi);
+                    // wraping li content in col row bootstrap with btn, contentLi
+                    var $divLiRow = $("<div/>").addClass("row")
+                    var $divLiCol1 = $("<div/>").addClass("col-xs-1").append($checkBtn);;
+                    var $divLiCol11 = $("<div/>").addClass("col-xs-11").append($contentLi);
+                    $divLiRow.append($divLiCol1, $divLiCol11)
+                    $liElement.append($divLiRow);
                     listaJugadoresTag.append($liElement);
                 });
             }
         });
     }
-}
-
-function saveEquipo() {
-    var route = "http://localhost:8000/equipo";
-    var token = $("#token").val();
-    var inputNombre = $('#inputNombre').val();
-    var inputEntrenador = $('#inputEntrenador').val();
-    var inputCategoriaSelect = $('#inputCategoriaSelect').val();
-    alert('ya esta');
-    // envia los datos al servidor en Json
-    var ajaxRequest = $.ajax({
-        url: route,
-        headers: {
-            'X-CSRF-TOKEN': token
-        },
-        type: 'POST',
-        data: {
-            entrenador: inputEntrenador,
-            nombre: inputNombre,
-            categoria: inputCategoriaSelect,
-
-        },
-        dataType: 'json'
-    });
-
-    // se recibe si hay una respuesta (est caso vien del controller@create)
-    ajaxRequest.done(function(data) {
-        window.location = "http://localhost:8000/equipo/" + data.idEquipo;
-    });
 }
 
 $(document).ready(function() {
@@ -69,19 +54,15 @@ $(document).ready(function() {
     $(document).on("click", "#inputJugadores li button", function(event) {
         $(this).addClass("btn-danger").removeClass("btn-success");
         $(this).html($("<i/>").addClass("fa fa-times"));
-        $("#JugadoresElegidos").append($(this).parent());
+        $("#JugadoresElegidos").append($(this).parent().parent().parent());
 
     });
 
     $(document).on("click", "#JugadoresElegidos li button", function(event) {
         $(this).addClass("btn-success").removeClass("btn-danger");
         $(this).html($("<i/>").addClass("fa fa-check"));
-        $("#inputJugadores").append($(this).parent());
+        $("#inputJugadores").append($(this).parent().parent().parent());
     });
-
-    // $("#logo").click(function(event) {
-    //     console.log($("#JugadoresElegidos").parent().html());
-    // });
 
     $("#btn_guardar").on('click', function() {
         var route = "http://localhost:8000/equipo";
@@ -91,7 +72,7 @@ $(document).ready(function() {
         var inputCategoriaSelect = $('#inputCategoriaSelect').val();
         var elegidos = [];
         $("#JugadoresElegidos li").each(function(index, el) {
-            elegidos.push($(el).children("button").attr("id"));
+            elegidos.push($(el).find("button").attr("id"));
         });
         // elegidos[0] = 20000; para validar jugador desconocido
         // envia los datos al servidor en Json
@@ -121,7 +102,7 @@ $(document).ready(function() {
             }
         });
 
-        // se recibe si hay una respuesta (est caso vien del controller@create)
+        // se recibe si hay una respuesta (est caso vien del controller@store)
         ajaxRequest.done(function(data) {
             alert(data.mensaje);
             window.location = "http://localhost:8000/equipo/";
@@ -138,7 +119,7 @@ $(document).ready(function() {
         var inputCategoriaSelect = $('#inputCategoriaSelect').val();
         var elegidos = [];
         $("#JugadoresElegidos li").each(function(index, el) {
-            elegidos.push($(el).children("button").attr("id"));
+            elegidos.push($(el).find("button").attr("id"));
         });
         // envia los datos al servidor en Json
         var ajaxRequest = $.ajax({
@@ -167,7 +148,7 @@ $(document).ready(function() {
             }
         });
 
-        // se recibe si hay una respuesta (est caso vien del controller@create)
+        // se recibe si hay una respuesta (est caso vien del controller@update)
         ajaxRequest.done(function(data) {
             alert('Equipo actualizado exitosamente');
             window.location = "http://localhost:8000/equipo/";

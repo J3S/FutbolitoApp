@@ -16,8 +16,8 @@
 @endsection
 
 @section('content')
-    <div class="col-xs-2"></div>
-    <div class="col-xs-8">
+    <div class="col-xs-12 col-md-2"></div>
+    <div class="col-xs-12 col-md-8">
         <!-- general form elements -->
         <div class="box box-primary">
             <!-- mensajes de errro de validacion -->
@@ -74,10 +74,10 @@
                     <!-- Lista de jugadores para elegir -->
                     <div class="form-group col-xs-12">
                         <div class="panel panel-success">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="text-align:center">
                                 <h3 class="panel-title">
                                     <a data-toggle="collapse" href="#collapseListJug" aria-expanded="true" aria-controls="collapseOne">
-                                        Jugadores Disponibles
+                                        Jugadores Disponibles <span class="fa fa-chevron-down " > </span>
                                     </a>
                                 </h3>
                             </div>
@@ -110,7 +110,7 @@
             </form>
         </div><!-- /.box -->
     </div><!--/.col (left) -->
-    <div class="col-xs-2"></div>
+    <div class="col-xs-12 col-md-2"></div>
 @endsection
 
 @section('scriptsPersonales')

@@ -71,13 +71,13 @@
                                     <td>{{ $equipo->categoria }}</td>
                                     <td><a href="{!! route('equipo.show', ['equipo' => $equipo->id]) !!}">Ver Jugadores</a></td>
                                     <td>
-                                        <a class="btn btn-warning btn-sm" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+                                        <a class="btn btn-warning btn-xs" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
                                     </td>
                                     <td>
                                         <form style="display:inline-block" action="{!!route('equipo.destroy', ['equipo' => $equipo->id])!!}" method="POST">
                                             <input name="_method" type="hidden" value="DELETE">
                                             {{ csrf_field() }}
-                                            <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa-times fa-lg"></i></button>
+                                            <button class="btn btn-danger btn-xs" type="submit" ><i class="fa fa-times fa-lg"></i></button>
                                         </form>
                                         <!-- <a class="btn btn-danger btn-sm" href="{!! route('equipo.index') !!}"><i class="fa fa-times fa-lg"></i></a> -->
                                     </td>
