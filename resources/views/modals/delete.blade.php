@@ -1,7 +1,7 @@
 <div class="modal" id="confirm">
     <div class="modal-dialog">
-        <div class="modal-content panel-danger">
-            <div class="modal-header panel-heading">
+        <div class="modal-content">
+            <div class="modal-header alert-danger">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">¡Alerta!</h4>
             </div>

@@ -16,7 +16,13 @@
     <li><a href="/"><i class="fa fa-user"></i> Home</a></li>
     <li class="active">Jugador</li>
 @endsection
-
+<style>
+.alert {
+    z-index: 99; 
+    position: absolute; 
+    left: 65%;
+}
+</style>
 <!-- Contenido de la pagina -->
 @section('content')
 

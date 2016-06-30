@@ -17,10 +17,12 @@
     <li class="active">Partido</li>
 @endsection
 <style>
-.modal-header .panel-heading {
-    border-top-left-radius: inherit; 
-    border-top-right-radius: inherit;
+.alert {
+	z-index: 99; 
+	position: absolute; 
+	left: 65%;
 }
+
 .panel-heading.accordion-toggle.collapsed:after {
     /* symbol for "collapsed" panels */
     content:"\e080";
