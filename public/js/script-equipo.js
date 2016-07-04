@@ -2,7 +2,7 @@ function loadCatJugadors(element) {
     var inputCategoria = element.val();
     var listaJugadoresTag = $('#inputJugadores');
     var route = "http://localhost:8000/jugadores/" + inputCategoria;
-    if (inputCategoria.length === "noSelected") {
+    if (inputCategoria === "noSelected") {
         listaJugadoresTag.html('<li class="list-group-item">Ninguna Categoria selecionada</li>');
     } else {
         var ajaxRequest = $.ajax({
@@ -10,11 +10,12 @@ function loadCatJugadors(element) {
             async:false
         });
         ajaxRequest.done(function (jugadoresCategoriaResp) {
-            if ($.type(jugadoresCategoriaResp) === "string") { //getAjax response has not jugadors
+            // getAjax response has not jugadors?
+            if ($.type(jugadoresCategoriaResp) === "string") {
                 listaJugadoresTag.html('<li class="list-group-item">' + jugadoresCategoriaResp + '</li>')
             } else {
                 listaJugadoresTag.empty();
-                $("#JugadoresElegidos").empty();
+                // $("#JugadoresElegidos").empty();
                 $(jugadoresCategoriaResp).each(function(key, value) {
                     var $liElement = $('<li/>').addClass("list-group-item");
                     $liElement.css({
@@ -48,9 +49,20 @@ function loadCatJugadors(element) {
 }
 
 $(document).ready(function() {
-    $('#inputCategoriaSelect ').change(function() {
-        loadCatJugadors($(this));
-    });
+    if ($("#inputCategoriaSelect").val() === "noSelected") {
+        $("#inputCategoriaSelect").on('change', function(event) {
+            loadCatJugadors($(this));
+        });
+    }else {
+        loadCatJugadors($("#inputCategoriaSelect"));
+        $("#inputCategoriaSelect").on('change', function(event) {
+            loadCatJugadors($(this));
+        });
+    }
+
+    // $('#inputCategoriaSelect ').change(function() {
+    //     loadCatJugadors($(this));
+    // });
     $(document).on("click", "#inputJugadores li button", function(event) {
         $(this).addClass("btn-danger").removeClass("btn-success");
         $(this).html($("<i/>").addClass("fa fa-times"));

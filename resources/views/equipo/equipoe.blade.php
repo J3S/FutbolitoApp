@@ -42,7 +42,11 @@
                         <select class="form-control" id="inputCategoriaSelect" value="{!! $equipo->categoria !!}">
                             @if(count($categorias) != 0)
                                 @foreach($categorias as $categoria)
-                                    <option value="{!! $categoria->nombre !!}">{{ $categoria->nombre }}</option>
+                                    @if ($categoria->nombre === $equipo->categoria)
+                                        <option value="{!! $categoria->nombre !!}" selected>{{ $categoria->nombre }}</option>
+                                    @else
+                                        <option value="{!! $categoria->nombre !!}">{{ $categoria->nombre }}</option>
+                                    @endif
                                 @endforeach
                             @else
                                 <option>No se ha registrado ninguna categor&iacute;a</option>
