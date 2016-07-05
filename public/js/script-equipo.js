@@ -15,7 +15,7 @@ function loadCatJugadors(element) {
                 listaJugadoresTag.html('<li class="list-group-item">' + jugadoresCategoriaResp + '</li>')
             } else {
                 listaJugadoresTag.empty();
-                // $("#JugadoresElegidos").empty();
+                $("#JugadoresElegidos").empty();
                 $(jugadoresCategoriaResp).each(function(key, value) {
                     var $liElement = $('<li/>').addClass("list-group-item");
                     $liElement.css({
@@ -25,7 +25,11 @@ function loadCatJugadors(element) {
                     var $contentLi = $("<div/>").addClass("row");
                     var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
                     var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
-                    var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);
+                    if (value.categoria === null) {
+                        var $divCat = $("<div/>").addClass("col-xs-4").text("sin categoria");
+                    }else {
+                        var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);
+                    }
                     // creando el contendo de li
                     $contentLi.append($divNom, $divApe, $divCat);
                     var $checkBtn = $("<button/>");
@@ -49,11 +53,13 @@ function loadCatJugadors(element) {
 }
 
 $(document).ready(function() {
+    // create case
     if ($("#inputCategoriaSelect").val() === "noSelected") {
         $("#inputCategoriaSelect").on('change', function(event) {
             loadCatJugadors($(this));
         });
     }else {
+        //update case
         loadCatJugadors($("#inputCategoriaSelect"));
         $("#inputCategoriaSelect").on('change', function(event) {
             loadCatJugadors($(this));
