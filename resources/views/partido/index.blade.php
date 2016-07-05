@@ -16,54 +16,73 @@
     <li><a href="/"><i class="fa fa-user"></i> Home</a></li>
     <li class="active">Partido</li>
 @endsection
+<style>
+.alert {
+	z-index: 99; 
+	position: absolute; 
+	left: 65%;
+}
 
+.panel-heading.accordion-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content:"\e080";
+    /* adjust as needed, taken from bootstrap.css */
+}
+
+.panel-heading.accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family:'Glyphicons Halflings';
+    /* essential for enabling glyphicon */
+    content:"\e114";
+    /* adjust as needed, taken from bootstrap.css */
+    float: right;
+    position: relative;
+    bottom: 23px;
+    font-size: 15pt;
+    /* adjust as needed */
+    color: grey;
+    /* adjust as needed */
+}
+
+.panel-heading:hover {
+    cursor: pointer;
+}
+
+.panel-heading:hover h4 {
+    text-decoration: underline;
+}
+</style>
 <!-- Contenido de la pagina -->
 @section('content')
-    <div class="col-xs-12" style="padding-bottom: 15px;">
+    <div class="col-xs-12">
     @include('flash::message')
         <form><!--  -->
         	<!-- Boton para crear un nuevo partido -->
             <button type="button" id="nuevoPartidoButton" class="btn btn-success" onclick="window.location='{{ route("partido.create") }}'"><i class="fa fa-plus"></i> Crear Partido</button>
         </form>
+    <button type="button" id="buscarPartidoBtn" data-toggle="collapse" data-target="#boxBuscar" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Buscar Partidos</button>
     </div>
 	<div class="col-xs-12">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title">Buscar Partido</h3>
-			</div><!-- /.box-header -->
+		<div class="box box-primary collapse" id="boxBuscar">
             <form role="form" action="/selectPartido" method="post">
             {!! csrf_field() !!}
 				<div class="box-body">
-					<div class="form-group col-xs-12 col-sm-4">
-						<label for="iniPartido">Fecha inicio</label>
-						<!-- Campo para ingresar fecha inicial para busqueda del partido -->
-						<input type="date" class="form-control" id="iniPartido" name="ini_partido">
-					</div>
-					<div class="form-group col-xs-12 col-sm-4">
-						<label for="finPartido">Fecha fin</label>
-						<!-- Campo para ingresar la fecha final para busqueda del partido -->
-						<input type="date" class="form-control" id="finPartido" name="fin_partido">
-					</div>
-					<div class="form-group col-xs-12 col-sm-4">
-                        <label for="listaAnio">Torneo</label>
+                    <div class="col-xs-12 col-sm-2">
+                        <div class="form-group">
+                            <label for="anio">A&ntilde;o</label>
+                            <!-- Campo para seleccionar el año para busqueda del partido -->
+                            <input type="number" min="1970" max="2038" class="form-control" id="anio" name="anio">
+                        </div>
+                    </div>
+					<div class="form-group col-xs-12 col-sm-2">
+                        <label for="categoria">Categor&iacute;a</label>
                         <!-- Campo para seleccionar el torneo para busqueda del partido -->
-                        <select class="form-control input" id="torneo" name="torneo">
+                        <select class="form-control input" id="categoria" name="categoria">
                         	<option selected="selected"></option>
                             @foreach($categorias as $categoria)
-                                @foreach($torneos as $torneo)
-                                    @if($categoria->id == $torneo->id_categoria)
-                                        <option value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
-                                    @endif
-                                @endforeach
+                                <option>{{ $categoria['nombre'] }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="form-group">
-                            <label for="inputJornada">Jornada #</label>
-                            <!-- Campo para seleccionar la jornada para busqueda del partido -->
-                            <input type="number" min="0" class="form-control" id="inputJornada" name="jornada" placeholder="Ingrese jornada del partido">
-                        </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="equipo_local">Equipo local</label>
@@ -85,6 +104,23 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <div class="form-group">
+                            <label for="inputJornada">Jornada #</label>
+                            <!-- Campo para seleccionar la jornada para busqueda del partido -->
+                            <input type="number" min="0" class="form-control" id="inputJornada" name="jornada">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-4">
+						<label for="iniPartido">Fecha inicio</label>
+						<!-- Campo para ingresar fecha inicial para busqueda del partido -->
+						<input type="datetime-local" class="form-control" id="iniPartido" name="ini_partido">
+					</div>
+					<div class="form-group col-xs-12 col-sm-4">
+						<label for="finPartido">Fecha fin</label>
+						<!-- Campo para ingresar la fecha final para busqueda del partido -->
+						<input type="datetime-local" class="form-control" id="finPartido" name="fin_partido">
+					</div>
 					<div class="col-xs-12" >
 	                    <button type="submit" class="btn btn-success">Buscar</button>
 	                </div>
@@ -94,89 +130,134 @@
 	</div>
 
 	<!-- Seccion para mostrar los resultados de la busqueda de partidos -->
-	@if(!empty($partidos) and count($partidos) != 0)
-		@foreach($torneos as $torneo)
-			@foreach($categorias as $categoria)
-				@if($torneo->id_categoria == $categoria->id)
-					@if($contienePartidos[$torneo->id-1]['partidos'] != 0 and $torneo['estado'] == 1)
-					<div class="col-xs-12">
-						<div class="box box-primary">
-			            	<div class="box-header with-border">
-								<h3 class="box-title">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</h3>
-								<div class="table-responsive">
-									<table class="table table-hover">
-							            <thead>
-							                <tr>
-							                    <th>Jornada</th>
-							                    <th>Fecha</th>
-							                    <th>Lugar</th>
-							                    <th>Resultado</th>
-							                    <th>Editar</th>
-							                    <th>Desactivar</th>
-							                </tr>
-							            </thead>  
-										@foreach($partidos as $partido)
-											@if($partido->id_torneo == $torneo->id)
-											<tbody>
-												<tr>
-													<td><span class="badge bg-black">{{ $partido['jornada'] }}</span></td>
-													<td><span class="label label-default">{{ $partido['fecha'] }}</span></td>
-													<td><span class="label label-default">{{ $partido['lugar'] }}</span></td>
-													<td><span class="badge bg-green">{{ $partido['equipo_local'] }}</span> <span class="label label-default">{{ $partido['gol_local'] }} - {{ $partido['gol_visitante'] }}</span> <span class="badge bg-green">{{ $partido['equipo_visitante'] }}</span></td>
-													<td>
-														<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o fa-lg"></i></a>
-													</td>
-													<td>
-														<form action="/partido/{{ $partido->id }}" method="POST">
-							                            <input type="hidden" name="_method" value="DELETE">
-							                            {{ csrf_field() }}
+	<div class="col-xs-12">
+	@include('modals.delete')
+		<div class="panel-group" id="accordion">
+		@if(!empty($partidos) and count($partidos) != 0)
+			<h4 style="text-align:center;">Se encontraron {{ count($partidos) }} partidos.</h4>
+			@foreach($torneos as $torneo)
+				@foreach($categorias as $categoria)
+					@if($torneo->id_categoria == $categoria->id)
+						@if($contienePartidos[$torneo->id-1]['partidos'] != 0 and $torneo['estado'] == 1)
+						<div class="panel panel-default">
+	            	        <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#expand{{ $torneo['id'] }}">
+							     <h4 class="panel-title">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</h4>
+							</div>
+							<div id="expand{{ $torneo['id'] }}" class="collapse table-responsive">
+								<div class="panel-body">
+								<table class="table table-hover">
+						            <thead>
+						                <tr>
+						                    <th>Jornada</th>
+						                    <th>Fecha</th>
+						                    <th>Lugar</th>
+						                    <th>Resultado</th>
+						                    <th>Editar</th>
+						                    <th>Desactivar</th>
+						                </tr>
+						            </thead>  
+									@foreach($partidos as $partido)
+										@if($partido->id_torneo == $torneo->id)
+										<tbody>
+											<tr>
+												<td><span class="badge bg-black">{{ $partido['jornada'] }}</span></td>
+												<td><span class="label label-default">{{ $partido['fecha'] }}</span></td>
+												<td><span class="label label-default">{{ $partido['lugar'] }}</span></td>
+												<td><span class="badge bg-green">{{ $partido['equipo_local'] }}</span> <span class="label label-default">{{ $partido['gol_local'] }} - {{ $partido['gol_visitante'] }}</span> <span class="badge bg-green">{{ $partido['equipo_visitante'] }}</span></td>
+												<td>
+													<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+												</td>
+												<td>
+													<form class="deleteForm" action="/partido/{{ $partido->id }}" method="POST">
+						                            <input type="hidden" name="_method" value="DELETE">
+						                            {{ csrf_field() }}
 
-							                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa fa-times fa-lg"></i></button>
-							                        	</form>
-						                        	</td>
-												</tr>
-											</tbody>
-											@endif<!-- endif partido.id = torneo.id -->
-										@endforeach<!-- endforeach partidos -->
-									</table>
+						                            <button type="submit" class="deleteBtn btn btn-danger btn-sm"><i class="fa fa fa-times fa-lg"></i></button>
+						                        	</form>
+					                        	</td>
+											</tr>
+										</tbody>
+										@endif<!-- endif partido.id = torneo.id -->
+									@endforeach<!-- endforeach partidos -->
+								</table>
 								</div>
 							</div>
 						</div>
-					</div>
-					@endif<!-- endif contienePartidos -->
-				@endif<!-- endif torneo.id = categoria.id -->
-			@endforeach<!-- endforeach categorias -->
-		@endforeach<!-- endforeach torneos -->
-    @endif<!-- endif busqueda no vacia -->
-
+						@endif
+					@endif
+				@endforeach
+			@endforeach
+	    @endif
+		</div>
+	</div>
     @if(!empty($partidos) and count($partidos) == 0)
     	<h4 class="text-center">La búsqueda no ha coincidido con ning&uacute;n partido.</h4>
     	<h5 class="text-center">Seleccione opciones m&aacute;s generales e intente de nuevo.</h4>
-    @endif<!-- endif busqueda vacia -->
+    @endif
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script>
-	    // Carga dinámica de los equipos dependiendo del torneo seleccionado
-	    document.getElementById("torneo").addEventListener("change", llenarEquiposSelect);
-	    // Funcion que filtra los equipos locales y visitantes dependiendo del torneo seleccionado
+    	$('div.alert').not('.alert-important').delay(3000).slideUp(500);
+
+		$('.deleteForm').on('click', '.deleteBtn', function(e){
+		    e.preventDefault();
+		    var $form=$(this.closest('form'));
+		    $('#confirm').modal({ keyboard: false })
+		        .on('click', '#delete-btn', function(){
+		        	console.log($form);
+		            $form.submit();
+		        });
+		});
+
+	    // Carga dinámica de los equipos dependiendo del torneo (categoria y año) seleccionado.
+	    document.getElementById("categoria").addEventListener("change", llenarEquiposSelect);
+		document.getElementById("anio").addEventListener("change", llenarEquiposSelect);
+		
+	    // Funcion que filtra los equipos locales y visitantes dependiendo del torneo (categoria y año) seleccionado.
 	    function llenarEquiposSelect() {
 	        var equipos = <?php echo json_encode($equipos); ?>;
 	        var torneoEquipos = <?php echo json_encode($torneoEquipos); ?>;
-	        var torneo = $("#torneo option:selected").attr("value");
+	        var torneos = <?php echo json_encode($torneos); ?>;
+	        var categorias = <?php echo json_encode($categorias); ?>;
+	        var categoria = $("#categoria option:selected").val();
+	        var anio = $("#anio").val();
+	        var categoriaID;
+	        var torneo;
+
+	        // Quito las opciones de equipo local/visitante y agrego opcion nula.
         	$('#equipo_local').find('option').remove().end();
 	        $('#equipo_visitante').find('option').remove().end();
 	        $('#equipo_local').append($('<option></option>'));
 	        $('#equipo_visitante').append($('<option></option>'));
 
-	        // Si usuario no ha seleccionado un torneo, se cargan todos los equipos
-	        if($("#torneo option:selected").val() == ""){
+	        // Si usuario no ha seleccionado categoria, se cargan todos los equipos.
+	        if(categoria == ""){
 	        	for(var j = 0; j < equipos.length; ++j){
     				$('#equipo_local').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
 					$('#equipo_visitante').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
         		}
 	        }
-	        // Si el usuario selecciono un torneo
+	        // Si el usuario no he seleccionado un año, se cargan solo equipos de la categoria.
+	        else if(anio == ""){
+	        	for(var j = 0; j < equipos.length; ++j){
+	        		if(equipos[j]['categoria'] == categoria){
+	    				$('#equipo_local').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
+						$('#equipo_visitante').append($('<option value="'+equipos[j]['id']+'">'+equipos[j]['nombre']+'</option>'));
+	        		}
+        		}	
+	        }
+	        // Si el usuario selecciono categoria y año, se cargan equipos del torneo con esa categoria y año.
 	        else{
-
-		        // Agrego solo los equipos que participan en el torneo seleccionado
+	        	for(var i = 0; i < categorias.length; ++i){
+	        		if(categorias[i]['nombre'] == categoria){
+	        			categoriaID = categorias[i]['id'];
+	        		}
+	        	}
+	        	for(var i = 0; i < torneos.length; ++i){
+	        		if(torneos[i]['id_categoria'] == categoriaID && torneos[i]['anio'] == anio){
+	        			torneo = torneos[i]['id'];
+	        		}
+	        	}
+		        // Agrego solo los equipos que participan en el torneo seleccionado.
 		        for (var i = 0; i < torneoEquipos.length; ++i){
 		        	if(torneoEquipos[i]['id_torneo'] == torneo){
 		        		for(var j = 0; j < equipos.length; ++j){

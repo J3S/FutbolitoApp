@@ -17,7 +17,21 @@ V2.0 Branny
     <li><a href="{{ url('jugador') }}">Jugador</a></li>
     <li class="active">Crear</li>
 @endsection
+<style>
+    .form-group .required:after {
+        position:absolute;
+        content:'*';
+        color:red;
+        margin-left: 5px;
+        top:0;
+    }
 
+    .campoRequerido {
+        color:red; 
+        font-style:italic; 
+        font-size:0.9em;
+    }
+</style>
 @section('content')
     <div class="col-xs-12">
         <div class="col-xs-2"></div>
@@ -48,11 +62,11 @@ V2.0 Branny
                 {!! csrf_field() !!}
                 <div class="box-body">
                     <div class="form-group col-xs-12">
-                        <label for="inputNombre">Nombres</label>
+                        <label class="required" for="inputNombre">Nombres</label>
                         <input type="text" class="form-control" id="inputNombre" name="nombres" placeholder="Ingrese nombre">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="inputApellido">Apellidos</label>
+                        <label class="required" for="inputApellido">Apellidos</label>
                         <input type="text" class="form-control" id="inputApellido" name="apellidos" placeholder="Ingrese apellido">
                     </div>
                     <div class="form-group col-xs-12">
@@ -112,6 +126,9 @@ V2.0 Branny
                                <option value="{{ $equipo['id'] }}">{{ $equipo->nombre}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <label class="campoRequerido">(*) Campo requerido</label>
                     </div>
                 </div><!-- /.box-body -->
 

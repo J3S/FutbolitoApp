@@ -17,7 +17,21 @@
     <li><a href="{{ url('partido') }}">Partido</a></li>
     <li class="active">Editar</li>
 @endsection
+<style>
+    .form-group .required:after {
+        position:absolute;
+        content:'*';
+        color:red;
+        margin-left: 5px;
+        top:0;
+    }
 
+    .campoRequerido {
+        color:red; 
+        font-style:italic; 
+        font-size:0.9em;
+    }
+</style>
 @section('content')
     <div class="col-xs-12">
         <div class="col-xs-2"></div>
@@ -49,15 +63,15 @@
                 {!! csrf_field() !!}
                 <div class="box-body">
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="torneo">Torneo</label>
+                        <label class="required" for="torneo">Torneo</label>
                         <select class="form-control" id="torneo" name="torneo">
                             @foreach($categorias as $categoria)
                                 @foreach($torneos as $torneo)
                                     @if($categoria->id == $torneo->id_categoria)
                                         @if($torneo->id == $partido->id_torneo)
-                                            <option selected="selected" value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
+                                            <option selected="selected" value="{{ $torneo['id'] }}" id="{{ $torneo['anio'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
                                         @else
-                                            <option value="{{ $torneo['id'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
+                                            <option value="{{ $torneo['id'] }}" id="{{ $torneo['anio'] }}">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</option>
                                         @endif
                                     @endif
                                 @endforeach
@@ -66,8 +80,8 @@
                     </div>
                      <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="jornada">Jornada #</label>
-                            <input type="number" value="{{ $partido['jornada'] }}" min="0" class="form-control" id="jornada" name="jornada" placeholder="Ingrese jornada del partido">
+                            <label class="required" for="jornada">Jornada #</label>
+                            <input type="number" value="{{ $partido['jornada'] }}" min="1" max="100" class="form-control" id="jornada" name="jornada" placeholder="Ingrese jornada del partido">
                         </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
@@ -75,12 +89,12 @@
                         <input type="text" value="{{ $partido['arbitro'] }}" class="form-control" id="arbitro" name="arbitro" placeholder="Ingrese arbitro">
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="fecha">Fecha del partido</label>
+                        <label class="required" for="fecha">Fecha del partido</label>
                         <input type="datetime-local" value="{{ $date }}" class="form-control" id="fecha" name="fecha" >
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="lugar">Lugar</label>
+                            <label class="required" for="lugar">Lugar</label>
                             <input type="text" value="{{ $partido['lugar'] }}" class="form-control" id="lugar" name="lugar" placeholder="Ingrese lugar del partido">
                         </div>
                     </div>
@@ -94,26 +108,29 @@
                         <label class="header-group" for="listaEquipo">Equipos</label>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="equipo_local">Equipo local</label>
+                        <label class="required" for="equipo_local">Equipo local</label>
                         <select class="form-control" id="equipo_local" name="equipo_local">
                         </select>
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label for="equipo_visitante">Equipo visitante</label>
+                        <label class="required" for="equipo_visitante">Equipo visitante</label>
                         <select class="form-control" id="equipo_visitante" name="equipo_visitante">
                         </select>
                     </div>
                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="gol_local">Goles local</label>
-                            <input type="number" value="{{ $partido['gol_local'] }}" min="0" class="form-control" id="gol_local" name="gol_local">
+                            <label class="required" for="gol_local">Goles local</label>
+                            <input type="number" value="{{ $partido['gol_local'] }}" min="0" max="100" class="form-control" id="gol_local" name="gol_local">
                         </div>
                     </div>
                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label for="gol_visitante">Goles visitante</label>
-                            <input type="number" value="{{ $partido['gol_visitante'] }}" min="0" class="form-control" id="gol_visitante" name="gol_visitante">
+                            <label class="required" for="gol_visitante">Goles visitante</label>
+                            <input type="number" value="{{ $partido['gol_visitante'] }}" min="0" max="100" class="form-control" id="gol_visitante" name="gol_visitante">
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <label class="campoRequerido">(*) Campo requerido</label>
                     </div>
                 </div><!-- /.box-body -->
 
@@ -139,7 +156,6 @@
     <script>
     
         function init(){
-            
             llenarEquiposSelect();
 
             document.getElementById("torneo").addEventListener("change", llenarEquiposSelect);
@@ -151,6 +167,11 @@
                 var equipos = <?php echo json_encode($equipos); ?>;
                 var torneoEquipos = <?php echo json_encode($torneoEquipos); ?>;
                 var torneo = $("#torneo option:selected").attr("value");
+                var anio = $("#torneo option:selected").attr("id");
+                var fechaInicial = anio+"-01-01T00:00:00";
+                var fechaFinal = anio+"-12-31T23:59:59";
+                $('#fecha').attr('min', fechaInicial);
+                $('#fecha').attr('max', fechaFinal);
                 $('#equipo_local').find('option').remove().end();
                 $('#equipo_visitante').find('option').remove().end();
 

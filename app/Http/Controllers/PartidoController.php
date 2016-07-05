@@ -12,7 +12,9 @@
 namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PartidoRequest;
 use App\Torneo;
 use App\TorneoEquipo;
 use App\Equipo;
@@ -93,28 +95,14 @@ class PartidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PartidoRequest $request)
     {
-        // Validación de datos requeridos para la creacion de un partido.
-        $this->validate(
-            $request,
-            array(
-             'torneo'           => 'required|numeric|min:1',
-             'fecha'            => 'required|date',
-             'jornada'          => 'required|numeric|min:1',
-             'lugar'            => 'required|max:200',
-             'equipo_local'     => 'required|numeric|min:1',
-             'equipo_visitante' => 'required|numeric|min:1',
-             'gol_local'        => 'required|numeric|min:0',
-             'gol_visitante'    => 'required|numeric|min:0',
-            )
-        );
 
         // Verificación si el torneo recibido está registrado.
         try {
             $torneoID = Torneo::find($request->torneo)->id;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return redirect()->route('partido.create')->withInput()->withErrors(
                 'El torneo seleccionado no se encuentra registrado.'
             );
         }
@@ -126,7 +114,7 @@ class PartidoController extends Controller
             $equipoLocal       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_local)->first();
             $equipoLocalNombre = $equipoLocal->nombre;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return redirect()->route('partido.create')->withInput()->withErrors(
                 'El equipo local seleccionado no se encuentra registrado en el torneo seleccionado.'
             );
         }
@@ -136,15 +124,27 @@ class PartidoController extends Controller
             $equipoVisitante       = Equipo::where('categoria', $categoria->nombre)->where('id', $request->equipo_visitante)->first();
             $equipoVisitanteNombre = $equipoVisitante->nombre;
         } catch (\Exception $e) {
-            return redirect()->route('partido.create')->withErrors(
+            return redirect()->route('partido.create')->withInput()->withErrors(
                 'El equipo visitante seleccionado no se encuentra registrado en el torneo seleccionado.'
             );
         }
 
         // Verificación si el equipo local y visitante son iguales.
         if ($request->equipo_local === $request->equipo_visitante) {
-            return redirect()->route('partido.create')->withErrors(
+            return redirect()->route('partido.create')->withInput()->withErrors(
                 'Equipo local y equipo visitante no pueden ser iguales.'
+            );
+        }
+
+        // Verificación si fecha del partido está en el rango adecuado.
+        // Rango: (año del torneo)-enero-1 00:00:00 hasta (año del torneo)-diciembre-31 23:59:59.
+        $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
+        $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
+        $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+
+        if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
+            return redirect()->route('partido.create')->withInput()->withErrors(
+                'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
             );
         }
 
@@ -233,22 +233,8 @@ class PartidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PartidoRequest $request, $id)
     {
-        // Validación de datos requeridos para la modificación de un partido.
-        $this->validate(
-            $request,
-            array(
-             'torneo'           => 'required|numeric|min:1',
-             'fecha'            => 'required|date',
-             'jornada'          => 'required|numeric|min:1',
-             'lugar'            => 'required|max:200',
-             'equipo_local'     => 'required|numeric|min:1',
-             'equipo_visitante' => 'required|numeric|min:1',
-             'gol_local'        => 'required|numeric|min:0',
-             'gol_visitante'    => 'required|numeric|min:0',
-            )
-        );
 
         // Verificación si el torneo recibido está registrado.
         try {
@@ -285,6 +271,18 @@ class PartidoController extends Controller
         if ($request->equipo_local === $request->equipo_visitante) {
             return back()->withInput()->withErrors(
                 'Equipo local y equipo visitante no pueden ser iguales.'
+            );
+        }
+
+        // Verificación si fecha del partido está en el rango adecuado.
+        // Rango: (año del torneo)-enero-1 00:00:00 hasta (año del torneo)-diciembre-31 23:59:59.
+        $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
+        $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
+        $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+
+        if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
+            return back()->withInput()->withErrors(
+                'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
             );
         }
 
@@ -359,11 +357,47 @@ class PartidoController extends Controller
             $partidos      = $partidos->intersect($partidosFecha);
         }
 
-        // Filtro los partidos activos por torneo (si fue ingresado por el usuario).
-        if ($request->torneo !== '') {
-            $torneo         = Torneo::find($request->torneo);
-            $partidosTorneo = Partido::where('id_torneo', $torneo->id)->get();
-            $partidos       = $partidos->intersect($partidosTorneo);
+        // Filtro los partidos activos por categoria y año del torneo (si fueron ingresados por usuario).
+        if ($request->categoria !== '' && $request->anio !== '') {
+            $categoria = Categoria::where('nombre', $request->categoria)->first();
+            try {
+                $torneo         = Torneo::where('id_categoria', $categoria->id)->where('anio', $request->anio)->first();
+                $partidosTorneo = Partido::where('id_torneo', $torneo->id)->get();
+                $partidos       = $partidos->intersect($partidosTorneo);
+            } catch (\Exception $e) {
+                $partidos = $partidos->intersect([]);
+            }
+        }
+
+        // Filtro los partidos activos por categoria del torneo (si fue ingresado por el usuario).
+        if ($request->categoria !== '' && $request->anio === '') {
+            $partidosCategoria = [];
+            $categoria         = Categoria::where('nombre', $request->categoria)->first();
+            $torneosCategoria  = Torneo::where('id_categoria', $categoria->id)->get();
+            foreach ($torneosCategoria as $torneoCategoria) {
+                foreach ($partidos as $partidoCategoria) {
+                    if ($partidoCategoria->id_torneo === $torneoCategoria->id) {
+                        array_push($partidosCategoria, $partidoCategoria);
+                    }
+                }
+            }
+
+            $partidos = $partidos->intersect($partidosCategoria);
+        }
+
+        // Filtro los partidos activos por año del torneo (si fue ingresado por el usuario).
+        if ($request->categoria === '' && $request->anio !== '') {
+            $partidosAnio = [];
+            $torneosAnio  = Torneo::where('anio', $request->anio)->get();
+            foreach ($torneosAnio as $torneoAnio) {
+                foreach ($partidos as $partidoAnio) {
+                    if ($partidoAnio->id_torneo === $torneoAnio->id) {
+                        array_push($partidosAnio, $partidoAnio);
+                    }
+                }
+            }
+
+            $partidos = $partidos->intersect($partidosAnio);
         }
 
         // Filtro los partidos activos por jornada (si fue ingresado por el usuario).

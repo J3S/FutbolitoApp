@@ -91,13 +91,12 @@ class JugadorController extends Controller
         $this->validate(
             $request, 
             array(
-            'nombres' => 'required|regex:/([A-Z a-z])+/',
-            'apellidos' => 'required|regex:/([A-Z a-z])+/',
-            'equipo' => 'required',
-            'identificacion' => 'required|numeric|unique:jugadors,identificacion|digits_between:10,13',
-            'num_camiseta' => 'numeric|between:01,99',
+            'nombres' => 'required|regex:/^[\pL\s\-]+$/u',
+            'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
+            'identificacion' => 'numeric|unique:jugadors,identificacion|digits_between:10,13',
             'rol' => 'alpha',
             'peso' => 'numeric',
+            'num_camiseta' => 'numeric',
             'telefono' => 'numeric',
             'email' => 'email',
             'fecha_nac' => 'date'
@@ -107,6 +106,7 @@ class JugadorController extends Controller
         /* 
         *Creo nueva instancia de jugador y le asigno todos los valores 
         *ingresados por el usuario desde la vista 'jugadorc' 
+        *Verificación si el jugador recibido está registrado
         */
         $jugador = new Jugador;
         $jugador->nombres = $request->nombres;
@@ -151,7 +151,13 @@ class JugadorController extends Controller
     public function edit($id)
     {
         // Encuentro el jugador seleccionado por el usuario 
-        $jugador = Jugador::find($id);
+        try {
+            $jugadorID = Jugador::find($id)->id;
+            $jugador = Jugador::find($id);
+        } catch (\Exception $e) {
+            flash()->error('El jugador que desea modificar no se encuentra registrado.');
+            return redirect()->route('jugador.index');
+        }
 
         // Preparo los datos que seran enviados a la vista 
         $equipos = Equipo::where('estado', 1)->get(['id', 'nombre']);
@@ -179,15 +185,14 @@ class JugadorController extends Controller
         $this->validate(
            $request, 
            array(
-            'nombres' => 'required|regex:/([A-Z a-z])+/',
-            'apellidos' => 'required|regex:/([A-Z a-z])+/',
-            'equipo' => 'required',
-            'identificacion' => 'required|numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
-            'num_camiseta' => 'numeric|between:01,99',
+            'nombres' => 'required|regex:/^[\pL\s\-]+$/u',
+            'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
+            'identificacion' => 'numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
             'rol' => 'alpha',
             'peso' => 'numeric',
             'telefono' => 'numeric',
             'email' => 'email',
+            'num_camiseta' => 'numeric',
             'fecha_nac' => 'date'
             )
         );
@@ -206,9 +211,7 @@ class JugadorController extends Controller
         $jugador->num_camiseta = $request->num_camiseta;
         $jugador->categoria = $request->categoria;
         $jugador->estado = 1;
-        $equipo = Equipo::find($request->equipo);
-        $jugador->id_equipo = $equipo->id;
-
+        $jugador->id_equipo = $request->equipo;
 
         // Guardo el jugador creado en la base de datos 
         $jugador->save();
@@ -229,7 +232,13 @@ class JugadorController extends Controller
     public function destroy($id)
     {
         //Encuentro al jugador que el usuario desea desactivar y cambio su estado a 0 (desactivado) 
-        $jugador = Jugador::find($id);
+        try {
+            $jugadorID = Jugador::find($id)->id;
+            $jugador = Jugador::find($id);
+        } catch (\Exception $e) {
+            flash()->error('El jugador que desea borrar no se encuentra registrado.');
+            return redirect()->route('jugador.index');
+        }
         $jugador->estado = 0;
 
         //Actualizo los datos del jugador en la base de datos 

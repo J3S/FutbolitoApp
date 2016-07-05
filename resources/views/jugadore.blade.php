@@ -19,7 +19,21 @@
     <li><a href="#">Jugador</a></li>
     <li class="active">Editar</li>
 @endsection
+<style>
+    .form-group .required:after {
+        position:absolute;
+        content:'*';
+        color:red;
+        margin-left: 5px;
+        top:0;
+    }
 
+    .campoRequerido {
+        color:red; 
+        font-style:italic; 
+        font-size:0.9em;
+    }
+</style>
 @section('content')
     <div class="col-xs-12">
         <div class="col-xs-2"></div>
@@ -52,11 +66,11 @@
                 <div class="box-body">
                     
                   <div class="form-group col-xs-12">
-                        <label for="inputNombre">Nombres</label>
+                        <label class="required" for="inputNombre">Nombres</label>
                         <input type="text" class="form-control" id="inputNombre" value="{{ $jugador['nombres'] }}" name="nombres" placeholder="Ingrese nombre">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="inputApellido">Apellidos</label>
+                        <label class="required" for="inputApellido">Apellidos</label>
                         <input type="text" class="form-control" id="inputApellido" value="{{ $jugador['apellidos'] }}" name="apellidos" placeholder="Ingrese apellido">
                     </div>
                     <div class="form-group col-xs-12">
@@ -101,6 +115,7 @@
                         <label for="categoria">Categor&iacute;a</label>
                         <!-- Campo para seleccionar la categoría del jugador -->
                         <select class="form-control input" id="categoria" name="categoria">
+                            <option></option>
                             @foreach($categorias as $categoria)
                                 @if($categoria->nombre == $jugador->categoria)
                                     <option selected="selected" value="{{ $categoria['nombre'] }}">{{ $categoria->nombre}}</option>
@@ -114,6 +129,7 @@
                         <label for="equipo">Equipo</label>
                         <!-- Campo para seleccionar el equipo para busqueda del jugador -->
                         <select class="form-control input" id="equipo" name="equipo">
+                            <option></option>
                             @foreach($equipos as $equipo)
                                 @if($equipo->id == $jugador->id_equipo)
                                     <option selected="selected" value="{{ $equipo['id'] }}">{{ $equipo->nombre}}</option>
@@ -123,7 +139,9 @@
                             @endforeach
                         </select>
                     </div>   
-                  
+                    <div class="col-xs-12 col-sm-6">
+                        <label class="campoRequerido">(*) Campo requerido</label>
+                    </div>
                 </div><!-- /.box-body -->
 
               <div class="box-footer">

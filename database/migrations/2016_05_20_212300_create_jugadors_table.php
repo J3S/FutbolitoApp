@@ -26,7 +26,6 @@ class CreateJugadorsTable extends Migration
             $table->string('categoria', 50)->nullable();
             $table->boolean('estado');
             $table->integer('id_equipo')->unsigned()->nullable();
-            //$table->foreign('id_equipo')->references('id')->on('equipos');
             $table->timestamps();
         });
     }

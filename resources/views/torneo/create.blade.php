@@ -17,7 +17,21 @@
     <li><a href="{{ url('torneo') }}">Torneo</a></li>
     <li class="active">Crear</li>
 @endsection
+<style>
+    .form-group .required:after {
+        position:absolute;
+        content:'*';
+        color:red;
+        margin-left: 5px;
+        top:0;
+    }
 
+    .campoRequerido {
+        color:red; 
+        font-style:italic; 
+        font-size:0.9em;
+    }
+</style>
 <!-- Agregar el contenido de la página -->
 @section('content')
     <div class="col-xs-12">
@@ -52,7 +66,7 @@
                         <div class="form-group">
                             <!-- Campo año -->
                             <div class="col-md-2">
-                                <label for="anio">A&ntilde;o</label>
+                                <label class="required" for="anio">A&ntilde;o</label>
                             </div>
                             <div class="col-md-3">
                                 <input type="number" class="form-control" id="anio" name="anio" placeholder="A&ntilde;o">
@@ -60,7 +74,7 @@
 
                             <!-- Campo categoría -->
                             <div class="col-md-2">
-                                <label for="categoria">Categor&iacute;a</label>
+                                <label class="required" for="categoria">Categor&iacute;a</label>
                             </div>
                             <div class="col-md-3" id="categoria">
                                 <!-- Se carga las categorías recibidas del servidor -->
@@ -121,6 +135,9 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <label class="campoRequerido">(*) Campo requerido</label>
                     </div>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
