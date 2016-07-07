@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Categoria;
 use App\Equipo;
 use App\Torneo;
+use App\TorneoEquipo;
 
 class EditarTorneoTest extends TestCase
 {
@@ -28,6 +29,8 @@ class EditarTorneoTest extends TestCase
     public function testEditarTorneo1()
     {
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio('1981');
         $registrosEliminados = Torneo::where('anio', '1981')->delete();
 
         // Creación del torneo.
@@ -85,6 +88,8 @@ class EditarTorneoTest extends TestCase
     public function testEditarTorneo2()
     {
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio('1981');
         $registrosEliminados = Torneo::where('anio', '1981')->delete();
 
         // Creación del torneo.
@@ -141,6 +146,8 @@ class EditarTorneoTest extends TestCase
     public function testEditarTorneo3()
     {
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio('1981');
         $registrosEliminados = Torneo::where('anio', '1981')->delete();
 
         // Creación del torneo.
@@ -196,6 +203,8 @@ class EditarTorneoTest extends TestCase
     public function testEditarTorneo4()
     {
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio('1981');
         $registrosEliminados = Torneo::where('anio', '1981')->delete();
 
         // Creación del torneo.
@@ -242,6 +251,8 @@ class EditarTorneoTest extends TestCase
     public function testEditarTorneo5()
     {
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio('1981');
         $registrosEliminados = Torneo::where('anio', '1981')->delete();
 
         // Creación del torneo.
@@ -298,6 +309,8 @@ class EditarTorneoTest extends TestCase
     public function testEditarTorneo6()
     {
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio('1981');
         $registrosEliminados = Torneo::where('anio', '1981')->delete();
 
         // Creación del torneo.
