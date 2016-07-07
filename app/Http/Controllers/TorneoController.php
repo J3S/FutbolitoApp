@@ -157,6 +157,12 @@ class TorneoController extends Controller
             ]
         );
 
+        $anioServer = date('Y');
+        if($request->anio < 1970 || $request->anio > ($anioServer + 5))
+            return redirect()->route('torneo.create')->withErrors(
+                'El año ingresado no está dentro del rango permitido.'
+            );
+
         // Verificación si la categoría recibida está registrada.
         try {
             $categoriaID = Categoria::where('nombre', $request->categoria)
@@ -333,6 +339,12 @@ class TorneoController extends Controller
              'anio'      => 'required|numeric',
             ]
         );
+
+        $anioServer = date('Y');
+        if($request->anio < 1970 || $request->anio > ($anioServer + 5))
+            return redirect()->route('torneo.create')->withErrors(
+                'El año ingresado no está dentro del rango permitido.'
+            );
 
         // Verificación si la categoría recibida está registrada.
         try {
