@@ -51,11 +51,12 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Lista de Jugadores</h3>
+                <h3 class="box-title">Lista de Equipos</h3>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Entrenador</th>
                                 <th>Categoria</th>
@@ -67,6 +68,7 @@
                         @foreach($equipos as $equipo)
                             <tbody>
                                 <tr>
+                                    <td>{{ $equipo->id }}</td>
                                     <td>{{ $equipo->nombre }}</td>
                                     <td>{{ $equipo->director_tecnico }}</td>
                                     <td>{{ $equipo->categoria }}</td>
@@ -80,7 +82,6 @@
                                             {{ csrf_field() }}
                                             <button class="btn btn-danger btn-xs" type="submit" ><i class="fa fa-times fa-lg"></i></button>
                                         </form>
-                                        <!-- <a class="btn btn-danger btn-sm" href="{!! route('equipo.index') !!}"><i class="fa fa-times fa-lg"></i></a> -->
                                     </td>
 
                                 </tr>

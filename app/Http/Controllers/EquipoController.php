@@ -1,9 +1,10 @@
 <?php
 /**
  * Controlador para los equipos
+ * PHP version 5
  *
  * @category   PHP_6.5
- * @package    Laravel
+ * @package    App\Http
  * @subpackage Controller
  * @author     Branny Chito <brajchit@espol.edu.ec>
  * @license    MIT, http://opensource.org/licenses/MIT
@@ -113,7 +114,7 @@ class EquipoController extends Controller
             $request,
             array(
              'nombre'     => 'required|unique:equipos,nombre',
-             'entrenador' => 'alpha',
+             'entrenador' => 'alpha_spaces',
              'categoria'  => 'required|exists:categorias,nombre',
             )
         );
@@ -125,7 +126,7 @@ class EquipoController extends Controller
                 if ($jugadorDB === null) {
                     $mensaje = array("Jugador(s) no identificado(s)");
                     return response()->json(['ids' => $mensaje], 422);
-                } elseif ($jugadorDB->id_equipo !== null) {
+                } else if ($jugadorDB->id_equipo !== null) {
                     $mensaje = array("Jugador ".$jugadorDB->nombres."ya pertenece a un equipo");
                     return response()->json(['ids' => $mensaje], 422);
                 }
@@ -151,11 +152,13 @@ class EquipoController extends Controller
                 [
                  "mensaje"  => "guardado con exito",
                  "idEquipo" => $equipo->id,
+                 "create"   => true,
                 ]
             );
         } else {
-            return response()->json(["mensaje" => "Error al guardar en la BDD"]);
-        }
+            return response()->json(["mensaje" => "Error al guardar en la BDD", "create" => false]);
+        }//end if
+
     }//end store()
 
 
@@ -163,22 +166,32 @@ class EquipoController extends Controller
      * Display the specified 'Equipo'.
      *
      * @param int $id equipo
+     * @param Class $request equipo
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+
         $equipo   = Equipo::findOrFail($id);
         $jugadors = Jugador::where('id_equipo', $id)
                            ->get(
                                [
+                                'id',
                                 'nombres',
                                 'apellidos',
+                                'categoria',
                                 'identificacion',
                                 'num_camiseta',
                                ]
                            );
+        if ($request->ajax() === true) {
+            $jugsArray = $jugadors->toArray();
+            return response()->json($jugsArray);
+        }
+
         return view('equipo.equiposhow')->with(compact('equipo', 'jugadors'));
+
     }//end show()
 
 
@@ -189,8 +202,13 @@ class EquipoController extends Controller
      *
      * @return \Illuminate\Http\Response Json
      */
-    public function getJugadoresCategoria($categoria)
+    public function getJugadoresCategoria( $categoria )
     {
+        if (Categoria::where('nombre', $categoria)->exists() === false) {
+            // retorna string instead JSON!
+            return "categoria no existe";
+        }
+
         $jugadoresCategoria = Jugador::where('categoria', $categoria)
                                      ->whereNull('id_equipo')
                                      ->orWhere(function ($query){
@@ -206,10 +224,11 @@ class EquipoController extends Controller
                                          ]
                                      );
         $arrJugs = $jugadoresCategoria->toArray();
-        // return var_dump($arrJugs);
+        // ya no hay jugadores disponibles en la DB?
         if (empty($arrJugs) === false) {
             return response()->json( $arrJugs);
         } else {
+            // retorna string instead JSON!
             return "No hay jugadores disponibles para esta categoria";
         }
     }//end getJugadoresCategoria()
@@ -254,12 +273,13 @@ class EquipoController extends Controller
     public function update(Request $request, $id)
     {
         $equipoNew = Equipo::find($id);
+        // dd($request->all(), $id, $equipoNew);
 
         $this->validate(
             $request,
             array(
-             'nombre'     => 'required|unique:equipos,nombre,'.$equipoNew->$id,
-             'entrenador' => 'alpha',
+             'nombre'     => 'required|unique:equipos,nombre,'.$equipoNew->id.',id',
+             'entrenador' => 'alpha_spaces',
              'categoria'  => 'required|exists:categorias,nombre',
             )
         );
@@ -282,7 +302,7 @@ class EquipoController extends Controller
         $equipoNew->director_tecnico = $request->entrenador;
         $equipoNew->categoria        = $request->categoria;
         if ($equipoNew->save() === true) {
-            Jugador::where('id', $equipoNew->id)
+            Jugador::where('id_equipo', $equipoNew->id)
                    ->update(['id_equipo' => null, 'categoria' => null]);
 
             // Set id_equipo a nuevos jugadors selecionados en el equipo!

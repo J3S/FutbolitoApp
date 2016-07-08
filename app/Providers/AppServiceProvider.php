@@ -14,8 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
-            return $value=='foo';
+        Validator::extend('alpha_spaces', function($attribute, $value, $parameters, $validator) {
+            return preg_match('/^[\pL\s]+$/u', $value);
         });
     }
 
