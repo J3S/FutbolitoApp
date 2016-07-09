@@ -1,3 +1,47 @@
+
+function loadSelectedJugadors(ulElement, idEquipo) {
+    var path = "/equipo/"+idEquipo;
+    $.getJSON(path, function ( data ) {
+        $(data).each(function(key ,value) {
+            var $liElement = $('<li/>').addClass("list-group-item");
+            $liElement.css({
+                "padding": "5px 15px",
+                "text-align": "center",
+            });
+
+            // make contenido de li
+            var $contentLi = $("<div/>").addClass("row");
+            var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
+            var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
+            if (value.categoria === null) {
+                var $divCat = $("<div/>").addClass("col-xs-4").text("sin categoria");
+            }else {
+                var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);
+            }
+            $contentLi.append($divNom, $divApe, $divCat);
+
+            // make botton
+            var $checkBtn = $("<button/>");
+            $checkBtn.attr({
+                type: "button",
+                class: "btn btn-danger btn-xs",
+                id: value.id
+            });
+            $checkBtn.append($("<i/>").addClass("fa fa-times"));
+
+            // wraping li content in col row bootstrap with btn, contentLi
+            var $divLiRow = $("<div/>").addClass("row")
+            var $divLiCol1 = $("<div/>").addClass("col-xs-1").append($checkBtn);;
+            var $divLiCol11 = $("<div/>").addClass("col-xs-11").append($contentLi);
+            $divLiRow.append($divLiCol1, $divLiCol11)
+            $liElement.append($divLiRow);
+
+            // append row li into JugadorsList
+            ulElement.append($liElement);
+        });
+    })
+}
+
 function loadCatJugadors(element) {
     var inputCategoria = element.val();
     var listaJugadoresTag = $('#inputJugadores');
@@ -10,12 +54,17 @@ function loadCatJugadors(element) {
             async:false
         });
         ajaxRequest.done(function (jugadoresCategoriaResp) {
-            // getAjax response has not jugadors?
+            // getAjax response has not jugadors(responde con string y no JSON)?
             if ($.type(jugadoresCategoriaResp) === "string") {
                 listaJugadoresTag.html('<li class="list-group-item">' + jugadoresCategoriaResp + '</li>')
             } else {
-                listaJugadoresTag.empty();
+
                 $("#JugadoresElegidos").empty();
+                if (inputCategoria === $("#categoriaEquipo").val()) {
+                    loadSelectedJugadors($("#JugadoresElegidos"), $("#idEquipo").val() );
+                }
+
+                listaJugadoresTag.empty();
                 $(jugadoresCategoriaResp).each(function(key, value) {
                     var $liElement = $('<li/>').addClass("list-group-item");
                     $liElement.css({
@@ -56,6 +105,8 @@ $(document).ready(function() {
     // create case
     if ($("#inputCategoriaSelect").val() === "noSelected") {
         $("#inputCategoriaSelect").on('change', function(event) {
+            var $li = $("#JugadoresElegidos");
+            // loadSelectedJugadors($li, 3);
             loadCatJugadors($(this));
         });
     }else {
@@ -66,9 +117,7 @@ $(document).ready(function() {
         });
     }
 
-    // $('#inputCategoriaSelect ').change(function() {
-    //     loadCatJugadors($(this));
-    // });
+    // from lista elegibles(inputJugadores) to JugadoresElegidos
     $(document).on("click", "#inputJugadores li button", function(event) {
         $(this).addClass("btn-danger").removeClass("btn-success");
         $(this).html($("<i/>").addClass("fa fa-times"));
@@ -76,6 +125,7 @@ $(document).ready(function() {
 
     });
 
+    // form JugadoresElegidos back to lista elegibles (inputJugadores)
     $(document).on("click", "#JugadoresElegidos li button", function(event) {
         $(this).addClass("btn-success").removeClass("btn-danger");
         $(this).html($("<i/>").addClass("fa fa-check"));
@@ -168,7 +218,7 @@ $(document).ready(function() {
 
         // se recibe si hay una respuesta (est caso vien del controller@update)
         ajaxRequest.done(function(data) {
-            alert('Equipo actualizado exitosamente');
+            alert(data.mensaje);
             window.location = "http://localhost:8000/equipo/";
         });
     });
