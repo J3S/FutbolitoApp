@@ -367,4 +367,116 @@ class EditarTorneoTest extends TestCase
         $idUltimoRegistro = $torneoUltimoRegistro->id+1;
         $this->visit('torneo/' . $idUltimoRegistro . '/edit')->seePageIs(route('torneo.index'));
     }
+
+    /**
+     * Comprueba el funcionamiento para editar un torneo.
+     * Se crea un torneo que tenga como año 1981, categoría Junior y con un equipo
+     * de esa categoría. Se edita ese torneo recién creado modificándole el año
+     * colocando como año 1969(menor al año mínimo).
+     * Es exitoso si en la base de datos se encuentra que el torneo queda con los
+     * mismos datos y permanece en la misma página para editar ese torneo.
+     * Corresponde al caso de prueba testEditarTorneo: post-condition 8.
+     *
+     * @return void
+     */
+    public function testEditarTorneo8()
+    {
+        // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio('1981');
+        $registrosEliminados = Torneo::where('anio', '1981')->delete();
+
+        // Creación del torneo.
+        $equipoJunior = Equipo::where('categoria', 'Junior')->first();
+        // Se inicia una sesión para esta prueba.
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1981',
+            'categoria' => 'Junior',
+            $equipoJunior->nombre => $equipoJunior->nombre,
+        ];
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        //Búsqueda del torneo recién creado.
+        $torneoCreado = Torneo::where('anio', '1981')
+                              ->where('id_categoria', 7)
+                              ->first();
+        // Modificación del torneo.
+        $categoriaJunior = Categoria::where('nombre', 'Junior')->first();
+        $parametros = [
+            '_method' => 'PUT',
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1969',
+            'categoria' => 'Categoria Test',
+            $equipoJunior->nombre => $equipoJunior->nombre,
+        ];
+        $uri = "/torneo/".$torneoCreado->id;
+        $response = $this->call('POST', $uri, $parametros);
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->seeInDatabase(
+            'torneos',
+            [
+             'anio' => '1981',
+             'id_categoria' => $categoriaJunior->id,
+            ]
+        );
+    }
+
+    /**
+     * Comprueba el funcionamiento para editar un torneo.
+     * Se crea un torneo que tenga como año 1981, categoría Junior y con un equipo
+     * de esa categoría. Se edita ese torneo recién creado modificándole el año
+     * colocando como año 5000.
+     * Es exitoso si en la base de datos se encuentra que el torneo queda con los
+     * mismos datos y permanece en la misma página para editar ese torneo.
+     * Corresponde al caso de prueba testEditarTorneo: post-condition 9.
+     *
+     * @return void
+     */
+    public function testEditarTorneo9()
+    {
+        // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio('1981');
+        $registrosEliminados = Torneo::where('anio', '1981')->delete();
+
+        // Creación del torneo.
+        $equipoJunior = Equipo::where('categoria', 'Junior')->first();
+        // Se inicia una sesión para esta prueba.
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1981',
+            'categoria' => 'Junior',
+            $equipoJunior->nombre => $equipoJunior->nombre,
+        ];
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        //Búsqueda del torneo recién creado.
+        $torneoCreado = Torneo::where('anio', '1981')
+                              ->where('id_categoria', 7)
+                              ->first();
+        // Modificación del torneo.
+        $categoriaJunior = Categoria::where('nombre', 'Junior')->first();
+        $parametros = [
+            '_method' => 'PUT',
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '5000',
+            'categoria' => 'Categoria Test',
+            $equipoJunior->nombre => $equipoJunior->nombre,
+        ];
+        $uri = "/torneo/".$torneoCreado->id;
+        $response = $this->call('POST', $uri, $parametros);
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->seeInDatabase(
+            'torneos',
+            [
+             'anio' => '1981',
+             'id_categoria' => $categoriaJunior->id,
+            ]
+        );
+    }
 }

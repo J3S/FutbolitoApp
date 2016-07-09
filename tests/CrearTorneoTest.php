@@ -173,4 +173,50 @@ class CrearTorneoTest extends TestCase
         $this->assertRedirectedToRoute('torneo.create');
     }
 
+    /**
+     * Comprueba el funcionamiento para crear un torneo.
+     * Se visita la página para crear un torneo, se agrega una categoría master,
+     * se ingresa el año 1969(menor al año mínimo) y se manda a guardar el torneo.
+     * Es exitoso si se mantiene en la misma página torneo/create.
+     * Corresponde al caso de prueba testCrearTorneo: post-condition 7.
+     *
+     * @return void
+     */
+    public function testCrearTorneo7()
+    {
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1969',
+            'categoria' => 'Master',
+        ];
+
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        $this->assertRedirectedToRoute('torneo.create');
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un torneo.
+     * Se visita la página para crear un torneo, se agrega una categoría master,
+     * se ingresa el año 10000 y se manda a guardar el torneo.
+     * Es exitoso si se mantiene en la misma página torneo/create.
+     * Corresponde al caso de prueba testCrearTorneo: post-condition 8.
+     *
+     * @return void
+     */
+    public function testCrearTorneo8()
+    {
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '10000',
+            'categoria' => 'Master',
+        ];
+
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        $this->assertRedirectedToRoute('torneo.create');
+    }
+
 }
