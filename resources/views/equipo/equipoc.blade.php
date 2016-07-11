@@ -44,7 +44,7 @@
                     <!-- Select para elegir la categoria del equipo -->
                     <div class="form-group col-xs-12">
                         <label for="inputCategoria">Categoria</label>
-                        <select class="form-control" id="inputCategoriaSelect">
+                        <select class="form-control" id="inputCategoriaSelect" name="categoriaSelect">
                             <option value="noSelected">-Selecionar-</option>
                             @if(count($categorias) != 0)
                                 @foreach($categorias as $categoria)
