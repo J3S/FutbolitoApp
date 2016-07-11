@@ -1,49 +1,82 @@
+/**
+ * Llena un tag ul con li's que son sacados de un arreglo o json, cada li
+ * contiene los datos de un jugador y un boton para add o remover.
+ *
+ * @param {Array} lista de jugadores obtenidos como respuesta de ajax.
+ * @param {Element} ul element que sera llenado con li's.
+ * @param {string} accion del boton si de tipo add o remove.
+ */
+function fillJugsAjax( jugsAjaxResp, ulElement, btnAction ) {
+    $(jugsAjaxResp).each(function(key, value) {
+        var $liElement = $('<li/>').addClass("list-group-item");
+        $liElement.css({
+            "padding": "5px 15px",
+            "text-align": "center",
+        });
 
-function loadSelectedJugadors(ulElement, idEquipo) {
+        // make content li element
+        var $contentLi = $("<div/>").addClass("row");
+        var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
+        var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
+        if (value.categoria === null) {
+            var $divCat = $("<div/>").addClass("col-xs-4").text("sin categoria");
+        }else {
+            var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);
+        }
+        $contentLi.append($divNom, $divApe, $divCat);
+
+        // make button
+        var $checkBtn = $("<button/>");
+        $checkBtn.attr({
+            type: "button",
+            name: "btnList",
+            id:   value.id
+        });
+
+        //
+        if (btnAction === "check") {
+            $checkBtn.addClass("btn btn-success btn-xs");
+            $checkBtn.append($("<i/>").addClass("fa fa-check"));
+        } else if (btnAction === "times") {
+            $checkBtn.addClass("btn btn-danger btn-xs");
+            $checkBtn.append($("<i/>").addClass("fa fa-times"));
+        }
+
+        // wraping li content in col row bootstrap with btn, contentLi
+        var $divLiRow = $("<div/>").addClass("row")
+        var $divLiCol1 = $("<div/>").addClass("col-xs-1").append($checkBtn);;
+        var $divLiCol11 = $("<div/>").addClass("col-xs-11").append($contentLi);
+        $divLiRow.append($divLiCol1, $divLiCol11)
+        $liElement.append($divLiRow);
+
+        // append row li into
+        ulElement.append($liElement);
+    });
+}
+
+
+/**
+ * Carga la lista de jugadores selecionados de ese equipo.
+ *
+ * @param {Element} ul element que sera llenado con li's.
+ * @param {int} id del equipo.
+ */
+function loadSelectedJugadors(ulInputJugadores, idEquipo) {
     var path = "/equipo/"+idEquipo;
     $.getJSON(path, function ( data ) {
-        $(data).each(function(key ,value) {
-            var $liElement = $('<li/>').addClass("list-group-item");
-            $liElement.css({
-                "padding": "5px 15px",
-                "text-align": "center",
-            });
-
-            // make contenido de li
-            var $contentLi = $("<div/>").addClass("row");
-            var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
-            var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
-            if (value.categoria === null) {
-                var $divCat = $("<div/>").addClass("col-xs-4").text("sin categoria");
-            }else {
-                var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);
-            }
-            $contentLi.append($divNom, $divApe, $divCat);
-
-            // make botton
-            var $checkBtn = $("<button/>");
-            $checkBtn.attr({
-                type: "button",
-                class: "btn btn-danger btn-xs",
-                id: value.id
-            });
-            $checkBtn.append($("<i/>").addClass("fa fa-times"));
-
-            // wraping li content in col row bootstrap with btn, contentLi
-            var $divLiRow = $("<div/>").addClass("row")
-            var $divLiCol1 = $("<div/>").addClass("col-xs-1").append($checkBtn);;
-            var $divLiCol11 = $("<div/>").addClass("col-xs-11").append($contentLi);
-            $divLiRow.append($divLiCol1, $divLiCol11)
-            $liElement.append($divLiRow);
-
-            // append row li into JugadorsList
-            ulElement.append($liElement);
-        });
+        fillJugsAjax(data, ulInputJugadores, "times");
     })
 }
 
-function loadCatJugadors(element) {
-    var inputCategoria = element.val();
+
+/**
+ * Carga los jugadores selecionados y los disponibles para esa categoria
+ * haciendo un requerimiento ajax
+ *
+ * @param {Element} select element que tiene la categoria de jugadores a cargar.
+ */
+function loadCatJugadors(selectorElement) {
+    var inputCategoria = selectorElement.val();
     var listaJugadoresTag = $('#inputJugadores');
     var route = "http://localhost:8000/jugadores/" + inputCategoria;
     if (inputCategoria === "noSelected") {
@@ -65,37 +98,7 @@ function loadCatJugadors(element) {
                 }
 
                 listaJugadoresTag.empty();
-                $(jugadoresCategoriaResp).each(function(key, value) {
-                    var $liElement = $('<li/>').addClass("list-group-item");
-                    $liElement.css({
-                        "padding": "5px 15px",
-                        "text-align": "center",
-                    });
-                    var $contentLi = $("<div/>").addClass("row");
-                    var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
-                    var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
-                    if (value.categoria === null) {
-                        var $divCat = $("<div/>").addClass("col-xs-4").text("sin categoria");
-                    }else {
-                        var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);
-                    }
-                    // creando el contendo de li
-                    $contentLi.append($divNom, $divApe, $divCat);
-                    var $checkBtn = $("<button/>");
-                    $checkBtn.attr({
-                        type: "button",
-                        class: "btn btn-success btn-xs",
-                        id: value.id
-                    });
-                    $checkBtn.append($("<i/>").addClass("fa fa-check"));
-                    // wraping li content in col row bootstrap with btn, contentLi
-                    var $divLiRow = $("<div/>").addClass("row")
-                    var $divLiCol1 = $("<div/>").addClass("col-xs-1").append($checkBtn);;
-                    var $divLiCol11 = $("<div/>").addClass("col-xs-11").append($contentLi);
-                    $divLiRow.append($divLiCol1, $divLiCol11)
-                    $liElement.append($divLiRow);
-                    listaJugadoresTag.append($liElement);
-                });
+                fillJugsAjax( jugadoresCategoriaResp, listaJugadoresTag, "check" );
             }
         });
     }
@@ -106,7 +109,6 @@ $(document).ready(function() {
     if ($("#inputCategoriaSelect").val() === "noSelected") {
         $("#inputCategoriaSelect").on('change', function(event) {
             var $li = $("#JugadoresElegidos");
-            // loadSelectedJugadors($li, 3);
             loadCatJugadors($(this));
         });
     }else {
@@ -200,6 +202,7 @@ $(document).ready(function() {
                 entrenador : inputEntrenador,
                 nombre     : inputNombre,
                 categoria  : inputCategoriaSelect,
+                id         : equipo,
                 ids        : elegidos
             },
             dataType: 'json',

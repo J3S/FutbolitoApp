@@ -43,7 +43,7 @@ class CrearTorneoTest extends TestCase
     /**
      * Comprueba el funcionamiento para crear un torneo.
      * Se visita la página para crear un torneo, se selecciona la categoría Super
-     * Junior, se ingresa el año 1980, se agrega a uno de los equipos que están 
+     * Junior, se ingresa el año 1980, se agrega a uno de los equipos que están
      * disponibles con esa categoría y se manda a guardar el torneo.
      * Es exitoso si en la base de datos se encuentra el torneo con esos datos
      * registrado.

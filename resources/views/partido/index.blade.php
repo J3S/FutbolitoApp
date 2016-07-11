@@ -138,7 +138,7 @@
 			@foreach($torneos as $torneo)
 				@foreach($categorias as $categoria)
 					@if($torneo->id_categoria == $categoria->id)
-						@if($contienePartidos[$torneo->id-1]['partidos'] != 0 and $torneo['estado'] == 1)
+						@if($torneo['estado'] == 1)
 						<div class="panel panel-default">
 	            	        <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#expand{{ $torneo['id'] }}">
 							     <h4 class="panel-title">{{ $categoria['nombre'] }} {{ $torneo['anio'] }}</h4>

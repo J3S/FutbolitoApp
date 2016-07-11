@@ -3,7 +3,7 @@
  * This file contains common functions used for testing when user creates Equipo.
  * PHP version 5
  *
- * @category   CategoryName
+ * @category   Testing
  * @package    FutbolitoApp
  * @subpackage Tests
  * @author     Branny Chito <brajchit@espol.edu.ec>
@@ -14,6 +14,9 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Symfony\Component\HttpKernel\Client;
+use App\Categoria;
+use App\Jugador;
 
 /**
  * CrearEquipoTest Class Doc Comment
@@ -56,12 +59,15 @@ class CrearEquipoTest extends TestCase
              'nombre'     => $inputNombre,
              'entrenador' => $inputEntrenador,
              'categoria'  => $inputCategoria,
-             'ids'        => [],
+             'ids'        => $inputIds,
             ],
-            ['X-CSRF-TOKEN' => csrf_token()]
+            [
+             'X-CSRF-TOKEN'          => csrf_token(),
+             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            ]
         );
         // $this->dump(); // testing debug
-        // $this->expectOutputString("cont: ".$response->content()); //testing debug
+        // $this->expectOutputString("cont: ".$response->content()); //debug
         $test->seeInDatabase(
             'equipos',
             [
@@ -101,7 +107,7 @@ class CrearEquipoTest extends TestCase
              'nombre'     => $inputNombre,
              'entrenador' => $inputEntrenador,
              'categoria'  => $inputCategoria,
-             'ids'        => [],
+             'ids'        => $inputIds,
             ],
             [
              'X-CSRF-TOKEN'          => csrf_token(),
@@ -147,7 +153,7 @@ class CrearEquipoTest extends TestCase
              'nombre'     => $inputNombre,
              'entrenador' => $inputEntrenador,
              'categoria'  => $inputCategoria,
-             'ids'        => [],
+             'ids'        => $inputIds,
             ],
             [
              'X-CSRF-TOKEN'          => csrf_token(),
@@ -194,7 +200,7 @@ class CrearEquipoTest extends TestCase
              'nombre'     => $inputNombre,
              'entrenador' => $inputEntrenador,
              'categoria'  => $inputCategoria,
-             'ids'        => [],
+             'ids'        => $inputIds,
             ],
             [
              'X-CSRF-TOKEN'          => csrf_token(),
@@ -241,7 +247,7 @@ class CrearEquipoTest extends TestCase
              'nombre'     => $inputNombre,
              'entrenador' => $inputEntrenador,
              'categoria'  => $inputCategoria,
-             'ids'        => [],
+             'ids'        => $inputIds,
             ],
             [
              'X-CSRF-TOKEN'          => csrf_token(),
@@ -290,7 +296,7 @@ class CrearEquipoTest extends TestCase
              'nombre'     => $inputNombre,
              'entrenador' => $inputEntrenador,
              'categoria'  => $inputCategoria,
-             'ids'        => [],
+             'ids'        => $inputIds,
             ],
             [
              'X-CSRF-TOKEN'          => csrf_token(),
@@ -307,11 +313,188 @@ class CrearEquipoTest extends TestCase
             ]
         );
         $test->assertResponseStatus(422);
-        $test->seeJson(
-            ["categoria" => ["categoria es inválido."]]
-        );
+        $test->seeJson(["categoria" => ["categoria es inválido."]]);
 
     }//end testCrearEquipo6()
+
+
+    /**
+     * Comprueba el funcionamiento para crear un Equipo.
+     * Se crea un equipo y para guardar se envia por ajax los datos en JSON,
+     * se ingresa nombre alfanumerico, nombre del entrenador, categoria
+     * master, 11 jugadores de categoria master o null, y que no pertenencen a.
+     * otro equpo.
+     * Es exitoso si el sistema registra los datos en la BDD y se actualiza la
+     * tabla de jugadores con los elegidos para el nuevo equipo, responde
+     * mensaje (guardado con exito) y redireciona a '/equipo'
+     * Corresponde al caso de prueba testCrearEquipo: post-condition 1.
+     *
+     * @return void
+     */
+    public function testCrearEquipo7()
+    {
+
+        $inputNombre     = 'Bayern';
+        $inputEntrenador = 'Bk';
+        $inputCategoria  = 'Master';
+        $inputIds        = [];
+        $jugsCategoria   = Jugador::where('categoria', $inputCategoria)
+                                  ->whereNull('id_equipo')
+                                  ->orWhere(
+                                        function ($query) {
+                                            $query->where('categoria', null)
+                                                ->whereNull('id_equipo');
+                                        }
+                                  )
+                                  ->lists('id');
+
+        // Select 11 jugadors for create equipo!
+        $jugSelecteds = $jugsCategoria->take(11)->toArray();
+        $inputIds     = $jugSelecteds;
+
+        // Session start is necesary for csrf_token!
+        Session::start();
+        $response = $this->call(
+            'POST',
+            '/equipo',
+            [
+             '_token'     => csrf_token(),
+             'nombre'     => $inputNombre,
+             'entrenador' => $inputEntrenador,
+             'categoria'  => $inputCategoria,
+             'ids'        => $inputIds,
+            ],
+            array(), // Cookies
+            array(), // Files
+            ['HTTP_X-Requested-With' => 'XMLHttpRequest'] // Serve Ajax
+        );
+
+        $this->seeInDatabase(
+            'equipos',
+            [
+             'nombre'           => $inputNombre,
+             'director_tecnico' => $inputEntrenador,
+             'categoria'        => $inputCategoria,
+            ]
+        );
+
+        // Get id_equipo del nuevo equipo registrado!
+        $idEquipoNew = filter_var($response->content(), FILTER_SANITIZE_NUMBER_INT);
+
+        // Check si los juegadores fueron realcionados al equipo creado!
+        $jugsOfNewEq = Jugador::where('id_equipo', $idEquipoNew)->lists('id');
+        $jugsOfNewEq = $jugsOfNewEq->toArray();
+        // Jugadores relacionados al nuevo equipo son los mismos ingresados?
+        $this->assertTrue($jugsOfNewEq === $inputIds);
+
+        $this->seeJson(['mensaje' => "guardado con exito"]);
+        $this->seePageIs('/equipo');
+
+    }//end testCrearEquipo7()
+
+
+    /**
+     * Comprueba el funcionamiento para crear un Equipo.
+     * Se crea un equipo y para guardar se envia por ajax los datos en JSON,
+     * se ingresa nombre alfanumerico, nombre del entrenador, categoria
+     * master, 2 jugadores con id's que no existen en la BDD.
+     * Es exitoso si el sistema NO registra los datos en la BDD, responde
+     * con estado 422 y un mensaje de error de validación.
+     * Corresponde al caso de prueba testCrearEquipo: post-condition 1.
+     *
+     * @return void
+     */
+    public function testCrearEquipo8()
+    {
+
+        $inputNombre     = 'Bayern';
+        $inputEntrenador = 'Bk';
+        $inputCategoria  = 'Master';
+        // Dos Jugadores que no estan registrados en la BDD!
+        $inputIds        = [-1, -2];
+
+        // Session start is necesary for csrf_token!
+        Session::start();
+        $response = $this->call(
+            'POST',
+            '/equipo',
+            [
+             '_token'     => csrf_token(),
+             'nombre'     => $inputNombre,
+             'entrenador' => $inputEntrenador,
+             'categoria'  => $inputCategoria,
+             'ids'        => $inputIds,
+            ],
+            array(), // Cookies
+            array(), // Files
+            ['HTTP_X-Requested-With' => 'XMLHttpRequest'] // Serve Ajax
+        );
+
+        $this->dontSeeInDatabase(
+            'equipos',
+            [
+             'nombre'           => $inputNombre,
+             'director_tecnico' => $inputEntrenador,
+             'categoria'        => $inputCategoria,
+            ]
+        );
+
+        $this->assertResponseStatus(422);
+        $this->seeJson(["ids" => ["Jugador(s) no identificado(s)"]]);
+
+    }//end testCrearEquipo8()
+
+
+    /**
+     * Comprueba el funcionamiento para crear un Equipo.
+     * Se crea un equipo y para guardar se envia por ajax los datos en JSON,
+     * se ingresa nombre alfanumerico, nombre del entrenador, categoria
+     * master, 2 jugadores con id's que ya pertenecen a otro equipo.
+     * Es exitoso si el sistema NO registra los datos en la BDD, responde
+     * con estado 422 y un mensaje de error de validación.
+     * Corresponde al caso de prueba testCrearEquipo: post-condition 1.
+     *
+     * @return void
+     */
+    public function testCrearEquipo9()
+    {
+
+        $inputNombre     = 'Bayern';
+        $inputEntrenador = 'Bk';
+        $inputCategoria  = 'Master';
+        // Dos jugadores que le pertenecen al equipo 20A!
+        $inputIds        = [1, 2];
+
+        // Session start is necesary for csrf_token!
+        Session::start();
+        $response = $this->call(
+            'POST',
+            '/equipo',
+            [
+             '_token'     => csrf_token(),
+             'nombre'     => $inputNombre,
+             'entrenador' => $inputEntrenador,
+             'categoria'  => $inputCategoria,
+             'ids'        => $inputIds,
+            ],
+            array(), // Cookies
+            array(), // Files
+            ['HTTP_X-Requested-With' => 'XMLHttpRequest'] // Serve Ajax
+        );
+
+        $this->dontSeeInDatabase(
+            'equipos',
+            [
+             'nombre'           => $inputNombre,
+             'director_tecnico' => $inputEntrenador,
+             'categoria'        => $inputCategoria,
+            ]
+        );
+
+        $this->assertResponseStatus(422);
+        $this->seeJson(["ids" => ["Jugador(es) ya pertenece a un equipo."]]);
+
+    }//end testCrearEquipo9()
 
 
 }//end class

@@ -31,7 +31,7 @@
                 <div class="box-body">
                     <div class="form-group col-xs-12">
                         <label for="inputNombre">Nombre</label>
-                        <input type="text" class="form-control" id="inputNombre" value="{!! $equipo->nombre !!}">
+                        <input type="text" class="form-control" id="inputNombre" value="{!! $equipo->nombre !!}" name="nombre">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputEntrenador">Entrenador</label>
@@ -40,7 +40,7 @@
                     <!-- Select para elegir la categoria del equipo -->
                     <div class="form-group col-xs-12">
                         <label for="inputCategoria">Categoria</label>
-                        <select class="form-control" id="inputCategoriaSelect" value="{!! $equipo->categoria !!}">
+                        <select class="form-control" id="inputCategoriaSelect" value="{!! $equipo->categoria !!}" name="categoria">
                             @if(count($categorias) != 0)
                                 @foreach($categorias as $categoria)
                                     @if ($categoria->nombre === $equipo->categoria)
@@ -98,10 +98,13 @@
                     <div class="col-xs-2"></div>
                         <div class="col-xs-8">
                             <div class="col-xs-4">
-                                <button id="idlimp" type="submit" class="btn btn-primary">Limpiar</button>
+                                <a href="{!!route('equipo.index')!!}" class="btn btn-primary">Cancelar</a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="{!! '/equipo/'.$equipo->id.'/edit' !!}" class="btn btn-primary">Restablecer</a>
                             </div>
                             <div class="col-xs-4 pull-right">
-                                <button type="button" id="btn_actualizar" class="btn btn-success">Actualizar</button>
+                                <button type="button" id="btn_actualizar" class="btn btn-success" name="update">Actualizar</button>
                             </div>
                         </div>
                     <div class="col-xs-2"></div>

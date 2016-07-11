@@ -345,7 +345,7 @@ class PartidoController extends Controller
     public function searchPartido(Request $request)
     {
         // Arreglo que guardara la cantidad de partidos que contiene cada torneo.
-        $contienePartidos = [];
+        $torneosConPartidos = [];
 
         // Encuentro todos los partidos activos.
         $partidos = Partido::where('estado', 1)->orderBy('jornada', 'asc')->orderBy('fecha', 'asc')->get();
@@ -435,12 +435,12 @@ class PartidoController extends Controller
                 }
             }
 
-            $info = [
-                     'id'       => $torneo->id,
-                     'partidos' => $contador,
-                    ];
-            array_push($contienePartidos, $info);
+            if ($contador !== 0) {
+                array_push($torneosConPartidos, $torneo);
+            }
         }
+
+        $torneos = $torneos->intersect($torneosConPartidos);
 
         // Retorno a vista principal de partido con los partidos activos filtrados, lista de equipos activos, lista de torneos activos, lista de categorias y numero de partidos por torneo.
         return view('partido.index')
@@ -448,8 +448,7 @@ class PartidoController extends Controller
             ->withEquipos($equipos)
             ->withTorneos($torneos)
             ->withCategorias($categorias)
-            ->with('torneoEquipos', $torneoEquipos)
-            ->with('contienePartidos', $contienePartidos);
+            ->with('torneoEquipos', $torneoEquipos);
 
     }//end searchPartido()
 

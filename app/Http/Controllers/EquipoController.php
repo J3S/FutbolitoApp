@@ -84,6 +84,7 @@ class EquipoController extends Controller
         }
 
         return view('equipo.equipo-index')->with(compact('equipos', 'categorias'));
+
     }//end search()
 
 
@@ -97,6 +98,7 @@ class EquipoController extends Controller
         $categorias = Categoria::all();
 
         return view('equipo.equipoc')->with('categorias', $categorias);
+
     }//end create()
 
 
@@ -127,7 +129,7 @@ class EquipoController extends Controller
                     $mensaje = array("Jugador(s) no identificado(s)");
                     return response()->json(['ids' => $mensaje], 422);
                 } else if ($jugadorDB->id_equipo !== null) {
-                    $mensaje = array("Jugador ".$jugadorDB->nombres."ya pertenece a un equipo");
+                    $mensaje = array("Jugador(es) ya pertenece a un equipo.");
                     return response()->json(['ids' => $mensaje], 422);
                 }
             }
@@ -151,8 +153,8 @@ class EquipoController extends Controller
             return response()->json(
                 [
                  "mensaje"  => "guardado con exito",
-                 "idEquipo" => $equipo->id,
                  "create"   => true,
+                 "idEquipo" => $equipo->id,
                 ]
             );
         } else {
@@ -165,8 +167,8 @@ class EquipoController extends Controller
     /**
      * Display the specified 'Equipo'.
      *
-     * @param int $id equipo
      * @param Class $request equipo
+     * @param int   $id      equipo
      *
      * @return \Illuminate\Http\Response
      */
@@ -189,7 +191,6 @@ class EquipoController extends Controller
             $jugsArray = $jugadors->toArray();
             return response()->json($jugsArray);
         }
-
         return view('equipo.equiposhow')->with(compact('equipo', 'jugadors'));
 
     }//end show()
@@ -205,7 +206,7 @@ class EquipoController extends Controller
     public function getJugadoresCategoria( $categoria )
     {
         if (Categoria::where('nombre', $categoria)->exists() === false) {
-            // retorna string instead JSON!
+            // Retorna string instead JSON!
             return "categoria no existe";
         }
 
@@ -224,13 +225,14 @@ class EquipoController extends Controller
                                          ]
                                      );
         $arrJugs = $jugadoresCategoria->toArray();
-        // ya no hay jugadores disponibles en la DB?
+        // Ya no hay jugadores disponibles en la DB?
         if (empty($arrJugs) === false) {
-            return response()->json( $arrJugs);
+            return response()->json($arrJugs);
         } else {
-            // retorna string instead JSON!
+            // Retorna string instead JSON!
             return "No hay jugadores disponibles para esta categoria";
         }
+
     }//end getJugadoresCategoria()
 
 
@@ -243,6 +245,14 @@ class EquipoController extends Controller
      */
     public function edit($id)
     {
+
+        $equipoNew = Equipo::find($id);
+        if ($equipoNew === null || $equipoNew->estado === 0) {
+            return redirect()->route('equipo.index')->withErrors(
+                'El equipo que desea modificar no se encuentra registrado.'
+            );
+        }
+
         $jugadors   = Jugador::where('estado', 1)
                             ->where('id_equipo', $id)
                             ->get(
@@ -281,6 +291,7 @@ class EquipoController extends Controller
              'nombre'     => 'required|unique:equipos,nombre,'.$equipoNew->id.',id',
              'entrenador' => 'alpha_spaces',
              'categoria'  => 'required|exists:categorias,nombre',
+             'id'         => 'exists:equipos,id',
             )
         );
 
@@ -291,8 +302,8 @@ class EquipoController extends Controller
                 if ($jugadorDB === null) {
                     $mensaje = array("Jugador(s) no identificado(s)");
                     return response()->json(['ids' => $mensaje], 422);
-                } elseif ($jugadorDB->id_equipo !== null && $jugadorDB->id_equipo !== $equipoNew->id) {
-                    $mensaje = array("Jugador ".$jugadorDB->nombres."ya pertenece a un equipo");
+                } else if ($jugadorDB->id_equipo !== null && $jugadorDB->id_equipo !== $equipoNew->id) {
+                    $mensaje = array("Jugador(es) ya pertenece a un equipo.");
                     return response()->json(['ids' => $mensaje], 422);
                 }
             }
@@ -322,6 +333,7 @@ class EquipoController extends Controller
         } else {
             return response()->json(["mensaje" => "Error al actualizar en la BDD"]);
         }//end if
+
     }//end update()
 
 
@@ -334,6 +346,12 @@ class EquipoController extends Controller
      */
     public function destroy($id)
     {
+        $equipoNew = Equipo::find($id);
+        if ($equipoNew === null || $equipoNew->estado === 0) {
+            return redirect()->route('equipo.index')->withErrors(
+                'El equipo que desea desactivar no se encuentra registrado.'
+            );
+        }
 
         try {
             $equipo         = Equipo::find($id);
@@ -348,4 +366,6 @@ class EquipoController extends Controller
         }
 
     }//end destroy()
+
+
 }//end class
