@@ -19,6 +19,11 @@
 
     <div class="col-xs-12">
         <div class="box box-primary">
+            <!-- mensajes de errro de validacion -->
+            <div class="alert alert-danger" style="display: none">
+                <ul id="alerts">
+                </ul>
+            </div>
 			<div class="box-header with-border">
 				<h3 class="box-title">Buscar Equipo</h3>
 			</div><!-- /.box-header -->
@@ -56,7 +61,6 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Entrenador</th>
                                 <th>Categoria</th>
@@ -68,7 +72,6 @@
                         @foreach($equipos as $equipo)
                             <tbody>
                                 <tr>
-                                    <td>{{ $equipo->id }}</td>
                                     <td>{{ $equipo->nombre }}</td>
                                     <td>{{ $equipo->director_tecnico }}</td>
                                     <td>{{ $equipo->categoria }}</td>

@@ -6,7 +6,7 @@
  * @param {Element} ul element que sera llenado con li's.
  * @param {string} accion del boton si de tipo add o remove.
  */
-function fillJugsAjax(jugsAjaxResp, ulElement, btnAction) {
+function fillJugsAjax( jugsAjaxResp, ulElement, btnAction ) {
     $(jugsAjaxResp).each(function(key, value) {
         var $liElement = $('<li/>').addClass("list-group-item");
         $liElement.css({
@@ -14,7 +14,7 @@ function fillJugsAjax(jugsAjaxResp, ulElement, btnAction) {
             "text-align": "center",
         });
 
-        // make contenido de li
+        // make content li element
         var $contentLi = $("<div/>").addClass("row");
         var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
         var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
@@ -29,7 +29,7 @@ function fillJugsAjax(jugsAjaxResp, ulElement, btnAction) {
         var $checkBtn = $("<button/>");
         $checkBtn.attr({
             type: "button",
-            // name: "btnList",
+            name: "btnList",
             id:   value.id
         });
 
@@ -202,6 +202,7 @@ $(document).ready(function() {
                 entrenador : inputEntrenador,
                 nombre     : inputNombre,
                 categoria  : inputCategoriaSelect,
+                id         : equipo,
                 ids        : elegidos
             },
             dataType: 'json',

@@ -245,6 +245,14 @@ class EquipoController extends Controller
      */
     public function edit($id)
     {
+
+        $equipoNew = Equipo::find($id);
+        if ($equipoNew === null || $equipoNew->estado === 0) {
+            return redirect()->route('equipo.index')->withErrors(
+                'El equipo que desea modificar no se encuentra registrado.'
+            );
+        }
+
         $jugadors   = Jugador::where('estado', 1)
                             ->where('id_equipo', $id)
                             ->get(
@@ -283,6 +291,7 @@ class EquipoController extends Controller
              'nombre'     => 'required|unique:equipos,nombre,'.$equipoNew->id.',id',
              'entrenador' => 'alpha_spaces',
              'categoria'  => 'required|exists:categorias,nombre',
+             'id'         => 'exists:equipos,id',
             )
         );
 
@@ -293,7 +302,7 @@ class EquipoController extends Controller
                 if ($jugadorDB === null) {
                     $mensaje = array("Jugador(s) no identificado(s)");
                     return response()->json(['ids' => $mensaje], 422);
-                } elseif ($jugadorDB->id_equipo !== null && $jugadorDB->id_equipo !== $equipoNew->id) {
+                } else if ($jugadorDB->id_equipo !== null && $jugadorDB->id_equipo !== $equipoNew->id) {
                     $mensaje = array("Jugador(es) ya pertenece a un equipo.");
                     return response()->json(['ids' => $mensaje], 422);
                 }
@@ -324,6 +333,7 @@ class EquipoController extends Controller
         } else {
             return response()->json(["mensaje" => "Error al actualizar en la BDD"]);
         }//end if
+
     }//end update()
 
 
@@ -336,6 +346,12 @@ class EquipoController extends Controller
      */
     public function destroy($id)
     {
+        $equipoNew = Equipo::find($id);
+        if ($equipoNew === null || $equipoNew->estado === 0) {
+            return redirect()->route('equipo.index')->withErrors(
+                'El equipo que desea desactivar no se encuentra registrado.'
+            );
+        }
 
         try {
             $equipo         = Equipo::find($id);
@@ -350,4 +366,6 @@ class EquipoController extends Controller
         }
 
     }//end destroy()
+
+
 }//end class

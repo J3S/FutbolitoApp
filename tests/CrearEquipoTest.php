@@ -3,7 +3,7 @@
  * This file contains common functions used for testing when user creates Equipo.
  * PHP version 5
  *
- * @category   CategoryName
+ * @category   Testing
  * @package    FutbolitoApp
  * @subpackage Tests
  * @author     Branny Chito <brajchit@espol.edu.ec>
@@ -17,6 +17,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Symfony\Component\HttpKernel\Client;
 use App\Categoria;
 use App\Jugador;
+
 /**
  * CrearEquipoTest Class Doc Comment
  *
@@ -60,7 +61,10 @@ class CrearEquipoTest extends TestCase
              'categoria'  => $inputCategoria,
              'ids'        => $inputIds,
             ],
-            ['X-CSRF-TOKEN' => csrf_token()]
+            [
+             'X-CSRF-TOKEN'          => csrf_token(),
+             'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            ]
         );
         // $this->dump(); // testing debug
         // $this->expectOutputString("cont: ".$response->content()); //debug
@@ -309,7 +313,7 @@ class CrearEquipoTest extends TestCase
             ]
         );
         $test->assertResponseStatus(422);
-        $test->seeJson( ["categoria" => ["categoria es inválido."]] );
+        $test->seeJson(["categoria" => ["categoria es inválido."]]);
 
     }//end testCrearEquipo6()
 
@@ -381,9 +385,7 @@ class CrearEquipoTest extends TestCase
         $jugsOfNewEq = Jugador::where('id_equipo', $idEquipoNew)->lists('id');
         $jugsOfNewEq = $jugsOfNewEq->toArray();
         // Jugadores relacionados al nuevo equipo son los mismos ingresados?
-        if ($jugsOfNewEq === $inputIds) {
-            $this->assertTrue(true);
-        }
+        $this->assertTrue($jugsOfNewEq === $inputIds);
 
         $this->seeJson(['mensaje' => "guardado con exito"]);
         $this->seePageIs('/equipo');
@@ -438,7 +440,7 @@ class CrearEquipoTest extends TestCase
         );
 
         $this->assertResponseStatus(422);
-        $this->seeJson( ["ids" => ["Jugador(s) no identificado(s)"]] );
+        $this->seeJson(["ids" => ["Jugador(s) no identificado(s)"]]);
 
     }//end testCrearEquipo8()
 
@@ -490,7 +492,7 @@ class CrearEquipoTest extends TestCase
         );
 
         $this->assertResponseStatus(422);
-        $this->seeJson( ["ids" => ["Jugador(es) ya pertenece a un equipo."]] );
+        $this->seeJson(["ids" => ["Jugador(es) ya pertenece a un equipo."]]);
 
     }//end testCrearEquipo9()
 
