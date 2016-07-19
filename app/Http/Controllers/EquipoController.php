@@ -58,7 +58,7 @@ class EquipoController extends Controller
     {
 
         $equipos    = Equipo::where('estado', '1')
-                         ->orderBy('Categoria', 'ASC')
+                         ->orderBy('categoria', 'ASC')
                          ->orderBy('nombre', 'ASC')
                          ->get();
         $categorias = Categoria::all();
