@@ -157,6 +157,12 @@ class TorneoController extends Controller
             ]
         );
 
+        $anioServer = date('Y');
+        if($request->anio < 1970 || $request->anio > ($anioServer + 5))
+            return redirect()->route('torneo.create')->withErrors(
+                'El año ingresado no está dentro del rango permitido.'
+            );
+
         // Verificación si la categoría recibida está registrada.
         try {
             $categoriaID = Categoria::where('nombre', $request->categoria)
@@ -283,7 +289,9 @@ class TorneoController extends Controller
             * torneo_equipos que tienen id_torneo = $id.
         */
 
-        $torneo        = Torneo::find($id);
+        $torneo        = Torneo::where('id', $id)
+                                ->where('estado', 1)
+                                ->first();
         $torneoEquipos = TorneoEquipo::where('id_torneo', $id)
                                      ->get();
         // Verificación de la existencia del torneo.
@@ -318,7 +326,7 @@ class TorneoController extends Controller
     /**
      * Actualiza la información de un torneo específico utilizando el $id.
      *
-     * @param \Illuminate\Http\Request $request Información que se va a actualizar
+     * @param \Illuminate\Http\Reqhttp://localhost:8000/torneo/25/edituest $request Información que se va a actualizar
      * @param int                      $id      ID del torneo que se va a actualizar
      *
      * @return \Illuminate\Http\Response
@@ -333,6 +341,12 @@ class TorneoController extends Controller
              'anio'      => 'required|numeric',
             ]
         );
+
+        $anioServer = date('Y');
+        if($request->anio < 1970 || $request->anio > ($anioServer + 5))
+            return redirect()->route('torneo.create')->withErrors(
+                'El año ingresado no está dentro del rango permitido.'
+            );
 
         // Verificación si la categoría recibida está registrada.
         try {

@@ -19,6 +19,11 @@
 
     <div class="col-xs-12">
         <div class="box box-primary">
+            <!-- mensajes de errro de validacion -->
+            <div class="alert alert-danger" style="display: none">
+                <ul id="alerts">
+                </ul>
+            </div>
 			<div class="box-header with-border">
 				<h3 class="box-title">Buscar Equipo</h3>
 			</div><!-- /.box-header -->
@@ -51,7 +56,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Lista de Jugadores</h3>
+                <h3 class="box-title">Lista de Equipos</h3>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -72,15 +77,14 @@
                                     <td>{{ $equipo->categoria }}</td>
                                     <td><a href="{!! route('equipo.show', ['equipo' => $equipo->id]) !!}">Ver Jugadores</a></td>
                                     <td>
-                                        <a class="btn btn-warning btn-sm" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+                                        <a class="btn btn-warning btn-xs" href="{!! route('equipo.edit', ['equipo' => $equipo->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
                                     </td>
                                     <td>
                                         <form style="display:inline-block" action="{!!route('equipo.destroy', ['equipo' => $equipo->id])!!}" method="POST">
                                             <input name="_method" type="hidden" value="DELETE">
                                             {{ csrf_field() }}
-                                            <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa-times fa-lg"></i></button>
+                                            <button class="btn btn-danger btn-xs" type="submit" ><i class="fa fa-times fa-lg"></i></button>
                                         </form>
-                                        <!-- <a class="btn btn-danger btn-sm" href="{!! route('equipo.index') !!}"><i class="fa fa-times fa-lg"></i></a> -->
                                     </td>
 
                                 </tr>
