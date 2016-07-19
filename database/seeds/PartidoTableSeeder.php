@@ -30,11 +30,11 @@ class PartidoTableSeeder extends Seeder
                     $day = rand(1, 28);
                     $hour = rand(8, 16);
                     $date = Carbon::create($year, $month, $day, $hour, 0, 0);
-                    $torneoEquipo = TorneoEquipo::orderByRaw("RAND()")->where('id_torneo', $torneo->id)->first();
-                    $equipoL = Equipo::orderByRaw("RAND()")->where('estado', 1)->where('id', $torneoEquipo->id_equipo)->first();
+                    $torneoEquipo = TorneoEquipo::orderByRaw("RANDOM()")->where('id_torneo', $torneo->id)->first();
+                    $equipoL = Equipo::orderByRaw("RANDOM()")->where('estado', 1)->where('id', $torneoEquipo->id_equipo)->first();
                     do {
-                        $torneoEquipo2 = TorneoEquipo::orderByRaw("RAND()")->where('id_torneo', $torneo->id)->first();
-                        $equipoV = Equipo::orderByRaw("RAND()")->where('estado', 1)->where('id', $torneoEquipo2->id_equipo)->first();
+                        $torneoEquipo2 = TorneoEquipo::orderByRaw("RANDOM()")->where('id_torneo', $torneo->id)->first();
+                        $equipoV = Equipo::orderByRaw("RANDOM()")->where('estado', 1)->where('id', $torneoEquipo2->id_equipo)->first();
                     } while($equipoV->id == $equipoL->id);
                     DB::table('partidos')->insert([
                         'lugar' => strtoupper(str_random(10)),

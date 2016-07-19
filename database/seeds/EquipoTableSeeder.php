@@ -34,7 +34,7 @@ class EquipoTableSeeder extends Seeder
                 'nombre' => $equipo,
                 'director_tecnico' => $name,
                 'estado' => 1,
-                'categoria' => Categoria::orderByRaw("RAND()")->first()->nombre,
+                'categoria' => Categoria::orderByRaw("RANDOM()")->first()->nombre,
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
