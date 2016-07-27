@@ -69,7 +69,7 @@
                                 <th>Categoria</th>
                                 <th>Perfil</th>
                                 <th>Editar</th>
-                                <th>Desactivar</th>
+                                <th>Borrar</th>
                             </tr>
                         </thead>
                         <tbody>

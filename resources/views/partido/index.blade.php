@@ -154,7 +154,7 @@
 						                    <th>Lugar</th>
 						                    <th>Resultado</th>
 						                    <th>Editar</th>
-						                    <th>Desactivar</th>
+						                    <th>Borrar</th>
 						                </tr>
 						            </thead>  
 						            <tbody>

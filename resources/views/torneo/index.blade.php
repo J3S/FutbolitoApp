@@ -90,7 +90,7 @@
                                                                 <form class="deleteForm" action="/torneo/{{ $torneo['id'] }}" method="POST">
                                                                     <input type="hidden" name="_method" value="DELETE">
                                                                     {{ csrf_field() }}
-                                                                    <button type="submit" class="deleteBtn btn btn-danger btn-xs"><i class="fa fa-minus"></i> Desactivar</button>
+                                                                    <button type="submit" class="deleteBtn btn btn-danger btn-xs"><i class="fa fa-minus"></i> Borrar</button>
                                                                 </form>
                                                             </td>
                                                         @endif
@@ -177,7 +177,7 @@
                                                                 <form class="deleteForm" action="/torneo/{{ $torneoEncontrado[0] }}" method="POST">
                                                                     <input type="hidden" name="_method" value="DELETE">
                                                                     {{ csrf_field() }}
-                                                                    <button type="submit" class="deleteBtn btn btn-danger btn-xs"><i class="fa fa-minus"></i> Desactivar</button>
+                                                                    <button type="submit" class="deleteBtn btn btn-danger btn-xs"><i class="fa fa-minus"></i> Borrar</button>
                                                                 </form>
                                                             </td>
                                                         </tr>
