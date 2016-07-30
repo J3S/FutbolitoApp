@@ -32,7 +32,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="text-center">
-                                <a href="{{ url('login') }}" class="btn btn-default btn-flat">Salir</a>
+                                <a href="{{ url('logout') }}" class="btn btn-default btn-flat">Salir</a>
                             </div>
                         </li>
                     </ul>

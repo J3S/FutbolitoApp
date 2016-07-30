@@ -19,6 +19,7 @@ use App\Categoria;
 use App\Jugador;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
 
 /**
  * EquipoController Class Doc Comment
@@ -41,8 +42,10 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        return view('equipo.search')->with(compact('categorias'));
+        if (Auth::check()) {
+            $categorias = Categoria::all();
+            return view('equipo.search')->with(compact('categorias'));
+        }
 
     }//end index()
 

@@ -16,7 +16,7 @@ class CreateAdministradorsTable extends Migration
             $table->increments('id');
             $table->string('nombre', 50);
             $table->string('user', 30);
-            $table->string('pass', 30);
+            $table->string('pass', 60);
             $table->boolean('estado');
             $table->integer('id_equipo')->unsigned();
             $table->foreign('id_equipo')->references('id')->on('equipos');
