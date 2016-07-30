@@ -35,6 +35,11 @@ class EquipoController extends Controller
 {
 
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Muestra el formulario para buscar 'Equipo'.
      *
@@ -42,11 +47,8 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $categorias = Categoria::all();
-            return view('equipo.search')->with(compact('categorias'));
-        }
-
+        $categorias = Categoria::all();
+        return view('equipo.search')->with(compact('categorias'));
     }//end index()
 
 

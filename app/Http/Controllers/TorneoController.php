@@ -33,6 +33,11 @@ class TorneoController extends Controller
 {
 
 
+  public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Muestra la vista principal de la opción torneo.
      * Devuelve la vista torneo junto con los torneos del

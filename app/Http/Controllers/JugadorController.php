@@ -36,6 +36,13 @@ use Flash;
  */
 class JugadorController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display lista de Jugadores
      *
