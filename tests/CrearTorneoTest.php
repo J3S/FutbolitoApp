@@ -250,4 +250,25 @@ class CrearTorneoTest extends TestCase
         $this->assertRedirectedToRoute('torneo.create');
     }
 
+    public function testCrearTorneoRepetido()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoriaJunior = Categoria::where('nombre', 'Junior')->first();
+
+        $this->visit(route('torneo.create'))
+            ->type('1980', 'anio')
+            ->select('Junior', 'categoria')
+            ->press('Guardar');
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1980',
+            'categoria' => 'Junior',
+        ];
+
+        $response = $this->call('POST', 'torneo', $parametros);
+        $this->assertRedirectedToRoute('torneo.create');
+    }
+
 }
