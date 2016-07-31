@@ -345,7 +345,7 @@ class PartidoController extends Controller
     public function searchPartido(Request $request)
     {
         // Arreglo que guardara la cantidad de partidos que contiene cada torneo.
-        $contienePartidos = [];
+        $torneosConPartidos = [];
 
         // Encuentro todos los partidos activos.
         $partidos = Partido::where('estado', 1)->orderBy('jornada', 'asc')->orderBy('fecha', 'asc')->get();
@@ -357,11 +357,47 @@ class PartidoController extends Controller
             $partidos      = $partidos->intersect($partidosFecha);
         }
 
-        // Filtro los partidos activos por torneo (si fue ingresado por el usuario).
-        if ($request->torneo !== '') {
-            $torneo         = Torneo::find($request->torneo);
-            $partidosTorneo = Partido::where('id_torneo', $torneo->id)->get();
-            $partidos       = $partidos->intersect($partidosTorneo);
+        // Filtro los partidos activos por categoria y año del torneo (si fueron ingresados por usuario).
+        if ($request->categoria !== '' && $request->anio !== '') {
+            $categoria = Categoria::where('nombre', $request->categoria)->first();
+            try {
+                $torneo         = Torneo::where('id_categoria', $categoria->id)->where('anio', $request->anio)->first();
+                $partidosTorneo = Partido::where('id_torneo', $torneo->id)->get();
+                $partidos       = $partidos->intersect($partidosTorneo);
+            } catch (\Exception $e) {
+                $partidos = $partidos->intersect([]);
+            }
+        }
+
+        // Filtro los partidos activos por categoria del torneo (si fue ingresado por el usuario).
+        if ($request->categoria !== '' && $request->anio === '') {
+            $partidosCategoria = [];
+            $categoria         = Categoria::where('nombre', $request->categoria)->first();
+            $torneosCategoria  = Torneo::where('id_categoria', $categoria->id)->get();
+            foreach ($torneosCategoria as $torneoCategoria) {
+                foreach ($partidos as $partidoCategoria) {
+                    if ($partidoCategoria->id_torneo === $torneoCategoria->id) {
+                        array_push($partidosCategoria, $partidoCategoria);
+                    }
+                }
+            }
+
+            $partidos = $partidos->intersect($partidosCategoria);
+        }
+
+        // Filtro los partidos activos por año del torneo (si fue ingresado por el usuario).
+        if ($request->categoria === '' && $request->anio !== '') {
+            $partidosAnio = [];
+            $torneosAnio  = Torneo::where('anio', $request->anio)->get();
+            foreach ($torneosAnio as $torneoAnio) {
+                foreach ($partidos as $partidoAnio) {
+                    if ($partidoAnio->id_torneo === $torneoAnio->id) {
+                        array_push($partidosAnio, $partidoAnio);
+                    }
+                }
+            }
+
+            $partidos = $partidos->intersect($partidosAnio);
         }
 
         // Filtro los partidos activos por jornada (si fue ingresado por el usuario).
@@ -399,12 +435,12 @@ class PartidoController extends Controller
                 }
             }
 
-            $info = [
-                     'id'       => $torneo->id,
-                     'partidos' => $contador,
-                    ];
-            array_push($contienePartidos, $info);
+            if ($contador !== 0) {
+                array_push($torneosConPartidos, $torneo);
+            }
         }
+
+        $torneos = $torneos->intersect($torneosConPartidos);
 
         // Retorno a vista principal de partido con los partidos activos filtrados, lista de equipos activos, lista de torneos activos, lista de categorias y numero de partidos por torneo.
         return view('partido.index')
@@ -412,8 +448,7 @@ class PartidoController extends Controller
             ->withEquipos($equipos)
             ->withTorneos($torneos)
             ->withCategorias($categorias)
-            ->with('torneoEquipos', $torneoEquipos)
-            ->with('contienePartidos', $contienePartidos);
+            ->with('torneoEquipos', $torneoEquipos);
 
     }//end searchPartido()
 

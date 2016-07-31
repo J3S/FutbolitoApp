@@ -16,8 +16,8 @@
 @endsection
 
 @section('content')
-    <div class="col-xs-2"></div>
-    <div class="col-xs-8">
+    <div class="col-xs-12 col-md-2"></div>
+    <div class="col-xs-12 col-md-8">
         <!-- general form elements -->
         <div class="box box-primary">
             <!-- mensajes de errro de validacion -->
@@ -35,16 +35,16 @@
                 <div class="box-body">
                     <div class="form-group col-xs-12">
                         <label for="inputNombre">Nombre</label>
-                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre equipo">
+                        <input type="text" class="form-control" id="inputNombre" placeholder="Ingrese nombre equipo" name="nombre">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputEntrenador">Entrenador</label>
-                        <input type="text" class="form-control" id="inputEntrenador" placeholder="Ingrese nombre entrenador">
+                        <input type="text" class="form-control" id="inputEntrenador" placeholder="Ingrese nombre entrenador" name="entrenador">
                     </div>
                     <!-- Select para elegir la categoria del equipo -->
                     <div class="form-group col-xs-12">
                         <label for="inputCategoria">Categoria</label>
-                        <select class="form-control" id="inputCategoriaSelect">
+                        <select class="form-control" id="inputCategoriaSelect" name="categoria">
                             <option value="noSelected">-Selecionar-</option>
                             @if(count($categorias) != 0)
                                 @foreach($categorias as $categoria)
@@ -74,12 +74,18 @@
                     <!-- Lista de jugadores para elegir -->
                     <div class="form-group col-xs-12">
                         <div class="panel panel-success">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Jugadores Disponibles</h3>
+                            <div class="panel-heading" style="text-align:center">
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapseListJug" aria-expanded="true" aria-controls="collapseOne">
+                                        Jugadores Disponibles <span class="fa fa-chevron-down " > </span>
+                                    </a>
+                                </h3>
                             </div>
-                            <div class="panel-body">
-                                <ul class="list-group"  id="inputJugadores">
-                                </ul>
+                            <div id="collapseListJug" class="panel-collapse collapse in" role="contenido" aria-labelledby="cabecera de lista">
+                                <div class="panel-body">
+                                    <ul class="list-group"  id="inputJugadores">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,10 +99,10 @@
                     <div class="col-xs-2"></div>
                         <div class="col-xs-8">
                             <div class="col-xs-4">
-                                <button id="idlimp" type="submit" class="btn btn-primary">Limpiar</button>
+                                <a href="{!!route('equipo.index')!!}" class="btn btn-primary">Cancelar</a>
                             </div>
                             <div class="col-xs-4 pull-right">
-                                <button type="button" id="btn_guardar" class="btn btn-success">Guardar</button>
+                                <button type="button" id="btn_guardar" class="btn btn-success" name="save">Guardar</button>
                             </div>
                         </div>
                     <div class="col-xs-2"></div>
@@ -104,7 +110,7 @@
             </form>
         </div><!-- /.box -->
     </div><!--/.col (left) -->
-    <div class="col-xs-2"></div>
+    <div class="col-xs-12 col-md-2"></div>
 @endsection
 
 @section('scriptsPersonales')

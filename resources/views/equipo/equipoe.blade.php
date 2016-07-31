@@ -27,10 +27,11 @@
             <form role="form">
                 <input type="hidden" name="_token" value="{!! csrf_token() !!}" id="token">
                 <input type="hidden" value="{!! $equipo->id !!}" id="idEquipo">
+                <input type="hidden" value="{!! $equipo->categoria !!}" id="categoriaEquipo">
                 <div class="box-body">
                     <div class="form-group col-xs-12">
                         <label for="inputNombre">Nombre</label>
-                        <input type="text" class="form-control" id="inputNombre" value="{!! $equipo->nombre !!}">
+                        <input type="text" class="form-control" id="inputNombre" value="{!! $equipo->nombre !!}" name="nombre">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputEntrenador">Entrenador</label>
@@ -39,10 +40,14 @@
                     <!-- Select para elegir la categoria del equipo -->
                     <div class="form-group col-xs-12">
                         <label for="inputCategoria">Categoria</label>
-                        <select class="form-control" id="inputCategoriaSelect" value="{!! $equipo->categoria !!}">
+                        <select class="form-control" id="inputCategoriaSelect" value="{!! $equipo->categoria !!}" name="categoria">
                             @if(count($categorias) != 0)
                                 @foreach($categorias as $categoria)
-                                    <option value="{!! $categoria->nombre !!}">{{ $categoria->nombre }}</option>
+                                    @if ($categoria->nombre === $equipo->categoria)
+                                        <option value="{!! $categoria->nombre !!}" selected>{{ $categoria->nombre }}</option>
+                                    @else
+                                        <option value="{!! $categoria->nombre !!}">{{ $categoria->nombre }}</option>
+                                    @endif
                                 @endforeach
                             @else
                                 <option>No se ha registrado ninguna categor&iacute;a</option>
@@ -60,16 +65,6 @@
                             </div>
                             <div class="panel-body">
                                 <ul class="list-group"  id="JugadoresElegidos">
-                                    @if(count($jugadors) != 0)
-                                        @foreach($jugadors as $jugador)
-                                            <li class="list-group-item" style="padding: 5px 15px">
-                                                <button class="btn btn-danger btn-xs" id="{!!$jugador->id!!}" type="button" name="button"><i class="fa fa-times"aria-hidden="true"></i></button>
-                                                {{ $jugador->nombres }} - {!!$jugador->apellidos!!}
-                                            </li>
-                                        @endforeach
-                                    @else
-                                        <li>No se ha registrado ningun jugador</li>
-                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -78,12 +73,18 @@
                     <!-- Lista de jugadores para elegir -->
                     <div class="form-group col-xs-12">
                         <div class="panel panel-success">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Jugadores Disponibles</h3>
+                            <div class="panel-heading" style="text-align:center">
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapseListJug" aria-expanded="true" aria-controls="collapseOne">
+                                        Jugadores Disponibles <span class="fa fa-chevron-down " > </span>
+                                    </a>
+                                </h3>
                             </div>
-                            <div class="panel-body">
-                                <ul class="list-group"  id="inputJugadores">
-                                </ul>
+                            <div id="collapseListJug" class="panel-collapse collapse in" role="contenido" aria-labelledby="cabecera de lista">
+                                <div class="panel-body">
+                                    <ul class="list-group"  id="inputJugadores">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,10 +98,13 @@
                     <div class="col-xs-2"></div>
                         <div class="col-xs-8">
                             <div class="col-xs-4">
-                                <button id="idlimp" type="submit" class="btn btn-primary">Limpiar</button>
+                                <a href="{!!route('equipo.index')!!}" class="btn btn-primary">Cancelar</a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="{!! '/equipo/'.$equipo->id.'/edit' !!}" class="btn btn-primary">Restablecer</a>
                             </div>
                             <div class="col-xs-4 pull-right">
-                                <button type="button" id="btn_actualizar" class="btn btn-success">Actualizar</button>
+                                <button type="button" id="btn_actualizar" class="btn btn-success" name="update">Actualizar</button>
                             </div>
                         </div>
                     <div class="col-xs-2"></div>

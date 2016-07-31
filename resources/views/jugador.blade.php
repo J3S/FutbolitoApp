@@ -16,7 +16,14 @@
     <li><a href="/"><i class="fa fa-user"></i> Home</a></li>
     <li class="active">Jugador</li>
 @endsection
-
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<style>
+.alert {
+    z-index: 99; 
+    position: absolute; 
+    left: 65%;
+}
+</style>
 <!-- Contenido de la pagina -->
 @section('content')
 
@@ -82,46 +89,51 @@
 <!-- Seccion para mostrar los resultadsos de la busqueda de jugadores -->
 	
 	@if(!empty($jugadores) and count($jugadores) != 0)
+	@include('modals.delete')
 		<div class="col-xs-1"></div>
 		    <div class="col-xs-15">
 		        <h3 style="margin-top:0;">Lista de Jugadores</h3>
-		        <table class="table table-striped">
-		            <tr>
-		                <!-- <th>id</th> -->
-		                <th>Nombres</th>
-		                <th>Apellidos</th>
-		                <th>Equipo</th>
-		                <th>Categor&iacute;a</th>
-		                <th>C&eacute;dula</th>
-		                <th>Acci&oacute;n</th>
-		            </tr>
-		            @foreach ($jugadores as $jugador)
-		            {{--*/ $tieneEquipo = 0 /*--}}
-		            <tr>
-		                <td>{{ $jugador->nombres}}</td>
-		                <td>{{ $jugador->apellidos}}</td>
-		                @foreach($equipos as $equipo)
-		                	@if($jugador->id_equipo == $equipo->id)
-		                		<td>{{ $equipo->nombre }}</td>
-		                		{{--*/ $tieneEquipo = 1 /*--}}
+		        <table class="dataTable table table-hover">
+			        <thead>
+			            <tr>
+			                <!-- <th>id</th> -->
+			                <th>Nombres</th>
+			                <th>Apellidos</th>
+			                <th>Equipo</th>
+			                <th>Categor&iacute;a</th>
+			                <th>C&eacute;dula</th>
+			                <th>Acci&oacute;n</th>
+			            </tr>
+			         </thead>
+			         <tbody>
+			            @foreach ($jugadores as $jugador)
+			            {{--*/ $tieneEquipo = 0 /*--}}
+			            <tr>
+			                <td>{{ $jugador->nombres}}</td>
+			                <td>{{ $jugador->apellidos}}</td>
+			                @foreach($equipos as $equipo)
+			                	@if($jugador->id_equipo == $equipo->id)
+			                		<td>{{ $equipo->nombre }}</td>
+			                		{{--*/ $tieneEquipo = 1 /*--}}
+			                	@endif
+			                @endforeach
+		                	@if($tieneEquipo == 0)
+		                		<td>No asignado</td>
 		                	@endif
-		                @endforeach
-	                	@if($tieneEquipo == 0)
-	                		<td>No asignado</td>
-	                	@endif
-		                <td>{{ $jugador->categoria}}</td>
-		                <td>{{ $jugador->identificacion}}</td>
-		                <td>
-		                    <a class="btn btn-warning btn-sm" href="{!! route('jugador.edit', ['jugador' => $jugador->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
-		                    <form style="display:inline-block" action="{!!route('jugador.destroy', ['jugador' => $jugador->id])!!}" method="POST">
-		                        <input name="_method" type="hidden" value="DELETE">
-		                        {{ csrf_field() }}
-		                        <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa fa-times fa-lg"></i></button>
-		                        <!-- <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa-minus"></i> Desactivar</button> -->
-		                    </form>
-		                </td>
-		            </tr>
-		            @endforeach
+			                <td>{{ $jugador->categoria}}</td>
+			                <td>{{ $jugador->identificacion}}</td>
+			                <td>
+			                    <a class="btn btn-warning btn-sm" href="{!! route('jugador.edit', ['jugador' => $jugador->id]) !!}"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+			                    <form class="deleteForm" style="display:inline-block" action="{!!route('jugador.destroy', ['jugador' => $jugador->id])!!}" method="POST">
+			                        <input name="_method" type="hidden" value="DELETE">
+			                        {{ csrf_field() }}
+			                        <button class="deleteBtn btn btn-danger btn-sm" type="submit" ><i class="fa fa fa-times fa-lg"></i></button>
+			                        <!-- <button class="btn btn-danger btn-sm" type="submit" ><i class="fa fa-minus"></i> Desactivar</button> -->
+			                    </form>
+			                </td>
+			            </tr>
+			            @endforeach
+		            </tbody>
 		        </table>
 		    </div>
 	    <div class="col-xs-1"></div>
@@ -131,8 +143,35 @@
     	<h5 class="text-center">Seleccione opciones m&aacute;s generales e intente de nuevo.</h4>
     @endif
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 	<script>
 	    $('div.alert').not('.alert-important').delay(3000).slideUp(500);
+		$('.deleteForm').on('click', '.deleteBtn', function(e){
+		    e.preventDefault();
+		    var $form=$(this.closest('form'));
+		    $('#confirm').modal({ keyboard: false })
+		        .on('click', '#delete-btn', function(){
+		        	console.log($form);
+		            $form.submit();
+	        });
+		});
+		$('.dataTable').DataTable({
+	        "language": {
+	            "lengthMenu": "Mostrar _MENU_ registros",
+	            "zeroRecords": "No se han encontrado registros.",
+	            "info": "P&aacute;gina _PAGE_ de _PAGES_",
+	            "infoEmpty": "No hay datos para mostrar.",
+	            "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+	            "sSearch": "Buscar:",
+	            "sLoadingRecords": "Cargando...",
+	            "oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "Siguiente",
+					"sPrevious": "Anterior"
+				}
+	        }
+	    });
 	</script>
 @endsection
 
