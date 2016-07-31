@@ -37,6 +37,11 @@ class PartidoController extends Controller
 {
 
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Prepara la vista principal de la opción partido.
      *

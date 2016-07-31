@@ -19,6 +19,7 @@ use App\Categoria;
 use App\Jugador;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
 
 /**
  * EquipoController Class Doc Comment
@@ -34,6 +35,11 @@ class EquipoController extends Controller
 {
 
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Muestra el formulario para buscar 'Equipo'.
      *
@@ -43,7 +49,6 @@ class EquipoController extends Controller
     {
         $categorias = Categoria::all();
         return view('equipo.search')->with(compact('categorias'));
-
     }//end index()
 
 

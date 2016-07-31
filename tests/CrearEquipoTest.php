@@ -17,6 +17,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Symfony\Component\HttpKernel\Client;
 use App\Categoria;
 use App\Jugador;
+use App\Usuario;
 
 /**
  * CrearEquipoTest Class Doc Comment
@@ -47,6 +48,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
         $inputCategoria  = 'Master';
@@ -95,6 +98,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = '';
         $inputEntrenador = 'Bk';
         $inputCategoria  = 'Master';
@@ -141,6 +146,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo3()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = '20A';
         $inputEntrenador = 'Bk';
         $inputCategoria  = 'Master';
@@ -188,6 +195,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo4()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = 'Bayern Munich';
         $inputEntrenador = '';
         $inputCategoria  = 'Master';
@@ -235,6 +244,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo5()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk123';
         $inputCategoria  = 'Master';
@@ -284,6 +295,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo6()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
         $inputCategoria  = '123xx';
@@ -333,7 +346,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo7()
     {
-
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
         $inputCategoria  = 'Master';
@@ -406,7 +420,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo8()
     {
-
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
         $inputCategoria  = 'Master';
@@ -458,7 +473,8 @@ class CrearEquipoTest extends TestCase
      */
     public function testCrearEquipo9()
     {
-
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
         $inputCategoria  = 'Master';
