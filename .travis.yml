@@ -6,6 +6,8 @@ php:
   - 7.0
   - hhvm
   
+
+
 before_script:
   - cp .env.travis .env
   - mysql -e 'create database CDJ_BD;'
@@ -15,6 +17,10 @@ before_script:
 script:
   - php artisan migrate --seed
   - vendor/bin/phpunit
+  - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
+
+after_script:
+- php vendor/bin/coveralls -v
 
 #sudo: false
 #
