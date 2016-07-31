@@ -22,18 +22,32 @@
     </head>
     <body class="hold-transition login-page">
         <div class="login-box">
+            <div class="row">
+                <!-- Alert que muestra todos los errores en los campos si falla al hacer post -->
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
             <div class="login-logo">
                 <h2>Futbolito App</h2>
             </div><!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Iniciar Sesi&oacute;n</p>
-                <form action="../../index2.html" method="post">
+                <form action="/login" method="POST">
+                    {{ csrf_field() }}
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="Usuario">
+                        <input type="text" class="form-control" placeholder="Usuario" name="user">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="Contrase&ntilde;a">
+                        <input type="password" class="form-control" placeholder="Contrase&ntilde;a" name="password">
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="row">

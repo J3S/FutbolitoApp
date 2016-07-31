@@ -12,12 +12,17 @@
 */
 
 Route::get('/', function () {
-	return view('welcome');
+    if(Auth::check())
+        return view('welcome');
+    else
+        return view('login');
  });
 Route::get('login', function () {
     return view('login');
 });
 
+Route::post('login', 'Auth\AuthController@postLogin');
+Route::get('logout', 'Auth\AuthController@getLogout');
 
 // Route::get('jugador/crear', function () {
 //     return view('jugadorc');
