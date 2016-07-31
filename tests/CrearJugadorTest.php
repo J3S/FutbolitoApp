@@ -259,13 +259,13 @@ class CrearJugadorTest extends TestCase
         $identificacion = '0927086781';
         $apellidos = 'Oyola';
         $nombres = 'Pedro';
-        $fecha_nac = Carbon::create(19, 3, 1);
+        $fecha_nac = "hola";
         $this->visit(route('jugador.create'))
             ->type($nombres, 'nombres')
             ->type($apellidos, 'apellidos')
             ->type($identificacion, 'identificacion')
             ->select($equipoL->id, 'equipo')
-            ->select($fecha_nac->format('Y-m-d'), 'fecha_nac')
+            ->select($fecha_nac, 'fecha_nac')
             ->press('Guardar')
             ->seePageIs(route('jugador.create'));
     }
