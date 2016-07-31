@@ -26,4 +26,4 @@
 
 
 [![Build Status](https://travis-ci.org/ajoyola/FutbolitoApp.svg?branch=master)](https://travis-ci.org/ajoyola/FutbolitoApp)
-[![Coverage Status](https://coveralls.io/repos/ajoyola/FutbolitoApp/badge.svg?branch=master&service=github)](https://coveralls.io/github/ajoyola/FutbolitoApp?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ajoyola/FutbolitoApp/badge.svg?branch=master)](https://coveralls.io/github/ajoyola/FutbolitoApp?branch=master)
