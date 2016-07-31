@@ -8,7 +8,13 @@
     <li><a href="#"><i class="fa fa-user"></i> Home</a></li>
     <li><a href="{!!route('equipo.index')!!}">Equipo</a></li>
 @endsection
-
+<style>
+.alert {
+    z-index: 99; 
+    position: absolute; 
+    left: 65%;
+}
+</style>
 @section('content')
     <div class="col-xs-12" style="padding-bottom: 15px;">
     @include('flash::message')
@@ -22,6 +28,15 @@
 			<div class="box-header with-border">
 				<h3 class="box-title">Buscar Equipo</h3>
 			</div><!-- /.box-header -->
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form role="form" action="{!!route('equipo.search')!!}" method="post">
             {!! csrf_field() !!}
 				<div class="box-body">
@@ -47,4 +62,8 @@
 			</form>
 		</div>
 	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+        $('div.alert').not('.alert-important').delay(3000).slideUp(500);
+    </script>
 @endsection

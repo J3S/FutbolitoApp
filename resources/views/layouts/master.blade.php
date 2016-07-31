@@ -40,7 +40,7 @@
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.3.0
                 </div>
-                <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+                <strong id="footerDate">Copyright &copy;</strong>
             </footer>
 
             <!-- Control Sidebar -->
@@ -70,5 +70,9 @@
         <!-- AdminLTE for demo purposes -->
         <script type="text/javascript" src="{!! asset('js/demo.js') !!}"></script>
         @yield('scriptsPersonales')
+        <script type="text/javascript">
+            var d = new Date();
+            $("#footerDate").append(" "+d.getFullYear())
+        </script>
     </body>
 </html>
