@@ -10,6 +10,7 @@ use App\Torneo;
 use App\Partido;
 use App\TorneoEquipo;
 use Carbon\Carbon;
+use App\Usuario;
 
 class CrearJugadorTest extends TestCase
 {
@@ -24,7 +25,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador1()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086777';
@@ -56,7 +59,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador2()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086778';
@@ -81,7 +86,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador3()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086779';
@@ -113,7 +120,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador4()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086779';
@@ -138,7 +147,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador5()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086780';
@@ -170,7 +181,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador6()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = 'hola';
@@ -194,7 +207,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador7()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '092';
@@ -218,7 +233,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador8()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086781';
@@ -253,7 +270,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador9()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086781';
@@ -279,7 +298,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador10()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086784';
@@ -314,7 +335,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador11()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086785';
@@ -340,7 +363,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador12()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086789';
@@ -368,7 +393,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador13()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086789';
@@ -396,7 +423,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador14()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086789';
@@ -430,7 +459,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador15()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086789';
@@ -456,7 +487,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador16()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086789';
@@ -490,7 +523,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador17()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086789';
@@ -516,7 +551,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador18()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086789';
@@ -550,7 +587,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador19()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086789';
@@ -576,7 +615,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador20()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $categorias = Categoria::where('nombre', 'Rey Master')->get();
@@ -612,6 +653,8 @@ class CrearJugadorTest extends TestCase
      */
     public function testCrearJugador21()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Se inicia una sesión para esta prueba
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
@@ -638,7 +681,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador22()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipos = Equipo::where('nombre', '20A')->get();
         $equipoL = $equipos[0];
         $identificacion = '0927086790';
@@ -670,7 +715,9 @@ class CrearJugadorTest extends TestCase
      * @return void
      */
     public function testCrearJugador23()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         Session::start();
         $parametros = [
             '_token' => csrf_token(), // Obteniendo el csrf token

@@ -11,6 +11,7 @@ use App\Jugador;
 use App\Partido;
 use App\TorneoEquipo;
 use Carbon\Carbon;
+use App\Usuario;
 
 class EditarJugadorTest extends TestCase
 {
@@ -25,7 +26,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador1()
-    {      
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $datonuevo = "PEDRO ADRIANO";
         $apellidos = "OYOLA SUAREZ";
@@ -67,7 +70,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador2()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $datonuevo = "PEDRO123";
         $apellidos = "OYOLA SUAREZ";
@@ -109,7 +114,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador3()
-    {        
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $datonuevo = "OYOLA SANCHEZ";
         $apellidos = "OYOLA SUAREZ";
@@ -151,7 +158,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador4()
-    {               
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = "OYOLA123";
@@ -194,7 +203,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador5()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $identificacion = "1234567890";
         $datonuevo = "1234567895";
@@ -242,7 +253,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador6()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $identificacion = "1234567890";
         $datonuevo = "als";
@@ -290,7 +303,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador7()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $identificacion = "1234567890";
         $datonuevo = "1234567";
@@ -338,7 +353,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador8()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = Carbon::create(1990, 3, 1);
@@ -381,7 +398,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador9()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = Carbon::create(19, 3, 1);
@@ -424,7 +443,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador10()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = "Arquero";
@@ -469,7 +490,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador11()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = "Arquero2134";
@@ -512,7 +535,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador12()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = 80;
@@ -556,7 +581,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador13()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = "80rpty";
@@ -598,7 +625,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador14()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = 'ajoyola@espol.edu.ec';
@@ -642,7 +671,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador15()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = 'ajoyolaespol.edu.ec';
@@ -685,7 +716,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador16()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = '23456';
@@ -728,7 +761,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador17()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = "2abg3456";
@@ -771,7 +806,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador18()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = 10;
@@ -814,7 +851,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador19()
-     {         
+     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = "aa10";
@@ -857,7 +896,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador20()
-     {         
+     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $categorias = Categoria::where('nombre', 'Rey Master')->get();
@@ -901,7 +942,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador21()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = 'ESPOL TORNEO';
@@ -944,7 +987,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador22()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $equipos = Equipo::where('nombre', '20A')->get();
@@ -989,7 +1034,9 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador23()
-    {         
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $nombres = "ADRIANO JOHNNY";
         $apellidos = "OYOLA SUAREZ";
         $datonuevo = '99999999';
