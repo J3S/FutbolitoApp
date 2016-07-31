@@ -19,6 +19,7 @@ use App\Categoria;
 use App\Jugador;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
 
 /**
  * EquipoController Class Doc Comment
@@ -34,6 +35,11 @@ class EquipoController extends Controller
 {
 
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Muestra el formulario para buscar 'Equipo'.
      *
@@ -43,7 +49,6 @@ class EquipoController extends Controller
     {
         $categorias = Categoria::all();
         return view('equipo.search')->with(compact('categorias'));
-
     }//end index()
 
 
@@ -149,7 +154,7 @@ class EquipoController extends Controller
                        ->whereNull('categoria')
                        ->update(['categoria' => $equipo->categoria]);
             }
-
+            flash()->info('Equipo ha sido creado con éxito.');
             return response()->json(
                 [
                  "mensaje"  => "guardado con exito",
@@ -323,7 +328,7 @@ class EquipoController extends Controller
             Jugador::whereIn('id', $request->ids)
                    ->whereNull('categoria')
                    ->update(['categoria' => $equipoNew->categoria]);
-
+            flash()->info('Equipo ha sido modificado con éxito.');
             return response()->json(
                 [
                  "mensaje"  => "actualizado con exito",
@@ -357,6 +362,7 @@ class EquipoController extends Controller
             $equipo         = Equipo::find($id);
             $equipo->estado = 0;
             $equipo->save();
+            flash()->info('Equipo ha sido borrado con éxito.');
             return redirect()->route('equipo.index');
 
         } catch (\Exception $e) {

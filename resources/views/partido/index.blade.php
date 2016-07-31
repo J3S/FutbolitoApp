@@ -16,6 +16,7 @@
     <li><a href="/"><i class="fa fa-user"></i> Home</a></li>
     <li class="active">Partido</li>
 @endsection
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <style>
 .alert {
 	z-index: 99; 
@@ -145,7 +146,7 @@
 							</div>
 							<div id="expand{{ $torneo['id'] }}" class="collapse table-responsive">
 								<div class="panel-body">
-								<table class="table table-hover">
+								<table class="dataTable table table-hover">
 						            <thead>
 						                <tr>
 						                    <th>Jornada</th>
@@ -153,32 +154,32 @@
 						                    <th>Lugar</th>
 						                    <th>Resultado</th>
 						                    <th>Editar</th>
-						                    <th>Desactivar</th>
+						                    <th>Borrar</th>
 						                </tr>
 						            </thead>  
+						            <tbody>
 									@foreach($partidos as $partido)
 										@if($partido->id_torneo == $torneo->id)
-										<tbody>
-											<tr>
-												<td><span class="badge bg-black">{{ $partido['jornada'] }}</span></td>
-												<td><span class="label label-default">{{ $partido['fecha'] }}</span></td>
-												<td><span class="label label-default">{{ $partido['lugar'] }}</span></td>
-												<td><span class="badge bg-green">{{ $partido['equipo_local'] }}</span> <span class="label label-default">{{ $partido['gol_local'] }} - {{ $partido['gol_visitante'] }}</span> <span class="badge bg-green">{{ $partido['equipo_visitante'] }}</span></td>
-												<td>
-													<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o fa-lg"></i></a>
-												</td>
-												<td>
-													<form class="deleteForm" action="/partido/{{ $partido->id }}" method="POST">
-						                            <input type="hidden" name="_method" value="DELETE">
-						                            {{ csrf_field() }}
+										<tr>
+											<td><span class="badge bg-black">{{ $partido['jornada'] }}</span></td>
+											<td><span class="label label-default">{{ $partido['fecha'] }}</span></td>
+											<td><span class="label label-default">{{ $partido['lugar'] }}</span></td>
+											<td><span class="badge bg-green">{{ $partido['equipo_local'] }}</span> <span class="label label-default">{{ $partido['gol_local'] }} - {{ $partido['gol_visitante'] }}</span> <span class="badge bg-green">{{ $partido['equipo_visitante'] }}</span></td>
+											<td>
+												<a href="{{ route('partido.edit', $partido->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+											</td>
+											<td>
+												<form class="deleteForm" action="/partido/{{ $partido->id }}" method="POST">
+					                            <input type="hidden" name="_method" value="DELETE">
+					                            {{ csrf_field() }}
 
-						                            <button type="submit" class="deleteBtn btn btn-danger btn-sm"><i class="fa fa fa-times fa-lg"></i></button>
-						                        	</form>
-					                        	</td>
-											</tr>
-										</tbody>
+					                            <button type="submit" class="deleteBtn btn btn-danger btn-sm"><i class="fa fa fa-times fa-lg"></i></button>
+					                        	</form>
+				                        	</td>
+										</tr>
 										@endif<!-- endif partido.id = torneo.id -->
 									@endforeach<!-- endforeach partidos -->
+									</tbody>
 								</table>
 								</div>
 							</div>
@@ -195,9 +196,10 @@
     	<h5 class="text-center">Seleccione opciones m&aacute;s generales e intente de nuevo.</h4>
     @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    
     <script>
     	$('div.alert').not('.alert-important').delay(3000).slideUp(500);
-
 		$('.deleteForm').on('click', '.deleteBtn', function(e){
 		    e.preventDefault();
 		    var $form=$(this.closest('form'));
@@ -207,7 +209,23 @@
 		            $form.submit();
 		        });
 		});
-
+    	$('.dataTable').DataTable({
+	        "language": {
+	            "lengthMenu": "Mostrar _MENU_ registros",
+	            "zeroRecords": "No se han encontrado registros.",
+	            "info": "P&aacute;gina _PAGE_ de _PAGES_",
+	            "infoEmpty": "No hay datos para mostrar.",
+	            "infoFiltered": "(filtrados de un total de _MAX_ registros)",
+	            "sSearch": "Buscar:",
+	            "sLoadingRecords": "Cargando...",
+	            "oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "Siguiente",
+					"sPrevious": "Anterior"
+				}
+	        }
+	    });
 	    // Carga dinámica de los equipos dependiendo del torneo (categoria y año) seleccionado.
 	    document.getElementById("categoria").addEventListener("change", llenarEquiposSelect);
 		document.getElementById("anio").addEventListener("change", llenarEquiposSelect);

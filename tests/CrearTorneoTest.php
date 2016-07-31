@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Categoria;
 use App\Equipo;
 use App\Torneo;
+use App\Usuario;
 
 class CrearTorneoTest extends TestCase
 {
@@ -25,6 +26,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoriaJunior = Categoria::where('nombre', 'Junior')->first();
 
         $this->visit(route('torneo.create'))
@@ -53,6 +56,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipoSuperJunior = Equipo::where('categoria', 'Super Junior')->first();
         $categoriaSuperJunior = Categoria::where('nombre', 'Super Junior')->first();
 
@@ -86,6 +91,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo3()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $this->visit(route('torneo.create'))
             ->type('abcd', 'anio')
             ->select('Super Master', 'categoria')
@@ -105,6 +112,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo4()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Se inicia una sesión para esta prueba
         Session::start();
         $parametros = [
@@ -133,6 +142,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo5()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipoSenior = Equipo::where('categoria', 'Senior')->first();
         $equipoSuperSenior = Equipo::where('categoria', 'Super Senior')->first();
         // Se inicia una sesión para esta prueba
@@ -161,6 +172,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo6()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         Session::start();
         $parametros = [
             '_token' => csrf_token(), // Obteniendo el csrf token
@@ -184,6 +197,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo7()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         Session::start();
         $parametros = [
             '_token' => csrf_token(), // Obteniendo el csrf token
@@ -207,6 +222,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo8()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         Session::start();
         $parametros = [
             '_token' => csrf_token(), // Obteniendo el csrf token
