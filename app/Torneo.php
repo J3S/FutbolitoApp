@@ -16,5 +16,6 @@ class Torneo extends Model
             $partido = new Partido();
             $partido->borrarPorTorneoId($idTorneoAnio);
         }
+        Torneo::where('anio', $anio)->delete();
     }
 }
