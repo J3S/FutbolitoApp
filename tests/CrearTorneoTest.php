@@ -8,11 +8,25 @@ use App\Categoria;
 use App\Equipo;
 use App\Torneo;
 use App\Usuario;
+use App\TorneoEquipo;
 
 class CrearTorneoTest extends TestCase
 {
     use DatabaseTransactions;
 
+
+    public function testTorneoIndex()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio(date('Y'));
+        $torneo = new Torneo();
+        $torneo->borrarPorAnio(date('Y'));
+        $response = $this->call('GET', 'torneo');
+        $this->assertEquals(200, $response->status());
+    }
 
     /**
      * Comprueba el funcionamiento para crear un torneo.
