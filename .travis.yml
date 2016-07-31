@@ -12,7 +12,9 @@ before_script:
   - cp .env.travis .env
   - mysql -e 'create database CDJ_BD;'
   - composer self-update
-  - composer install --no-interaction
+  # - composer install --no-interaction
+  - composer require phpunit/phpunit:4.8.* satooshi/php-coveralls:dev-master
+  - composer install --dev
   
 script:
   - php artisan migrate --seed
