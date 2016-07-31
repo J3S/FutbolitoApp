@@ -8,6 +8,7 @@ use App\Categoria;
 use App\Equipo;
 use App\Torneo;
 use App\TorneoEquipo;
+use App\Usuario;
 
 class EditarTorneoTest extends TestCase
 {
@@ -28,6 +29,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');
@@ -87,6 +90,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');
@@ -145,6 +150,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo3()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');
@@ -202,6 +209,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo4()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');
@@ -250,6 +259,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo5()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');
@@ -308,6 +319,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo6()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');
@@ -363,6 +376,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo7()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $torneoUltimoRegistro = Torneo::orderBy('id', 'desc')->first();
         $idUltimoRegistro = $torneoUltimoRegistro->id+1;
         $this->visit('torneo/' . $idUltimoRegistro . '/edit')->seePageIs(route('torneo.index'));
@@ -381,6 +396,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo8()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');
@@ -437,6 +454,8 @@ class EditarTorneoTest extends TestCase
      */
     public function testEditarTorneo9()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');

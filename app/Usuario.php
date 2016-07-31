@@ -16,6 +16,9 @@ class Usuario extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
+    
+    protected $fillable = ['user', 'password'];
+
     // Override required, otherwise existing Authentication system will not match credentials
     public function getAuthPassword()
     {

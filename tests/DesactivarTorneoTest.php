@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Categoria;
 use App\Equipo;
 use App\Torneo;
+use App\Usuario;
 
 class DesactivarTorneoTest extends TestCase
 {
@@ -26,6 +27,8 @@ class DesactivarTorneoTest extends TestCase
      */
     public function testDesactivarTorneo1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $registrosEliminados = Torneo::where('anio', '1983')->delete();
 
@@ -72,6 +75,8 @@ class DesactivarTorneoTest extends TestCase
      */
     public function testDesactivarTorneo2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Se inicia una sesión para esta prueba.
         Session::start();
         $torneoUltimoRegistro = Torneo::orderBy('id', 'desc')->first();
