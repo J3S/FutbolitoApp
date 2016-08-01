@@ -514,6 +514,7 @@ class EditarTorneoTest extends TestCase
         $torneoEquipo = new TorneoEquipo();
         $torneoEquipo->borrarPorAnio('1981');
         $registrosEliminados = Torneo::where('anio', '1981')->delete();
+        $categoriaJunior = Categoria::where('nombre', 'Junior')->first();
 
         // Creación del torneo.
         $equipoJunior = Equipo::where('categoria', 'Junior')->first();
@@ -556,7 +557,14 @@ class EditarTorneoTest extends TestCase
         ];
         $uri = "/torneo/".$torneoCreado->id;
         $response = $this->call('POST', $uri, $parametros);
+        $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertRedirectedToRoute('torneo.index');
+        $this->seeInDatabase(
+            'torneos',
+            [
+             'anio' => '1981',
+             'id_categoria' => $categoriaJunior->id,
+            ]
+        );
     }
 }
