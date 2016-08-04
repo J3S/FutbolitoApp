@@ -51,23 +51,15 @@
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6">
-                            <div class="checkbox icheck">
-                                <label>
-                                    <input type="checkbox"> Recu&eacute;rdame
-                                </label>
-                            </div>
-                        </div><!-- /.col -->
-                        <div class="col-xs-6">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">
                             Iniciar Sesi&oacute;n
                             </button>
                         </div><!-- /.col -->
+                        <div class="col-md-2"></div>
                     </div>
                 </form>
-
-                <a href="#">Olvid&eacute; mi contrase&ntilde;a</a><br>
-
             </div><!-- /.login-box-body -->
         </div><!-- /.login-box -->
 

@@ -86,4 +86,18 @@ class DesactivarTorneoTest extends TestCase
         $response = $this->call('DELETE', $uri, ['_token' => csrf_token()]);
         $this->assertEquals(302, $response->getStatusCode());
     }
+
+    public function testDesactivarTorneoConPartido()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+
+        $torneoCreado = Torneo::where('anio', '2016')
+                              ->where('id_categoria', 7)
+                              ->first();
+        $uri = "/torneo/".$torneoCreado->id;
+        $response = $this->call('DELETE', $uri, ['_token' => csrf_token()]);
+
+        $this->assertEquals(500, $response->getStatusCode());
+    }
 }
