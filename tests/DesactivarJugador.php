@@ -10,6 +10,7 @@ use App\Torneo;
 use App\Partido;
 use App\TorneoEquipo;
 use Carbon\Carbon;
+use App\Usuario;
 
 class DesactivarJugadorTest extends TestCase
 {
@@ -27,6 +28,8 @@ class DesactivarJugadorTest extends TestCase
      */
     public function testDesactivarJugador1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
         $uri = "/jugador/".$jugadores->id;
         $response = $this->call('DELETE', $uri, ['_token' => csrf_token()]);
@@ -51,6 +54,8 @@ class DesactivarJugadorTest extends TestCase
      */
     public function testDesactivarJugador2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Se inicia una sesión para esta prueba.
         Session::start();
         $jugadorUltimoRegistro = Jugador::orderBy('id', 'desc')->first();

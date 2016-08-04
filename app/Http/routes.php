@@ -17,9 +17,9 @@ Route::get('/', function () {
     else
         return view('login');
  });
-Route::get('login', function () {
+Route::get('login', ['as' => 'login', function () {
     return view('login');
-});
+}]);
 
 Route::post('login', 'Auth\AuthController@postLogin');
 Route::get('logout', 'Auth\AuthController@getLogout');
