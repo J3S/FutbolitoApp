@@ -22,7 +22,7 @@ class BuscarPartidoTest extends TestCase
      *
      * @return void
      */
-    public function testBuscarPartido()
+    public function testBuscarPartido1()
     {
         $user = new Usuario(['user' => 'admin']);
         $this->be($user);
@@ -43,6 +43,104 @@ class BuscarPartidoTest extends TestCase
             ->select($equipoL->id, 'equipo_local')
             ->select($equipoV->id, 'equipo_visitante')
             ->type($jornada, 'jornada')
+            ->press('btnFormBuscarPartido')
+            ->seePageIs('/selectPartido');
+    }
+
+    /**
+     * Comprueba el funcionamiento de buscar un partido.
+     *
+     * @return void
+     */
+    public function testBuscarPartido2()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $anio = 1975;
+        $jornada = 1;
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0];
+        $equipoV = $equipos[1];
+
+        $this->visit(route('partido.index'))
+            ->type($anio, 'anio')
+            ->select($categoria->nombre, 'categoria')
+            ->select($equipoL->id, 'equipo_local')
+            ->select($equipoV->id, 'equipo_visitante')
+            ->type($jornada, 'jornada')
+            ->press('btnFormBuscarPartido')
+            ->seePageIs('/selectPartido');
+    }
+
+    /**
+     * Comprueba el funcionamiento de buscar un partido.
+     *
+     * @return void
+     */
+    public function testBuscarPartido3()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $anio = 2016;
+        $jornada = 1;
+        $ini = Carbon::create(2016, 1, 1, 12, 0, 0);
+        $fin = Carbon::create(2016, 10, 10, 12, 0, 0);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0];
+        $equipoV = $equipos[1];
+
+        $this->visit(route('partido.index'))
+            ->type($anio, 'anio')
+            ->select($ini->format('Y-m-d H:i:s'), 'ini_partido')
+            ->select($fin->format('Y-m-d H:i:s'), 'fin_partido')
+            ->select($equipoL->id, 'equipo_local')
+            ->select($equipoV->id, 'equipo_visitante')
+            ->type($jornada, 'jornada')
+            ->press('btnFormBuscarPartido')
+            ->seePageIs('/selectPartido');
+    }
+
+    /**
+     * Comprueba el funcionamiento de buscar un partido.
+     *
+     * @return void
+     */
+    public function testBuscarPartido4()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $jornada = 1;
+        $ini = Carbon::create(2016, 1, 1, 12, 0, 0);
+        $fin = Carbon::create(2016, 10, 10, 12, 0, 0);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0];
+        $equipoV = $equipos[1];
+
+        $this->visit(route('partido.index'))
+            ->select($categoria->nombre, 'categoria')
+            ->select($ini->format('Y-m-d H:i:s'), 'ini_partido')
+            ->select($fin->format('Y-m-d H:i:s'), 'fin_partido')
+            ->select($equipoL->id, 'equipo_local')
+            ->select($equipoV->id, 'equipo_visitante')
+            ->type($jornada, 'jornada')
+            ->press('btnFormBuscarPartido')
+            ->seePageIs('/selectPartido');
+    }
+
+    /**
+     * Comprueba el funcionamiento de buscar un partido.
+     *
+     * @return void
+     */
+    public function testBuscarPartido5()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+
+        $this->visit(route('partido.index'))
             ->press('btnFormBuscarPartido')
             ->seePageIs('/selectPartido');
     }
