@@ -253,10 +253,10 @@ class TorneoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    // public function show($id)
+    // {
 
-    }//end show()
+    // }//end show()
 
 
     /**
