@@ -61,7 +61,7 @@
         	<!-- Boton para crear un nuevo partido -->
             <button type="button" id="nuevoPartidoButton" class="btn btn-success" onclick="window.location='{{ route("partido.create") }}'"><i class="fa fa-plus"></i> Crear Partido</button>
         </form>
-    <button type="button" id="buscarPartidoBtn" data-toggle="collapse" data-target="#boxBuscar" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Buscar Partidos</button>
+    <button type="button" id="buscarPartidoBtn" name="buscarPartidoBtn" data-toggle="collapse" data-target="#boxBuscar" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Buscar Partidos</button>
     </div>
 	<div class="col-xs-12">
 		<div class="box box-primary collapse" id="boxBuscar">
@@ -123,7 +123,7 @@
 						<input type="datetime-local" class="form-control" id="finPartido" name="fin_partido">
 					</div>
 					<div class="col-xs-12" >
-	                    <button type="submit" class="btn btn-success">Buscar</button>
+	                    <button id="btnFormBuscarPartido" name="btnFormBuscarPartido" type="submit" class="btn btn-success">Buscar</button>
 	                </div>
 				</div>
 			</form>

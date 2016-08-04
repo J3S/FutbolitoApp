@@ -37,10 +37,17 @@ class PartidoController extends Controller
 {
 
 
+    /**
+     * Auth
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
-    }
+
+    }//end __construct()
+
 
     /**
      * Prepara la vista principal de la opción partido.
@@ -184,10 +191,14 @@ class PartidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
 
-    }//end show()
+    /*
+        Public function show($id)
+
+        {
+
+        }//end show()
+    */
 
 
     /**
