@@ -83,3 +83,7 @@ Route::post('selectPartido', 'PartidoController@searchPartido');
 
 //Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
 //Route::post('partido', 'PartidoController@store')->name('partido.store');
+
+Route::get('tabla_posiciones', function() {
+    return response()->json(['name' => 'Abigail', 'state' => 'CA']);
+});
