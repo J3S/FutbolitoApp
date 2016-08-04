@@ -19,6 +19,11 @@ class CrearTorneoTest extends TestCase
     {
         $user = new Usuario(['user' => 'admin']);
         $this->be($user);
+        // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio(date('Y'));
+        $torneo = new Torneo();
+        $torneo->borrarPorAnio(date('Y'));
         $response = $this->call('GET', 'torneo');
         $this->assertEquals(200, $response->status());
     }
