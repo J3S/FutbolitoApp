@@ -63,13 +63,10 @@ class ResourceController extends Controller
         return $jugadores;
     }
 
-    public function getTablaPosicionesTorneo(){
-    //public function getTablaPosicionesTorneo($id){
-    	//$torneo = Torneo::where('id', $id)->first();
-    	$torneo = Torneo::where('id', 1)->first();
+    public function getTablaPosicionesTorneo($id){
+    	$torneo = Torneo::where('id', $id)->first();
     	$partidos = Partido::where('id_torneo', $torneo->id)->get();
-    	//$torneoEquipos = TorneoEquipo::where('id_torneo', $id)->get();
-    	$torneoEquipos = TorneoEquipo::where('id_torneo', 1)->get();
+    	$torneoEquipos = TorneoEquipo::where('id_torneo', $id)->get();
     	$equipos = Equipo::where('estado', 1)->get();
     	$equiposTorneo = [];
     	$resultados = [];

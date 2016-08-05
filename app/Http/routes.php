@@ -94,4 +94,4 @@ Route::get('get_torneos', 'ResourceController@getTorneos');
 Route::get('get_partidos', 'ResourceController@getPartidos');
 Route::get('get_categorias', 'ResourceController@getCategorias');
 Route::get('get_torneoequipos', 'ResourceController@getTorneoEquipos');
-Route::get('get_tablaposiciones', 'ResourceController@getTablaPosicionesTorneo');
+Route::get('get_tablaposiciones/{id}', 'ResourceController@getTablaPosicionesTorneo');
