@@ -149,7 +149,7 @@ class EquipoTest extends TestCase
             array(), // Files
             ['HTTP_X-Requested-With' => 'XMLHttpRequest'] // Serve Ajax
         );
-        $this->seeJson(["apellidos" => "ALONSO ALVAREZ"]);
+        $this->assertResponseOk();
 
 
     }// end testEquipoShow2()
