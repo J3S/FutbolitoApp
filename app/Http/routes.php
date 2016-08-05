@@ -87,3 +87,10 @@ Route::post('selectPartido', 'PartidoController@searchPartido');
 Route::get('tabla_posiciones', function() {
     return response()->json(['name' => 'Abigail', 'state' => 'CA']);
 });
+
+Route::get('getjugadores', 'ResourceController@getJugadores');
+Route::get('getequipos', 'ResourceController@getEquipos');
+Route::get('gettorneos', 'ResourceController@getTorneos');
+Route::get('getpartidos', 'ResourceController@getPartidos');
+Route::get('getcategorias', 'ResourceController@getCategorias');
+Route::get('gettorneoequipos', 'ResourceController@getTorneoEquipos');
