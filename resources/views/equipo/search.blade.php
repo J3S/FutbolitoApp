@@ -10,8 +10,8 @@
 @endsection
 <style>
 .alert {
-    z-index: 99; 
-    position: absolute; 
+    z-index: 99;
+    position: absolute;
     left: 65%;
 }
 </style>
@@ -56,7 +56,7 @@
                         </select>
                     </div>
                     <div class="col-xs-12" >
-	                    <button type="submit" class="btn btn-success">Buscar</button>
+	                    <button type="submit" class="btn btn-success" name="btn-search">Buscar</button>
 	                </div>
 				</div>
 			</form>
