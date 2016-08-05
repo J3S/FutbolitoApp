@@ -12,12 +12,17 @@
 */
 
 Route::get('/', function () {
-	return view('welcome');
+    if(Auth::check())
+        return view('welcome');
+    else
+        return view('login');
  });
-Route::get('login', function () {
+Route::get('login', ['as' => 'login', function () {
     return view('login');
-});
+}]);
 
+Route::post('login', 'Auth\AuthController@postLogin');
+Route::get('logout', 'Auth\AuthController@getLogout');
 
 // Route::get('jugador/crear', function () {
 //     return view('jugadorc');
@@ -78,3 +83,15 @@ Route::post('selectPartido', 'PartidoController@searchPartido');
 
 //Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
 //Route::post('partido', 'PartidoController@store')->name('partido.store');
+
+Route::get('tabla_posiciones', function() {
+    return response()->json(['name' => 'Abigail', 'state' => 'CA']);
+});
+
+Route::get('get_jugadores', 'ResourceController@getJugadores');
+Route::get('get_equipos', 'ResourceController@getEquipos');
+Route::get('get_torneos', 'ResourceController@getTorneos');
+Route::get('get_partidos', 'ResourceController@getPartidos');
+Route::get('get_categorias', 'ResourceController@getCategorias');
+Route::get('get_torneoequipos', 'ResourceController@getTorneoEquipos');
+Route::get('get_tablaposiciones/{id}', 'ResourceController@getTablaPosicionesTorneo');

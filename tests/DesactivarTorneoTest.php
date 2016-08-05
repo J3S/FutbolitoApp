@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Categoria;
 use App\Equipo;
 use App\Torneo;
+use App\Usuario;
+use App\TorneoEquipo;
+use Carbon\Carbon;
 
 class DesactivarTorneoTest extends TestCase
 {
@@ -26,6 +29,8 @@ class DesactivarTorneoTest extends TestCase
      */
     public function testDesactivarTorneo1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
         $registrosEliminados = Torneo::where('anio', '1983')->delete();
 
@@ -72,6 +77,8 @@ class DesactivarTorneoTest extends TestCase
      */
     public function testDesactivarTorneo2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Se inicia una sesión para esta prueba.
         Session::start();
         $torneoUltimoRegistro = Torneo::orderBy('id', 'desc')->first();
@@ -79,6 +86,65 @@ class DesactivarTorneoTest extends TestCase
         
         $uri = "/torneo/".$idTorneoNoExistente;
         $response = $this->call('DELETE', $uri, ['_token' => csrf_token()]);
+        $this->assertEquals(302, $response->getStatusCode());
+    }
+
+    public function testDesactivarTorneoConPartido()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio(date('Y'));
+        $torneo = new Torneo();
+        $torneo->borrarPorAnio(date('Y'));
+        // Se inicia una sesión para esta prueba
+        Session::start();
+        $equipoSuperJunior1 = Equipo::where('categoria', 'Super Junior')->first();
+        $equipoSuperJunior2 = Equipo::where('categoria', 'Super Junior')->orderBy('id', 'desc')->first();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => date('Y'),
+            'categoria' => 'Super Junior',
+            $equipoSuperJunior1->nombre => $equipoSuperJunior1->nombre,
+            $equipoSuperJunior2->nombre => $equipoSuperJunior2->nombre,
+        ];
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        $categoria = Categoria::where('nombre', "Super Junior")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', date('Y'))->first();
+        $date = Carbon::create(date('Y'), 1, 3, 12, 0, 0);
+        $jornada = 1;
+        $lugar = "Cancha #3";
+        $observacion = "No hay observaciones.";
+        $arbitro = "John Doe";
+        $equipoL = $equipoSuperJunior1;
+        $equipoV = $equipoSuperJunior2;
+        $golLocal = 1;
+        $golVisitante = 0;
+
+        $this->visit(route('partido.create'))
+            ->select($torneo->id, 'torneo')
+            ->type($jornada, 'jornada')
+            ->type($arbitro, 'arbitro')
+            ->select($date->format('Y-m-d H:i:s'), 'fecha')
+            ->type($lugar, 'lugar')
+            ->type($observacion, 'observaciones')
+            ->select($equipoL->id, 'equipo_local')
+            ->select($equipoV->id, 'equipo_visitante')
+            ->type($golLocal, 'gol_local')
+            ->type($golVisitante, 'gol_visitante')
+            ->press('Guardar');
+
+
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        $torneoCreado = Torneo::where('anio', date('Y'))
+                              ->where('id_categoria', $categoria->id)
+                              ->first();
+        $uri = "/torneo/".$torneoCreado->id;
+        $response = $this->call('DELETE', $uri, ['_token' => csrf_token()]);
+
         $this->assertEquals(302, $response->getStatusCode());
     }
 }

@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Equipo;
+use App\Usuario;
 class DesactivarEquipoTest extends TestCase
 {
 
@@ -13,6 +14,8 @@ class DesactivarEquipoTest extends TestCase
 
     protected function createEquipo($inputNombre, $inputEntrenador, $inputCategoria, $inputIds)
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Session start is necesary for csrf_token!
         Session::start();
         $this->post(
@@ -47,7 +50,8 @@ class DesactivarEquipoTest extends TestCase
      */
     public function testDesactivarEquipo1()
     {
-
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -87,7 +91,8 @@ class DesactivarEquipoTest extends TestCase
      */
     public function testDesactivarEquipo2()
     {
-
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $idEquipoCreated = -1;
 
         // Delete equipo!

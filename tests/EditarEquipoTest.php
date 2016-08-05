@@ -16,6 +16,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Equipo;
 use App\Jugador;
+use App\Usuario;
 
 /**
  * EditarEquipoTest Class Doc Comment
@@ -35,6 +36,8 @@ class EditarEquipoTest extends TestCase
 
     protected function createEquipo($inputNombre, $inputEntrenador, $inputCategoria, $inputIds)
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Session start is necesary for csrf_token!
         Session::start();
         $this->post(
@@ -72,6 +75,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -124,6 +129,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -176,6 +183,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo3()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -229,6 +238,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo4()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -281,6 +292,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo5()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -335,6 +348,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo6()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -390,6 +405,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo7()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -463,6 +480,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo8()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -519,6 +538,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo9()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         //Crear equipo!
         $inputNombre     = 'Bayern';
         $inputEntrenador = 'Bk';
@@ -574,7 +595,8 @@ class EditarEquipoTest extends TestCase
      */
     public function testEditarEquipo10()
     {
-
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $idEquipo = -1;
         $this->get('/equipo/'.$idEquipo.'/edit');
         $this->assertRedirectedTo('/equipo');

@@ -10,6 +10,7 @@ use App\Torneo;
 use App\Partido;
 use App\TorneoEquipo;
 use Carbon\Carbon;
+use App\Usuario;
 
 class CrearPartidoTest extends TestCase
 {
@@ -27,7 +28,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido1()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -80,7 +83,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido2()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -130,7 +135,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido3()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = "aaa";
@@ -165,7 +172,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido4()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = "aaa";
         $jornada = 1;
@@ -200,7 +209,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido5()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -235,7 +246,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido6()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -270,7 +283,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido7()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = 5000;
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -308,7 +323,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido8()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -348,7 +365,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido9()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -388,7 +407,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido10()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -429,7 +450,9 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido11()
     {
-	    $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
         $jornada = 1;
@@ -470,6 +493,8 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido12()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
@@ -505,6 +530,8 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido13()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2016)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
@@ -545,6 +572,8 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido14()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2016, 1, 3, 12, 0, 0);
@@ -585,6 +614,8 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido15()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
@@ -620,6 +651,8 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido16()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
@@ -655,6 +688,8 @@ class CrearPartidoTest extends TestCase
      */
     public function testCrearPartido17()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);

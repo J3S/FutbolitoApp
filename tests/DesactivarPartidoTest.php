@@ -10,6 +10,7 @@ use App\Torneo;
 use App\Partido;
 use App\TorneoEquipo;
 use Carbon\Carbon;
+use App\Usuario;
 
 class DesactivarPartidoTest extends TestCase
 {
@@ -27,6 +28,8 @@ class DesactivarPartidoTest extends TestCase
      */
     public function testDesactivarPartido1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoria = Categoria::where('nombre', "Rey Master")->first();
         $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
         $date = Carbon::create(2014, 1, 3, 12, 0, 0);
@@ -93,7 +96,6 @@ class DesactivarPartidoTest extends TestCase
         $this->assertEquals(302, $response->getStatusCode());
     }
 
-
     /**
      * Comprueba el funcionamiento para desactivar un partido.
      * Se trata de desactivar a un partido que no existe (prueba realizada por medio
@@ -105,12 +107,14 @@ class DesactivarPartidoTest extends TestCase
      */
     public function testDesactivarPartido2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Se inicia una sesión para esta prueba.
         Session::start();
         $partidoUltimoRegistro = Partido::orderBy('id', 'desc')->first();
         $idPartidoNoExistente = $partidoUltimoRegistro->id+1;
-        
-        $uri = "/torneo/".$idPartidoNoExistente;
+
+        $uri = "/partido/".$idPartidoNoExistente;
         $response = $this->call('DELETE', $uri, ['_token' => csrf_token()]);
         $this->assertEquals(302, $response->getStatusCode());
     }

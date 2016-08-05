@@ -78,7 +78,7 @@ function loadSelectedJugadors(ulInputJugadores, idEquipo) {
 function loadCatJugadors(selectorElement) {
     var inputCategoria = selectorElement.val();
     var listaJugadoresTag = $('#inputJugadores');
-    var route = "http://localhost:8000/jugadores/" + inputCategoria;
+    var route = "/jugadores/" + inputCategoria;
     if (inputCategoria === "noSelected") {
         listaJugadoresTag.html('<li class="list-group-item">Ninguna Categoria selecionada</li>');
     } else {
@@ -135,7 +135,7 @@ $(document).ready(function() {
     });
 
     $("#btn_guardar").on('click', function() {
-        var route = "http://localhost:8000/equipo";
+        var route = "/equipo";
         var token = $("#token").val();
         var inputNombre = $('#inputNombre').val();
         var inputEntrenador = $('#inputEntrenador').val();
@@ -174,8 +174,7 @@ $(document).ready(function() {
 
         // se recibe si hay una respuesta (est caso vien del controller@store)
         ajaxRequest.done(function(data) {
-            alert(data.mensaje);
-            window.location = "http://localhost:8000/equipo/";
+            window.location = "/equipo/";
         });
     });
 
@@ -183,7 +182,7 @@ $(document).ready(function() {
         var equipo = $("#idEquipo").val();
         var token = $("#token").val();
         var metodo = $("#method").val();
-        var route = "http://localhost:8000/equipo/" + equipo;
+        var route = "/equipo/" + equipo;
         var inputNombre = $('#inputNombre').val();
         var inputEntrenador = $('#inputEntrenador').val();
         var inputCategoriaSelect = $('#inputCategoriaSelect').val();
@@ -221,8 +220,7 @@ $(document).ready(function() {
 
         // se recibe si hay una respuesta (est caso vien del controller@update)
         ajaxRequest.done(function(data) {
-            alert(data.mensaje);
-            window.location = "http://localhost:8000/equipo/";
+            window.location = "/equipo/";
         });
     });
 });

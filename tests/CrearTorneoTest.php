@@ -7,11 +7,26 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Categoria;
 use App\Equipo;
 use App\Torneo;
+use App\Usuario;
+use App\TorneoEquipo;
 
 class CrearTorneoTest extends TestCase
 {
     use DatabaseTransactions;
 
+
+    public function testCrearTorneoView()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        // Borrar registros con ese año si se han hecho pruebas y no se han eliminado esos registros.
+        $torneoEquipo = new TorneoEquipo();
+        $torneoEquipo->borrarPorAnio(date('Y'));
+        $torneo = new Torneo();
+        $torneo->borrarPorAnio(date('Y'));
+        $response = $this->call('GET', 'torneo');
+        $this->assertEquals(200, $response->status());
+    }
 
     /**
      * Comprueba el funcionamiento para crear un torneo.
@@ -25,6 +40,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo1()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $categoriaJunior = Categoria::where('nombre', 'Junior')->first();
 
         $this->visit(route('torneo.create'))
@@ -53,6 +70,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo2()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipoSuperJunior = Equipo::where('categoria', 'Super Junior')->first();
         $categoriaSuperJunior = Categoria::where('nombre', 'Super Junior')->first();
 
@@ -86,6 +105,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo3()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $this->visit(route('torneo.create'))
             ->type('abcd', 'anio')
             ->select('Super Master', 'categoria')
@@ -105,6 +126,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo4()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         // Se inicia una sesión para esta prueba
         Session::start();
         $parametros = [
@@ -133,6 +156,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo5()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         $equipoSenior = Equipo::where('categoria', 'Senior')->first();
         $equipoSuperSenior = Equipo::where('categoria', 'Super Senior')->first();
         // Se inicia una sesión para esta prueba
@@ -161,6 +186,8 @@ class CrearTorneoTest extends TestCase
      */
     public function testCrearTorneo6()
     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
         Session::start();
         $parametros = [
             '_token' => csrf_token(), // Obteniendo el csrf token
@@ -170,6 +197,77 @@ class CrearTorneoTest extends TestCase
 
         $response = $this->call('POST', 'torneo', $parametros);
 
+        $this->assertRedirectedToRoute('torneo.create');
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un torneo.
+     * Se visita la página para crear un torneo, se agrega una categoría master,
+     * se ingresa el año 1969(menor al año mínimo) y se manda a guardar el torneo.
+     * Es exitoso si se mantiene en la misma página torneo/create.
+     * Corresponde al caso de prueba testCrearTorneo: post-condition 7.
+     *
+     * @return void
+     */
+    public function testCrearTorneo7()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1969',
+            'categoria' => 'Master',
+        ];
+
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        $this->assertRedirectedToRoute('torneo.create');
+    }
+
+    /**
+     * Comprueba el funcionamiento para crear un torneo.
+     * Se visita la página para crear un torneo, se agrega una categoría master,
+     * se ingresa el año 10000 y se manda a guardar el torneo.
+     * Es exitoso si se mantiene en la misma página torneo/create.
+     * Corresponde al caso de prueba testCrearTorneo: post-condition 8.
+     *
+     * @return void
+     */
+    public function testCrearTorneo8()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '10000',
+            'categoria' => 'Master',
+        ];
+
+        $response = $this->call('POST', 'torneo', $parametros);
+
+        $this->assertRedirectedToRoute('torneo.create');
+    }
+
+    public function testCrearTorneoRepetido()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoriaJunior = Categoria::where('nombre', 'Junior')->first();
+
+        $this->visit(route('torneo.create'))
+            ->type('1980', 'anio')
+            ->select('Junior', 'categoria')
+            ->press('Guardar');
+        Session::start();
+        $parametros = [
+            '_token' => csrf_token(), // Obteniendo el csrf token
+            'anio' => '1980',
+            'categoria' => 'Junior',
+        ];
+
+        $response = $this->call('POST', 'torneo', $parametros);
         $this->assertRedirectedToRoute('torneo.create');
     }
 

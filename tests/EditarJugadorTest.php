@@ -11,6 +11,7 @@ use App\Jugador;
 use App\Partido;
 use App\TorneoEquipo;
 use Carbon\Carbon;
+use App\Usuario;
 
 class EditarJugadorTest extends TestCase
 {
@@ -25,26 +26,42 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador1()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $nombres = 'Pedro';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $datonuevo = "PEDRO ADRIANO";
+        $apellidos = "OYOLA SUAREZ";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'nombres'           => $nombres,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'    => $datonuevo,
+            'apellidos'  => $apellidos,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres' => $datonuevo,
+                 'apellidos' => $apellidos,
                 ]
             );
     }
 
-    /**
+     /**
      * Comprueba el funcionamiento para crear un jugador.
      * Se ingresan los datos requeridos del jugador.
      * Se prueba el ingreso incorrecto alfanumérico en el nombre del jugador.
@@ -53,21 +70,37 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador2()
-    {        
-        $jugadores = Jugador::where('id', '282')->get()->first();
-        $nombres = '1234';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $datonuevo = "PEDRO123";
+        $apellidos = "OYOLA SUAREZ";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
             '_method'          => 'PUT',
             '_token'           => csrf_token(),
-            'nombres'           => $nombres,
+            'nombres'          => $datonuevo,
+            'apellidos'        => $apellidos,
         ];
-        $uri = "/jugador/".$jugadores->id;
+
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres' => $nombres,
+                 'apellidos' => $apellidos,
                 ]
             );
     }
@@ -81,26 +114,42 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador3()
-    {        
-        $jugadores = Jugador::where('id', '282')->get()->first();
-        $apellidos = 'Oyola';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $datonuevo = "OYOLA SANCHEZ";
+        $apellidos = "OYOLA SUAREZ";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
             '_method'          => 'PUT',
             '_token'           => csrf_token(),
-            'apellidos'        => $apellidos,
+            'nombres'          => $nombres,
+            'apellidos'        => $datonuevo,
         ];
-
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres' => $nombres,
+                 'apellidos' => $datonuevo,
                 ]
             );
     }
 
-    /**
+
+/**
      * Comprueba el funcionamiento para crear un jugador.
      * Se ingresan los datos requeridos del jugador.
      * Se prueba el ingreso incorrecto alfanumérico en el apellido del jugador.
@@ -109,24 +158,39 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador4()
-    {               
-        $jugadores = Jugador::where('id', '282')->get()->first();
-        $apellidos = '1234';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = "OYOLA123";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
             '_method'          => 'PUT',
             '_token'           => csrf_token(),
-            'apellidos'        => $apellidos,
+            'apellidos'        => $datonuevo,
+            'nombres'          => $nombres,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres' => $nombres,
+                 'apellidos' => $apellidos,
                 ]
-            );
+            );    
     }
 
 
@@ -139,21 +203,43 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador5()
-    {         
-        $jugadores = Jugador::where('id', '282')->get()->first();
-        $identificacion = '0980980987';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $identificacion = "1234567890";
+        $datonuevo = "1234567895";
+        $apellidos = "OYOLA SUAREZ";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->where('identificacion', $identificacion)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->type($identificacion, 'identificacion')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->where('identificacion', $identificacion)
+                                ->first();
         $parametros2 = [
             '_method'          => 'PUT',
             '_token'           => csrf_token(),
-            'identificacion'   => $identificacion,
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'identificacion'   => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'        => $nombres,
+                 'apellidos'      => $apellidos,
+                 'identificacion' => $datonuevo,
                 ]
             );
     }
@@ -167,26 +253,45 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador6()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $identificacion = 'hola';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $identificacion = "1234567890";
+        $datonuevo = "als";
+        $apellidos = "OYOLA SUAREZ";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->where('identificacion', $identificacion)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->type($identificacion, 'identificacion')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->where('identificacion', $identificacion)
+                                ->first();
         $parametros2 = [
             '_method'          => 'PUT',
             '_token'           => csrf_token(),
-            'identificacion'   => $identificacion,
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'identificacion'   => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'        => $nombres,
+                 'apellidos'      => $apellidos,
+                 'identificacion' => $identificacion,
                 ]
             );
-
-        //$this->assertRedirectedToRoute('jugador.index');  
     }
 
     /**
@@ -198,26 +303,45 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador7()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $identificacion = '1234';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $identificacion = "1234567890";
+        $datonuevo = "1234567";
+        $apellidos = "OYOLA SUAREZ";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->where('identificacion', $identificacion)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->type($identificacion, 'identificacion')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->where('identificacion', $identificacion)
+                                ->first();
         $parametros2 = [
             '_method'          => 'PUT',
             '_token'           => csrf_token(),
-            'identificacion'   => $identificacion,
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'identificacion'   => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'        => $nombres,
+                 'apellidos'      => $apellidos,
+                 'identificacion' => $identificacion,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index');  
+            ); 
     }
 
      /**
@@ -229,27 +353,42 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador8()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $date2 = Carbon::create(2016, 2, 2);
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = Carbon::create(1990, 3, 1);
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
             '_method'          => 'PUT',
             '_token'           => csrf_token(),
-            'fecha_nac'            => $date2->format('Y-m-d'),
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'fecha_nac'        => $datonuevo->format('Y-m-d'),
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'        => $nombres,
+                 'apellidos'      => $apellidos,
+                 'fecha_nac'      => $datonuevo->format('Y-m-d'),
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index');  
+            ); 
     }
-
      /**
      * Comprueba el funcionamiento para crear un jugador.
      * Se ingresan los datos requeridos del jugador.
@@ -259,26 +398,40 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador9()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $date2 = Carbon::create(2014, 1, 2);
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = Carbon::create(19, 3, 1);
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
             '_method'          => 'PUT',
             '_token'           => csrf_token(),
-            'fecha_nac'        => $date2->format('Y-m-d'),
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'fecha_nac'        => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'        => $nombres,
+                 'apellidos'      => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index');  
+            ); 
     }
 
     /**
@@ -290,26 +443,43 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador10()
-    {                
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $rol = 'Arquero';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = "Arquero";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'rol'              => $rol,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'rol'        => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'      => $nombres,
+                 'apellidos'    => $apellidos,
+                 'rol'          => $datonuevo,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index');  
+            ); 
     }
+
 
     /**
      * Comprueba el funcionamiento para crear un jugador.
@@ -320,26 +490,40 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador11()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $rol = '1234';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = "Arquero2134";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'rol'              => $rol,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'rol'        => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'      => $nombres,
+                 'apellidos'    => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index');  
+            ); 
     }
 
     /**
@@ -351,25 +535,41 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador12()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $peso = 80;
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = 80;
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'peso'             => $peso,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'peso'       => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'      => $nombres,
+                 'apellidos'    => $apellidos,
+                 'peso'         => $datonuevo,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index');  
+            ); 
     }
 
     /**
@@ -381,28 +581,41 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador13()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $peso = '80rp';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = "80rpty";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'peso'             => $peso,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'    => $nombres,
+            'apellidos'  => $apellidos,
+            'peso'       => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'      => $nombres,
+                 'apellidos'    => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
-
     /**
      * Comprueba el funcionamiento para crear un jugador.
      * Se ingresan los datos requeridos del jugador.
@@ -412,25 +625,41 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador14()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $email = 'a@espol.edu.ec';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = 'ajoyola@espol.edu.ec';
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'email'            => $email,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'email'      => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'      => $nombres,
+                 'apellidos'    => $apellidos,
+                 'email'        => $datonuevo,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
 
     /**
@@ -442,26 +671,40 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador15()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $email = 'aespol.edu.ec';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = 'ajoyolaespol.edu.ec';
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'email'            => $email,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'          => $nombres,
+            'apellidos'        => $apellidos,
+            'email'      => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'      => $nombres,
+                 'apellidos'    => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
 
     /**
@@ -473,25 +716,41 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador16()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $telefono = '1234';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = '23456';
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'telefono'         => $telefono,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'    => $nombres,
+            'apellidos'  => $apellidos,
+            'telefono'   => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'      => $nombres,
+                 'apellidos'    => $apellidos,
+                 'telefono'     => $datonuevo,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
     /**
      * Comprueba el funcionamiento para crear un jugador.
@@ -502,26 +761,40 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador17()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $telefono = '1234rt';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = "2abg3456";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'telefono'         => $telefono,
+            '_method'    => 'PUT',
+            '_token'     => csrf_token(),
+            'nombres'    => $nombres,
+            'apellidos'  => $apellidos,
+            'telefono'   => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'      => $nombres,
+                 'apellidos'    => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
 
     /**
@@ -533,27 +806,42 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador18()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $num_camiseta = '10';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = 10;
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'num_camiseta'     => $num_camiseta,
+            '_method'        => 'PUT',
+            '_token'         => csrf_token(),
+            'nombres'        => $nombres,
+            'apellidos'      => $apellidos,
+            'num_camiseta'   => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'       => $nombres,
+                 'apellidos'     => $apellidos,
+                 'num_camiseta'  => $datonuevo,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
-
     /**
      * Comprueba el funcionamiento para crear un jugador.
      * Se ingresan los datos requeridos del jugador.
@@ -563,26 +851,40 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador19()
-     {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $num_camiseta = 'abc';
+     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = "aa10";
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'num_camiseta'     => $num_camiseta,
+            '_method'        => 'PUT',
+            '_token'         => csrf_token(),
+            'nombres'        => $nombres,
+            'apellidos'      => $apellidos,
+            'num_camiseta'   => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'       => $nombres,
+                 'apellidos'     => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
 
     /**
@@ -594,25 +896,41 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador20()
-     {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $categoria = 'Rey Master';
+     {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $categorias = Categoria::where('nombre', 'Rey Master')->get();
+        $datonuevo = $categorias[0];
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'categoria'        => $categoria,
+            '_method'        => 'PUT',
+            '_token'         => csrf_token(),
+            'nombres'        => $nombres,
+            'apellidos'      => $apellidos,
+            'categoria'      => $datonuevo->nombre,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'    => $nombres,
+                 'apellidos'  => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
 
     /**
@@ -624,26 +942,40 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador21()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $categoria = 'Rey Master';
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = 'ESPOL TORNEO';
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'categoria'        => $categoria,
+            '_method'        => 'PUT',
+            '_token'         => csrf_token(),
+            'nombres'        => $nombres,
+            'apellidos'      => $apellidos,
+            'categoria'      => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'    => $nombres,
+                 'apellidos'  => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
 
     /**
@@ -655,26 +987,43 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador22()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $equipo = Equipo::where('nombre', '20A')->get()->first();
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $equipos = Equipo::where('nombre', '20A')->get();
+        $datonuevo = $equipos[0];
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'id_equipo'        => $equipo->id,
+            '_method'        => 'PUT',
+            '_token'         => csrf_token(),
+            'nombres'        => $nombres,
+            'apellidos'      => $apellidos,
+            'id_equipo'      => $datonuevo->id,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'    => $nombres,
+                 'apellidos'  => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
+
 
     /**
      * Comprueba el funcionamiento para crear un jugador.
@@ -685,26 +1034,40 @@ class EditarJugadorTest extends TestCase
      * @return void
      */
     public function testEditarJugador23()
-    {        
-        $jugadores = Jugador::where('nombres', 'ADRIANO JOHNNY')->get()->first();
-        $equipo = 5000;
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $nombres = "ADRIANO JOHNNY";
+        $apellidos = "OYOLA SUAREZ";
+        $datonuevo = '99999999';
+        $registrosEliminados = Jugador::where('nombres', $nombres)
+                                      ->where('apellidos', $apellidos)
+                                      ->delete();
+        Session::start();
+        $this->visit(route('jugador.create'))
+            ->type($nombres, 'nombres')
+            ->type($apellidos, 'apellidos')
+            ->press('Guardar');
+        $jugadorCreado = Jugador::where('nombres', $nombres)
+                                ->where('apellidos', $apellidos)
+                                ->first();
         $parametros2 = [
-            '_method'          => 'PUT',
-            '_token'           => csrf_token(),
-            'id_equipo'        => $equipo,
+            '_method'        => 'PUT',
+            '_token'         => csrf_token(),
+            'nombres'        => $nombres,
+            'apellidos'      => $apellidos,
+            'id_equipo'      => $datonuevo,
         ];
 
-        $uri = "/jugador/".$jugadores->id;
+        $uri = "/jugador/".$jugadorCreado->id;
         $response = $this->call('POST', $uri, $parametros2);
-        //$this->assertEquals(302, $response->getStatusCode());
         $this->seeInDatabase(
                 'jugadors',
                 [
-                 'id' => $jugadores->id,
+                 'nombres'    => $nombres,
+                 'apellidos'  => $apellidos,
                 ]
-            );
-
-        //$this->assertRedirectedToRoute('jugador.index'); 
+            ); 
     }
-  
+
 }
