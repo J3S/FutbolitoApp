@@ -21,6 +21,7 @@
         <activity
             android:name=".TablaPosicionesActivity">
         </activity>
+        <activity android:name=".Datos"></activity>
     </application>
 
 </manifest>

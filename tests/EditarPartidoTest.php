@@ -18,6 +18,31 @@ class EditarPartidoTest extends TestCase
 	use DatabaseTransactions;
 
     /**
+     * Comprueba el funcionamiento de la vista para editar un partido.
+     *
+     * @return void
+     */
+    public function testEditarPartidoView(){
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $response = $this->call('GET', 'partido/1/edit');
+        $this->assertEquals(200, $response->status());
+    }
+
+    /**
+     * Comprueba el funcionamiento de la vista para editar un partido que no existe.
+     *
+     * @return void
+     */
+    public function testEditarPartidoNoExiste(){
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $partidoUltimoRegistro = Partido::orderBy('id', 'desc')->first();
+        $idUltimoRegistro = $partidoUltimoRegistro->id+1;
+        $this->visit('partido/' . $idUltimoRegistro . '/edit')->seePageIs(route('partido.index'));
+    }
+
+    /**
      * Comprueba el funcionamiento para editar un partido.
      * Se crea un partido con datos predeterminados.
      * Se edita ese partido recién creado modificándole los campos obligatorios
