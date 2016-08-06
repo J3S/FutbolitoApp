@@ -1,5 +1,6 @@
 package com.example.kevin.futbolitoapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_torneos = (Button)findViewById(R.id.btn_torneos);
         Button btn_categorias = (Button)findViewById(R.id.btn_categorias);
         Button btn_torneoequipos = (Button)findViewById(R.id.btn_torneoequipos);
+        Button btn_aniotorneo = (Button)findViewById(R.id.btn_aniotorneo);
 
         btn_jugadores.setOnClickListener(new View.OnClickListener(){
 
@@ -86,6 +88,26 @@ public class MainActivity extends AppCompatActivity {
                 new JSONTask().execute(base_url+"gettorneoequipos");
                 setContentView(R.layout.activity_datos);
                 jsonData = (TextView)findViewById(R.id.datos);
+            }
+        });
+
+        //Implementamos el evento click del botón
+        btn_aniotorneo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creamos el Intent
+                Intent intent =
+                        new Intent(MainActivity.this, TablaPosicionesActivity.class);
+
+                //Creamos la información a pasar entre actividades
+//                Bundle b = new Bundle();
+//                b.putString("NOMBRE", txtNombre.getText().toString());
+
+                //Añadimos la información al intent
+//                intent.putExtras(b);
+
+                //Iniciamos la nueva actividad
+                startActivity(intent);
             }
         });
     }

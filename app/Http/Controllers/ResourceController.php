@@ -39,13 +39,25 @@ class ResourceController extends Controller
     }
 
     public function getTorneos(){
-        $array_torneos = array();
-        $torneos = Torneo::where('estado', 1)->orderBy('anio', 'desc')->orderBy('id_categoria', 'desc')->get();
-        foreach ($torneos as $torneo) {
-            $categoria = Categoria::where('id', $torneo->id_categoria)->first();
-            array_push($array_torneos, array("anio" => $torneo->anio, "categoria" => $categoria->nombre));
+        $array_torneos_x_anio = array();
+        $categorias_torneo_anio = array();
+        $anio;
+        $torneos = Torneo::where('estado', 1)->orderBy('anio', 'desc')->orderBy('id_categoria', 'asc')->get();
+        $anio = $torneos[0]->anio;
+        foreach ($torneos as $torneo)  {
+            if ($anio === $torneo->anio) {
+                $categoria = Categoria::where('id', $torneo->id_categoria)->first();
+                array_push($categorias_torneo_anio, $categoria->nombre);
+            } else {
+                array_push($array_torneos_x_anio, array("anio" => $anio, "categorias" => $categorias_torneo_anio));
+                $anio = $torneo->anio;
+                $categorias_torneo_anio = array();
+                $categoria = Categoria::where('id', $torneo->id_categoria)->first();
+                array_push($categorias_torneo_anio, $categoria->nombre);
+            }
         }
-        return json_encode($array_torneos);
+        array_push($array_torneos_x_anio, array("anio" => $anio, "categorias" => $categorias_torneo_anio));
+        return json_encode($array_torneos_x_anio);
     }
 
     public function getTorneoEquipos(){
