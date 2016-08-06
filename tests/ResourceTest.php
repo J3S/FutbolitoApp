@@ -97,4 +97,9 @@ class ResourceTest extends TestCase
         $response = $this->call('GET', '/get_tablaposiciones/3');
         $this->assertResponseStatus(200);
     }
+
+    public function testGetTablasPosicionesAnio(){
+        $response = $this->call('GET', '/get_tablasposicionesanio/2016');
+        $this->assertResponseStatus(200);
+    }
 }

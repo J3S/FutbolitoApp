@@ -137,7 +137,8 @@ class ResourceController extends Controller
     }
 
     public function getTablaPosicionesTorneo($id){
-    	$torneo = Torneo::where('id', $id)->first();
+    	$torneo = Torneo::find($id);
+    	$categoria = Categoria::find($torneo->id_categoria);
     	$partidos = Partido::where('id_torneo', $torneo->id)->get();
     	$torneoEquipos = TorneoEquipo::where('id_torneo', $id)->get();
     	$equipos = Equipo::where('estado', 1)->get();
@@ -215,7 +216,17 @@ class ResourceController extends Controller
 		    $goldif[$key] = $row['GD'];
 		}
 		array_multisort($puntos, SORT_DESC, $goldif, SORT_DESC, $resultados);
+		$tabla_posiciones = ["categoria" => $categoria->nombre, "anio" => $torneo->anio, "resultados" => $resultados];
+		return json_encode($tabla_posiciones);
+	}
 
-		return json_encode($resultados);
+    public function getTablasPosicionesAnio($anio){
+    	$tablas_posiciones = [];
+    	$torneos = Torneo::where('estado', 1)->where('anio', $anio)->get();
+    	foreach($torneos as $torneo) {
+    		$tabla_posiciones = json_decode($this->getTablaPosicionesTorneo($torneo->id));
+			array_push($tablas_posiciones, $tabla_posiciones);
+    	}
+		return json_encode($tablas_posiciones);
 	}
 }
