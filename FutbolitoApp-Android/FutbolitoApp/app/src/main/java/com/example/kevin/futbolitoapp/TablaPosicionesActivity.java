@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +38,7 @@ public class TablaPosicionesActivity extends Activity {
     //Tarea Asincrona para llamar al WS de listado en segundo plano
     private class TareaWSListar extends AsyncTask<String, Integer, Boolean> {
 
-        private String[] torneos;
+        private String[] anios;
 
         protected Boolean doInBackground(String... params) {
 
@@ -64,14 +63,15 @@ public class TablaPosicionesActivity extends Activity {
                 }
 
                 JSONArray respJSON = new JSONArray(buffer.toString());
-                torneos = new String[respJSON.length()];
+                anios = new String[respJSON.length()];
 
                 for(int i=0; i<respJSON.length(); i++)
                 {
                     JSONObject obj = respJSON.getJSONObject(i);
                     int anioTorneo = obj.getInt("anio");
-                    int categoriaTorneo = obj.getInt("categoria");
-                    torneos[i] = "" + anioTorneo + "-" + categoriaTorneo;
+//                    String categoriaTorneo = obj.getString("categoria");
+//                    torneos[i] = "" + anioTorneo + "-" + categoriaTorneo;
+                    anios[i] = "" + anioTorneo;
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -105,7 +105,7 @@ public class TablaPosicionesActivity extends Activity {
                 //Rellenamos la lista con los torneos
                 ArrayAdapter<String> adaptador =
                         new ArrayAdapter<String>(TablaPosicionesActivity.this,
-                                android.R.layout.simple_list_item_1, torneos);
+                                android.R.layout.simple_list_item_1, anios);
 
                 lstTorneos.setAdapter(adaptador);
             }
