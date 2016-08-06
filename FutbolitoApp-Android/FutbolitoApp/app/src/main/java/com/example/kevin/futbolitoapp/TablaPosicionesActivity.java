@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +69,7 @@ public class TablaPosicionesActivity extends Activity {
                 {
                     JSONObject obj = respJSON.getJSONObject(i);
                     int anioTorneo = obj.getInt("anio");
-                    int categoriaTorneo = obj.getInt("categoria");
+                    String categoriaTorneo = obj.getString("categoria");
                     torneos[i] = "" + anioTorneo + "-" + categoriaTorneo;
                 }
             } catch (MalformedURLException e) {
