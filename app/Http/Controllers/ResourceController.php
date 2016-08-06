@@ -98,6 +98,26 @@ class ResourceController extends Controller
     	return $jugador;
     }
 
+    public function getAnioTorneos($anio){
+    	$anioTorneos = [];
+    	$torneos = Torneo::where('anio', $anio)->where('estado', 1)->orderBy('id_categoria', 'desc')->get();
+    	foreach ($torneos as $torneo){
+    		$categoria = Categoria::where('id', $torneo->id_categoria)->first();
+    		array_push($anioTorneos, ["anio" => $torneo->anio, "categoria" => $categoria->nombre]);
+    	}
+    	return json_encode($anioTorneos);
+    }
+
+    public function getAniosConTorneos(){
+    	$anios = [];
+    	$torneos = Torneo::distinct()->select('anio')->where('estado', 1)->groupBy('anio')
+    		->orderBy('anio', 'desc')->get();
+    	foreach ($torneos as $torneo){
+    		array_push($anios, ["anio" => $torneo->anio]);
+    	}
+    	return json_encode($anios);
+    }
+
     public function getPartidosJornada($torneo, $jornada){
     	$torneo = Torneo::find($torneo);
     	$partidos = Partido::where('id_torneo', $torneo->id)->where('jornada', $jornada)->get();

@@ -73,6 +73,16 @@ class ResourceTest extends TestCase
         $this->assertResponseStatus(200);
     }
 
+    public function testGetAnioTorneos(){
+    	$response = $this->call('GET', '/get_aniotorneos/2016');
+        $this->assertResponseStatus(200);
+    }
+
+	public function testGetAniosConTorneos(){
+    	$response = $this->call('GET', '/get_anioscontorneos');
+        $this->assertResponseStatus(200);
+    }
+
     public function testGetTablaPosiciones1(){
         $response = $this->call('GET', '/get_tablaposiciones/1');
         $this->assertResponseStatus(200);

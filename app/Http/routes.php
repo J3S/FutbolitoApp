@@ -100,5 +100,7 @@ Route::get('get_torneoequipo/{id}', 'ResourceController@getTorneoEquipo');
 Route::get('get_torneoequipos', 'ResourceController@getTorneoEquipos');
 Route::get('get_categoria/{id}', 'ResourceController@getCategoria');
 Route::get('get_categorias', 'ResourceController@getCategorias');
-Route::get('get_tablaposiciones/{id}', 'ResourceController@getTablaPosicionesTorneo');
+Route::get('get_aniotorneos/{anio}', 'ResourceController@getAnioTorneos');
+Route::get('get_anioscontorneos', 'ResourceController@getAniosConTorneos');
 Route::get('get_jornada/{torneo}/{jornada}', 'ResourceController@getPartidosJornada');
+Route::get('get_tablaposiciones/{id}', 'ResourceController@getTablaPosicionesTorneo');
