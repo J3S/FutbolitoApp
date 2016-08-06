@@ -111,7 +111,7 @@ class EditarEquipoTest extends TestCase
             ]
         );
         $test->seeJson(['mensaje' => "actualizado con exito"]);
-        $test->seePageIs('/equipo/'.$idEquipoCreated);
+        $test->seePageIs('equipo/'.$idEquipoCreated);
 
     }//end testEditarEquipo1()
 

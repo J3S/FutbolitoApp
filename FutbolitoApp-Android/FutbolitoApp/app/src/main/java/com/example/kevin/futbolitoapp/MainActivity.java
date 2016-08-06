@@ -20,6 +20,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     private TextView jsonData;
+    private String base_url = "http://192.168.1.116:8000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +28,64 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btn_jugadores = (Button)findViewById(R.id.btn_jugadores);
-
-        jsonData = (TextView)findViewById(R.id.jsonData);
+        Button btn_equipos = (Button)findViewById(R.id.btn_equipos);
+        Button btn_partidos = (Button)findViewById(R.id.btn_partidos);
+        Button btn_torneos = (Button)findViewById(R.id.btn_torneos);
+        Button btn_categorias = (Button)findViewById(R.id.btn_categorias);
+        Button btn_torneoequipos = (Button)findViewById(R.id.btn_torneoequipos);
 
         btn_jugadores.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                new JSONTask().execute("http://futbolitoapp.herokuapp.com/jugadores/Master");
+                new JSONTask().execute(base_url+"getjugadores");
+                setContentView(R.layout.activity_datos);
+                jsonData = (TextView)findViewById(R.id.datos);
+            }
+        });
+        btn_equipos.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                new JSONTask().execute(base_url+"getequipos");
+                setContentView(R.layout.activity_datos);
+                jsonData = (TextView)findViewById(R.id.datos);
+            }
+        });
+        btn_torneos.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                new JSONTask().execute(base_url+"gettorneos");
+                setContentView(R.layout.activity_datos);
+                jsonData = (TextView)findViewById(R.id.datos);
+            }
+        });
+        btn_partidos.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                new JSONTask().execute(base_url+"getpartidos");
+                setContentView(R.layout.activity_datos);
+                jsonData = (TextView)findViewById(R.id.datos);
+            }
+        });
+        btn_categorias.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                new JSONTask().execute(base_url+"getcategorias");
+                setContentView(R.layout.activity_datos);
+                jsonData = (TextView)findViewById(R.id.datos);
+            }
+        });
+        btn_torneoequipos.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                new JSONTask().execute(base_url+"gettorneoequipos");
+                setContentView(R.layout.activity_datos);
+                jsonData = (TextView)findViewById(R.id.datos);
             }
         });
     }

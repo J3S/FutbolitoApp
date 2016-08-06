@@ -96,7 +96,6 @@ class DesactivarPartidoTest extends TestCase
         $this->assertEquals(302, $response->getStatusCode());
     }
 
-
     /**
      * Comprueba el funcionamiento para desactivar un partido.
      * Se trata de desactivar a un partido que no existe (prueba realizada por medio
@@ -114,8 +113,8 @@ class DesactivarPartidoTest extends TestCase
         Session::start();
         $partidoUltimoRegistro = Partido::orderBy('id', 'desc')->first();
         $idPartidoNoExistente = $partidoUltimoRegistro->id+1;
-        
-        $uri = "/torneo/".$idPartidoNoExistente;
+
+        $uri = "/partido/".$idPartidoNoExistente;
         $response = $this->call('DELETE', $uri, ['_token' => csrf_token()]);
         $this->assertEquals(302, $response->getStatusCode());
     }

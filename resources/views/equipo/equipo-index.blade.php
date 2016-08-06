@@ -11,8 +11,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <style>
 .alert {
-    z-index: 99; 
-    position: absolute; 
+    z-index: 99;
+    position: absolute;
     left: 65%;
 }
 </style>
@@ -50,7 +50,7 @@
                         </select>
                     </div>
                     <div class="col-xs-12" >
-	                    <button type="submit" class="btn btn-success">Buscar</button>
+	                    <button type="submit" class="btn btn-success" name="btn-search">Buscar</button>
 	                </div>
 				</div>
 			</form>
@@ -109,7 +109,7 @@
                     console.log($form);
                     $form.submit();
             });
-        });        
+        });
         $('.dataTable').DataTable({
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros",
