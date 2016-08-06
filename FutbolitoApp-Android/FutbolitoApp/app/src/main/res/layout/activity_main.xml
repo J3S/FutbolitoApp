@@ -17,18 +17,6 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jugadores"
-        android:id="@+id/btn_jugadores"
-        android:layout_below="@+id/jsonData"
-        android:layout_marginTop="126dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
         android:text="Torneos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,14 +61,43 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Año Torneo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jugadores"
+        android:id="@+id/btn_jugadores"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Jornadas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_torneoequipos"
-        android:id="@+id/btn_aniotorneo"
+        android:id="@+id/btn_jornada"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Tabla Posiciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_jornada"
+        android:id="@+id/btn_tablaposiciones"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+            <Button
+        android:text="Año Torneo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_tablaposiciones"
+        android:id="@+id/btn_aniotorneo" />
 
 </RelativeLayout>
