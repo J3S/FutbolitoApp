@@ -38,19 +38,39 @@ class ResourceController extends Controller
         return $categorias;
     }
 
+    public function getCategoria($id){
+    	$categoria = Categoria::find($id)->toJson();
+    	return $categoria;
+    }
+
     public function getTorneos(){
     	$torneos = Torneo::where('estado', 1)->get()->toJson();
         return $torneos;
     }
 
+    public function getTorneo($id){
+    	$torneo = Torneo::find($id)->toJson();
+    	return $torneo;
+    }
+
     public function getTorneoEquipos(){
     	$torneoEquipos = TorneoEquipo::all()->toJson();
         return $torneoEquipos;
-    }    
+    }
+
+    public function getTorneoEquipo($id){
+    	$torneoEquipo = TorneoEquipo::find($id)->toJson();
+    	return $torneoEquipo;
+    } 
 
     public function getEquipos(){
         $equipos = Equipo::where('estado', 1)->get()->toJson();
         return $equipos;
+    }
+
+    public function getEquipo($id){
+		$equipo = Equipo::find($id)->toJson();
+    	return $equipo;
     }
 
     public function getPartidos(){
@@ -58,9 +78,25 @@ class ResourceController extends Controller
         return $partidos;
     }
 
+    public function getPartido($id){
+    	$partido = Partido::find($id)->toJson();
+    	return $partido;
+    }
+
     public function getJugadores(){
         $jugadores = Jugador::where('estado', 1)->get()->toJson();
         return $jugadores;
+    }
+
+    public function getJugador($id){
+    	$jugador = Jugador::find($id)->toJson();
+    	return $jugador;
+    }
+
+    public function getPartidosJornada($torneo, $jornada){
+    	$torneo = Torneo::find($torneo);
+    	$partidos = Partido::where('id_torneo', $torneo->id)->where('jornada', $jornada)->get();
+    	return $partidos->toJson();
     }
 
     public function getTablaPosicionesTorneo($id){

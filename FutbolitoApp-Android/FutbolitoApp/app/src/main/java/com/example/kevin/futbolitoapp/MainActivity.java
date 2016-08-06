@@ -20,7 +20,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     private TextView jsonData;
-    private String base_url = "http://192.168.1.116:8000/";
+    private String base_url = "http://192.168.1.129:8000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,14 @@ public class MainActivity extends AppCompatActivity {
         Button btn_torneos = (Button)findViewById(R.id.btn_torneos);
         Button btn_categorias = (Button)findViewById(R.id.btn_categorias);
         Button btn_torneoequipos = (Button)findViewById(R.id.btn_torneoequipos);
+        Button btn_jornada = (Button)findViewById(R.id.btn_jornada);
+        Button btn_tablaposiciones = (Button)findViewById(R.id.btn_tablaposiciones);
 
         btn_jugadores.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                new JSONTask().execute(base_url+"getjugadores");
+                new JSONTask().execute(base_url+"get_jugadores");
                 setContentView(R.layout.activity_datos);
                 jsonData = (TextView)findViewById(R.id.datos);
             }
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                new JSONTask().execute(base_url+"getequipos");
+                new JSONTask().execute(base_url+"get_equipos");
                 setContentView(R.layout.activity_datos);
                 jsonData = (TextView)findViewById(R.id.datos);
             }
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                new JSONTask().execute(base_url+"gettorneos");
+                new JSONTask().execute(base_url+"get_torneos");
                 setContentView(R.layout.activity_datos);
                 jsonData = (TextView)findViewById(R.id.datos);
             }
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                new JSONTask().execute(base_url+"getpartidos");
+                new JSONTask().execute(base_url+"get_partidos");
                 setContentView(R.layout.activity_datos);
                 jsonData = (TextView)findViewById(R.id.datos);
             }
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                new JSONTask().execute(base_url+"getcategorias");
+                new JSONTask().execute(base_url+"get_categorias");
                 setContentView(R.layout.activity_datos);
                 jsonData = (TextView)findViewById(R.id.datos);
             }
@@ -83,7 +85,25 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                new JSONTask().execute(base_url+"gettorneoequipos");
+                new JSONTask().execute(base_url+"get_torneoequipos");
+                setContentView(R.layout.activity_datos);
+                jsonData = (TextView)findViewById(R.id.datos);
+            }
+        });
+        btn_jornada.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                new JSONTask().execute(base_url+"get_jornada/1/1");
+                setContentView(R.layout.activity_datos);
+                jsonData = (TextView)findViewById(R.id.datos);
+            }
+        });
+        btn_tablaposiciones.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                new JSONTask().execute(base_url+"get_tablaposiciones/1");
                 setContentView(R.layout.activity_datos);
                 jsonData = (TextView)findViewById(R.id.datos);
             }

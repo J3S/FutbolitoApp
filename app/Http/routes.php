@@ -88,10 +88,17 @@ Route::get('tabla_posiciones', function() {
     return response()->json(['name' => 'Abigail', 'state' => 'CA']);
 });
 
+Route::get('get_jugador/{id}', 'ResourceController@getJugador');
 Route::get('get_jugadores', 'ResourceController@getJugadores');
+Route::get('get_equipo/{id}', 'ResourceController@getEquipo');
 Route::get('get_equipos', 'ResourceController@getEquipos');
+Route::get('get_torneo/{id}', 'ResourceController@getTorneo');
 Route::get('get_torneos', 'ResourceController@getTorneos');
+Route::get('get_partido/{id}', 'ResourceController@getPartido');
 Route::get('get_partidos', 'ResourceController@getPartidos');
-Route::get('get_categorias', 'ResourceController@getCategorias');
+Route::get('get_torneoequipo/{id}', 'ResourceController@getTorneoEquipo');
 Route::get('get_torneoequipos', 'ResourceController@getTorneoEquipos');
+Route::get('get_categoria/{id}', 'ResourceController@getCategoria');
+Route::get('get_categorias', 'ResourceController@getCategorias');
 Route::get('get_tablaposiciones/{id}', 'ResourceController@getTablaPosicionesTorneo');
+Route::get('get_jornada/{torneo}/{jornada}', 'ResourceController@getPartidosJornada');
