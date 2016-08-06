@@ -44,8 +44,13 @@ class ResourceController extends Controller
     }
 
     public function getTorneos(){
-    	$torneos = Torneo::where('estado', 1)->get()->toJson();
-        return $torneos;
+        $array_torneos = array();
+        $torneos = Torneo::where('estado', 1)->orderBy('anio', 'desc')->orderBy('id_categoria', 'desc')->get();
+        foreach ($torneos as $torneo) {
+            $categoria = Categoria::where('id', $torneo->id_categoria)->first();
+            array_push($array_torneos, array("anio" => $torneo->anio, "categoria" => $categoria->nombre));
+        }
+        return json_encode($array_torneos);
     }
 
     public function getTorneo($id){
