@@ -4,5 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="mostrar_torneo">Mostrar Torneo</string>
-    <string name="seleccionar_torneo">Seleccione un torneo</string>
+    <string name="tabla_de_posiciones">Tabla de posiciones</string>
+    <string name="buscar_torneos">Buscar Torneos</string>
 </resources>
