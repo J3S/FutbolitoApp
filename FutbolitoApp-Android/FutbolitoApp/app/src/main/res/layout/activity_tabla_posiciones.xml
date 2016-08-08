@@ -1,21 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/torneos">
+    android:layout_height="match_parent" >
 
-    <TextView android:id="@+id/lblSeleccionarTorneo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/seleccionar_torneo"
-        android:textSize="12pt"
-        android:textStyle="bold"
-        android:layout_marginTop="25px"/>
+    <TableRow>
+        <TextView android:id="@+id/lblAnio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Año"
+            android:textSize="60px"
+            android:textStyle="bold"
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="20px"/>
 
-    <ListView android:id="@+id/lstTorneo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/lblSeleccionarTorneo"/>
+        <Spinner android:id="@+id/cmbAnio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="20px"/>
 
-</RelativeLayout>
+        <TextView android:id="@+id/lblCategoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="60px"
+            android:textStyle="bold"
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="20px"
+            android:text="Categoría"/>
+
+        <Spinner android:id="@+id/cmbCategoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="20px"/>
+
+    </TableRow>
+
+    <TableRow>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_span="4">
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:stretchColumns="0,1"
+                android:id="@+id/tablaposiciones" >
+            </TableLayout>
+        </ScrollView>
+
+    </TableRow>
+
+</TableLayout>

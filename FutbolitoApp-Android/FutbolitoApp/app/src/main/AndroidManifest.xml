@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TablaPosicionesActivity">
+            android:name=".TablaPosicionesActivity"
+            android:label="Tabla de posiciones">
         </activity>
         <activity android:name=".Datos"></activity>
     </application>
