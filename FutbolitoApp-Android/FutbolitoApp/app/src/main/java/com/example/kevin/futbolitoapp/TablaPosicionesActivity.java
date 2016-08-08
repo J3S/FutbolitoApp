@@ -1,5 +1,7 @@
 package com.example.kevin.futbolitoapp;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.os.AsyncTask;
@@ -7,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.TableRow.LayoutParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +34,10 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     private Spinner cmbAnio;
     private Spinner cmbCategoria;
     private String[][] categorias;
+    private String[][][] tablasPosiciones;
+
+    private TableLayout tablaP;
+    TableRow tr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +46,9 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
         cmbAnio = (Spinner)findViewById(R.id.cmbAnio);
         cmbCategoria = (Spinner)findViewById(R.id.cmbCategoria);
+        tablaP = (TableLayout)findViewById(R.id.tablaposiciones);
 
         new TareaWSListarTorneos().execute(torneos_url);
-        new TareaWSListarTablaPosiciones().execute(tabla_posiciones_url + cmbAnio.getSelectedItem().toString());
 
         cmbAnio.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -48,6 +58,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                                 new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, categorias[position]);
                         adaptadorCmbCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         cmbCategoria.setAdapter(adaptadorCmbCategoria);
+                        tablaP.removeAllViews();
+                        new TareaWSListarTablaPosiciones().execute(tabla_posiciones_url + cmbAnio.getSelectedItem().toString());
                     }
 
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -55,6 +67,146 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    /** Agregar los headers a la tabla **/
+    public void addHeaders(int index) {
+
+        /** Creando un TableRow dinámicamente **/
+        tr = new TableRow(this);
+        tr.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+
+        /** Creando los TextViews para agregarlo al TableRow **/
+        TextView cat = new TextView(this);
+        cat.setText(categorias[0][index]);
+        cat.setTextColor(Color.RED);
+        cat.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        cat.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        cat.setPadding(5,5,0,0);
+        tr.addView(cat);
+
+        tablaP.addView(tr, new TableLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+
+        /** Creando un TableRow dinámicamente **/
+        tr = new TableRow(this);
+        tr.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+
+        /** Creando los TextViews para agregarlo al TableRow **/
+        TextView equipo = new TextView(this);
+        equipo.setText("Equipo");
+        equipo.setTextColor(Color.GRAY);
+        equipo.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        equipo.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        equipo.setPadding(5,5,0,0);
+        tr.addView(equipo);
+
+        TextView pj = new TextView(this);
+        pj.setText("PJ");
+        pj.setTextColor(Color.GRAY);
+        pj.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        pj.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        pj.setPadding(5,5,0,0);
+        tr.addView(pj);
+
+        TextView pg = new TextView(this);
+        pg.setText("PG");
+        pg.setTextColor(Color.GRAY);
+        pg.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        pg.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        pg.setPadding(5,5,0,0);
+        tr.addView(pg);
+
+        TextView pe = new TextView(this);
+        pe.setText("PE");
+        pe.setTextColor(Color.GRAY);
+        pe.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        pe.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        pe.setPadding(5,5,0,0);
+        tr.addView(pe);
+
+        TextView pp = new TextView(this);
+        pp.setText("PP");
+        pp.setTextColor(Color.GRAY);
+        pp.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        pp.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        pp.setPadding(5,5,0,0);
+        tr.addView(pp);
+
+        TextView gf = new TextView(this);
+        gf.setText("GF");
+        gf.setTextColor(Color.GRAY);
+        gf.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        gf.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        gf.setPadding(5,5,0,0);
+        tr.addView(gf);
+
+        TextView gc = new TextView(this);
+        gc.setText("GC");
+        gc.setTextColor(Color.GRAY);
+        gc.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        gc.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        gc.setPadding(5,5,0,0);
+        tr.addView(gc);
+
+        TextView gd = new TextView(this);
+        gd.setText("GD");
+        gd.setTextColor(Color.GRAY);
+        gd.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        gd.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        gd.setPadding(5,5,0,0);
+        tr.addView(gd);
+
+        TextView pts = new TextView(this);
+        pts.setText("Puntos");
+        pts.setTextColor(Color.GRAY);
+        pts.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        pts.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
+        pts.setPadding(5,5,0,0);
+        tr.addView(pts);
+
+        tablaP.addView(tr, new TableLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        ));
     }
 
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
@@ -139,14 +291,14 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                         new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, categorias[0]);
                 adaptadorCmbCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 cmbCategoria.setAdapter(adaptadorCmbCategoria);
+
+
             }
         }
     }
 
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
     private class TareaWSListarTablaPosiciones extends AsyncTask<String, Integer, Boolean> {
-
-        private String[] tablaPosicion;
 
         protected Boolean doInBackground(String... params) {
 
@@ -171,20 +323,34 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                 }
 
                 JSONArray respJSON = new JSONArray(buffer.toString());
-                tablaPosicion = new String[respJSON.length()];
-//                categorias = new String[categoriaTorneo.length][];
+                tablasPosiciones = new String[respJSON.length()][][];
                 for(int i=0; i<respJSON.length(); i++)
                 {
                     JSONObject obj = respJSON.getJSONObject(i);
-                    String categoriaTorneo = obj.getString("categoria");
-                    JSONArray categoriasTorneoAnio = obj.getJSONArray("categorias");
-                    categorias[i] = new String[categoriasTorneoAnio.length() + 1];
-                    anios[i] = "" + anioTorneo;
+                    JSONArray resultados = obj.getJSONArray("resultados");
+                    tablasPosiciones[i] = new String[resultados.length()][];
 
-                    categorias[i][0] = "Todas";
-
-                    for(int j=0; j<categoriasTorneoAnio.length(); j++) {
-                        categorias[i][j+1] = categoriasTorneoAnio.getString(j);
+                    for(int j=0; j<resultados.length(); j++) {
+                        JSONObject objInfo = resultados.getJSONObject(j);
+                        String nombreEquipo = objInfo.getString("equipo");
+                        String partidosJugados = objInfo.getString("PJ");
+                        String partidosGanados = objInfo.getString("PG");
+                        String partidosEmpatados = objInfo.getString("PE");
+                        String partidosPerdidos = objInfo.getString("PP");
+                        String golesFavor = objInfo.getString("GF");
+                        String golesContra = objInfo.getString("GC");
+                        String golesDiferencia = objInfo.getString("GD");
+                        String puntos = objInfo.getString("PTS");
+                        tablasPosiciones[i][j] = new String[objInfo.length()];
+                        tablasPosiciones[i][j][0] = nombreEquipo;
+                        tablasPosiciones[i][j][1] = partidosJugados;
+                        tablasPosiciones[i][j][2] = partidosGanados;
+                        tablasPosiciones[i][j][3] = partidosEmpatados;
+                        tablasPosiciones[i][j][4] = partidosPerdidos;
+                        tablasPosiciones[i][j][5] = golesFavor;
+                        tablasPosiciones[i][j][6] = golesContra;
+                        tablasPosiciones[i][j][7] = golesDiferencia;
+                        tablasPosiciones[i][j][8] = puntos;
                     }
                 }
             } catch (MalformedURLException e) {
@@ -216,16 +382,129 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-                ArrayAdapter<String> adaptadorCmbAnio =
-                        new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, anios);
-                adaptadorCmbAnio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                cmbAnio.setAdapter(adaptadorCmbAnio);
+                for (int i=1; i<categorias[0].length;i++) {
+                    addHeaders(i);
+                    addData(i-1);
+                }
 
-                ArrayAdapter<String> adaptadorCmbCategoria =
-                        new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, categorias[0]);
-                adaptadorCmbCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                cmbCategoria.setAdapter(adaptadorCmbCategoria);
             }
+        }
+    }
+
+    public void addData(int index) {
+        int limite = tablasPosiciones[index].length;
+        for (int i=0; i<limite; i++) {
+            /** Creando un TableRow dinámicamente **/
+            tr = new TableRow(this);
+            tr.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+
+            /** Creando los TextViews para agregarlo al TableRow **/
+            TextView equipo = new TextView(this);
+            equipo.setText(tablasPosiciones[index][i][0]);
+            equipo.setTextColor(Color.BLUE);
+            equipo.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            equipo.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            equipo.setPadding(5,5,0,0);
+            tr.addView(equipo);
+
+            TextView pj = new TextView(this);
+            pj.setText(tablasPosiciones[index][i][1]);
+            pj.setTextColor(Color.BLUE);
+            pj.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            pj.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            pj.setPadding(5,5,0,0);
+            tr.addView(pj);
+
+            TextView pg = new TextView(this);
+            pg.setText(tablasPosiciones[index][i][2]);
+            pg.setTextColor(Color.BLUE);
+            pg.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            pg.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            pg.setPadding(5,5,0,0);
+            tr.addView(pg);
+
+            TextView pe = new TextView(this);
+            pe.setText(tablasPosiciones[index][i][3]);
+            pe.setTextColor(Color.BLUE);
+            pe.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            pe.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            pe.setPadding(5,5,0,0);
+            tr.addView(pe);
+
+            TextView pp = new TextView(this);
+            pp.setText(tablasPosiciones[index][i][4]);
+            pp.setTextColor(Color.BLUE);
+            pp.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            pp.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            pp.setPadding(5,5,0,0);
+            tr.addView(pp);
+
+            TextView gf = new TextView(this);
+            gf.setText(tablasPosiciones[index][i][5]);
+            gf.setTextColor(Color.BLUE);
+            gf.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            gf.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            gf.setPadding(5,5,0,0);
+            tr.addView(gf);
+
+            TextView gc = new TextView(this);
+            gc.setText(tablasPosiciones[index][i][6]);
+            gc.setTextColor(Color.BLUE);
+            gc.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            gc.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            gc.setPadding(5,5,0,0);
+            tr.addView(gc);
+
+            TextView gd = new TextView(this);
+            gd.setText(tablasPosiciones[index][i][7]);
+            gd.setTextColor(Color.BLUE);
+            gd.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            gd.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            gd.setPadding(5,5,0,0);
+            tr.addView(gd);
+
+            TextView pts = new TextView(this);
+            pts.setText(tablasPosiciones[index][i][8]);
+            pts.setTextColor(Color.BLUE);
+            pts.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            pts.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
+            pts.setPadding(5,5,0,0);
+            tr.addView(pts);
+
+            tablaP.addView(tr, new TableLayout.LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+            ));
         }
     }
 }

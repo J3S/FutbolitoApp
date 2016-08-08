@@ -19,13 +19,6 @@
             android:layout_marginTop="20px"
             android:layout_marginLeft="20px"/>
 
-        <!--<Button android:id="@+id/btnBuscarTablaPosiciones"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/buscar_torneos"-->
-            <!--android:layout_marginTop="20px"-->
-            <!--android:layout_marginLeft="20px"/>-->
-
         <TextView android:id="@+id/lblCategoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,18 +38,11 @@
 
     <TableRow>
 
-        <TextView android:id="@+id/lblResultadoBusqueda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Se encontraron los siguientes torneos"
-            android:layout_marginTop="20px"
-            android:layout_marginLeft="20px"
-            android:layout_span="4"/>
-
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:layout_span="4">
             <TableLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -66,24 +52,5 @@
         </ScrollView>
 
     </TableRow>
-
-    <!--<TableRow>-->
-
-        <!--<TextView android:id="@+id/lblCategoria"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="60px"-->
-            <!--android:textStyle="bold"-->
-            <!--android:layout_marginTop="20px"-->
-            <!--android:layout_marginLeft="20px"-->
-            <!--android:text="Categoría"/>-->
-
-        <!--<Spinner android:id="@+id/cmbCategoria"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="20px"-->
-            <!--android:layout_marginLeft="20px"/>-->
-    <!--</TableRow>-->
-
 
 </TableLayout>
