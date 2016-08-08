@@ -58,8 +58,6 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                                 new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, categorias[position]);
                         adaptadorCmbCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         cmbCategoria.setAdapter(adaptadorCmbCategoria);
-                        tablaP.removeAllViews();
-                        new TareaWSListarTablaPosiciones().execute(tabla_posiciones_url + cmbAnio.getSelectedItem().toString());
                     }
 
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -67,6 +65,30 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        cmbCategoria.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> parent,
+                                               android.view.View v, int position, long id) {
+                        int numelem = cmbCategoria.getAdapter().getCount();
+                        if (v != null) {
+                            if (cmbCategoria.getSelectedItemPosition() == 0) {
+                                tablaP.removeAllViews();
+                                new TareaWSListarTablaPosiciones().execute(tabla_posiciones_url + cmbAnio.getSelectedItem().toString());
+                            } else {
+                                tablaP.removeAllViews();
+                                addHeaders(cmbCategoria.getSelectedItemPosition());
+                                addData(cmbCategoria.getSelectedItemPosition()-1);
+                            }
+                        }
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                }
+        );
+
     }
 
     /** Agregar los headers a la tabla **/
@@ -291,8 +313,6 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                         new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, categorias[0]);
                 adaptadorCmbCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 cmbCategoria.setAdapter(adaptadorCmbCategoria);
-
-
             }
         }
     }
