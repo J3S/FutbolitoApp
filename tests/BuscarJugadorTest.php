@@ -97,26 +97,14 @@ class BuscarJugadorTest extends TestCase
             ->seePageIs('/selectJugador');
     }
 
-   /**
-     * Comprueba el funcionamiento de buscar un partido dando filtros vacíos
-     * 
-     * @return void
-     */
-    public function testBuscarJugador6()
-    {
-        $user = new Usuario(['user' => 'admin']);
-        $this->be($user);
-        $this->visit(route('jugador.index'))       
-            ->press('btnFormBuscarJugador')
-            ->seePageIs('/selectJugador');
-    }
+
 
    /**
      * Comprueba el funcionamiento de buscar un partido dando filtros de nombres y apellidos existentes
      * 
      * @return void
      */
-    public function testBuscarJugador7()
+    public function testBuscarJugador6()
     {
         $user = new Usuario(['user' => 'admin']);
         $this->be($user);
@@ -134,7 +122,7 @@ class BuscarJugadorTest extends TestCase
      * 
      * @return void
      */
-    public function testBuscarJugador8()
+    public function testBuscarJugador7()
     {
         $user = new Usuario(['user' => 'admin']);
         $this->be($user);
@@ -152,7 +140,7 @@ class BuscarJugadorTest extends TestCase
      * 
      * @return void
      */
-    public function testBuscarJugador9()
+    public function testBuscarJugador8()
     {
         $user = new Usuario(['user' => 'admin']);
         $this->be($user);
