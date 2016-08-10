@@ -18,4 +18,12 @@ class Torneo extends Model
         }
         Torneo::where('anio', $anio)->delete();
     }
+
+    public static function getTorneoByCategoriaAndAnio($categoria, $anio) {
+        return Torneo::where('id_categoria', Categoria::getId($categoria->nombre))
+                            ->where('anio', $anio)
+                            ->where('estado', 1)
+                            ->first();
+    } 
 }
+

@@ -58,7 +58,7 @@ class TorneoController extends Controller
         */
 
         $anioServer           = date('Y');
-        $categorias           = Categoria::all();
+        $categorias           = Categoria::getAll();
         $torneosExistentes    = [];
         $infoTorneo           = [];
         $contadorInexistentes = 0;
@@ -72,10 +72,7 @@ class TorneoController extends Controller
         */
 
         foreach ($categorias as $categoria) {
-            $torneo = Torneo::where('id_categoria', $categoria->id)
-                            ->where('anio', $anioServer)
-                            ->where('estado', 1)
-                            ->first();
+            $torneo = Torneo::getTorneoByCategoriaAndAnio($categoria, $anioServer);
             if (count($torneo) === 0) {
                 ++$contadorInexistentes;
                 $infoTorneo = [
@@ -116,26 +113,9 @@ class TorneoController extends Controller
      */
     public function create()
     {
-        /*
-            * Variable categorías - Contiene todas las categorías que están
-            * guardadas en la base.
-            * Variable equiposxcategorias - Contiene a los equipos registrados
-            * divididos por categorías.
-        */
-
-        $categorias         = Categoria::all();
-        $equiposxcategorias = [];
-
-        // División de los equipos por categorías.
-        foreach ($categorias as $categoria) {
-            $equipos = Equipo::where('categoria', $categoria->nombre)
-                             ->get();
-            $equiposxcategorias[$categoria->nombre] = $equipos;
-        }
-
         // Retorno la vista con todas las categorías disponibles.
-        return view('torneo.create')->with('categorias', $categorias)
-                              ->with('equiposxcategorias', $equiposxcategorias);
+        return view('torneo.create')->with('categorias', Categoria::getAll())
+                              ->with('equiposxcategorias', Equipo::getEquipoDivididoxCategorias());
 
     }//end create()
 
@@ -272,23 +252,6 @@ class TorneoController extends Controller
     public function edit($id)
     {
         /*
-            * Variable categorías - Contiene todas las categorías que están
-            * guardadas en la base.
-            * Variable equiposxcategorias - Contiene a los equipos registrados
-            * divididos por categorías.
-        */
-
-        $categorias         = Categoria::all();
-        $equiposxcategorias = [];
-
-        // División de los equipos por categorías.
-        foreach ($categorias as $categoria) {
-            $equipos = Equipo::where('categoria', $categoria->nombre)
-                             ->get();
-            $equiposxcategorias[$categoria->nombre] = $equipos;
-        }
-
-        /*
             * Variable torneo - Contiene el torneo que se desea modificar.
             * Variable torneoEquipos - Contiene todos los registros de la tabla
             * torneo_equipos que tienen id_torneo = $id.
@@ -321,8 +284,8 @@ class TorneoController extends Controller
         */
 
         return view('torneo.edit')->with('torneo', $torneo)
-                                  ->with('equiposxcategorias', $equiposxcategorias)
-                                  ->with('categorias', $categorias)
+                                  ->with('equiposxcategorias', Equipo::getEquipoDivididoxCategorias())
+                                  ->with('categorias', Categoria::getAll())
                                   ->with('equiposAgregados', $equiposAgregados);
 
     }//end edit()

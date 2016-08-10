@@ -24,31 +24,6 @@ Route::get('login', ['as' => 'login', function () {
 Route::post('login', 'Auth\AuthController@postLogin');
 Route::get('logout', 'Auth\AuthController@getLogout');
 
-// Route::get('jugador/crear', function () {
-//     return view('jugadorc');
-// });
-// Route::get('jugador/editar', function () {
-//     return view('jugadore');
-// });
-// Route::get('jugador/desactivar', function () {
-//     return view('jugadord');
-// });
-
-// Route::get('equipo/crear', function () {
-//     return view('equipoc');
-// });
-// Route::get('equipo/editar', function () {
-//     return view('equipoe');
-// });
-// Route::get('equipo/desactivar', function () {
-//     return view('equipod');
-// });
-//
-// Route::get('torneo', function () {
-//     return view('torneo');
-// });
-
-
 //-------------------Branny Rutas-----------------------
 //rutas RESTfull para jugador, ejecutar (php artisan route:list)
 Route::resource('equipo', 'EquipoController');
@@ -105,3 +80,5 @@ Route::get('get_anioscontorneos', 'ResourceController@getAniosConTorneos');
 Route::get('get_jornada/{torneo}/{jornada}', 'ResourceController@getPartidosJornada');
 Route::get('get_tablaposiciones/{id}', 'ResourceController@getTablaPosicionesTorneo');
 Route::get('get_tablasposicionesanio/{anio}', 'ResourceController@getTablasPosicionesAnio');
+Route::get('get_partidostorneo/{id}', 'ResourceController@getPartidosTorneo');
+Route::get('get_jugadores_equipo/{id}', 'ResourceController@getJugadoresEquipo');

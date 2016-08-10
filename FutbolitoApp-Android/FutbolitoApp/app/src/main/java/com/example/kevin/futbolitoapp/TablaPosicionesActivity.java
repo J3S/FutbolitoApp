@@ -70,7 +70,6 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent,
                                                android.view.View v, int position, long id) {
-                        int numelem = cmbCategoria.getAdapter().getCount();
                         if (v != null) {
                             if (cmbCategoria.getSelectedItemPosition() == 0) {
                                 tablaP.removeAllViews();
@@ -411,6 +410,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         }
     }
 
+    /** Agregar los datos a la tabla **/
     public void addData(int index) {
         int limite = tablasPosiciones[index].length;
         for (int i=0; i<limite; i++) {

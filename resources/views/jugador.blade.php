@@ -79,7 +79,7 @@
                         </select>
                     </div>
                     <div class="col-xs-12" >
-	                    <button type="submit" class="btn btn-success">Buscar</button>
+	                    <button id="btnFormBuscarJugador" name="btnFormBuscarJugador" type="submit" class="btn btn-success">Buscar</button>
 	                </div>
 				</div>
 			</form>
