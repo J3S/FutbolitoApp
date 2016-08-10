@@ -229,4 +229,10 @@ class ResourceController extends Controller
     	}
 		return json_encode($tablas_posiciones);
 	}
+
+    public function getPartidosTorneo($id){
+        $torneo = Torneo::find($id);
+        $partidos = Partido::where('id_torneo', $torneo->id)->get();
+        return $partidos->toJson();
+    }
 }
