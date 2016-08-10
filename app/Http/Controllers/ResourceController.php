@@ -235,4 +235,19 @@ class ResourceController extends Controller
         $partidos = Partido::where('id_torneo', $torneo->id)->get();
         return $partidos->toJson();
     }
+
+    public function getJugadoresEquipo ($id_equipo) {
+        $jugadoresEquipo = [];
+        $jugadores = Jugador::getJugadoresxEquipo($id_equipo);
+        foreach ($jugadores as $jugador) {
+            array_push($jugadoresEquipo, array(
+                'id' => $jugador->id,
+                'nombre' => $jugador->nombres,
+                'apellido' => $jugador->apellidos,
+                'rol' => $jugador->rol,
+                'camiseta' => $jugador->num_camiseta
+                ));
+        }
+        return json_encode($jugadoresEquipo);
+    }
 }
