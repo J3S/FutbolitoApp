@@ -349,6 +349,88 @@ class PartidoController extends Controller
 
     }//end destroy()
 
+    public function getPartidosByFecha($ini, $fin, $partidos){
+        if ($ini !== '' && $fin !== '') {
+            $partidosFecha = Partido::whereBetween('fecha', array($ini, $fin))
+            ->where('estado', 1)->get();
+            $partidos      = $partidos->intersect($partidosFecha);
+        }
+        return $partidos;
+    }
+
+    public function getPartidosByCategoriaYAnio($anio, $categoriaReq, $partidos){
+        if ($categoriaReq !== '' && $anio !== '') {
+            $categoria = Categoria::where('nombre', $categoriaReq)->first();
+            try {
+                $torneo         = Torneo::where('id_categoria', $categoria->id)->where('anio', $anio)->first();
+                $partidosTorneo = Partido::where('id_torneo', $torneo->id)->get();
+                $partidos       = $partidos->intersect($partidosTorneo);
+            } catch (\Exception $e) {
+                $partidos = $partidos->intersect([]);
+            }
+        }
+        return $partidos;
+    }
+
+    public function getPartidosByCategoria($anio, $categoriaReq, $partidos){
+       if ($categoriaReq !== '' && $anio === '') {
+            $partidosCategoria = [];
+            $categoria         = Categoria::where('nombre', $categoriaReq)->first();
+            $torneosCategoria  = Torneo::where('id_categoria', $categoria->id)->get();
+            foreach ($torneosCategoria as $torneoCategoria) {
+                foreach ($partidos as $partidoCategoria) {
+                    if ($partidoCategoria->id_torneo === $torneoCategoria->id) {
+                        array_push($partidosCategoria, $partidoCategoria);
+                    }
+                }
+            }
+            $partidos = $partidos->intersect($partidosCategoria);
+        }
+        return $partidos;
+    }
+
+    public function getPartidosByAnio($anio, $categoriaReq, $partidos){
+        if ($categoriaReq === '' && $anio !== '') {
+            $partidosAnio = [];
+            $torneosAnio  = Torneo::where('anio', $anio)->get();
+            foreach ($torneosAnio as $torneoAnio) {
+                foreach ($partidos as $partidoAnio) {
+                    if ($partidoAnio->id_torneo === $torneoAnio->id) {
+                        array_push($partidosAnio, $partidoAnio);
+                    }
+                }
+            }
+
+            $partidos = $partidos->intersect($partidosAnio);
+        }
+        return $partidos;
+    }
+
+    public function getPartidosByJornada($jornada, $partidos){
+        if ($jornada !== '') {
+            $partidosJornada = Partido::where('jornada', $jornada)->get();
+            $partidos        = $partidos->intersect($partidosJornada);
+        }
+        return $partidos;
+    }
+
+    public function getPartidosByEquipoLocal($equipo_local, $partidos){
+        if ($equipo_local !== '') {
+            $equipo = Equipo::find($equipo_local);
+            $partidosEquipoLocal = Partido::where('equipo_local', $equipo->nombre)->get();
+            $partidos            = $partidos->intersect($partidosEquipoLocal);
+        }   
+        return $partidos;   
+    }
+
+    public function getPartidosByEquipoVisitante($equipo_visitante, $partidos){
+        if ($equipo_visitante !== '') {
+            $equipo = Equipo::find($equipo_visitante);
+            $partidosEquipoVisitante = Partido::where('equipo_visitante', $equipo->nombre)->get();
+            $partidos = $partidos->intersect($partidosEquipoVisitante);
+        }
+        return $partidos;
+    }
 
     /**
      * Función que se encarga de filtrar los partidos activos utilizando los datos ingresados por el
@@ -367,74 +449,25 @@ class PartidoController extends Controller
         $partidos = Partido::where('estado', 1)->orderBy('jornada', 'asc')->orderBy('fecha', 'asc')->get();
 
         // Filtro los partidos activos por fecha inicial y final (si fueron ingresados por el usuario).
-        if ($request->ini_partido !== '' && $request->fin_partido !== '') {
-            $partidosFecha = Partido::whereBetween('fecha', array($request->ini_partido, $request->fin_partido))
-            ->where('estado', 1)->get();
-            $partidos      = $partidos->intersect($partidosFecha);
-        }
+        $partidos = $this->getPartidosByFecha($request->ini_partido, $request->fin_partido, $partidos);
 
         // Filtro los partidos activos por categoria y año del torneo (si fueron ingresados por usuario).
-        if ($request->categoria !== '' && $request->anio !== '') {
-            $categoria = Categoria::where('nombre', $request->categoria)->first();
-            try {
-                $torneo         = Torneo::where('id_categoria', $categoria->id)->where('anio', $request->anio)->first();
-                $partidosTorneo = Partido::where('id_torneo', $torneo->id)->get();
-                $partidos       = $partidos->intersect($partidosTorneo);
-            } catch (\Exception $e) {
-                $partidos = $partidos->intersect([]);
-            }
-        }
+        $partidos = $this->getPartidosByCategoriaYAnio($request->anio, $request->categoria, $partidos);
 
         // Filtro los partidos activos por categoria del torneo (si fue ingresado por el usuario).
-        if ($request->categoria !== '' && $request->anio === '') {
-            $partidosCategoria = [];
-            $categoria         = Categoria::where('nombre', $request->categoria)->first();
-            $torneosCategoria  = Torneo::where('id_categoria', $categoria->id)->get();
-            foreach ($torneosCategoria as $torneoCategoria) {
-                foreach ($partidos as $partidoCategoria) {
-                    if ($partidoCategoria->id_torneo === $torneoCategoria->id) {
-                        array_push($partidosCategoria, $partidoCategoria);
-                    }
-                }
-            }
-
-            $partidos = $partidos->intersect($partidosCategoria);
-        }
-
+        $partidos = $this->getPartidosByCategoria($request->anio, $request->categoria, $partidos);
+ 
         // Filtro los partidos activos por año del torneo (si fue ingresado por el usuario).
-        if ($request->categoria === '' && $request->anio !== '') {
-            $partidosAnio = [];
-            $torneosAnio  = Torneo::where('anio', $request->anio)->get();
-            foreach ($torneosAnio as $torneoAnio) {
-                foreach ($partidos as $partidoAnio) {
-                    if ($partidoAnio->id_torneo === $torneoAnio->id) {
-                        array_push($partidosAnio, $partidoAnio);
-                    }
-                }
-            }
-
-            $partidos = $partidos->intersect($partidosAnio);
-        }
+        $partidos = $this->getPartidosByAnio($request->anio, $request->categoria, $partidos);
 
         // Filtro los partidos activos por jornada (si fue ingresado por el usuario).
-        if ($request->jornada !== '') {
-            $partidosJornada = Partido::where('jornada', $request->jornada)->get();
-            $partidos        = $partidos->intersect($partidosJornada);
-        }
+        $partidos = $this->getPartidosByJornada($request->jornada, $partidos);
 
         // Filtro los partidos activos por equipo local (si fue ingresado por el usuario).
-        if ($request->equipo_local !== '') {
-            $equipo = Equipo::find($request->equipo_local);
-            $partidosEquipoLocal = Partido::where('equipo_local', $equipo->nombre)->get();
-            $partidos            = $partidos->intersect($partidosEquipoLocal);
-        }
+        $partidos = $this->getPartidosByEquipoLocal($request->equipo_local, $partidos);
 
         // Filtro los partidos activos por equipo visitante (si fue ingresado por el usuario).
-        if ($request->equipo_visitante !== '') {
-            $equipo = Equipo::find($request->equipo_visitante);
-            $partidosEquipoVisitante = Partido::where('equipo_visitante', $equipo->nombre)->get();
-            $partidos = $partidos->intersect($partidosEquipoVisitante);
-        }
+        $partidos = $this->getPartidosByEquipoVisitante($request->equipo_visitante, $partidos);
 
         // Busco equipos, torneos y categorias.
         $equipos       = Equipo::where('estado', 1)->get();

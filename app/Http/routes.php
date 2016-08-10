@@ -105,3 +105,4 @@ Route::get('get_anioscontorneos', 'ResourceController@getAniosConTorneos');
 Route::get('get_jornada/{torneo}/{jornada}', 'ResourceController@getPartidosJornada');
 Route::get('get_tablaposiciones/{id}', 'ResourceController@getTablaPosicionesTorneo');
 Route::get('get_tablasposicionesanio/{anio}', 'ResourceController@getTablasPosicionesAnio');
+Route::get('get_partidostorneo/{id}', 'ResourceController@getPartidosTorneo');
