@@ -44,8 +44,8 @@
             android:scrollbars="none"
             android:layout_span="4">
             <TableLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:stretchColumns="0,1"
                 android:id="@+id/tablaposiciones" >
             </TableLayout>
