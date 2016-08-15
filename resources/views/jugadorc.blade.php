@@ -63,48 +63,48 @@ V2.0 Branny
                 <div class="box-body">
                     <div class="form-group col-xs-12">
                         <label class="required" for="inputNombre">Nombres</label>
-                        <input type="text" class="form-control" id="inputNombre" name="nombres" placeholder="Ingrese nombre">
+                        <input type="text" class="form-control" id="inputNombre" name="nombres" placeholder="Ingrese nombre" value="{{ old('nombres') }}">
                     </div>
                     <div class="form-group col-xs-12">
                         <label class="required" for="inputApellido">Apellidos</label>
-                        <input type="text" class="form-control" id="inputApellido" name="apellidos" placeholder="Ingrese apellido">
+                        <input type="text" class="form-control" id="inputApellido" name="apellidos" placeholder="Ingrese apellido" value="{{ old('apellidos') }}">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="fecha_nac">Fecha Nacimiento</label>
-                        <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento">
+                        <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento" value="{{ old('fecha_nac') }}">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputCedula">C&eacute;dula</label>
-                        <input type="text" class="form-control" id="inputCedula" name="identificacion" placeholder="Ingrese c&eacute;dula">
+                        <input type="text" class="form-control" id="inputCedula" name="identificacion" placeholder="Ingrese c&eacute;dula" value="{{ old('identificacion') }}">
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <div class="form-group">
                             <label for="inputPeso">Rol</label>
-                            <input type="text" class="form-control" id="inputRol" name="rol" placeholder="Ej: Defensa">
+                            <input type="text" class="form-control" id="inputRol" name="rol" placeholder="Ej: Defensa" value="{{ old('rol') }}">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="inputCorreo">Email</label>
-                            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="ejemplo@gmail.com">
+                            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="ejemplo@gmail.com" value="{{ old('email') }}">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label for="inputPeso">Tel&eacute;fono</label>
-                            <input type="text" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono">
+                            <input type="text" class="form-control" id="inputTelefono" name="telefono" placeholder="Ingrese Telefono" value="{{ old('telefono') }}">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <div class="form-group">
                             <label for="peso">Peso (Kg)</label>
-                            <input type="number" min="0" step="0.1" class="form-control" id="peso" name="peso" placeholder="Ej: 70.5">
+                            <input type="number" min="0" step="0.1" class="form-control" id="peso" name="peso" placeholder="Ej: 70.5" value="{{ old('peso') }}">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <div class="form-group">
                             <label for="inputNumCam">N&uacute;mero de camiseta</label>
-                            <input type="number" min="0" class="form-control" id="inputNumCam" name="num_camiseta" placeholder="Ingrese N&uacute;mero">
+                            <input type="number" min="0" class="form-control" id="inputNumCam" name="num_camiseta" placeholder="Ingrese N&uacute;mero" value="{{ old('num_camiseta') }}">
                         </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">

@@ -25,5 +25,6 @@ class Torneo extends Model
                             ->where('estado', 1)
                             ->first();
     } 
+
 }
 
