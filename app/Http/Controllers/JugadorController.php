@@ -16,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
+use Validator;
 use App\Torneo;
 use App\TorneoEquipo;
 use App\Equipo;
@@ -94,21 +95,40 @@ class JugadorController extends Controller
     public function store(Request $request)
      {
 
+        $validator = Validator::make($request->all(), [
+                'nombres' => 'required|regex:/^[\pL\s\-]+$/u',
+                'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
+                'identificacion' => 'numeric|unique:jugadors,identificacion|digits_between:10,13',
+                'rol' => 'alpha',
+                'peso' => 'numeric',
+                'num_camiseta' => 'numeric',
+                'telefono' => 'numeric',
+                'email' => 'email',
+                'fecha_nac' => 'date'
+            ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                            ->route('jugador.create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
         /* Validación de datos requeridos para la creacion de un jugador */
-        $this->validate(
-            $request, 
-            array(
-            'nombres' => 'required|regex:/^[\pL\s\-]+$/u',
-            'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
-            'identificacion' => 'numeric|unique:jugadors,identificacion|digits_between:10,13',
-            'rol' => 'alpha',
-            'peso' => 'numeric',
-            'num_camiseta' => 'numeric',
-            'telefono' => 'numeric',
-            'email' => 'email',
-            'fecha_nac' => 'date'
-            )
-        );
+        // $this->validate(
+        //     $request, 
+        //     array(
+        //     'nombres' => 'required|regex:/^[\pL\s\-]+$/u',
+        //     'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
+        //     'identificacion' => 'numeric|unique:jugadors,identificacion|digits_between:10,13',
+        //     'rol' => 'alpha',
+        //     'peso' => 'numeric',
+        //     'num_camiseta' => 'numeric',
+        //     'telefono' => 'numeric',
+        //     'email' => 'email',
+        //     'fecha_nac' => 'date'
+        //     )
+        // );
 
         /* 
         *Creo nueva instancia de jugador y le asigno todos los valores 

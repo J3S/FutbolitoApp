@@ -88,10 +88,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-xs-12">
+{{--                     <div class="form-group col-xs-12">
                         <label for="file">Logo</label>
                         <input type="file" name="file" id="inputFile" class="btn btn-default" />
-                    </div>
+                    </div> --}}
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">

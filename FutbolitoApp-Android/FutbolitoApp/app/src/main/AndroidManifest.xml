@@ -20,9 +20,10 @@
         </activity>
         <activity
             android:name=".TablaPosicionesActivity"
-            android:label="Tabla de posiciones">
-        </activity>
-        <activity android:name=".Datos"></activity>
+            android:label="Tabla de posiciones"></activity>
+        <activity android:name=".Datos" />
+        <activity android:name=".JugadoresEquipoActivity"
+            android:label="Jugadores"></activity>
     </application>
 
 </manifest>

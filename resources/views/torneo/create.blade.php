@@ -69,7 +69,7 @@
                                 <label class="required" for="anio">A&ntilde;o</label>
                             </div>
                             <div class="col-md-3">
-                                <input type="number" class="form-control" id="anio" name="anio" placeholder="A&ntilde;o">
+                                <input type="number" class="form-control" id="anio" name="anio" placeholder="A&ntilde;o" value="{{ old('anio') }}">
                             </div>
 
                             <!-- Campo categoría -->

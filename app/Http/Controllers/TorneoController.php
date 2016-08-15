@@ -144,7 +144,7 @@ class TorneoController extends Controller
 
         $anioServer = date('Y');
         if($request->anio < 1970 || $request->anio > ($anioServer + 5))
-            return redirect()->route('torneo.create')->withErrors(
+            return redirect()->route('torneo.create')->withInput()->withErrors(
                 'El año ingresado no está dentro del rango permitido.'
             );
 
@@ -154,7 +154,7 @@ class TorneoController extends Controller
                                     ->get(['id'])
                                     ->toArray()[0]['id'];
         } catch (\Exception $e) {
-            return redirect()->route('torneo.create')->withErrors(
+            return redirect()->route('torneo.create')->withInput()->withErrors(
                 'La categoría asignada a este torneo no se encuentra registrada.'
             );
         }
@@ -165,7 +165,7 @@ class TorneoController extends Controller
                                  ->where('estado', 1)
                                  ->get();
         if (count($torneoExistente) !== 0) {
-            return redirect()->route('torneo.create')->withErrors(
+            return redirect()->route('torneo.create')->withInput()->withErrors(
                 'Ya existe un torneo creado con ese año y categoría.'
             );
         }
@@ -194,7 +194,7 @@ class TorneoController extends Controller
                 if (count($equipo) === 1) {
                     array_push($equiposAgregadosID, $equipo->id);
                 } else {
-                    return redirect()->route('torneo.create')->withErrors(
+                    return redirect()->route('torneo.create')->withInput()->withErrors(
                         'Se trató de agregar a un equipo que no tiene la misma
                         categoría del torneo.'
                     );
