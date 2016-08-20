@@ -146,7 +146,10 @@ class JugadorController extends Controller
         $jugador->rol = $request->rol;
         $jugador->email = $request->email;
         $jugador->telefono = $request->telefono;
-        $jugador->peso = $request->peso;
+        if($request->peso != "")
+            $jugador->peso = $request->peso;
+        else
+            $jugador->peso = null;
         $jugador->num_camiseta = $request->num_camiseta;
         $jugador->categoria = $request->categoria;
         $jugador->estado = 1;
