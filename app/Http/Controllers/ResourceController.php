@@ -243,6 +243,33 @@ class ResourceController extends Controller
     public function getUltimos10PartidosEquipo($id){
         $equipo = Equipo::find($id);
         $partidos = Partido::where('equipo_local', $equipo->nombre)->orwhere('equipo_visitante', $equipo->nombre)->orderBy('fecha', 'desc')->take(10)->get();
+        $partidosxtorneo = [];
+        $info_partidos = [];
+        $id_torneo = 0;
+        foreach ($partidos as $partido) {
+            $torneo = Torneo::getTorneoById($partido->id_torneo);
+            if ($id_torneo == 0) {
+                $id_torneo = $torneo->id;    
+            }
+            if($id_torneo == $torneo->id) {
+                array_push($partidosxtorneo, $partido->toArray());
+            }
+            else {
+                $group_torneo = Torneo::getTorneoById($id_torneo);
+                $categoria_nombre = Categoria::getNombre($group_torneo->id_categoria)->nombre;
+                $nombre_torneo = $categoria_nombre . ' ' . $group_torneo->anio;
+                 array_push($info_partidos, [$nombre_torneo => $partidosxtorneo]);
+
+                 $id_torneo = $torneo->id;
+                 $partidosxtorneo = array();
+                 array_push($partidosxtorneo, $partido->toArray());
+            }
+        }
+        $group_torneo = Torneo::getTorneoById($id_torneo);
+        $categoria_nombre = Categoria::getNombre($group_torneo->id_categoria)->nombre;
+        $nombre_torneo = $categoria_nombre . ' ' . $group_torneo->anio;
+        array_push($info_partidos, [$nombre_torneo => $partidosxtorneo]);
+        dd(json_encode($info_partidos));
         return $partidos->toJson();
     }
     

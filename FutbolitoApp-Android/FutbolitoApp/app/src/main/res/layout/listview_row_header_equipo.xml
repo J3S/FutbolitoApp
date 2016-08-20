@@ -5,8 +5,32 @@
     android:gravity="center_vertical"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:background = "@color/colorHeader">
+    android:background = "@color/colorHeader"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/categoria_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_weight = "2"
+            android:gravity = "center"
+            android:padding = "5dp"
+            android:text = "Categoría"
+            android:id="@+id/categoria_torneo"
+            android:textColor = "#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
     <TextView
         android:layout_width = "0dp"
         android:layout_height = "wrap_content"
@@ -96,5 +120,6 @@
         android:text = ""
         android:id="@+id/pts_equipo_head"
         android:textColor = "#ffffff" />
+        </LinearLayout>
 
 </LinearLayout>
