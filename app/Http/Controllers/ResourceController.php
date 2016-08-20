@@ -143,16 +143,18 @@ class ResourceController extends Controller
     	$torneoEquipos = TorneoEquipo::where('id_torneo', $id)->get();
     	$equipos = Equipo::where('estado', 1)->get();
     	$equiposTorneo = [];
+            $equiposTorneoId = [];
     	$resultados = [];
 
     	foreach ($torneoEquipos as $torneoEquipo) {
     		foreach  ($equipos as $equipoTorneo) {
 				if ($equipoTorneo->id == $torneoEquipo->id_equipo) {
     				array_push ($equiposTorneo, $equipoTorneo->nombre);
+                                                array_push ($equiposTorneoId, $equipoTorneo->id);
     			}
     		}
 		}
-
+                        $index = 0;
 		foreach ($equiposTorneo as $equipo) {
 			$pj = $pg = $pe = $pp = $gf = $gc = $gd = $pts = 0;
 
@@ -207,7 +209,8 @@ class ResourceController extends Controller
 				}
 			}
 			array_push($resultados, ["equipo"=>$equipo, "PJ"=>$pj, "PG"=>$pg, "PE"=>$pe, "PP"=>$pp, "GF"=>$gf,
-				"GC"=>$gc, "GD"=>$gd, "PTS"=>$pts]);
+				"GC"=>$gc, "GD"=>$gd, "PTS"=>$pts, "ID"=>$equiposTorneoId[$index]]);
+                                    $index++;
 		}
 
 		// ordeno los resultados por puntos y gol diferencia

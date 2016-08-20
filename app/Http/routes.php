@@ -56,13 +56,6 @@ Route::resource('partido', 'PartidoController',
 
 Route::post('selectPartido', 'PartidoController@searchPartido');
 
-//Route::match(['get', 'head'], 'partido/crear', 'PartidoController@create')->name('partido.create');
-//Route::post('partido', 'PartidoController@store')->name('partido.store');
-
-Route::get('tabla_posiciones', function() {
-    return response()->json(['name' => 'Abigail', 'state' => 'CA']);
-});
-
 Route::get('get_jugador/{id}', 'ResourceController@getJugador');
 Route::get('get_jugadores', 'ResourceController@getJugadores');
 Route::get('get_equipo/{id}', 'ResourceController@getEquipo');
