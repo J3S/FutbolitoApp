@@ -239,6 +239,13 @@ class ResourceController extends Controller
         return $partidos->toJson();
     }
 
+
+    public function getUltimos10PartidosEquipo($id){
+        $equipo = Equipo::find($id);
+        $partidos = Partido::where('equipo_local', $equipo->nombre)->orwhere('equipo_visitante', $equipo->nombre)->orderBy('fecha', 'desc')->take(10)->get();
+        return $partidos->toJson();
+    }
+    
     public function getJugadoresEquipo ($id_equipo) {
         $jugadoresEquipo = [];
         $jugadores = Jugador::getJugadoresxEquipo($id_equipo);
