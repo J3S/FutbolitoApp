@@ -8,7 +8,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Año"
-            android:textSize="60px"
+            android:textSize="40px"
             android:textStyle="bold"
             android:layout_marginTop="20px"
             android:layout_marginLeft="20px"/>
@@ -22,7 +22,7 @@
         <TextView android:id="@+id/lblCategoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="60px"
+            android:textSize="40px"
             android:textStyle="bold"
             android:layout_marginTop="20px"
             android:layout_marginLeft="20px"
@@ -44,10 +44,10 @@
             android:scrollbars="none"
             android:layout_span="4">
             <TableLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:stretchColumns="0,1"
-                android:id="@+id/tablaposiciones" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tablaposiciones"
+                android:stretchColumns="*">
             </TableLayout>
         </ScrollView>
 

@@ -1,11 +1,13 @@
 package com.example.kevin.futbolitoapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -95,11 +97,11 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
         /** Creando un TableRow dinámicamente **/
         tr = new TableRow(this);
+        tr.setPadding(0,15,0,15);
         tr.setLayoutParams(new LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
+                LayoutParams.MATCH_PARENT
         ));
-
         /** Creando los TextViews para agregarlo al TableRow **/
         TextView cat = new TextView(this);
         cat.setText(categorias[0][index]);
@@ -107,7 +109,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         cat.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         cat.setLayoutParams(new LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
+                LayoutParams.MATCH_PARENT
         ));
         cat.setPadding(5,5,0,0);
         tr.addView(cat);
@@ -119,6 +121,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
         /** Creando un TableRow dinámicamente **/
         tr = new TableRow(this);
+        tr.setPadding(0,15,0,15);
         tr.setLayoutParams(new LayoutParams(
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT
@@ -360,6 +363,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                         String golesContra = objInfo.getString("GC");
                         String golesDiferencia = objInfo.getString("GD");
                         String puntos = objInfo.getString("PTS");
+                        String id = objInfo.getString("ID");
                         tablasPosiciones[i][j] = new String[objInfo.length()];
                         tablasPosiciones[i][j][0] = nombreEquipo;
                         tablasPosiciones[i][j][1] = partidosJugados;
@@ -370,6 +374,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                         tablasPosiciones[i][j][6] = golesContra;
                         tablasPosiciones[i][j][7] = golesDiferencia;
                         tablasPosiciones[i][j][8] = puntos;
+                        tablasPosiciones[i][j][9] = id;
                     }
                 }
             } catch (MalformedURLException e) {
@@ -416,6 +421,28 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         for (int i=0; i<limite; i++) {
             /** Creando un TableRow dinámicamente **/
             tr = new TableRow(this);
+            tr.setPadding(0,20,0,20);
+            tr.setId(Integer.parseInt(tablasPosiciones[index][i][9]));
+            tr.setClickable(true);
+            tr.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Creamos el Intent
+                    Intent intent =
+                            new Intent(TablaPosicionesActivity.this, EquipoActivity.class);
+
+                    //Creamos la información a pasar entre actividades
+                Bundle b = new Bundle();
+                b.putString("ID", String.valueOf(v.getId()));
+
+//                    Añadimos la información al intent
+                intent.putExtras(b);
+
+                    //Iniciamos la nueva actividad
+                    startActivity(intent);
+                }
+            });
+            if(i%2 == 0)
+                tr.setBackgroundColor(Color.LTGRAY);
             tr.setLayoutParams(new LayoutParams(
                     LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT

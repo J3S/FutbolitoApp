@@ -6,4 +6,5 @@
     <string name="mostrar_torneo">Mostrar Torneo</string>
     <string name="tabla_de_posiciones">Tabla de posiciones</string>
     <string name="buscar_torneos">Buscar Torneos</string>
+    <string name="nombre_equipo">Nombre del equipo: %1$s</string>
 </resources>
