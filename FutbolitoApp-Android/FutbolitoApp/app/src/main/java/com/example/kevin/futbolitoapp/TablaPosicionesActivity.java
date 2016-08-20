@@ -106,7 +106,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     private void populateList(String nom_equipo, String pj_equipo, String pg_equipo, String pe_equipo, String pp_equipo, String gf_equipo, String gc_equipo, String gd_equipo, String pts_equipo) {
         ModelEquipo item;
 
-        item = new ModelEquipo(nom_equipo, pj_equipo, pg_equipo, pe_equipo, pp_equipo, gf_equipo, gc_equipo, gd_equipo, pts_equipo);
+        item = new ModelEquipo(nom_equipo, pj_equipo, pg_equipo, pe_equipo, pp_equipo, gf_equipo, gc_equipo, gd_equipo, pts_equipo, "");
         equipoList.add(item);
     }
 
@@ -285,7 +285,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
             if (result) {
                 inicio_tabla();
                 for (int i=1; i<categorias[0].length;i++) {
-                    addHeaders();
+                    addHeaders(i);
                     addData(i-1);
                 }
                 adapter.notifyDataSetChanged();
@@ -298,8 +298,9 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         adapter = new listviewEquipoAdapter(this);
         lview.setAdapter(adapter);
     }
-    public void addHeaders(){
-        adapter.addSectionHeaderItem();
+    public void addHeaders(int index){
+        String nombre_categoria = cmbCategoria.getItemAtPosition(index).toString();
+        adapter.addSectionHeaderItem(nombre_categoria);
     }
 
     /** Agregar los datos a la tabla **/

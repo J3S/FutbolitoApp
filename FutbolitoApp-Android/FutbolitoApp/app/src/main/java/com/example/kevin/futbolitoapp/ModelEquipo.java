@@ -14,8 +14,9 @@ public class ModelEquipo {
     private String gc_equipo;
     private String gd_equipo;
     private String pts_equipo;
+    private String categoria;
 
-    public ModelEquipo(String nom_equipo, String pj_equipo, String pg_equipo, String pe_equipo, String pp_equipo, String gf_equipo, String gc_equipo, String gd_equipo, String pts_equipo) {
+    public ModelEquipo(String nom_equipo, String pj_equipo, String pg_equipo, String pe_equipo, String pp_equipo, String gf_equipo, String gc_equipo, String gd_equipo, String pts_equipo, String categoria) {
         this.nom_equipo = nom_equipo;
         this.pj_equipo = pj_equipo;
         this.pg_equipo = pg_equipo;
@@ -25,6 +26,7 @@ public class ModelEquipo {
         this.gc_equipo = gc_equipo;
         this.gd_equipo = gd_equipo;
         this.pts_equipo = pts_equipo;
+        this.categoria = categoria;
     }
 
     public String get_nom_equipo() {
@@ -61,5 +63,9 @@ public class ModelEquipo {
 
     public String get_pts_equipo() {
         return pts_equipo;
+    }
+
+    public String get_categoria_equipo() {
+        return categoria;
     }
 }
