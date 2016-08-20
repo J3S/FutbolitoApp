@@ -269,8 +269,7 @@ class ResourceController extends Controller
         $categoria_nombre = Categoria::getNombre($group_torneo->id_categoria)->nombre;
         $nombre_torneo = $categoria_nombre . ' ' . $group_torneo->anio;
         array_push($info_partidos, [$nombre_torneo => $partidosxtorneo]);
-        dd(json_encode($info_partidos));
-        return $partidos->toJson();
+        return json_encode($info_partidos);
     }
     
     public function getJugadoresEquipo ($id_equipo) {
