@@ -7,4 +7,15 @@
     <string name="tabla_de_posiciones">Tabla de posiciones</string>
     <string name="buscar_torneos">Buscar Torneos</string>
     <string name="nombre_equipo">Nombre del equipo: %1$s</string>
+    <string name="nom_equipo">Equipo</string>
+    <string name="pj_equipo">PJ</string>
+    <string name="pg_equipo">PG</string>
+    <string name="pe_equipo">PE</string>
+    <string name="pp_equipo">PP</string>
+    <string name="gf_equipo">GF</string>
+    <string name="gc_equipo">GC</string>
+    <string name="gd_equipo">GD</string>
+    <string name="pts_equipo">PTS</string>
+    <color name="colorHeader">#1b5e20</color>
+    <color name="colorSeparator">#9e9e9e</color>
 </resources>
