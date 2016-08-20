@@ -150,10 +150,16 @@ class JugadorController extends Controller
             $jugador->peso = $request->peso;
         else
             $jugador->peso = null;
-        $jugador->num_camiseta = $request->num_camiseta;
+        if($request->num_camiseta != "")
+            $jugador->num_camiseta = $request->num_camiseta;
+        else
+            $jugador->num_camiseta = null;
         $jugador->categoria = $request->categoria;
         $jugador->estado = 1;
-        $jugador->id_equipo =  $request->equipo;
+        if($request->equipo != "")
+            $jugador->id_equipo =  $request->equipo;
+        else
+            $jugador->id_equipo =  null;
 
         // Guardo el jugador creado en la base de datos 
         $jugador->save();
