@@ -150,11 +150,11 @@ class ResourceController extends Controller
     		foreach  ($equipos as $equipoTorneo) {
 				if ($equipoTorneo->id == $torneoEquipo->id_equipo) {
     				array_push ($equiposTorneo, $equipoTorneo->nombre);
-                                                array_push ($equiposTorneoId, $equipoTorneo->id);
+                    array_push ($equiposTorneoId, $equipoTorneo->id);
     			}
     		}
 		}
-                        $index = 0;
+        $index = 0;
 		foreach ($equiposTorneo as $equipo) {
 			$pj = $pg = $pe = $pp = $gf = $gc = $gd = $pts = 0;
 
@@ -287,4 +287,25 @@ class ResourceController extends Controller
         }
         return json_encode($jugadoresEquipo);
     }
+
+    public function getUltimaTablaEquipo($id){
+        $torneos = Torneo::where('estado', 1)->orderBy('anio', 'desc')->get();
+        $torneoEquipos = TorneoEquipo::where('id_equipo', $id)->get();
+        $torneoParticipacion = [];
+        $count = 0;
+        foreach($torneos as $torneo){
+            foreach($torneoEquipos as $torneoEquipo){
+                if($torneoEquipo->id_torneo === $torneo->id && $count === 0){
+                    array_push($torneoParticipacion, $torneo);
+                    $count = 1;
+                }
+            }
+        }
+        $tablaParticipacion = [];
+        if($count === 1){
+            $tablaParticipacion = json_decode($this->getTablaPosicionesTorneo($torneoParticipacion[0]->id));
+        }
+        return json_encode($tablaParticipacion);
+    }
+
 }
