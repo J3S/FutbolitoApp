@@ -6,15 +6,21 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TableRow.LayoutParams;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +33,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class TablaPosicionesActivity extends AppCompatActivity {
@@ -38,8 +45,11 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     private String[][] categorias;
     private String[][][] tablasPosiciones;
 
+    private ArrayList<ModelEquipo> equipoList;
+
     private TableLayout tablaP;
     TableRow tr;
+    private listviewEquipoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +58,9 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
         cmbAnio = (Spinner)findViewById(R.id.cmbAnio);
         cmbCategoria = (Spinner)findViewById(R.id.cmbCategoria);
-        tablaP = (TableLayout)findViewById(R.id.tablaposiciones);
+//        tablaP = (TableLayout)findViewById(R.id.tablaposiciones);
+
+        equipoList = new ArrayList<ModelEquipo>();
 
         new TareaWSListarTorneos().execute(torneos_url);
 
@@ -74,11 +86,11 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                                                android.view.View v, int position, long id) {
                         if (v != null) {
                             if (cmbCategoria.getSelectedItemPosition() == 0) {
-                                tablaP.removeAllViews();
+//                                tablaP.removeAllViews();
                                 new TareaWSListarTablaPosiciones().execute(tabla_posiciones_url + cmbAnio.getSelectedItem().toString());
                             } else {
-                                tablaP.removeAllViews();
-                                addHeaders(cmbCategoria.getSelectedItemPosition());
+//                                tablaP.removeAllViews();
+//                                addHeaders(cmbCategoria.getSelectedItemPosition());
                                 addData(cmbCategoria.getSelectedItemPosition()-1);
                             }
                         }
@@ -89,148 +101,13 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                     }
                 }
         );
-
     }
 
-    /** Agregar los headers a la tabla **/
-    public void addHeaders(int index) {
+    private void populateList(String nom_equipo, String pj_equipo, String pg_equipo, String pe_equipo, String pp_equipo, String gf_equipo, String gc_equipo, String gd_equipo, String pts_equipo) {
+        ModelEquipo item;
 
-        /** Creando un TableRow dinámicamente **/
-        tr = new TableRow(this);
-        tr.setPadding(0,15,0,15);
-        tr.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        /** Creando los TextViews para agregarlo al TableRow **/
-        TextView cat = new TextView(this);
-        cat.setText(categorias[0][index]);
-        cat.setTextColor(Color.RED);
-        cat.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        cat.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        cat.setPadding(5,5,0,0);
-        tr.addView(cat);
-
-        tablaP.addView(tr, new TableLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-
-        /** Creando un TableRow dinámicamente **/
-        tr = new TableRow(this);
-        tr.setPadding(0,15,0,15);
-        tr.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-
-        /** Creando los TextViews para agregarlo al TableRow **/
-        TextView equipo = new TextView(this);
-        equipo.setText("Equipo");
-        equipo.setTextColor(Color.GRAY);
-        equipo.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        equipo.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        equipo.setPadding(5,5,0,0);
-        tr.addView(equipo);
-
-        TextView pj = new TextView(this);
-        pj.setText("PJ");
-        pj.setTextColor(Color.GRAY);
-        pj.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        pj.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        pj.setPadding(5,5,0,0);
-        tr.addView(pj);
-
-        TextView pg = new TextView(this);
-        pg.setText("PG");
-        pg.setTextColor(Color.GRAY);
-        pg.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        pg.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        pg.setPadding(5,5,0,0);
-        tr.addView(pg);
-
-        TextView pe = new TextView(this);
-        pe.setText("PE");
-        pe.setTextColor(Color.GRAY);
-        pe.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        pe.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        pe.setPadding(5,5,0,0);
-        tr.addView(pe);
-
-        TextView pp = new TextView(this);
-        pp.setText("PP");
-        pp.setTextColor(Color.GRAY);
-        pp.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        pp.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        pp.setPadding(5,5,0,0);
-        tr.addView(pp);
-
-        TextView gf = new TextView(this);
-        gf.setText("GF");
-        gf.setTextColor(Color.GRAY);
-        gf.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        gf.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        gf.setPadding(5,5,0,0);
-        tr.addView(gf);
-
-        TextView gc = new TextView(this);
-        gc.setText("GC");
-        gc.setTextColor(Color.GRAY);
-        gc.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        gc.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        gc.setPadding(5,5,0,0);
-        tr.addView(gc);
-
-        TextView gd = new TextView(this);
-        gd.setText("GD");
-        gd.setTextColor(Color.GRAY);
-        gd.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        gd.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        gd.setPadding(5,5,0,0);
-        tr.addView(gd);
-
-        TextView pts = new TextView(this);
-        pts.setText("Puntos");
-        pts.setTextColor(Color.GRAY);
-        pts.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        pts.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
-        pts.setPadding(5,5,0,0);
-        tr.addView(pts);
-
-        tablaP.addView(tr, new TableLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT
-        ));
+        item = new ModelEquipo(nom_equipo, pj_equipo, pg_equipo, pe_equipo, pp_equipo, gf_equipo, gc_equipo, gd_equipo, pts_equipo, "");
+        equipoList.add(item);
     }
 
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
@@ -406,152 +283,76 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
+                inicio_tabla();
                 for (int i=1; i<categorias[0].length;i++) {
                     addHeaders(i);
                     addData(i-1);
                 }
-
+                adapter.notifyDataSetChanged();
             }
         }
     }
 
+    public void inicio_tabla() {
+        ListView lview = (ListView)findViewById(R.id.listview);
+        adapter = new listviewEquipoAdapter(this);
+        lview.setAdapter(adapter);
+    }
+    public void addHeaders(int index){
+        String nombre_categoria = cmbCategoria.getItemAtPosition(index).toString();
+        adapter.addSectionHeaderItem(nombre_categoria);
+    }
+
     /** Agregar los datos a la tabla **/
     public void addData(int index) {
+//        LinearLayout linearLayoutLista = (LinearLayout)findViewById(R.id.relativeLayout1);
+//        ListView lview = new ListView(this);
+//        ListView lview = (ListView)findViewById(R.id.listview);
+//        lview.setLayoutParams(new LayoutParams(
+//                LayoutParams.MATCH_PARENT,
+//                LayoutParams.WRAP_CONTENT
+//        ));
+//        listviewEquipoAdapter adapter = new listviewEquipoAdapter(this);
+//        adapter.addSectionHeaderItem();
+//        lview.setAdapter(adapter);
+//        linearLayoutLista.addView(lview);
+//
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        View header_tabla = inflater.inflate(R.layout.listview_row_header_equipo, null);
+//        linearLayoutLista.addView(header_tabla);
+//        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.listview_row_header_equipo,linearLayoutLista,false);
+//        lview.addHeaderView(header);
         int limite = tablasPosiciones[index].length;
+//        adapter = new listviewEquipoAdapter(this);
         for (int i=0; i<limite; i++) {
-            /** Creando un TableRow dinámicamente **/
-            tr = new TableRow(this);
-            tr.setPadding(0,20,0,20);
-            tr.setId(Integer.parseInt(tablasPosiciones[index][i][9]));
-            tr.setClickable(true);
-            tr.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //Creamos el Intent
-                    Intent intent =
-                            new Intent(TablaPosicionesActivity.this, EquipoActivity.class);
-
-                    //Creamos la información a pasar entre actividades
-                Bundle b = new Bundle();
-                b.putString("ID", String.valueOf(v.getId()));
-
-//                    Añadimos la información al intent
-                intent.putExtras(b);
-
-                    //Iniciamos la nueva actividad
-                    startActivity(intent);
-                }
-            });
-            if(i%2 == 0)
-                tr.setBackgroundColor(Color.LTGRAY);
-            tr.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-
-            /** Creando los TextViews para agregarlo al TableRow **/
-            TextView equipo = new TextView(this);
-            equipo.setText(tablasPosiciones[index][i][0]);
-            equipo.setTextColor(Color.BLUE);
-            equipo.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            equipo.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            equipo.setPadding(5,5,0,0);
-            tr.addView(equipo);
-
-            TextView pj = new TextView(this);
-            pj.setText(tablasPosiciones[index][i][1]);
-            pj.setTextColor(Color.BLUE);
-            pj.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            pj.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            pj.setPadding(5,5,0,0);
-            tr.addView(pj);
-
-            TextView pg = new TextView(this);
-            pg.setText(tablasPosiciones[index][i][2]);
-            pg.setTextColor(Color.BLUE);
-            pg.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            pg.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            pg.setPadding(5,5,0,0);
-            tr.addView(pg);
-
-            TextView pe = new TextView(this);
-            pe.setText(tablasPosiciones[index][i][3]);
-            pe.setTextColor(Color.BLUE);
-            pe.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            pe.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            pe.setPadding(5,5,0,0);
-            tr.addView(pe);
-
-            TextView pp = new TextView(this);
-            pp.setText(tablasPosiciones[index][i][4]);
-            pp.setTextColor(Color.BLUE);
-            pp.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            pp.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            pp.setPadding(5,5,0,0);
-            tr.addView(pp);
-
-            TextView gf = new TextView(this);
-            gf.setText(tablasPosiciones[index][i][5]);
-            gf.setTextColor(Color.BLUE);
-            gf.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            gf.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            gf.setPadding(5,5,0,0);
-            tr.addView(gf);
-
-            TextView gc = new TextView(this);
-            gc.setText(tablasPosiciones[index][i][6]);
-            gc.setTextColor(Color.BLUE);
-            gc.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            gc.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            gc.setPadding(5,5,0,0);
-            tr.addView(gc);
-
-            TextView gd = new TextView(this);
-            gd.setText(tablasPosiciones[index][i][7]);
-            gd.setTextColor(Color.BLUE);
-            gd.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            gd.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            gd.setPadding(5,5,0,0);
-            tr.addView(gd);
-
-            TextView pts = new TextView(this);
-            pts.setText(tablasPosiciones[index][i][8]);
-            pts.setTextColor(Color.BLUE);
-            pts.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            pts.setLayoutParams(new LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
-            pts.setPadding(5,5,0,0);
-            tr.addView(pts);
-
-            tablaP.addView(tr, new TableLayout.LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-            ));
+            adapter.addItem(tablasPosiciones[index][i][0], tablasPosiciones[index][i][1], tablasPosiciones[index][i][2], tablasPosiciones[index][i][3], tablasPosiciones[index][i][4],
+                    tablasPosiciones[index][i][5], tablasPosiciones[index][i][6], tablasPosiciones[index][i][7], tablasPosiciones[index][i][8]);
+//            populateList(tablasPosiciones[index][i][0], tablasPosiciones[index][i][1], tablasPosiciones[index][i][2], tablasPosiciones[index][i][3], tablasPosiciones[index][i][4],
+//                    tablasPosiciones[index][i][5], tablasPosiciones[index][i][6], tablasPosiciones[index][i][7], tablasPosiciones[index][i][8]);
         }
+//        lview.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+//        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//
+//                String nom_equipo = ((TextView)view.findViewById(R.id.nom_equipo)).getText().toString();
+//                String pj_equipo = ((TextView)view.findViewById(R.id.pj_equipo)).getText().toString();
+//                String pg_equipo = ((TextView)view.findViewById(R.id.pg_equipo)).getText().toString();
+//                String pe_equipo = ((TextView)view.findViewById(R.id.pe_equipo)).getText().toString();
+//                String pp_equipo = ((TextView)view.findViewById(R.id.pp_equipo)).getText().toString();
+//
+//                Toast.makeText(getApplicationContext(),
+//                        "Equipo : " + nom_equipo +"\n"
+//                                +"PJ : " + pj_equipo +"\n"
+//                                +"PG : " +pg_equipo +"\n"
+//                                +"PE : " +pe_equipo +"\n"
+//                                +"PP : " +pp_equipo, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        lview.setAdapter(adapter);
+//        linearLayoutLista.addView(lview);
     }
 }

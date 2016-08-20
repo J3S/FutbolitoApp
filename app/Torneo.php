@@ -26,5 +26,9 @@ class Torneo extends Model
                             ->first();
     } 
 
+    public static function getTorneoById($id) {
+        return Torneo::where('id', $id)->first();
+    }
+
 }
 

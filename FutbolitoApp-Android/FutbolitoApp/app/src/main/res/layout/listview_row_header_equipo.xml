@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background = "@color/colorHeader"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/categoria_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_weight = "2"
+            android:gravity = "center"
+            android:padding = "5dp"
+            android:text = ""
+            android:id="@+id/categoria_torneo"
+            android:textColor = "#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "2"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/nom_equipo_head"
+        android:textColor = "#ffffff"/>
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "0.8"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/pj_equipo_head"
+        android:textColor = "#ffffff"/>
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "0.8"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/pg_equipo_head"
+        android:textColor = "#ffffff" />
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "0.8"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/pe_equipo_head"
+        android:textColor = "#ffffff" />
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "0.8"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/pp_equipo_head"
+        android:textColor = "#ffffff" />
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "0.8"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/gf_equipo_head"
+        android:textColor = "#ffffff" />
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "0.8"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/gc_equipo_head"
+        android:textColor = "#ffffff" />
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "0.8"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/gd_equipo_head"
+        android:textColor = "#ffffff" />
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight = "1"
+        android:gravity = "center"
+        android:padding = "5dp"
+        android:text = ""
+        android:id="@+id/pts_equipo_head"
+        android:textColor = "#ffffff" />
+        </LinearLayout>
+
+</LinearLayout>

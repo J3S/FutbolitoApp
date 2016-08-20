@@ -102,4 +102,24 @@ class ResourceTest extends TestCase
         $response = $this->call('GET', '/get_tablasposicionesanio/2016');
         $this->assertResponseStatus(200);
     }
+
+    public function testGetPartidosTorneo(){
+        $response = $this->call('GET', '/get_partidostorneo/1');
+        $this->assertResponseStatus(200);
+    }
+
+    public function testGetJugadoresEquipo(){
+        $response = $this->call('GET', '/get_jugadores_equipo/1');
+        $this->assertResponseStatus(200);
+    }
+
+    public function test10Partidos(){
+        $response = $this->call('GET', '/get_ult10partidosequipo/1');
+        $this->assertResponseStatus(200);
+    }
+
+    public function testUltimaParticipacion(){
+        $response = $this->call('GET', '/get_ultima_participacion/1');
+        $this->assertResponseStatus(200);
+    }
 }

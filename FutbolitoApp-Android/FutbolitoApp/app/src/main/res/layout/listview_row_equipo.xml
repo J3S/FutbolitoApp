@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/relativeLayout1"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id = "@+id/nom_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "2"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/nom_equipo"
+        android:singleLine = "true" />
+
+    <TextView
+        android:id = "@+id/pj_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "0.8"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/pj_equipo"
+        android:singleLine = "true" />
+
+    <TextView
+        android:id = "@+id/pg_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "0.8"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/pg_equipo"
+        android:singleLine = "true" />
+
+    <TextView
+        android:id = "@+id/pe_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "0.8"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/pe_equipo"
+        android:singleLine = "true" />
+
+    <TextView
+        android:id = "@+id/pp_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "0.8"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/pp_equipo"
+        android:singleLine = "true" />
+
+    <TextView
+        android:id = "@+id/gf_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "0.8"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/gf_equipo"
+        android:singleLine = "true"/>
+
+    <TextView
+        android:id = "@+id/gc_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "0.8"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/gc_equipo"
+        android:singleLine = "true" />
+
+    <TextView
+        android:id = "@+id/gd_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "0.8"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/gd_equipo"
+        android:singleLine = "true"/>
+
+    <TextView
+        android:id = "@+id/pts_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "1"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:text = "@string/pts_equipo"
+        android:singleLine = "true" />
+
+</LinearLayout>

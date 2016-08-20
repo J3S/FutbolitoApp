@@ -1,56 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<!--<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" >-->
 
-    <TableRow>
+    <!--<TableRow>-->
+        <!--<TextView android:id="@+id/lblAnio"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Año"-->
+            <!--android:textSize="30px"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_marginTop="20px"-->
+            <!--android:layout_marginLeft="20px"/>-->
+
+        <!--<Spinner android:id="@+id/cmbAnio"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20px"-->
+            <!--android:layout_marginLeft="20px"/>-->
+
+        <!--<TextView android:id="@+id/lblCategoria"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="30px"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_marginTop="20px"-->
+            <!--android:layout_marginLeft="20px"-->
+            <!--android:text="Categoría"/>-->
+
+        <!--<Spinner android:id="@+id/cmbCategoria"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20px"-->
+            <!--android:layout_marginLeft="20px"/>-->
+
+    <!--</TableRow>-->
+
+    <!--<TableRow>-->
+
+        <!--<ScrollView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scrollbars="none"-->
+            <!--android:layout_span="4">-->
+            <!--<TableLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:id="@+id/tablaposiciones"-->
+                <!--android:stretchColumns="*">-->
+            <!--</TableLayout>-->
+        <!--</ScrollView>-->
+
+    <!--</TableRow>-->
+
+<!--</TableLayout>-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/relativeLayout1"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/cmb_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+
         <TextView android:id="@+id/lblAnio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Año"
-            android:textSize="30px"
-            android:textStyle="bold"
-            android:layout_marginTop="20px"
-            android:layout_marginLeft="20px"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Año"
+        android:textSize="30px"
+        android:textStyle="bold"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="20px"/>
 
         <Spinner android:id="@+id/cmbAnio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20px"
-            android:layout_marginLeft="20px"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="20px"/>
 
         <TextView android:id="@+id/lblCategoria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30px"
-            android:textStyle="bold"
-            android:layout_marginTop="20px"
-            android:layout_marginLeft="20px"
-            android:text="Categoría"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30px"
+        android:textStyle="bold"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="20px"
+        android:text="Categoría"/>
 
         <Spinner android:id="@+id/cmbCategoria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20px"
-            android:layout_marginLeft="20px"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="20px"/>
+    </LinearLayout>
 
-    </TableRow>
+    <ListView
+        android:id = "@+id/listview"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:divider = "@null"/>
 
-    <TableRow>
-
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:layout_span="4">
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/tablaposiciones"
-                android:stretchColumns="*">
-            </TableLayout>
-        </ScrollView>
-
-    </TableRow>
-
-</TableLayout>
+</LinearLayout>

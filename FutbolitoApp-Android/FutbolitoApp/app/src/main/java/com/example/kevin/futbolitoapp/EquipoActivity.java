@@ -108,8 +108,8 @@ public class EquipoActivity extends AppCompatActivity {
             if (result) {
                 TextView dt = (TextView)findViewById(R.id.lblDirEquipoData);
                 TextView cat = (TextView)findViewById(R.id.lblCatEquipoData);
-                dt.setText(director);
-                cat.setText(categoria);
+                dt.setText("Director técnico: " + director);
+                cat.setText("Categoría: " + categoria);
             }
         }
     }
@@ -229,7 +229,7 @@ public class EquipoActivity extends AppCompatActivity {
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT
             ));
-            equipo.setPadding(5,5,0,0);
+            equipo.setPadding(10,5,10,0);
             tr.addView(equipo);
 
             TextView pg = new TextView(this);
@@ -240,7 +240,7 @@ public class EquipoActivity extends AppCompatActivity {
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT
             ));
-            pg.setPadding(5,5,0,0);
+            pg.setPadding(10,5,10,0);
             tr.addView(pg);
 
             TextView pe = new TextView(this);
@@ -251,7 +251,7 @@ public class EquipoActivity extends AppCompatActivity {
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT
             ));
-            pe.setPadding(5,5,0,0);
+            pe.setPadding(10,5,10,0);
             tr.addView(pe);
 
             tablaJ.addView(tr, new TableLayout.LayoutParams(
