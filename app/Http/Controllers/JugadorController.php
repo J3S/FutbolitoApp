@@ -138,7 +138,10 @@ class JugadorController extends Controller
         $jugador = new Jugador;
         $jugador->nombres = $request->nombres;
         $jugador->apellidos = $request->apellidos;
-        $jugador->fecha_nac = $request->fecha_nac;
+        if($request->fecha_nac != "")
+            $jugador->fecha_nac = $request->fecha_nac;
+        else
+            $jugador->fecha_nac = null;
         $jugador->identificacion = $request->identificacion;
         $jugador->rol = $request->rol;
         $jugador->email = $request->email;

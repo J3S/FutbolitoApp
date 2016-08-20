@@ -100,7 +100,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         tr.setPadding(0,15,0,15);
         tr.setLayoutParams(new LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT
+                LayoutParams.WRAP_CONTENT
         ));
         /** Creando los TextViews para agregarlo al TableRow **/
         TextView cat = new TextView(this);
@@ -109,7 +109,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         cat.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         cat.setLayoutParams(new LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT
+                LayoutParams.WRAP_CONTENT
         ));
         cat.setPadding(5,5,0,0);
         tr.addView(cat);

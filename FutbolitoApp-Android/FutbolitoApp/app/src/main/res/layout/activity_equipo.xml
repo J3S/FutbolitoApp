@@ -4,14 +4,67 @@
     android:layout_height="match_parent" >
 
     <TableRow>
-        <TextView android:id="@+id/lbldatos"
+        <TextView android:id="@+id/lblDirEquipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Año"
-            android:textSize="40px"
+            android:text="Director técnico"
+            android:textSize="30px"
             android:textStyle="bold"
             android:layout_marginTop="20px"
             android:layout_marginLeft="20px"/>
+        <TextView android:id="@+id/lblDirEquipoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="30px"
+            android:textStyle="bold"
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="20px"/>
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@+id/lblCatEquipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categoría"
+            android:textSize="30px"
+            android:textStyle="bold"
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="20px"/>
+        <TextView android:id="@+id/lblCatEquipoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="30px"
+            android:textStyle="bold"
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="20px"/>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jugadores"
+            android:textSize="30px"
+            android:textStyle="bold"
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="20px"/>
+    </TableRow>
+
+    <TableRow>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:stretchColumns="0">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/jugadoresEquipo"
+                android:stretchColumns="*">
+            </TableLayout>
+        </ScrollView>
+
     </TableRow>
 
 </TableLayout>
