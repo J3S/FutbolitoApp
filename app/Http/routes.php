@@ -76,3 +76,4 @@ Route::get('get_tablasposicionesanio/{anio}', 'ResourceController@getTablasPosic
 Route::get('get_partidostorneo/{id}', 'ResourceController@getPartidosTorneo');
 Route::get('get_ult10partidosequipo/{id}', 'ResourceController@getUltimos10PartidosEquipo');
 Route::get('get_jugadores_equipo/{id}', 'ResourceController@getJugadoresEquipo');
+Route::get('get_ultima_participacion/{id}', 'ResourceController@getUltimaTablaEquipo');
