@@ -74,4 +74,5 @@ Route::get('get_jornada/{torneo}/{jornada}', 'ResourceController@getPartidosJorn
 Route::get('get_tablaposiciones/{id}', 'ResourceController@getTablaPosicionesTorneo');
 Route::get('get_tablasposicionesanio/{anio}', 'ResourceController@getTablasPosicionesAnio');
 Route::get('get_partidostorneo/{id}', 'ResourceController@getPartidosTorneo');
+Route::get('get_ult10partidosequipo/{id}', 'ResourceController@getUltimos10PartidosEquipo');
 Route::get('get_jugadores_equipo/{id}', 'ResourceController@getJugadoresEquipo');
