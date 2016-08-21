@@ -27,25 +27,27 @@ tools:context="InfoGeneralEquipoFragment">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Nombre"
         android:id="@+id/nombre_equipo"
-        android:layout_below="@id/lblInfoGeneral"
+        android:layout_below="@+id/lblInfoGeneral"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Director"
         android:id="@+id/director_equipo"
-        android:layout_below="@id/nombre_equipo"
+        android:layout_toRightOf="@+id/nombre_equipo"
+        android:layout_below="@+id/lblInfoGeneral"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Categoría"
         android:id="@+id/categoria_equipo"
-        android:layout_below="@id/director_equipo"
+        android:layout_toRightOf="@+id/director_equipo"
+        android:layout_below="@+id/lblInfoGeneral"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"/>
     <TextView
@@ -55,7 +57,7 @@ tools:context="InfoGeneralEquipoFragment">
         android:textStyle="bold"
         android:textSize="15dp"
         android:id="@+id/lblUltimosPartidos"
-        android:layout_below="@id/categoria_equipo"
+        android:layout_below="@+id/categoria_equipo"
         android:paddingTop="10dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"/>
@@ -67,7 +69,7 @@ tools:context="InfoGeneralEquipoFragment">
         android:divider="#000"
         android:headerDividersEnabled="false"
         android:dividerHeight="1dp"
-        android:layout_below="@id/lblUltimosPartidos"
+        android:layout_below="@+id/lblUltimosPartidos"
         android:paddingBottom="60dp"/>
 
     <!--android:layout_below="@id/lblUltimosPartidos"-->
