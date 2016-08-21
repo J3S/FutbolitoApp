@@ -2,6 +2,8 @@ package com.example.kevin.futbolitoapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +24,15 @@ public class listviewEquipoAdapter extends BaseAdapter {
     public ArrayList<ModelEquipo> equipoList = new ArrayList<ModelEquipo>();
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
     private LayoutInflater mInflater;
+    private String id_equipo = "";
+    private int resaltado = 0;
 
 
-    public listviewEquipoAdapter(Context context) {
+    public listviewEquipoAdapter(Context context, String id, int resaltado) {
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.id_equipo = id;
+        this.resaltado = resaltado;
     }
 
     public void addItem(String nom_equipo, String pj_equipo, String pg_equipo, String pe_equipo, String pp_equipo, String gf_equipo, String gc_equipo, String gd_equipo, String pts_equipo, String id) {
@@ -67,6 +73,10 @@ public class listviewEquipoAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public boolean isTeamTable(){
+        return this.resaltado == 1;
     }
 
     private class ViewHolder {
@@ -127,6 +137,53 @@ public class listviewEquipoAdapter extends BaseAdapter {
         ModelEquipo item = equipoList.get(position);
         if(rowType == TYPE_SEPARATOR) {
             holder.categoria_torneo.setText(item.get_categoria_equipo().toString());
+        }
+        if(isTeamTable()){
+            if(id_equipo.equals(item.get_id_equipo().toString())){
+                if(rowType != TYPE_SEPARATOR) {
+                    holder.nom_equipo.setTypeface(null, Typeface.BOLD);
+                    holder.pj_equipo.setTypeface(null, Typeface.BOLD);
+                    holder.pg_equipo.setTypeface(null, Typeface.BOLD);
+                    holder.pe_equipo.setTypeface(null, Typeface.BOLD);
+                    holder.pp_equipo.setTypeface(null, Typeface.BOLD);
+                    holder.gf_equipo.setTypeface(null, Typeface.BOLD);
+                    holder.gc_equipo.setTypeface(null, Typeface.BOLD);
+                    holder.gd_equipo.setTypeface(null, Typeface.BOLD);
+                    holder.pts_equipo.setTypeface(null, Typeface.BOLD);
+
+                    holder.nom_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                    holder.pj_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                    holder.pg_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                    holder.pe_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                    holder.pp_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                    holder.gf_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                    holder.gc_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                    holder.gd_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                    holder.pts_equipo.setTextColor(Color.parseColor("#b71c1c"));
+                }
+            } else {
+                if(rowType != TYPE_SEPARATOR) {
+                    holder.nom_equipo.setTypeface(null, Typeface.NORMAL);
+                    holder.pj_equipo.setTypeface(null, Typeface.NORMAL);
+                    holder.pg_equipo.setTypeface(null, Typeface.NORMAL);
+                    holder.pe_equipo.setTypeface(null, Typeface.NORMAL);
+                    holder.pp_equipo.setTypeface(null, Typeface.NORMAL);
+                    holder.gf_equipo.setTypeface(null, Typeface.NORMAL);
+                    holder.gc_equipo.setTypeface(null, Typeface.NORMAL);
+                    holder.gd_equipo.setTypeface(null, Typeface.NORMAL);
+                    holder.pts_equipo.setTypeface(null, Typeface.NORMAL);
+
+                    holder.nom_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                    holder.pj_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                    holder.pg_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                    holder.pe_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                    holder.pp_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                    holder.gf_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                    holder.gc_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                    holder.gd_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                    holder.pts_equipo.setTextColor(holder.id_equipo.getTextColors().getDefaultColor());
+                }
+            }
         }
         holder.nom_equipo.setText(item.get_nom_equipo().toString());
         holder.pj_equipo.setText(item.get_pj_equipo().toString());

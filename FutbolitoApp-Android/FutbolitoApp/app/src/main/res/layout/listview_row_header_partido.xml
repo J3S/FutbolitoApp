@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/relativeLayoutPartido"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content"
+    android:stretchColumns="1"
+    android:background = "@color/colorHeader"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <TableRow
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre_torneo"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:id="@+id/nombre_torneo"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:textColor = "#ffffff"
+            android:gravity = "center"/>
+    </TableRow>
+
+</TableLayout>

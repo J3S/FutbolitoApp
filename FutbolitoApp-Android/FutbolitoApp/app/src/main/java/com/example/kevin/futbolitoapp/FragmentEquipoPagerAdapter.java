@@ -27,11 +27,13 @@ public class FragmentEquipoPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        System.out.println("Posicion: " + position);
         if(position == 0)
             return InfoGeneralEquipoFragment.newInstance(id_equipo);
-        if(position == 1)
-            return PosicionEquipoFragment.newInstance(position + 1);
-        return PlantillaEquipoFragment.newInstance(position + 1);
+        else if(position == 1)
+            return PosicionEquipoFragment.newInstance(id_equipo);
+        else
+            return PlantillaEquipoFragment.newInstance(id_equipo);
     }
 
     @Override
