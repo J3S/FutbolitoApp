@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,10 +40,17 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
     private listviewEquipoAdapter adapter;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabla_posiciones);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         cmbAnio = (Spinner)findViewById(R.id.cmbAnio);
         cmbCategoria = (Spinner)findViewById(R.id.cmbCategoria);

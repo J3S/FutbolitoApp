@@ -258,7 +258,7 @@ class ResourceController extends Controller
                 $group_torneo = Torneo::getTorneoById($id_torneo);
                 $categoria_nombre = Categoria::getNombre($group_torneo->id_categoria)->nombre;
                 $nombre_torneo = $categoria_nombre . ' ' . $group_torneo->anio;
-                 array_push($info_partidos, [$nombre_torneo => $partidosxtorneo]);
+                 array_push($info_partidos, ["nombre_torneo"=>$nombre_torneo, "partidos" => $partidosxtorneo]);
 
                  $id_torneo = $torneo->id;
                  $partidosxtorneo = array();
@@ -268,7 +268,7 @@ class ResourceController extends Controller
         $group_torneo = Torneo::getTorneoById($id_torneo);
         $categoria_nombre = Categoria::getNombre($group_torneo->id_categoria)->nombre;
         $nombre_torneo = $categoria_nombre . ' ' . $group_torneo->anio;
-        array_push($info_partidos, [$nombre_torneo => $partidosxtorneo]);
+        array_push($info_partidos, ["nombre_torneo"=>$nombre_torneo, "partidos" => $partidosxtorneo]);
         return json_encode($info_partidos);
     }
     

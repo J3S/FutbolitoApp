@@ -125,7 +125,7 @@ public class listviewEquipoAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         ModelEquipo item = equipoList.get(position);
-        if(item.get_nom_equipo().toString() == "Equipo") {
+        if(rowType == TYPE_SEPARATOR) {
             holder.categoria_torneo.setText(item.get_categoria_equipo().toString());
         }
         holder.nom_equipo.setText(item.get_nom_equipo().toString());

@@ -8,9 +8,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MyMaterialTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".TablaPosicionesActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,15 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TablaPosicionesActivity"
-            android:label="Tabla de posiciones" />
+        <!--<activity-->
+            <!--android:name=".TablaPosicionesActivity"-->
+            <!--android:label="Tabla de posiciones" />-->
         <activity android:name=".Datos" />
         <activity
             android:name=".JugadoresEquipoActivity"
             android:label="Jugadores" />
         <activity android:name=".EquipoActivity"
-            android:label="Equipo"></activity>
+            android:label="@string/nom_equipo"></activity>
     </application>
 
 </manifest>
