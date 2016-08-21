@@ -225,7 +225,6 @@ public class InfoGeneralEquipoFragment extends Fragment {
         protected void onPostExecute(Boolean result) {
             if (result) {
                 inicio_tabla();
-                System.out.println(partidos[0].length);
                 for (int i=0; i<partidos.length;i++) {
                     addHeaders(i);
                     addData(i);
@@ -236,7 +235,7 @@ public class InfoGeneralEquipoFragment extends Fragment {
     }
     public void inicio_tabla() {
         ListView lview = (ListView) rootView.findViewById(R.id.listviewPartidosEquipo);
-        adapter = new listviewPartidoAdapter(rootView.getContext());
+        adapter = new listviewPartidoAdapter(rootView.getContext(), nombre);
         lview.setAdapter(adapter);
     }
 
@@ -251,7 +250,6 @@ public class InfoGeneralEquipoFragment extends Fragment {
         for (int i=0; i<limite; i++) {
             adapter.addItem(partidos[index][i][0], partidos[index][i][1], partidos[index][i][2], partidos[index][i][3], partidos[index][i][4],
                     partidos[index][i][5], nombre_torneo[index]);
-            System.out.println("Index: " + index + "SubIndex: " + i);
         }
         ListView lview = (ListView) rootView.findViewById(R.id.listviewPartidosEquipo);
 //        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

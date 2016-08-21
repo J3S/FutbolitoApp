@@ -1,6 +1,8 @@
 package com.example.kevin.futbolitoapp;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +20,17 @@ public class listviewPartidoAdapter extends BaseAdapter {
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
 
+    private String nombre_equipo = "";
+
     public ArrayList<ModelPartido> partidoList = new ArrayList<ModelPartido>();
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
     private LayoutInflater mInflater;
 
 
-    public listviewPartidoAdapter(Context context) {
+    public listviewPartidoAdapter(Context context, String nombre) {
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        nombre_equipo = nombre;
     }
 
     public void addItem(String id_partido, String fecha_partido, String equipo_local, String equipo_visitante, String gol_local, String gol_visitante, String nombre_torneo) {
@@ -112,9 +117,35 @@ public class listviewPartidoAdapter extends BaseAdapter {
         } else {
             holder.fecha_partido.setText(item.get_fecha_partido().toString());
             holder.equipo_local.setText(item.get_equipo_local().toString());
-            holder.equipo_visitante.setText(item.get_equipo_visitante().toString());
             holder.gol_local.setText(item.get_gol_local().toString());
+            String eqloc = "";
+            eqloc = item.get_equipo_local().toString();
+            if(eqloc.equals(nombre_equipo)) {
+                holder.equipo_local.setTypeface(null, Typeface.BOLD);
+                holder.gol_local.setTypeface(null, Typeface.BOLD);
+                holder.equipo_local.setTextColor(Color.parseColor("#b71c1c"));
+                holder.gol_local.setTextColor(Color.parseColor("#b71c1c"));
+            } else {
+                holder.equipo_local.setTypeface(null, Typeface.NORMAL);
+                holder.gol_local.setTypeface(null, Typeface.NORMAL);
+                holder.equipo_local.setTextColor(holder.fecha_partido.getTextColors().getDefaultColor());
+                holder.gol_local.setTextColor(holder.fecha_partido.getTextColors().getDefaultColor());
+            }
+            holder.equipo_visitante.setText(item.get_equipo_visitante().toString());
             holder.gol_visitante.setText(item.get_gol_visitante().toString());
+            String eqvis = "";
+            eqvis = item.get_equipo_visitante().toString();
+            if(eqvis.equals(nombre_equipo)) {
+                holder.equipo_visitante.setTypeface(null, Typeface.BOLD);
+                holder.gol_visitante.setTypeface(null, Typeface.BOLD);
+                holder.equipo_visitante.setTextColor(Color.parseColor("#b71c1c"));
+                holder.gol_visitante.setTextColor(Color.parseColor("#b71c1c"));
+            } else {
+                holder.equipo_visitante.setTypeface(null, Typeface.NORMAL);
+                holder.gol_visitante.setTypeface(null, Typeface.NORMAL);
+                holder.equipo_visitante.setTextColor(holder.fecha_partido.getTextColors().getDefaultColor());
+                holder.gol_visitante.setTextColor(holder.fecha_partido.getTextColors().getDefaultColor());
+            }
             holder.nombre_torneo.setText(item.get_nombre_torneo().toString());
             holder.id_partido.setText(item.get_id_partido().toString());
         }

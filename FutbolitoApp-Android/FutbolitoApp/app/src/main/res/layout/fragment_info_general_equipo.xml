@@ -4,14 +4,6 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="InfoGeneralEquipoFragment">
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:id = "@+id/relativeLayout1"-->
-    <!--android:layout_width = "match_parent"-->
-    <!--android:layout_height = "wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--tools:context="InfoGeneralEquipoFragment">-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +19,7 @@ tools:context="InfoGeneralEquipoFragment">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre"
+        android:text=""
         android:id="@+id/nombre_equipo"
         android:layout_below="@+id/lblInfoGeneral"
         android:paddingBottom="5dp"
@@ -35,7 +27,7 @@ tools:context="InfoGeneralEquipoFragment">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Director"
+        android:text=""
         android:id="@+id/director_equipo"
         android:layout_toRightOf="@+id/nombre_equipo"
         android:layout_below="@+id/lblInfoGeneral"
@@ -44,7 +36,7 @@ tools:context="InfoGeneralEquipoFragment">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Categoría"
+        android:text=""
         android:id="@+id/categoria_equipo"
         android:layout_toRightOf="@+id/director_equipo"
         android:layout_below="@+id/lblInfoGeneral"
@@ -66,7 +58,7 @@ tools:context="InfoGeneralEquipoFragment">
         android:id = "@+id/listviewPartidosEquipo"
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:divider="#000"
+        android:divider="#757575"
         android:headerDividersEnabled="false"
         android:dividerHeight="1dp"
         android:layout_below="@+id/lblUltimosPartidos"

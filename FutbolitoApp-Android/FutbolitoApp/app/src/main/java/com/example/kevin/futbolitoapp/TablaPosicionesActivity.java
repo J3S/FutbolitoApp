@@ -285,7 +285,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
     public void inicio_tabla() {
         ListView lview = (ListView)findViewById(R.id.listview);
-        adapter = new listviewEquipoAdapter(this);
+        adapter = new listviewEquipoAdapter(this, "", 0);
         lview.setAdapter(adapter);
     }
     public void addHeaders(int index){
