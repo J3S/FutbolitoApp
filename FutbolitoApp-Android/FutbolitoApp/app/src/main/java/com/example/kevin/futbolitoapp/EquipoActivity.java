@@ -5,7 +5,15 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -22,6 +30,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EquipoActivity extends AppCompatActivity {
 
@@ -35,15 +45,78 @@ public class EquipoActivity extends AppCompatActivity {
     private TableLayout tablaJ;
     TableRow tr;
 
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipo);
-        String s= getIntent().getStringExtra("ID");
-        TextView dd = new TextView(this);
-        tablaJ = (TableLayout)findViewById(R.id.jugadoresEquipo);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new FragmentEquipoPagerAdapter(getSupportFragmentManager(), EquipoActivity.this, getIntent().getStringExtra("ID")));
+
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+//        viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        setupViewPager(viewPager);
+//
+//        tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        tabLayout.setupWithViewPager(viewPager);
+
+
+
+//        String s= getIntent().getStringExtra("ID");
+//        TextView dd = new TextView(this);
+//        tablaJ = (TableLayout)findViewById(R.id.jugadoresEquipo);
         new TareaWSInfoEquipo().execute(equipo_url + getIntent().getStringExtra("ID"));
         new TareaWSListarJugadores().execute(jugadores_url + getIntent().getStringExtra("ID"));
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new InfoGeneralEquipoFragment(), "Detalles");
+        adapter.addFragment(new PosicionEquipoFragment(), "Clasificación");
+        adapter.addFragment(new PlantillaEquipoFragment(), "Plantilla");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
@@ -106,12 +179,17 @@ public class EquipoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-                TextView dt = (TextView)findViewById(R.id.lblDirEquipoData);
-                TextView cat = (TextView)findViewById(R.id.lblCatEquipoData);
-                dt.setText("Director técnico: " + director);
-                cat.setText("Categoría: " + categoria);
+//                TextView dt = (TextView)findViewById(R.id.lblDirEquipoData);
+//                TextView cat = (TextView)findViewById(R.id.lblCatEquipoData);
+//                dt.setText("Director técnico: " + director);
+//                cat.setText("Categoría: " + categoria);
+                setTitleActionBar(nombre);
             }
         }
+    }
+
+    public void setTitleActionBar(String title){
+        this.getSupportActionBar().setTitle("Equipo " + nombre);
     }
 
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
@@ -182,7 +260,7 @@ public class EquipoActivity extends AppCompatActivity {
             if (result) {
                 for (int i=0; i<infoJugador.length;i++) {
 //                    addHeaders(i);
-                    addData(i);
+//                    addData(i);
                 }
 
             }

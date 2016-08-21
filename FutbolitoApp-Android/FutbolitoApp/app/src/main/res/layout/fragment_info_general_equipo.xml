@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="InfoGeneralEquipoFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Información general"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:id="@+id/lblInfoGeneral"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"/>
+    <!--android:layout_centerHorizontal="true"-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/nombre_equipo"
+        android:layout_below="@id/lblInfoGeneral"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/director_equipo"
+        android:layout_below="@id/nombre_equipo"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/categoria_equipo"
+        android:layout_below="@id/director_equipo"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"/>
+
+</RelativeLayout>
