@@ -33,7 +33,7 @@ public class FragmentEquipoPagerAdapter extends FragmentPagerAdapter {
         else if(position == 1)
             return PosicionEquipoFragment.newInstance(id_equipo);
         else
-            return PlantillaEquipoFragment.newInstance(position + 1);
+            return PlantillaEquipoFragment.newInstance(id_equipo);
     }
 
     @Override
