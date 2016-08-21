@@ -62,7 +62,6 @@ public class EquipoActivity extends AppCompatActivity {
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new FragmentEquipoPagerAdapter(getSupportFragmentManager(), EquipoActivity.this, getIntent().getStringExtra("ID")));
-
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -79,16 +78,16 @@ public class EquipoActivity extends AppCompatActivity {
 //        TextView dd = new TextView(this);
 //        tablaJ = (TableLayout)findViewById(R.id.jugadoresEquipo);
         new TareaWSInfoEquipo().execute(equipo_url + getIntent().getStringExtra("ID"));
-        new TareaWSListarJugadores().execute(jugadores_url + getIntent().getStringExtra("ID"));
+//        new TareaWSListarJugadores().execute(jugadores_url + getIntent().getStringExtra("ID"));
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new InfoGeneralEquipoFragment(), "Detalles");
-        adapter.addFragment(new PosicionEquipoFragment(), "Clasificación");
-        adapter.addFragment(new PlantillaEquipoFragment(), "Plantilla");
-        viewPager.setAdapter(adapter);
-    }
+//    private void setupViewPager(ViewPager viewPager) {
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        adapter.addFragment(new InfoGeneralEquipoFragment(), "Detalles");
+//        adapter.addFragment(new PosicionEquipoFragment(), "Clasificación");
+//        adapter.addFragment(new PlantillaEquipoFragment(), "Plantilla");
+//        viewPager.setAdapter(adapter);
+//    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

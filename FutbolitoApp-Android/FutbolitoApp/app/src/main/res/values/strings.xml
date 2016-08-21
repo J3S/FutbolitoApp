@@ -16,6 +16,12 @@
     <string name="gc_equipo">GC</string>
     <string name="gd_equipo">GD</string>
     <string name="pts_equipo">PTS</string>
+    <string name="nombre_torneo">Torneo Anio</string>
+    <string name="fecha_partido">yyyy/mm/dd</string>
+    <string name="equipo_local">EquipoL</string>
+    <string name="equipo_visitante">EquipoV</string>
+    <string name="gol_local">#L</string>
+    <string name="gol_visitante">#V</string>
     <color name="colorSeparator">#33691e</color>
     <color name="colorHeader">#388e3c</color>
     <color name="colorApp">#1b5e20</color>

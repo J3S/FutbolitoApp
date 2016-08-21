@@ -1,8 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="InfoGeneralEquipoFragment">
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:id = "@+id/relativeLayout1"-->
+    <!--android:layout_width = "match_parent"-->
+    <!--android:layout_height = "wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context="InfoGeneralEquipoFragment">-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,5 +48,29 @@ tools:context="InfoGeneralEquipoFragment">
         android:layout_below="@id/director_equipo"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Últimos partidos"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:id="@+id/lblUltimosPartidos"
+        android:layout_below="@id/categoria_equipo"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"/>
+    <!--android:layout_centerHorizontal="true"-->
+    <ListView
+        android:id = "@+id/listviewPartidosEquipo"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:divider="#000"
+        android:headerDividersEnabled="false"
+        android:dividerHeight="1dp"
+        android:layout_below="@id/lblUltimosPartidos"
+        android:paddingBottom="60dp"/>
+
+    <!--android:layout_below="@id/lblUltimosPartidos"-->
 
 </RelativeLayout>
+

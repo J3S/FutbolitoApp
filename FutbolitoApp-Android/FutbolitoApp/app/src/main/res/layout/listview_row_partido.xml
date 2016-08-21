@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/relativeLayoutPartido"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content"
+    android:stretchColumns="1">
+
+    <TableRow
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fecha_partido"
+            android:id="@+id/fecha_partido"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/equipo_local"
+            android:id="@+id/equipo_local"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gol_local"
+            android:id="@+id/gol_local"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="40dp"
+            android:gravity="right"/>
+    </TableRow>
+
+
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/equipo_visitante"
+            android:id="@+id/equipo_visitante"
+            android:paddingLeft="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gol_visitante"
+            android:id="@+id/gol_visitante"
+            android:paddingRight="40dp"
+            android:gravity="right"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gol_visitante"
+            android:id="@+id/nombre_torneo"
+            android:paddingTop="10dp"
+            android:paddingRight="40dp"
+            android:gravity="right"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gol_visitante"
+            android:id="@+id/id_partido"
+            android:paddingTop="10dp"
+            android:paddingRight="40dp"
+            android:gravity="right"
+            android:visibility="gone"/>
+    </TableRow>
+
+</TableLayout>
