@@ -1,5 +1,6 @@
 package com.example.kevin.futbolitoapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,8 @@ public class JugadorActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         TextView tv = (TextView)findViewById(R.id.id_jugador);
+        Intent intent = getIntent();
+        String aaa = getIntent().getStringExtra("ID_J");
         tv.setText(getIntent().getStringExtra("ID"));
     }
 

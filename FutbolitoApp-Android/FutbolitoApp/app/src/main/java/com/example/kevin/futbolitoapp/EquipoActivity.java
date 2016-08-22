@@ -1,5 +1,6 @@
 package com.example.kevin.futbolitoapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -43,6 +44,8 @@ public class EquipoActivity extends AppCompatActivity {
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        Intent intent = getIntent();
 
         new TareaWSInfoEquipo().execute(equipo_url + getIntent().getStringExtra("ID"));
     }
