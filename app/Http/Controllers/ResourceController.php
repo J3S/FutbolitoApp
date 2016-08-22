@@ -275,7 +275,6 @@ class ResourceController extends Controller
     public function getJugadoresEquipo ($id_equipo) {
         $jugadoresEquipo = [];
         $jugadores = Jugador::getJugadoresxEquipo($id_equipo);
-        dd($jugadores);
         foreach ($jugadores as $jugador) {
             array_push($jugadoresEquipo, array(
                 'id' => $jugador->id,
