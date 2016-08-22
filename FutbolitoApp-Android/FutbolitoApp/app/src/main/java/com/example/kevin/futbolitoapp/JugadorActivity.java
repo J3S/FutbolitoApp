@@ -1,15 +1,14 @@
 package com.example.kevin.futbolitoapp;
 
-import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,51 +20,27 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class EquipoActivity extends AppCompatActivity {
+public class JugadorActivity extends AppCompatActivity {
 
-    private String equipo_url = "http://futbolitoapp.herokuapp.com/get_equipo/";
-    private String nombre;
-
+    private String jugador_url = "http://futbolitoapp.herokuapp.com/get_jugador/";
+    private String nombre, fecha_nac, rol, peso, camiseta, equipo, categoria;
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_equipo);
+        setContentView(R.layout.activity_jugador);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new FragmentEquipoPagerAdapter(getSupportFragmentManager(), EquipoActivity.this, getIntent().getStringExtra("ID")));
-        // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-        new TareaWSInfoEquipo().execute(equipo_url + getIntent().getStringExtra("ID"));
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
+        new TareaWSInfoJugador().execute(jugador_url + getIntent().getStringExtra("ID_J"));
     }
 
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
-    private class TareaWSInfoEquipo extends AsyncTask<String, Integer, Boolean> {
+    private class TareaWSInfoJugador extends AsyncTask<String, Integer, Boolean> {
 
 
         protected Boolean doInBackground(String... params) {
@@ -91,7 +66,15 @@ public class EquipoActivity extends AppCompatActivity {
                 }
 
                 JSONObject obj = new JSONObject(buffer.toString());
-                nombre = obj.getString("nombre");
+                JSONObject obj1 = obj.getJSONObject("info_jugador");
+                JSONObject obj2 = obj.getJSONObject("nombre_equipo");
+                nombre = obj1.getString("nombres") + " " + obj1.getString("apellidos");
+                fecha_nac = obj1.getString("fecha_nac");
+                rol = obj1.getString("rol");
+                peso = obj1.getString("peso");
+                camiseta = obj1.getString("num_camiseta");
+                categoria = obj1.getString("categoria");
+                equipo = obj2.getString("nombre");
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -123,11 +106,25 @@ public class EquipoActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             if (result) {
                 setTitleActionBar();
+                TextView tvnombre = (TextView)findViewById(R.id.nombre_jugador_ind);
+                TextView tvfecha = (TextView)findViewById(R.id.fecha_nac);
+                TextView tvrol = (TextView)findViewById(R.id.rol_ju);
+                TextView tvpeso = (TextView)findViewById(R.id.peso);
+                TextView tvcamiseta = (TextView)findViewById(R.id.camiseta);
+                TextView tvequipo = (TextView)findViewById(R.id.equipo_jugador);
+                TextView tvcategoria = (TextView)findViewById(R.id.categoria_jugador);
+                tvnombre.setText("Nombre: " + nombre);
+                tvfecha.setText("Fecha de nacimiento: " + fecha_nac);
+                tvrol.setText("Rol: " + rol);
+                tvpeso.setText("Peso: " + peso);
+                tvcamiseta.setText("# Camiseta: " + camiseta);
+                tvequipo.setText("Equipo: " + equipo);
+                tvcategoria.setText("Categoría: " + categoria);
             }
         }
     }
-
     public void setTitleActionBar(){
-        this.getSupportActionBar().setTitle("Equipo " + nombre);
+        this.getSupportActionBar().setTitle(nombre);
     }
+
 }

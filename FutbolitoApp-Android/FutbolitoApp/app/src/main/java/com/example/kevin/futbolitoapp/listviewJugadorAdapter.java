@@ -86,14 +86,16 @@ public class listviewJugadorAdapter extends BaseAdapter {
             switch (rowType) {
                 case TYPE_ITEM:
                     convertView = mInflater.inflate(R.layout.listview_row_jugador, null);
-                    holder.nom_jugador = (TextView) convertView.findViewById(R.id.nom_jugador);
+                    holder.nom_jugador = (TextView) convertView.findViewById(R.id.nombre_jugador);
                     holder.rol_jugador = (TextView) convertView.findViewById(R.id.rol_jugador);
-                    holder.camis_jugador = (TextView) convertView.findViewById(R.id.camis_jugador);
+                    holder.camis_jugador = (TextView) convertView.findViewById(R.id.num_camiseta);
                     holder.id_jugador = (TextView) convertView.findViewById(R.id.id_jugador);
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.listview_row_header_jugador, null);
-                    holder.rol_agrupado = (TextView) convertView.findViewById(R.id.rol_agrupado);
+                    holder.rol_jugador = (TextView) convertView.findViewById(R.id.rol_jugador);
+                    holder.camis_jugador = (TextView) convertView.findViewById(R.id.num_camiseta);
+                    holder.nom_jugador = (TextView) convertView.findViewById(R.id.nombre_jugador);
                     break;
             }
             convertView.setTag(holder);
@@ -102,7 +104,10 @@ public class listviewJugadorAdapter extends BaseAdapter {
         }
         ModelJugador item = jugadorList.get(position);
         if(rowType == TYPE_SEPARATOR) {
-            holder.rol_agrupado.setText(item.get_rol_jugador().toString());
+//            holder.rol_agrupado.setText(item.get_rol_jugador().toString());
+            holder.nom_jugador.setText("Nombre");
+            holder.rol_jugador.setText("Rol");
+            holder.camis_jugador.setText("# Cam");
         } else {
             holder.nom_jugador.setText(item.get_nom_jugador().toString());
             holder.rol_jugador.setText(item.get_rol_jugador().toString());

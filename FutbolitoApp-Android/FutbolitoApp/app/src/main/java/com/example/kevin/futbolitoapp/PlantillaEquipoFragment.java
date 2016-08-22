@@ -1,11 +1,13 @@
 package com.example.kevin.futbolitoapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +34,9 @@ public class PlantillaEquipoFragment extends Fragment {
     private String id_equipo;
     private View rootView;
     private String[][] infoJugador;
+    private String[] roles;
+
+    private listviewJugadorAdapter adapter;
 
     public static PlantillaEquipoFragment newInstance(String id) {
         Bundle args = new Bundle();
@@ -87,6 +92,9 @@ public class PlantillaEquipoFragment extends Fragment {
 
                 JSONArray respJSON = new JSONArray(buffer.toString());
                 infoJugador = new String[respJSON.length()][];
+                String rol = "";
+                roles = new String[respJSON.length()];
+                int j = 0;
                 for(int i=0; i<respJSON.length(); i++)
                 {
                     JSONObject obj = respJSON.getJSONObject(i);
@@ -96,6 +104,16 @@ public class PlantillaEquipoFragment extends Fragment {
                     infoJugador[i][2] = obj.getString("apellido");
                     infoJugador[i][3] = obj.getString("rol");
                     infoJugador[i][4] = obj.getString("camiseta");
+                    if(rol.equals("")){
+                        rol = obj.getString("rol");
+                        roles[j] = rol;
+                        j++;
+                    }
+                    if(!rol.equals(obj.getString("rol"))){
+                        roles[j] = rol;
+                        j++;
+                        rol = obj.getString("rol");
+                    }
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -126,48 +144,44 @@ public class PlantillaEquipoFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-                for (int i=0; i<infoJugador.length;i++) {
-                    addHeaders(i);
-                    addData(i);
-                }
-
+                inicio_tabla();
+                addData();
+                adapter.notifyDataSetChanged();
             }
         }
     }
-    public void addHeaders(int index){
-//        adapter.addSectionHeaderItem(nombre_torneo[index]);
+
+    public void inicio_tabla() {
+        ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
+        adapter = new listviewJugadorAdapter(rootView.getContext());
+        lview.setAdapter(adapter);
     }
 
     /** Agregar los datos a la tabla **/
-    public void addData(int index) {
+    public void addData() {
+        for (int i=0; i<infoJugador.length;i++) {
+            adapter.addItem(infoJugador[i][1] + " " + infoJugador[i][2], infoJugador[i][3], infoJugador[i][4], infoJugador[i][0]);
+        }
+        ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
+        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-//        int limite = partidos[index].length;
-//        for (int i=0; i<limite; i++) {
-//            adapter.addItem(partidos[index][i][0], partidos[index][i][1], partidos[index][i][2], partidos[index][i][3], partidos[index][i][4],
-//                    partidos[index][i][5], nombre_torneo[index]);
-//        }
-//        ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
-//
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
 
-
-//        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//
-//                if(((TextView)view.findViewById(R.id.id_equipo)).getText().toString() != "") {
-//                    //Creamos el Intent
-//                    Intent intent = new Intent(getActivity(), EquipoActivity.class);
-//                    //Creamos la información a pasar entre actividades
-//                    Bundle b = new Bundle();
-//                    b.putString("ID", ((TextView) view.findViewById(R.id.id_equipo)).getText().toString());
-//                    //Añadimos la información al intent
-//                    intent.putExtras(b);
-//                    //Iniciamos la nueva actividad
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+                if(((TextView)view.findViewById(R.id.id_jugador)).getText().toString() != "") {
+                    //Creamos el Intent
+                    Intent intent = new Intent(((EquipoActivity) getActivity()), JugadorActivity.class);
+                    //Creamos la información a pasar entre actividades
+                    Bundle b = new Bundle();
+                    String ttt = ((TextView) view.findViewById(R.id.id_jugador)).getText().toString();
+                    b.putString("ID_J", ((TextView) view.findViewById(R.id.id_jugador)).getText().toString());
+                    //Añadimos la información al intent
+                    intent.putExtras(b);
+                    //Iniciamos la nueva actividad
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }
