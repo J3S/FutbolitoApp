@@ -68,13 +68,13 @@ public class JugadorActivity extends AppCompatActivity {
                 JSONObject obj = new JSONObject(buffer.toString());
                 JSONObject obj1 = obj.getJSONObject("info_jugador");
                 JSONObject obj2 = obj.getJSONObject("nombre_equipo");
-//                nombre = obj.getString("nombres") + " " + obj.getString("apellidos");
-//                fecha_nac = obj.getString("fecha_nac");
-//                rol = obj.getString("rol");
-//                peso = obj.getString("peso");
-//                camiseta = obj.getString("num_camiseta");
-//                categoria = obj.getString("categoria");
-//                equipo = obj.getString("0");
+                nombre = obj1.getString("nombres") + " " + obj1.getString("apellidos");
+                fecha_nac = obj1.getString("fecha_nac");
+                rol = obj1.getString("rol");
+                peso = obj1.getString("peso");
+                camiseta = obj1.getString("num_camiseta");
+                categoria = obj1.getString("categoria");
+                equipo = obj2.getString("nombre");
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
