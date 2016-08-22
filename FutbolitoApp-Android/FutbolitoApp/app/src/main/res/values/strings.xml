@@ -22,6 +22,9 @@
     <string name="equipo_visitante">EquipoV</string>
     <string name="gol_local">#L</string>
     <string name="gol_visitante">#V</string>
+    <string name="nombre_jugador">Nombre</string>
+    <string name="num_camiseta">Cam:</string>
+    <string name="rol_jugador">Rol</string>
     <color name="colorSeparator">#33691e</color>
     <color name="colorHeader">#388e3c</color>
     <color name="colorApp">#1b5e20</color>

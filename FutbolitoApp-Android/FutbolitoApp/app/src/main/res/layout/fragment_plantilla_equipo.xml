@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="PlantillaEquipoFragment">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/relativeLayout1"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:orientation="horizontal"
+        android:background="@color/colorHeader">
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight = "1"
+        android:text="Rol"
+        android:id="@+id/rol_j"
+        android:textStyle="bold"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight = "1"
+        android:text="Cam"
+        android:id="@+id/n_cam"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:layout_toRightOf="@+id/rol_jugador"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:layout_width = "0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight = "6"
+        android:text="Nombre"
+        android:id="@+id/nom_j"
+        android:textStyle="bold"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_toRightOf="@+id/num_camiseta"
+        android:textColor="#ffffff"/>
+    </LinearLayout>
 
 <ListView
     android:id = "@+id/listviewTablaJugadoresEquipo"
@@ -12,8 +56,9 @@ tools:context="PlantillaEquipoFragment">
     android:divider="#757575"
     android:headerDividersEnabled="false"
     android:dividerHeight="1dp"
-    android:paddingBottom="60dp"/>
+    android:paddingBottom="60dp"
+    android:layout_below="@+id/nombre_jugador"/>
 
 <!--android:layout_below="@id/lblUltimosPartidos"-->
 
-</RelativeLayout>
+</LinearLayout>
