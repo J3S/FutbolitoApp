@@ -74,7 +74,7 @@ class CrearJugadorTest extends TestCase
             ->select($equipoL->id, 'equipo')
             ->press('Guardar')
             ->seePageIs(route('jugador.create'));
-            
+
     }
 
     /**
@@ -539,7 +539,7 @@ class CrearJugadorTest extends TestCase
             ->select($equipoL->id, 'equipo')
             ->type($telefono, 'telefono')
             ->press('Guardar')
-            ->seePageIs(route('jugador.create'));          
+            ->seePageIs(route('jugador.create'));
     }
 
     /**
@@ -575,7 +575,7 @@ class CrearJugadorTest extends TestCase
                  'identificacion' => $identificacion,
                  'num_camiseta' => $num_camiseta,
                 ]
-            );   
+            );
     }
 
     /**
@@ -603,7 +603,7 @@ class CrearJugadorTest extends TestCase
             ->select($equipoL->id, 'equipo')
             ->type($num_camiseta, 'num_camiseta')
             ->press('Guardar')
-            ->seePageIs(route('jugador.create'));            
+            ->seePageIs(route('jugador.create'));
     }
 
     /**
@@ -640,7 +640,7 @@ class CrearJugadorTest extends TestCase
                  'identificacion' => $identificacion,
                  'categoria' => $categoriaL->nombre,
                 ]
-            );               
+            );
     }
 
     /**
@@ -694,7 +694,7 @@ class CrearJugadorTest extends TestCase
             ->type($apellidos, 'apellidos')
             ->type($identificacion, 'identificacion')
             ->select($equipoL->id, 'equipo')
-            ->press('Guardar') 
+            ->press('Guardar')
             ->seeInDatabase(
                     'jugadors',
                     [
@@ -703,7 +703,7 @@ class CrearJugadorTest extends TestCase
                      'identificacion' => $identificacion,
                      'id_equipo' => $equipoL->id,
                     ]
-                );           
+                );
     }
 
     /**
@@ -727,7 +727,7 @@ class CrearJugadorTest extends TestCase
             'id_equipo' => '2000',
         ];
         $response = $this->call('POST', 'jugador', $parametros);
-        //$this->assertRedirectedToRoute('jugador.create');      
+        //$this->assertRedirectedToRoute('jugador.create');
     }
 
 
