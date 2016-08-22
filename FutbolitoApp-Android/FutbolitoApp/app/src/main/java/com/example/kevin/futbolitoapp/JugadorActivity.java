@@ -32,6 +32,7 @@ public class JugadorActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         new TareaWSInfoJugador().execute(jugador_url + getIntent().getStringExtra("ID_J"));
