@@ -276,7 +276,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             if (result) {
                 inicio_tabla();
-                for (int i=1; i<categorias[0].length;i++) {
+                for (int i=1; i<categorias[cmbAnio.getSelectedItemPosition()].length;i++) {
                     addHeaders(i);
                     addData(i-1);
                 }
