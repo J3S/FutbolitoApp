@@ -269,7 +269,7 @@ class EditarEquipoTest extends TestCase
             'equipos',
             [
              'nombre'           => $inputNombre,
-             'director_tecnico' => $inputEntrenador,
+             'director_tecnico' => null,
              'categoria'        => $inputCategoria,
             ]
         );

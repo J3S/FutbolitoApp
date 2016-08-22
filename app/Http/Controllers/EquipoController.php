@@ -114,17 +114,17 @@ class EquipoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EquipoRequest $request)
     {
 
-        $this->validate(
-            $request,
-            array(
-             'nombre'     => 'required|unique:equipos,nombre',
-             'entrenador' => 'alpha_spaces',
-             'categoria'  => 'required|exists:categorias,nombre',
-            )
-        );
+        // $this->validate(
+        //     $request,
+        //     array(
+        //      'nombre'     => 'required|unique:equipos,nombre',
+        //      'entrenador' => 'alpha_spaces',
+        //      'categoria'  => 'required|exists:categorias,nombre',
+        //     )
+        // );
 
         if (count($request->ids) > 0) {
             foreach ($request->ids as $value) {
@@ -141,9 +141,13 @@ class EquipoController extends Controller
         }
 
         $equipo         = new Equipo();
-        $equipo->nombre = $request->nombre;
-        $equipo->director_tecnico = $request->entrenador;
-        $equipo->categoria        = $request->categoria;
+        $equipo->nombre    = $request->nombre;
+        $equipo->categoria = $request->categoria;
+        if ($request->entrenador != "") {
+            $equipo->director_tecnico = $request->entrenador;
+        } else {
+            $equipo->director_tecnico = null;
+        }
         if ($equipo->save() === true) {
             if (count($request->ids) > 0) {
                 // Set id_equipo a jugadors selecionados en el nuevo equipo!
@@ -314,9 +318,13 @@ class EquipoController extends Controller
             }
         }
 
-        $equipoNew->nombre           = $request->nombre;
-        $equipoNew->director_tecnico = $request->entrenador;
-        $equipoNew->categoria        = $request->categoria;
+        $equipoNew->nombre    = $request->nombre;
+        $equipoNew->categoria = $request->categoria;
+        if ($request->entrenador != "") {
+            $equipoNew->director_tecnico = $request->entrenador;
+        } else {
+            $equipoNew->director_tecnico = null;
+        }
         if ($equipoNew->save() === true) {
             Jugador::where('id_equipo', $equipoNew->id)
                    ->update(['id_equipo' => null, 'categoria' => null]);

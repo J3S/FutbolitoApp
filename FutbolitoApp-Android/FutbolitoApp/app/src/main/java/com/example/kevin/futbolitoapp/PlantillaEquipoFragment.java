@@ -32,6 +32,9 @@ public class PlantillaEquipoFragment extends Fragment {
     private String id_equipo;
     private View rootView;
     private String[][] infoJugador;
+    private String[] roles;
+
+    private listviewJugadorAdapter adapter;
 
     public static PlantillaEquipoFragment newInstance(String id) {
         Bundle args = new Bundle();
@@ -87,6 +90,9 @@ public class PlantillaEquipoFragment extends Fragment {
 
                 JSONArray respJSON = new JSONArray(buffer.toString());
                 infoJugador = new String[respJSON.length()][];
+                String rol = "";
+                roles = new String[respJSON.length()];
+                int j = 0;
                 for(int i=0; i<respJSON.length(); i++)
                 {
                     JSONObject obj = respJSON.getJSONObject(i);
@@ -96,6 +102,16 @@ public class PlantillaEquipoFragment extends Fragment {
                     infoJugador[i][2] = obj.getString("apellido");
                     infoJugador[i][3] = obj.getString("rol");
                     infoJugador[i][4] = obj.getString("camiseta");
+                    if(rol.equals("")){
+                        rol = obj.getString("rol");
+                        roles[j] = rol;
+                        j++;
+                    }
+                    if(!rol.equals(obj.getString("rol"))){
+                        roles[j] = rol;
+                        j++;
+                        rol = obj.getString("rol");
+                    }
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -126,27 +142,33 @@ public class PlantillaEquipoFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-                for (int i=0; i<infoJugador.length;i++) {
-                    addHeaders(i);
-                    addData(i);
-                }
+//                for (int i=0; i<infoJugador.length;i++) {
+//                    addHeaders(i);
+                inicio_tabla();
+                    addData();
+                adapter.notifyDataSetChanged();
+//                }
 
             }
         }
     }
+
+    public void inicio_tabla() {
+        ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
+        adapter = new listviewJugadorAdapter(rootView.getContext());
+        lview.setAdapter(adapter);
+    }
+
     public void addHeaders(int index){
-//        adapter.addSectionHeaderItem(nombre_torneo[index]);
+        adapter.addSectionHeaderItem(roles[index]);
     }
 
     /** Agregar los datos a la tabla **/
-    public void addData(int index) {
-
-//        int limite = partidos[index].length;
-//        for (int i=0; i<limite; i++) {
-//            adapter.addItem(partidos[index][i][0], partidos[index][i][1], partidos[index][i][2], partidos[index][i][3], partidos[index][i][4],
-//                    partidos[index][i][5], nombre_torneo[index]);
-//        }
-//        ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
+    public void addData() {
+        for (int i=0; i<infoJugador.length;i++) {
+            adapter.addItem(infoJugador[i][1] + " " + infoJugador[i][2], infoJugador[i][3], infoJugador[i][4], infoJugador[i][0]);
+        }
+        ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
 //
 
 
