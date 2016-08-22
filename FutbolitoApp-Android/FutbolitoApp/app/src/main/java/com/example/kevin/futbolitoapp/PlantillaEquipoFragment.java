@@ -142,13 +142,9 @@ public class PlantillaEquipoFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-//                for (int i=0; i<infoJugador.length;i++) {
-//                    addHeaders(i);
                 inicio_tabla();
-                    addData();
+                addData();
                 adapter.notifyDataSetChanged();
-//                }
-
             }
         }
     }
@@ -157,10 +153,6 @@ public class PlantillaEquipoFragment extends Fragment {
         ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
         adapter = new listviewJugadorAdapter(rootView.getContext());
         lview.setAdapter(adapter);
-    }
-
-    public void addHeaders(int index){
-        adapter.addSectionHeaderItem(roles[index]);
     }
 
     /** Agregar los datos a la tabla **/
