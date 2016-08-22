@@ -29,9 +29,41 @@
             app:popupTheme="@style/MyMaterialTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/nombre_jugador_ind"
+        android:text="aasss"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nombre_fecha_nac"
+        android:text="aasss"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nombre_rol"
+        android:text="aasss"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nombre_peso"
+        android:text="aasss"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nombre_camiseta"
+        android:text="aasss"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/equipo_jugador"
         android:text="aasss"/>
 
 

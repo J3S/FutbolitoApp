@@ -1,11 +1,13 @@
 package com.example.kevin.futbolitoapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -164,24 +166,24 @@ public class PlantillaEquipoFragment extends Fragment {
 //
 
 
-//        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//
-//                if(((TextView)view.findViewById(R.id.id_equipo)).getText().toString() != "") {
-//                    //Creamos el Intent
-//                    Intent intent = new Intent(getActivity(), EquipoActivity.class);
-//                    //Creamos la información a pasar entre actividades
-//                    Bundle b = new Bundle();
-//                    b.putString("ID", ((TextView) view.findViewById(R.id.id_equipo)).getText().toString());
-//                    //Añadimos la información al intent
-//                    intent.putExtras(b);
-//                    //Iniciamos la nueva actividad
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                if(((TextView)view.findViewById(R.id.id_jugador)).getText().toString() != "") {
+                    //Creamos el Intent
+                    Intent intent = new Intent(getActivity(), JugadorActivity.class);
+                    //Creamos la información a pasar entre actividades
+                    Bundle b = new Bundle();
+                    b.putString("ID", ((TextView) view.findViewById(R.id.id_jugador)).getText().toString());
+                    //Añadimos la información al intent
+                    intent.putExtras(b);
+                    //Iniciamos la nueva actividad
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }
