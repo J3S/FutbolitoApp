@@ -64,8 +64,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent,
                                                android.view.View v, int position, long id) {
                         ArrayAdapter<String> adaptadorCmbCategoria =
-                                new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, categorias[position]);
-                        adaptadorCmbCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                new ArrayAdapter<>(TablaPosicionesActivity.this, R.layout.custom_spinner_item, categorias[position]);
+                        adaptadorCmbCategoria.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
                         cmbCategoria.setAdapter(adaptadorCmbCategoria);
                     }
 
@@ -174,13 +174,13 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             if (result) {
                 ArrayAdapter<String> adaptadorCmbAnio =
-                        new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, anios);
-                adaptadorCmbAnio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        new ArrayAdapter<>(TablaPosicionesActivity.this, R.layout.custom_spinner_item, anios);
+                adaptadorCmbAnio.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
                 cmbAnio.setAdapter(adaptadorCmbAnio);
 
                 ArrayAdapter<String> adaptadorCmbCategoria =
-                        new ArrayAdapter<>(TablaPosicionesActivity.this, android.R.layout.simple_spinner_item, categorias[0]);
-                adaptadorCmbCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        new ArrayAdapter<>(TablaPosicionesActivity.this, R.layout.custom_spinner_item, categorias[0]);
+                adaptadorCmbCategoria.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
                 cmbCategoria.setAdapter(adaptadorCmbCategoria);
             }
         }
