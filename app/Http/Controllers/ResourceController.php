@@ -218,8 +218,11 @@ class ResourceController extends Controller
 		    $puntos[$key]  = $row['PTS'];
 		    $goldif[$key] = $row['GD'];
 		}
-        array_multisort($puntos, SORT_DESC, $goldif, SORT_DESC, $resultados);
-        $tabla_posiciones = ["categoria" => $categoria->nombre, "anio" => $torneo->anio, "resultados" => $resultados];
+        $tabla_posiciones = [];
+        if(count($resultados) > 0){
+            array_multisort($puntos, SORT_DESC, $goldif, SORT_DESC, $resultados);
+            $tabla_posiciones = ["categoria" => $categoria->nombre, "anio" => $torneo->anio, "resultados" => $resultados];
+        }
 		
 		return json_encode($tabla_posiciones);
 	}
@@ -229,7 +232,9 @@ class ResourceController extends Controller
     	$torneos = Torneo::where('estado', 1)->where('anio', $anio)->orderBy('id_categoria', 'asc')->get();
     	foreach($torneos as $torneo) {
     		$tabla_posiciones = json_decode($this->getTablaPosicionesTorneo($torneo->id));
-			array_push($tablas_posiciones, $tabla_posiciones);
+            if(count($tabla_posiciones) > 0){
+                array_push($tablas_posiciones, $tabla_posiciones);
+            }	
     	}
 		return json_encode($tablas_posiciones);
 	}
