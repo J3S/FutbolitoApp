@@ -225,7 +225,7 @@ class ResourceController extends Controller
 
     public function getTablasPosicionesAnio($anio){
     	$tablas_posiciones = [];
-    	$torneos = Torneo::where('estado', 1)->where('anio', $anio)->get();
+    	$torneos = Torneo::where('estado', 1)->where('anio', $anio)->orderBy('id_categoria', 'asc')->get();
     	foreach($torneos as $torneo) {
     		$tabla_posiciones = json_decode($this->getTablaPosicionesTorneo($torneo->id));
 			array_push($tablas_posiciones, $tabla_posiciones);
