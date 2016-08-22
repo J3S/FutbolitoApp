@@ -182,6 +182,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                         new ArrayAdapter<>(TablaPosicionesActivity.this, R.layout.custom_spinner_item, categorias[0]);
                 adaptadorCmbCategoria.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
                 cmbCategoria.setAdapter(adaptadorCmbCategoria);
+            } else {
+                cmbAnio.setAdapter(null);
             }
         }
     }
@@ -279,6 +281,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                     addData(i-1);
                 }
                 adapter.notifyDataSetChanged();
+            } else {
+                cmbCategoria.setAdapter(null);
             }
         }
     }
