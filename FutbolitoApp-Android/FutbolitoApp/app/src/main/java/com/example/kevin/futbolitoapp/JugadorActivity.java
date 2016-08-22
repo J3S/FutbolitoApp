@@ -20,7 +20,9 @@ public class JugadorActivity extends AppCompatActivity {
         TextView tv = (TextView)findViewById(R.id.id_jugador);
         Intent intent = getIntent();
         String aaa = getIntent().getStringExtra("ID_J");
-        tv.setText(getIntent().getStringExtra("ID"));
+        System.out.println(aaa);
+
+        tv.setText(aaa);
     }
 
 }

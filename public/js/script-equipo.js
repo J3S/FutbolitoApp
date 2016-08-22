@@ -161,7 +161,6 @@ $(document).ready(function() {
             dataType: 'json',
             error: function (xhr) {
                 var alMjs = xhr.responseJSON;
-                console.log(alMjs);
                 $(".alert.alert-danger").css("display", "block");
                 $("#alerts").empty();
                 $.each(alMjs, function(key, value) {
