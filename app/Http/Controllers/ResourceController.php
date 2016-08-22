@@ -48,17 +48,21 @@ class ResourceController extends Controller
         $categorias_torneo_anio = array();
         $anio;
         $torneos = Torneo::where('estado', 1)->orderBy('anio', 'desc')->orderBy('id_categoria', 'asc')->get();
+
         $anio = $torneos[0]->anio;
         foreach ($torneos as $torneo)  {
-            if ($anio === $torneo->anio) {
-                $categoria = Categoria::where('id', $torneo->id_categoria)->first();
-                array_push($categorias_torneo_anio, $categoria->nombre);
-            } else {
-                array_push($array_torneos_x_anio, array("anio" => $anio, "categorias" => $categorias_torneo_anio));
-                $anio = $torneo->anio;
-                $categorias_torneo_anio = array();
-                $categoria = Categoria::where('id', $torneo->id_categoria)->first();
-                array_push($categorias_torneo_anio, $categoria->nombre);
+            $torneo_equipos = TorneoEquipo::where('id_torneo', $torneo->id)->get();
+            if (count($torneo_equipos) > 0){
+                if ($anio === $torneo->anio) {
+                    $categoria = Categoria::where('id', $torneo->id_categoria)->first();
+                    array_push($categorias_torneo_anio, $categoria->nombre);
+                } else {
+                    array_push($array_torneos_x_anio, array("anio" => $anio, "categorias" => $categorias_torneo_anio));
+                    $anio = $torneo->anio;
+                    $categorias_torneo_anio = array();
+                    $categoria = Categoria::where('id', $torneo->id_categoria)->first();
+                    array_push($categorias_torneo_anio, $categoria->nombre);
+                }
             }
         }
         array_push($array_torneos_x_anio, array("anio" => $anio, "categorias" => $categorias_torneo_anio));
