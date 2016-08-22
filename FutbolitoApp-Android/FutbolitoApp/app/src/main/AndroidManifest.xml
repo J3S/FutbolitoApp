@@ -18,15 +18,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-->
-            <!--android:name=".TablaPosicionesActivity"-->
-            <!--android:label="Tabla de posiciones" />-->
+        <!-- <activity -->
+        <!-- android:name=".TablaPosicionesActivity" -->
+        <!-- android:label="Tabla de posiciones" /> -->
         <activity android:name=".Datos" />
         <activity
             android:name=".JugadoresEquipoActivity"
             android:label="Jugadores" />
-        <activity android:name=".EquipoActivity"
-            android:label="@string/nom_equipo"></activity>
+        <activity
+            android:name=".EquipoActivity"
+            android:label="@string/nom_equipo" />
+        <activity
+            android:name=".JugadorActivity"
+            android:label="@string/title_activity_jugador"
+            android:theme="@style/MyMaterialTheme"></activity>
     </application>
 
 </manifest>
