@@ -114,17 +114,17 @@ class EquipoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(EquipoRequest $request)
+    public function store(Request $request)
     {
 
-        // $this->validate(
-        //     $request,
-        //     array(
-        //      'nombre'     => 'required|unique:equipos,nombre',
-        //      'entrenador' => 'alpha_spaces',
-        //      'categoria'  => 'required|exists:categorias,nombre',
-        //     )
-        // );
+        $this->validate(
+            $request,
+            array(
+             'nombre'     => 'required|unique:equipos,nombre',
+             'entrenador' => 'alpha_spaces',
+             'categoria'  => 'required|exists:categorias,nombre',
+            )
+        );
 
         if (count($request->ids) > 0) {
             foreach ($request->ids as $value) {
