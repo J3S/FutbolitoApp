@@ -163,9 +163,6 @@ public class PlantillaEquipoFragment extends Fragment {
             adapter.addItem(infoJugador[i][1] + " " + infoJugador[i][2], infoJugador[i][3], infoJugador[i][4], infoJugador[i][0]);
         }
         ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
-//
-
-
         lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -174,10 +171,11 @@ public class PlantillaEquipoFragment extends Fragment {
 
                 if(((TextView)view.findViewById(R.id.id_jugador)).getText().toString() != "") {
                     //Creamos el Intent
-                    Intent intent = new Intent(getActivity(), JugadorActivity.class);
+                    Intent intent = new Intent(((EquipoActivity) getActivity()), JugadorActivity.class);
                     //Creamos la información a pasar entre actividades
                     Bundle b = new Bundle();
-                    b.putString("ID", ((TextView) view.findViewById(R.id.id_jugador)).getText().toString());
+                    String ttt = ((TextView) view.findViewById(R.id.id_jugador)).getText().toString();
+                    b.putString("ID_J", ((TextView) view.findViewById(R.id.id_jugador)).getText().toString());
                     //Añadimos la información al intent
                     intent.putExtras(b);
                     //Iniciamos la nueva actividad
