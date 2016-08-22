@@ -110,7 +110,10 @@ class ResourceController extends Controller
     }
 
     public function getJugador($id){
-    	$jugador = Jugador::find($id)->toJson();
+    	$jugador = Jugador::find($id)->toArray();
+            $nombre_equipo = Equipo::where('id', $jugador['id_equipo'])->first(['nombre']);
+            array_push($jugador, $nombre_equipo["nombre"]);
+            dd(json_encode($jugador));
     	return $jugador;
     }
 

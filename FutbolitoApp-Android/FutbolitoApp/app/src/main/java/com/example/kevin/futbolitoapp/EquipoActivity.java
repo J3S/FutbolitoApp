@@ -45,8 +45,6 @@ public class EquipoActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        Intent intent = getIntent();
-
         new TareaWSInfoEquipo().execute(equipo_url + getIntent().getStringExtra("ID"));
     }
 
