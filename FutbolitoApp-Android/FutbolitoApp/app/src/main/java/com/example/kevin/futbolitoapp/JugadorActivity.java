@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,13 +66,15 @@ public class JugadorActivity extends AppCompatActivity {
                 }
 
                 JSONObject obj = new JSONObject(buffer.toString());
-                nombre = obj.getString("nombres") + " " + obj.getString("apellidos");
-                fecha_nac = obj.getString("fecha_nac");
-                rol = obj.getString("rol");
-                peso = obj.getString("peso");
-                camiseta = obj.getString("num_camiseta");
-                categoria = obj.getString("categoria");
-                equipo = obj.getString("0");
+                JSONObject obj1 = obj.getJSONObject("info_jugador");
+                JSONObject obj2 = obj.getJSONObject("nombre_equipo");
+//                nombre = obj.getString("nombres") + " " + obj.getString("apellidos");
+//                fecha_nac = obj.getString("fecha_nac");
+//                rol = obj.getString("rol");
+//                peso = obj.getString("peso");
+//                camiseta = obj.getString("num_camiseta");
+//                categoria = obj.getString("categoria");
+//                equipo = obj.getString("0");
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
