@@ -91,6 +91,7 @@ public class PosicionEquipoFragment extends Fragment {
                 JSONArray resultados = obj.getJSONArray("resultados");
                 header_tabla = obj.getString("categoria") + " " + obj.getString("anio");
                 tablaPosiciones = new String[resultados.length()][];
+                int pos_equipo = 1;
                 for(int j=0; j<resultados.length(); j++) {
                     JSONObject objInfo = resultados.getJSONObject(j);
                     String nombreEquipo = objInfo.getString("equipo");
@@ -103,7 +104,7 @@ public class PosicionEquipoFragment extends Fragment {
                     String golesDiferencia = objInfo.getString("GD");
                     String puntos = objInfo.getString("PTS");
                     String id = objInfo.getString("ID");
-                    tablaPosiciones[j] = new String[objInfo.length()];
+                    tablaPosiciones[j] = new String[objInfo.length()+1];
                     tablaPosiciones[j][0] = nombreEquipo;
                     tablaPosiciones[j][1] = partidosJugados;
                     tablaPosiciones[j][2] = partidosGanados;
@@ -114,6 +115,8 @@ public class PosicionEquipoFragment extends Fragment {
                     tablaPosiciones[j][7] = golesDiferencia;
                     tablaPosiciones[j][8] = puntos;
                     tablaPosiciones[j][9] = id;
+                    tablaPosiciones[j][10] = String.valueOf(pos_equipo);
+                    pos_equipo++;
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -167,7 +170,7 @@ public class PosicionEquipoFragment extends Fragment {
         int limite = tablaPosiciones.length;
         for (int i=0; i<limite; i++) {
             adapter.addItem(tablaPosiciones[i][0], tablaPosiciones[i][1], tablaPosiciones[i][2], tablaPosiciones[i][3], tablaPosiciones[i][4],
-                    tablaPosiciones[i][5], tablaPosiciones[i][6], tablaPosiciones[i][7], tablaPosiciones[i][8], tablaPosiciones[i][9]);
+                    tablaPosiciones[i][5], tablaPosiciones[i][6], tablaPosiciones[i][7], tablaPosiciones[i][8], tablaPosiciones[i][9], tablaPosiciones[i][10]);
         }
         ListView lview = (ListView) rootView.findViewById(R.id.listviewTablaPosIndividual);
         lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

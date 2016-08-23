@@ -1,70 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="InfoGeneralEquipoFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Información general"
-        android:textStyle="bold"
-        android:textSize="15dp"
-        android:id="@+id/lblInfoGeneral"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"/>
-    <!--android:layout_centerHorizontal="true"-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/nombre_equipo"
-        android:layout_below="@+id/lblInfoGeneral"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/director_equipo"
-        android:layout_toRightOf="@+id/nombre_equipo"
-        android:layout_below="@+id/lblInfoGeneral"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/categoria_equipo"
-        android:layout_toRightOf="@+id/director_equipo"
-        android:layout_below="@+id/lblInfoGeneral"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Últimos partidos"
-        android:textStyle="bold"
-        android:textSize="15dp"
-        android:id="@+id/lblUltimosPartidos"
-        android:layout_below="@+id/categoria_equipo"
-        android:paddingTop="10dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"/>
-    <!--android:layout_centerHorizontal="true"-->
-    <ListView
-        android:id = "@+id/listviewPartidosEquipo"
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:divider="#757575"
-        android:headerDividersEnabled="false"
-        android:dividerHeight="1dp"
-        android:layout_below="@+id/lblUltimosPartidos"
-        android:paddingBottom="60dp"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content"
+    android:orientation="vertical"
+    >
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
+        <TableRow android:background="@color/colorHeaderTableGreen">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:text="Información general"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:id="@+id/lblInfoGeneral"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Últimos partidos"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:id="@+id/lblUltimosPartidos"
+                android:layout_below="@+id/categoria_equipo"
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp"
+                android:gravity="center_horizontal"/>
+        </TableRow>
+        <TableRow>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:background="@color/colorSeparator">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nombre_equipo"
+                    android:text="Equipo"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:paddingTop="15dp"
+                    android:gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Equipo"
+                    android:textSize="12dp"
+                    android:layout_below="@+id/nombre_equipo"
+                    android:id="@+id/lbl_equipo"
+                    android:gravity="center_horizontal"
+                    android:paddingBottom="15dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorSeparator"
+                    android:id="@+id/separator_equipo"
+                    android:layout_below="@+id/lbl_equipo"/>
 
-    <!--android:layout_below="@id/lblUltimosPartidos"-->
 
-</RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/director_equipo"
+                    android:paddingTop="15dp"
+                    android:text="Director"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@+id/separator_equipo"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Director"
+                    android:textSize="12dp"
+                    android:layout_below="@+id/director_equipo"
+                    android:id="@+id/lbl_director"
+                    android:gravity="center_horizontal"
+                    android:paddingBottom="15dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorSeparator"
+                    android:layout_below="@+id/lbl_director"
+                    android:id="@+id/separator_director"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/categoria_equipo"
+                    android:paddingTop="15dp"
+                    android:text="Categoría"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@+id/separator_director"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Categoría"
+                    android:textSize="12dp"
+                    android:layout_below="@+id/categoria_equipo"
+                    android:id="@+id/lbl_categoria"
+                    android:gravity="center_horizontal"/>
+            </RelativeLayout>
+
+
+            <ListView
+                android:id = "@+id/listviewPartidosEquipo"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:divider="@color/colorSeparator"
+                android:headerDividersEnabled="false"
+                android:dividerHeight="1dp"
+                android:layout_below="@+id/lblUltimosPartidos"
+                android:paddingBottom="60dp"/>
+
+        </TableRow>
+    </TableLayout>
+
+
+</LinearLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--tools:context="InfoGeneralEquipoFragment">-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Información general"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textSize="15dp"-->
+        <!--android:id="@+id/lblInfoGeneral"-->
+        <!--android:paddingTop="5dp"-->
+        <!--android:paddingBottom="5dp"-->
+        <!--android:paddingLeft="10dp"/>-->
+    <!--&lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Nombre"-->
+        <!--android:id="@+id/nombre_equipo"-->
+        <!--android:layout_below="@+id/lblInfoGeneral"-->
+        <!--android:paddingBottom="5dp"-->
+        <!--android:paddingLeft="10dp"/>-->
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Director"-->
+        <!--android:id="@+id/director_equipo"-->
+        <!--android:layout_toRightOf="@+id/nombre_equipo"-->
+        <!--android:layout_below="@+id/lblInfoGeneral"-->
+        <!--android:paddingBottom="5dp"-->
+        <!--android:paddingLeft="10dp"/>-->
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Categoría"-->
+        <!--android:id="@+id/categoria_equipo"-->
+        <!--android:layout_toRightOf="@+id/director_equipo"-->
+        <!--android:layout_below="@+id/lblInfoGeneral"-->
+        <!--android:paddingBottom="5dp"-->
+        <!--android:paddingLeft="10dp"/>-->
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Últimos partidos"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textSize="15dp"-->
+        <!--android:id="@+id/lblUltimosPartidos"-->
+        <!--android:layout_below="@+id/categoria_equipo"-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:paddingBottom="5dp"-->
+        <!--android:paddingLeft="10dp"/>-->
+    <!--&lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+    <!--<ListView-->
+        <!--android:id = "@+id/listviewPartidosEquipo"-->
+        <!--android:layout_width = "match_parent"-->
+        <!--android:layout_height = "wrap_content"-->
+        <!--android:divider="#757575"-->
+        <!--android:headerDividersEnabled="false"-->
+        <!--android:dividerHeight="1dp"-->
+        <!--android:layout_below="@+id/lblUltimosPartidos"-->
+        <!--android:paddingBottom="60dp"/>-->
+
+    <!--&lt;!&ndash;android:layout_below="@id/lblUltimosPartidos"&ndash;&gt;-->
+
+<!--</RelativeLayout>-->
 

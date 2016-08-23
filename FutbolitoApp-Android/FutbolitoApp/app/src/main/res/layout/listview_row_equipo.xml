@@ -8,6 +8,18 @@
     android:paddingBottom="10dp">
 
     <TextView
+        android:id = "@+id/pos_equipo"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "0.8"
+        android:ellipsize = "end"
+        android:paddingTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="5dp"
+        android:text = "@string/pos_equipo"
+        android:singleLine = "true" />
+
+    <TextView
         android:id = "@+id/nom_equipo"
         android:layout_width = "0dp"
         android:layout_height = "match_parent"
@@ -35,7 +47,8 @@
         android:ellipsize = "end"
         android:padding = "5dp"
         android:text = "@string/pg_equipo"
-        android:singleLine = "true" />
+        android:singleLine = "true"
+        android:visibility="gone"/>
 
     <TextView
         android:id = "@+id/pe_equipo"
@@ -45,7 +58,8 @@
         android:ellipsize = "end"
         android:padding = "5dp"
         android:text = "@string/pe_equipo"
-        android:singleLine = "true" />
+        android:singleLine = "true"
+        android:visibility="gone"/>
 
     <TextView
         android:id = "@+id/pp_equipo"
@@ -55,7 +69,8 @@
         android:ellipsize = "end"
         android:padding = "5dp"
         android:text = "@string/pp_equipo"
-        android:singleLine = "true" />
+        android:singleLine = "true"
+        android:visibility="gone"/>
 
     <TextView
         android:id = "@+id/gf_equipo"
@@ -65,7 +80,8 @@
         android:ellipsize = "end"
         android:padding = "5dp"
         android:text = "@string/gf_equipo"
-        android:singleLine = "true"/>
+        android:singleLine = "true"
+        android:visibility="gone"/>
 
     <TextView
         android:id = "@+id/gc_equipo"
@@ -75,7 +91,8 @@
         android:ellipsize = "end"
         android:padding = "5dp"
         android:text = "@string/gc_equipo"
-        android:singleLine = "true" />
+        android:singleLine = "true"
+        android:visibility="gone"/>
 
     <TextView
         android:id = "@+id/gd_equipo"

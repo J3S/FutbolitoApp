@@ -87,9 +87,17 @@ public class JugadorActivity extends AppCompatActivity {
                 JSONObject obj2 = obj.getJSONObject("nombre_equipo");
                 nombre = obj1.getString("nombres") + " " + obj1.getString("apellidos");
                 fecha_nac = obj1.getString("fecha_nac");
+                if(fecha_nac == "null")
+                    fecha_nac = "No ingresada";
                 rol = obj1.getString("rol");
+                if(rol.length() == 0)
+                    rol = "Ninguna";
                 peso = obj1.getString("peso");
+                if(peso == "null")
+                    peso = "No ingresado";
                 camiseta = obj1.getString("num_camiseta");
+                if(camiseta == "null")
+                    camiseta = "No asignado";
                 categoria = obj1.getString("categoria");
                 equipo = obj2.getString("nombre");
 

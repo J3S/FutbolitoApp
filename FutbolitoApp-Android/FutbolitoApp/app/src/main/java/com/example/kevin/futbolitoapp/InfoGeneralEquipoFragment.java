@@ -97,6 +97,8 @@ public class InfoGeneralEquipoFragment extends Fragment {
                 JSONObject obj = new JSONObject(buffer.toString());
                 nombre = obj.getString("nombre");
                 director = obj.getString("director_tecnico");
+                if(director == "null")
+                    director = "No tiene";
                 categoria = obj.getString("categoria");
 
             } catch (MalformedURLException e) {
@@ -129,11 +131,11 @@ public class InfoGeneralEquipoFragment extends Fragment {
         protected void onPostExecute(Boolean result) {
             if (result) {
                 TextView textView = (TextView) rootView.findViewById(R.id.nombre_equipo);
-                textView.setText("Nombre: " + nombre);
+                textView.setText(nombre);
                 textView = (TextView) rootView.findViewById(R.id.director_equipo);
-                textView.setText("Director: " + director);
+                textView.setText(director);
                 textView = (TextView) rootView.findViewById(R.id.categoria_equipo);
-                textView.setText("Categoría: " + categoria);
+                textView.setText(categoria);
             }
         }
     }

@@ -18,7 +18,7 @@ function fillJugsAjax( jugsAjaxResp, ulElement, btnAction ) {
         var $contentLi = $("<div/>").addClass("row");
         var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
         var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
-        if (value.categoria === null) {
+        if (value.categoria === null || value.categoria === "") {
             var $divCat = $("<div/>").addClass("col-xs-4").text("sin categoria");
         }else {
             var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);
@@ -89,9 +89,16 @@ function loadCatJugadors(selectorElement) {
         ajaxRequest.done(function (jugadoresCategoriaResp) {
             // getAjax response has not jugadors(responde con string y no JSON)?
             if ($.type(jugadoresCategoriaResp) === "string") {
-                listaJugadoresTag.html('<li class="list-group-item">' + jugadoresCategoriaResp + '</li>')
+                listaJugadoresTag.html('<li class="list-group-item">' + jugadoresCategoriaResp + '</li>');
+
+                // Load jugadores elegidos de el Equipo
+                $("#JugadoresElegidos").empty();
+                if (inputCategoria === $("#categoriaEquipo").val()) {
+                    loadSelectedJugadors($("#JugadoresElegidos"), $("#idEquipo").val() );
+                }
             } else {
 
+                // Load jugadores elegidos de el Equipo
                 $("#JugadoresElegidos").empty();
                 if (inputCategoria === $("#categoriaEquipo").val()) {
                     loadSelectedJugadors($("#JugadoresElegidos"), $("#idEquipo").val() );
@@ -124,7 +131,6 @@ $(document).ready(function() {
         $(this).addClass("btn-danger").removeClass("btn-success");
         $(this).html($("<i/>").addClass("fa fa-times"));
         $("#JugadoresElegidos").append($(this).parent().parent().parent());
-
     });
 
     // form JugadoresElegidos back to lista elegibles (inputJugadores)
