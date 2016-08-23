@@ -223,10 +223,11 @@ class ResourceController extends Controller
 		foreach ($resultados as $key => $row) {
 		    $puntos[$key]  = $row['PTS'];
 		    $goldif[$key] = $row['GD'];
+            $golfav[$key] = $row['GF'];
 		}
         $tabla_posiciones = [];
         if(count($resultados) > 0){
-            array_multisort($puntos, SORT_DESC, $goldif, SORT_DESC, $resultados);
+            array_multisort($puntos, SORT_DESC, $goldif, SORT_DESC, $resultados, SORT_DESC, $golfav);
             $tabla_posiciones = ["categoria" => $categoria->nombre, "anio" => $torneo->anio, "resultados" => $resultados];
         }
 		
