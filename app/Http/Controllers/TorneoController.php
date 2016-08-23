@@ -468,6 +468,8 @@ class TorneoController extends Controller
             }
         }
 
+
+
         // Búsqueda de los torneos de acuerdo a los datos recibidos.
         $torneosBuscados;
         if ($request->anio !== "" && $request->categoria !== "") {
@@ -487,7 +489,9 @@ class TorneoController extends Controller
                                      ->orderBy('anio', 'desc')
                                      ->get();
         } else {
-            $torneosBuscados = [];
+            $torneosBuscados = Torneo::where('estado', 1)
+                                        ->orderBy('anio', 'desc')
+                                        ->get();
         }
 
         // Datos de los torneos encontrados.
@@ -506,6 +510,7 @@ class TorneoController extends Controller
         }
 
         // Retorno a la vista principal de torneo con los torneos encontrados.
+
         return redirect()->back()->with('torneosEncontrados', $torneosEncontrados);
 
     }//end searchTorneo()
