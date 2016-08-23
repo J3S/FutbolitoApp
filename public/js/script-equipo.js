@@ -18,7 +18,7 @@ function fillJugsAjax( jugsAjaxResp, ulElement, btnAction ) {
         var $contentLi = $("<div/>").addClass("row");
         var $divNom = $("<div/>").addClass("col-xs-4").text(value.nombres);
         var $divApe = $("<div/>").addClass("col-xs-4").text(value.apellidos);
-        if (value.categoria === null) {
+        if (value.categoria === null || value.categoria === "") {
             var $divCat = $("<div/>").addClass("col-xs-4").text("sin categoria");
         }else {
             var $divCat = $("<div/>").addClass("col-xs-4").text(value.categoria);

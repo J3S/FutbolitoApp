@@ -226,6 +226,10 @@ class EquipoController extends Controller
                                         $query->where('categoria', null)
                                               ->whereNull('id_equipo');
                                      })
+                                     ->orWhere(function ($query){
+                                        $query->where('categoria', "")
+                                              ->whereNull('id_equipo');
+                                     })
                                      ->get(
                                          [
                                           'id',
