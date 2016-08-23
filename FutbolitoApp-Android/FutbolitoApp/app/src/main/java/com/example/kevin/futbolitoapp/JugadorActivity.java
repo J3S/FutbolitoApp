@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -39,6 +41,21 @@ public class JugadorActivity extends AppCompatActivity {
         new TareaWSInfoJugador().execute(jugador_url + getIntent().getStringExtra("ID_J"));
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
     private class TareaWSInfoJugador extends AsyncTask<String, Integer, Boolean> {
 
@@ -68,13 +85,13 @@ public class JugadorActivity extends AppCompatActivity {
                 JSONObject obj = new JSONObject(buffer.toString());
                 JSONObject obj1 = obj.getJSONObject("info_jugador");
                 JSONObject obj2 = obj.getJSONObject("nombre_equipo");
-//                nombre = obj.getString("nombres") + " " + obj.getString("apellidos");
-//                fecha_nac = obj.getString("fecha_nac");
-//                rol = obj.getString("rol");
-//                peso = obj.getString("peso");
-//                camiseta = obj.getString("num_camiseta");
-//                categoria = obj.getString("categoria");
-//                equipo = obj.getString("0");
+                nombre = obj1.getString("nombres") + " " + obj1.getString("apellidos");
+                fecha_nac = obj1.getString("fecha_nac");
+                rol = obj1.getString("rol");
+                peso = obj1.getString("peso");
+                camiseta = obj1.getString("num_camiseta");
+                categoria = obj1.getString("categoria");
+                equipo = obj2.getString("nombre");
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -113,18 +130,18 @@ public class JugadorActivity extends AppCompatActivity {
                 TextView tvcamiseta = (TextView)findViewById(R.id.camiseta);
                 TextView tvequipo = (TextView)findViewById(R.id.equipo_jugador);
                 TextView tvcategoria = (TextView)findViewById(R.id.categoria_jugador);
-                tvnombre.setText("Nombre: " + nombre);
-                tvfecha.setText("Fecha de nacimiento: " + fecha_nac);
-                tvrol.setText("Rol: " + rol);
-                tvpeso.setText("Peso: " + peso);
-                tvcamiseta.setText("# Camiseta: " + camiseta);
-                tvequipo.setText("Equipo: " + equipo);
-                tvcategoria.setText("Categoría: " + categoria);
+                tvnombre.setText(nombre);
+                tvfecha.setText(fecha_nac);
+                tvrol.setText(rol);
+                tvpeso.setText(peso);
+                tvcamiseta.setText(camiseta);
+                tvequipo.setText(equipo);
+                tvcategoria.setText(categoria);
             }
         }
     }
     public void setTitleActionBar(){
-        this.getSupportActionBar().setTitle(nombre);
+        this.getSupportActionBar().setTitle("Jugador");
     }
 
 }
