@@ -27,8 +27,8 @@ V2.0 Branny
     }
 
     .campoRequerido {
-        color:red; 
-        font-style:italic; 
+        color:red;
+        font-style:italic;
         font-size:0.9em;
     }
 </style>
@@ -58,7 +58,7 @@ V2.0 Branny
                 <h3 class="box-title">Crear Jugador</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="{!!route('jugador.store')!!}" method="post">
+            <form id="newJugForm" role="form" action="{!!route('jugador.store')!!}" method="post">
                 {!! csrf_field() !!}
                 <div class="box-body">
                     <div class="form-group col-xs-12">
@@ -70,8 +70,8 @@ V2.0 Branny
                         <input type="text" class="form-control" id="inputApellido" name="apellidos" placeholder="Ingrese apellido" value="{{ old('apellidos') }}">
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="fecha_nac">Fecha Nacimiento</label>
-                        <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento" value="{{ old('fecha_nac') }}">
+                        <label id="press" for="fecha_nac">Fecha Nacimiento</label>
+                        <input type="date" min="1900-01-01" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento" value="{{ old('fecha_nac') }}">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputCedula">C&eacute;dula</label>
@@ -98,7 +98,7 @@ V2.0 Branny
                     <div class="col-xs-12 col-sm-4">
                         <div class="form-group">
                             <label for="peso">Peso (Kg)</label>
-                            <input type="number" min="0" step="0.1" class="form-control" id="peso" name="peso" placeholder="Ej: 70.5" value="{{ old('peso') }}">
+                            <input type="number" min="20" step="0.1" class="form-control" id="peso" name="peso" placeholder="Ej: 70.5" value="{{ old('peso') }}">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
@@ -148,4 +148,21 @@ V2.0 Branny
         </div><!-- /.box -->
     </div><!--/.col (left) -->
     <div class="col-xs-2"></div>
+@endsection
+@section('scriptsPersonales')
+    <script type="text/javascript">
+        var edadMinima = 12;
+        var curr = new Date();
+        curr.setFullYear(curr.getFullYear() - 10)
+        var strM = curr.getMonth()+"";
+        var strD = curr.getDay()+"";
+        if (strD.length == 1) {
+            strD = "0"+strD
+        }
+        if (strM.length == 1) {
+            strM = "0"+strM
+        }
+        var dataStr = curr.getFullYear() + "-" + strM + "-" + strD;
+        $("#fecha_nac").attr('max', dataStr);
+    </script>
 @endsection
