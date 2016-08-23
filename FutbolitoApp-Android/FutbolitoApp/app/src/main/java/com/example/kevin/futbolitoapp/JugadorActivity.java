@@ -113,18 +113,18 @@ public class JugadorActivity extends AppCompatActivity {
                 TextView tvcamiseta = (TextView)findViewById(R.id.camiseta);
                 TextView tvequipo = (TextView)findViewById(R.id.equipo_jugador);
                 TextView tvcategoria = (TextView)findViewById(R.id.categoria_jugador);
-                tvnombre.setText("Nombre: " + nombre);
-                tvfecha.setText("Fecha de nacimiento: " + fecha_nac);
-                tvrol.setText("Rol: " + rol);
-                tvpeso.setText("Peso: " + peso);
-                tvcamiseta.setText("# Camiseta: " + camiseta);
-                tvequipo.setText("Equipo: " + equipo);
-                tvcategoria.setText("Categoría: " + categoria);
+                tvnombre.setText(nombre);
+                tvfecha.setText(fecha_nac);
+                tvrol.setText(rol);
+                tvpeso.setText(peso);
+                tvcamiseta.setText(camiseta);
+                tvequipo.setText(equipo);
+                tvcategoria.setText(categoria);
             }
         }
     }
     public void setTitleActionBar(){
-        this.getSupportActionBar().setTitle(nombre);
+        this.getSupportActionBar().setTitle("Jugador");
     }
 
 }

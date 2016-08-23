@@ -30,49 +30,151 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nombre_jugador_ind"
-        android:text="aasss"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
+        <TableRow android:paddingTop="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nombre_jugador_ind"
+                android:text="Jugador"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_span="2"
+                android:gravity="center_horizontal" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jugador"
+                android:textSize="12dp"
+                android:layout_span="2"
+                android:gravity="center_horizontal" />
+        </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fecha_nac"
-        android:text="aasss"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rol_ju"
-        android:text="aasss"/>
+        <TableRow android:paddingTop="20dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/equipo_jugador"
+                android:text="Equipo"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/categoria_jugador"
+                android:text="Categoría"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:gravity="center_horizontal"/>
+        </TableRow>
+        <TableRow android:paddingBottom="20dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Equipo"
+                android:textSize="12dp"
+                android:gravity="center_horizontal"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/peso"
-        android:text="aasss"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Categoría"
+                android:textSize="12dp"
+                android:gravity="center_horizontal"/>
+        </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/camiseta"
-        android:text="aasss"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/equipo_jugador"
-        android:text="aasss"/>
+        <TableRow android:paddingTop="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/categoria_jugador"
-        android:text="aasss"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/fecha_nac"
+                android:text="Fecha Nac"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/peso"
+                android:text="Peso"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:gravity="center_horizontal"/>
+        </TableRow>
+        <TableRow android:paddingBottom="20dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Fecha de nacimiento"
+                android:textSize="12dp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Peso"
+                android:textSize="12dp"
+                android:gravity="center_horizontal"/>
+        </TableRow>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
+        <TableRow android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/rol_ju"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Rol"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/camiseta"
+                android:textStyle="bold"
+                android:text="Camiseta"
+                android:textSize="18dp"
+                android:gravity="center_horizontal"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Posición"
+                android:textSize="12dp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Camiseta"
+                android:textSize="12dp"
+                android:gravity="center_horizontal"/>
+        </TableRow>
+    </TableLayout>
 
 
 </LinearLayout>
