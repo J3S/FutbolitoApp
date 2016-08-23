@@ -15,6 +15,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Equipo;
+use App\Partido;
 use App\Categoria;
 use App\Jugador;
 use App\Http\Requests;
@@ -318,6 +319,20 @@ class EquipoController extends Controller
             }
         }
 
+        // Update Equipos in partidos
+        $mensaje = array("Error al actualizar partidos.");
+        if (Partido::where('equipo_local', $equipoNew->nombre)->update(['equipo_local' => $request->nombre]) >= 0) {
+            //code
+        }else {
+            return response()->json(['ids' => $mensaje], 422);
+        }
+        // Update Equipos in partidos
+        if (Partido::where('equipo_visitante', $equipoNew->nombre)->update(['equipo_visitante' => $request->nombre]) >= 0) {
+            //code
+        }else {
+            return response()->json(['ids' => $mensaje], 422);
+        }
+
         $equipoNew->nombre    = $request->nombre;
         $equipoNew->categoria = $request->categoria;
         if ($request->entrenador != "") {
@@ -325,7 +340,9 @@ class EquipoController extends Controller
         } else {
             $equipoNew->director_tecnico = null;
         }
+
         if ($equipoNew->save() === true) {
+
             Jugador::where('id_equipo', $equipoNew->id)
                    ->update(['id_equipo' => null, 'categoria' => null]);
 
