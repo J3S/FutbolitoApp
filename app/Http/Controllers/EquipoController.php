@@ -342,7 +342,6 @@ class EquipoController extends Controller
         }
 
         if ($equipoNew->save() === true) {
-
             Jugador::where('id_equipo', $equipoNew->id)
                    ->update(['id_equipo' => null, 'categoria' => null]);
 
