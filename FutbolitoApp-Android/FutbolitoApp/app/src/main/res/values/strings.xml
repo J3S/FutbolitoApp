@@ -25,9 +25,9 @@
     <string name="nombre_jugador">Nombre</string>
     <string name="num_camiseta">Cam:</string>
     <string name="rol_jugador">Rol</string>
-    <color name="colorSeparator">#33691e</color>
-    <color name="colorHeader">#388e3c</color>
+    <string name="pos_equipo">Pos</string>
     <color name="colorApp">#1b5e20</color>
+    <color name="colorAppBlue">#125688</color>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -215,11 +215,13 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
                 JSONArray respJSON = new JSONArray(buffer.toString());
                 tablasPosiciones = new String[respJSON.length()][][];
+                int pos_equipo = 1;
                 for(int i=0; i<respJSON.length(); i++)
                 {
                     JSONObject obj = respJSON.getJSONObject(i);
                     JSONArray resultados = obj.getJSONArray("resultados");
                     tablasPosiciones[i] = new String[resultados.length()][];
+                    pos_equipo = 1;
 
                     for(int j=0; j<resultados.length(); j++) {
                         JSONObject objInfo = resultados.getJSONObject(j);
@@ -233,7 +235,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                         String golesDiferencia = objInfo.getString("GD");
                         String puntos = objInfo.getString("PTS");
                         String id = objInfo.getString("ID");
-                        tablasPosiciones[i][j] = new String[objInfo.length()];
+                        tablasPosiciones[i][j] = new String[objInfo.length()+1];
                         tablasPosiciones[i][j][0] = nombreEquipo;
                         tablasPosiciones[i][j][1] = partidosJugados;
                         tablasPosiciones[i][j][2] = partidosGanados;
@@ -244,6 +246,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                         tablasPosiciones[i][j][7] = golesDiferencia;
                         tablasPosiciones[i][j][8] = puntos;
                         tablasPosiciones[i][j][9] = id;
+                        tablasPosiciones[i][j][10] = String.valueOf(pos_equipo);
+                        pos_equipo++;
                     }
                 }
             } catch (MalformedURLException e) {
@@ -303,7 +307,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         int limite = tablasPosiciones[index].length;
         for (int i=0; i<limite; i++) {
             adapter.addItem(tablasPosiciones[index][i][0], tablasPosiciones[index][i][1], tablasPosiciones[index][i][2], tablasPosiciones[index][i][3], tablasPosiciones[index][i][4],
-                    tablasPosiciones[index][i][5], tablasPosiciones[index][i][6], tablasPosiciones[index][i][7], tablasPosiciones[index][i][8], tablasPosiciones[index][i][9]);
+                    tablasPosiciones[index][i][5], tablasPosiciones[index][i][6], tablasPosiciones[index][i][7], tablasPosiciones[index][i][8], tablasPosiciones[index][i][9], tablasPosiciones[index][i][10]);
         }
         ListView lview = (ListView)findViewById(R.id.listview);
         lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

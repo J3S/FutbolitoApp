@@ -1,35 +1,91 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
-    </style>
-    <!-- ActionBar styles -->
-    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/colorApp</item>
-        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
-    </style>
-    <!-- ActionBar title text -->
-    <style name="MyActionBarTitleText" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:textColor">@android:color/white</item>
-    </style>
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+        <!--<item name="android:actionBarStyle">@style/MyActionBar</item>-->
+    <!--</style>-->
+    <!--&lt;!&ndash; ActionBar styles &ndash;&gt;-->
+    <!--<style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">-->
+        <!--<item name="android:background">@color/colorApp</item>-->
+        <!--<item name="android:titleTextStyle">@style/MyActionBarTitleText</item>-->
+    <!--</style>-->
+    <!--&lt;!&ndash; ActionBar title text &ndash;&gt;-->
+    <!--<style name="MyActionBarTitleText" parent="@android:style/Widget.Holo.Light.ActionBar">-->
+        <!--<item name="android:textColor">@android:color/white</item>-->
+    <!--</style>-->
 
     <!-- Material theme. -->
-    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+    <!--<style name="MyMaterialTheme" parent="MyMaterialTheme.Base">-->
+
+    <!--</style>-->
+
+    <!--<style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">-->
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="colorPrimary">@color/colorApp</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorApp</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--</style>-->
+
+    <!--<style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+
+    <!--<style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+
+
+
+
+    <style name="MaterialThemeBlue" parent="MaterialThemeBlue.Base">
 
     </style>
 
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MaterialThemeBlue.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="colorPrimary">@color/colorApp</item>
-        <item name="colorPrimaryDark">@color/colorApp</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="MaterialThemeBlue.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="MaterialThemeBlue.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <style name="MaterialThemeGreen" parent="MaterialThemeGreen.Base">
+
+    </style>
+
+    <style name="MaterialThemeGreen.Base" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimaryGreen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkGreen</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryGreen</item>
+    </style>
+
+    <style name="MaterialThemeGreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="MaterialThemeGreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="MaterialThemeBrown" parent="MaterialThemeBrown.Base">
+
+    </style>
+
+    <style name="MaterialThemeBrown.Base" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimaryBrown</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBrown</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryBrown</item>
+    </style>
+
+    <style name="MaterialThemeBrown.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="MaterialThemeBrown.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
+
+
