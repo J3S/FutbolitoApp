@@ -103,7 +103,12 @@ public class PlantillaEquipoFragment extends Fragment {
                     infoJugador[i][1] = obj.getString("nombre");
                     infoJugador[i][2] = obj.getString("apellido");
                     infoJugador[i][3] = obj.getString("rol");
+                    if (infoJugador[i][3].length() == 0)
+                        infoJugador[i][3] = "N/A";
                     infoJugador[i][4] = obj.getString("camiseta");
+                    if(infoJugador[i][4] == "null")
+                        infoJugador[i][4] = "N/A";
+
                     if(rol.equals("")){
                         rol = obj.getString("rol");
                         roles[j] = rol;

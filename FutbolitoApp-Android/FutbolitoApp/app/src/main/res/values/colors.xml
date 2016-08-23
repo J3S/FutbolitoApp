@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#125688</color>
-    <color name="colorPrimaryDark">#125688</color>
+    <color name="colorPrimary">#1565c0</color>
+    <color name="colorPrimaryDark">#0d47a1</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#c8e8ff</color>
+
+    <color name="colorHeaderTable">#b0bec5</color>
+    <color name="colorTextHeaderTable">#424242</color>
+    <color name="colorHeaderTableGreen">#c5e1a5</color>
+
+    <color name="colorPrimaryGreen">#2e7d32</color>
+    <color name="colorPrimaryDarkGreen">#1b5e20</color>
+    <color name="textColorPrimaryGreen">#FFFFFF</color>
+    <color name="colorPrimaryBrown">#4e342e</color>
+    <color name="colorPrimaryDarkBrown">#3e2723</color>
+    <color name="textColorPrimaryBrown">#FFFFFF</color>
+
+    <color name="colorSeparator">#e0e0e0</color>
 </resources>

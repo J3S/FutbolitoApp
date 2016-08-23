@@ -34,16 +34,16 @@ public class listviewEquipoAdapter extends BaseAdapter {
         this.resaltado = resaltado;
     }
 
-    public void addItem(String nom_equipo, String pj_equipo, String pg_equipo, String pe_equipo, String pp_equipo, String gf_equipo, String gc_equipo, String gd_equipo, String pts_equipo, String id) {
+    public void addItem(String nom_equipo, String pj_equipo, String pg_equipo, String pe_equipo, String pp_equipo, String gf_equipo, String gc_equipo, String gd_equipo, String pts_equipo, String id, String pos) {
         ModelEquipo item;
 
-        item = new ModelEquipo(nom_equipo, pj_equipo, pg_equipo, pe_equipo, pp_equipo, gf_equipo, gc_equipo, gd_equipo, pts_equipo, "", id);
+        item = new ModelEquipo(nom_equipo, pj_equipo, pg_equipo, pe_equipo, pp_equipo, gf_equipo, gc_equipo, gd_equipo, pts_equipo, "", id, pos);
         equipoList.add(item);
     }
 
     public void addSectionHeaderItem(String categoria) {
         ModelEquipo item;
-        item = new ModelEquipo("Equipo", "PJ", "PG", "PE", "PP", "GF", "GC", "GD", "PTS", categoria, "");
+        item = new ModelEquipo("Equipo", "PJ", "PG", "PE", "PP", "GF", "GC", "GD", "PTS", categoria, "", "POS");
         equipoList.add(item);
         sectionHeader.add(equipoList.size()-1);
         notifyDataSetChanged();
@@ -90,6 +90,7 @@ public class listviewEquipoAdapter extends BaseAdapter {
         TextView gd_equipo;
         TextView pts_equipo;
         TextView id_equipo;
+        TextView pos_equipo;
     }
 
     @Override
@@ -113,6 +114,7 @@ public class listviewEquipoAdapter extends BaseAdapter {
                     holder.gd_equipo = (TextView) convertView.findViewById(R.id.gd_equipo);
                     holder.pts_equipo = (TextView) convertView.findViewById(R.id.pts_equipo);
                     holder.id_equipo = (TextView) convertView.findViewById(R.id.id_equipo);
+                    holder.pos_equipo = (TextView) convertView.findViewById(R.id.pos_equipo);
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.listview_row_header_equipo, null);
@@ -127,6 +129,7 @@ public class listviewEquipoAdapter extends BaseAdapter {
                     holder.gd_equipo = (TextView) convertView.findViewById(R.id.gd_equipo_head);
                     holder.pts_equipo = (TextView) convertView.findViewById(R.id.pts_equipo_head);
                     holder.id_equipo = (TextView) convertView.findViewById(R.id.id_equipo);
+                    holder.pos_equipo = (TextView) convertView.findViewById(R.id.pos_equipo);
                     break;
             }
             convertView.setTag(holder);
@@ -194,6 +197,8 @@ public class listviewEquipoAdapter extends BaseAdapter {
         holder.gd_equipo.setText(item.get_gd_equipo().toString());
         holder.pts_equipo.setText(item.get_pts_equipo().toString());
         holder.id_equipo.setText(item.get_id_equipo().toString());
+        holder.pos_equipo.setText(item.get_pos_equipo().toString());
+
 
         return convertView;
     }
