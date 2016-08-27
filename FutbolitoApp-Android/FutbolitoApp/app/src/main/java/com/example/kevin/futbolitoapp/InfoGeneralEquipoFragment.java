@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -67,6 +68,31 @@ public class InfoGeneralEquipoFragment extends Fragment implements SwipeRefreshL
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_info_general_equipo, container, false);
+        final ListView mListView = (ListView) rootView.findViewById(R.id.listviewPartidosEquipo);
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private boolean scrollEnabled;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (mListView == null || mListView.getChildCount() == 0) ?
+                                0 : mListView.getChildAt(0).getTop();
+
+                boolean newScrollEnabled =
+                        (firstVisibleItem == 0 && topRowVerticalPosition >= 0) ?
+                                true : false;
+
+                if (null != infoEquipoSwipeRefresh && scrollEnabled != newScrollEnabled) {
+                    // Start refreshing....
+                    infoEquipoSwipeRefresh.setEnabled(newScrollEnabled);
+                    scrollEnabled = newScrollEnabled;
+                }
+            }
+        });
         new TareaWSInfoEquipo().execute(equipo_url + id_equipo);
         new TareaWSUltimosPartidos().execute(ultimos_partidos_url + id_equipo);
         infoEquipoSwipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeinfoequipo);
