@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -64,6 +65,31 @@ public class PosicionEquipoFragment extends Fragment implements SwipeRefreshLayo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_posicion_equipo, container, false);
+        final ListView mListView = (ListView) rootView.findViewById(R.id.listviewTablaPosIndividual);
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private boolean scrollEnabled;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (mListView == null || mListView.getChildCount() == 0) ?
+                                0 : mListView.getChildAt(0).getTop();
+
+                boolean newScrollEnabled =
+                        (firstVisibleItem == 0 && topRowVerticalPosition >= 0) ?
+                                true : false;
+
+                if (null != posicionSwipeRefresh && scrollEnabled != newScrollEnabled) {
+                    // Start refreshing....
+                    posicionSwipeRefresh.setEnabled(newScrollEnabled);
+                    scrollEnabled = newScrollEnabled;
+                }
+            }
+        });
         new TareaWSListarTablaPosiciones().execute(tabla_pos_equipo_url + id_equipo);
         posicionSwipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipePosicion);
         posicionSwipeRefresh.setOnRefreshListener(this);
