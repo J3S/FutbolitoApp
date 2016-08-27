@@ -31,7 +31,7 @@ import java.util.Collections;
 public class JugadorActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private String jugador_url = "http://futbolitoapp.herokuapp.com/get_jugador/";
-    private String nombre, fecha_nac, rol, peso, camiseta, equipo, categoria;
+    private String nombre, fecha_nac, rol, peso, camiseta, equipo, categoria, id_jugador;
     private Toolbar toolbar;
     private SwipeRefreshLayout jugadorSwipeRefresh;
 
@@ -39,24 +39,24 @@ public class JugadorActivity extends AppCompatActivity implements SwipeRefreshLa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jugador);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        new TareaWSInfoJugador().execute(jugador_url + getIntent().getStringExtra("ID_J"));
         jugadorSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipejugador);
         jugadorSwipeRefresh.setOnRefreshListener(this);
         jugadorSwipeRefresh.setDistanceToTriggerSync(30);
         jugadorSwipeRefresh.setSize(SwipeRefreshLayout.DEFAULT);
         jugadorSwipeRefresh.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
                 Color.RED, Color.CYAN);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        id_jugador = getIntent().getStringExtra("ID_J");
+        new TareaWSInfoJugador().execute(jugador_url + id_jugador);
+
     }
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            new TareaWSInfoJugador().execute(jugador_url + getIntent().getStringExtra("ID_J"));
+            new TareaWSInfoJugador().execute(jugador_url + id_jugador);
             jugadorSwipeRefresh.postDelayed(new Runnable() {
                 @Override
                 public void run() {

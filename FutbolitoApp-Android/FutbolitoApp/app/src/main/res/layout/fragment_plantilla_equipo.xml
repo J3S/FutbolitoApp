@@ -56,16 +56,20 @@
             android:textColor="@color/colorTextHeaderTable"/>
 
         </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ListView
+                android:id = "@+id/listviewTablaJugadoresEquipo"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:divider="@color/colorSeparator"
+                android:headerDividersEnabled="true"
+                android:dividerHeight="1dp"
+                android:paddingBottom="60dp"
+                android:layout_below="@+id/nombre_jugador"/>
+        </ScrollView>
 
-    <ListView
-        android:id = "@+id/listviewTablaJugadoresEquipo"
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:divider="@color/colorSeparator"
-        android:headerDividersEnabled="true"
-        android:dividerHeight="1dp"
-        android:paddingBottom="60dp"
-        android:layout_below="@+id/nombre_jugador"/>
 
     </LinearLayout>
 
