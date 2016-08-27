@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -68,6 +69,31 @@ public class PlantillaEquipoFragment extends Fragment implements SwipeRefreshLay
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_plantilla_equipo, container, false);
+        final ListView mListView = (ListView) rootView.findViewById(R.id.listviewTablaJugadoresEquipo);
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private boolean scrollEnabled;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (mListView == null || mListView.getChildCount() == 0) ?
+                                0 : mListView.getChildAt(0).getTop();
+
+                boolean newScrollEnabled =
+                        (firstVisibleItem == 0 && topRowVerticalPosition >= 0) ?
+                                true : false;
+
+                if (null != plantillaSwipeRefresh && scrollEnabled != newScrollEnabled) {
+                    // Start refreshing....
+                    plantillaSwipeRefresh.setEnabled(newScrollEnabled);
+                    scrollEnabled = newScrollEnabled;
+                }
+            }
+        });
         new TareaWSListarJugadores().execute(jugadores_url + id_equipo);
         plantillaSwipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeplantilla);
         plantillaSwipeRefresh.setOnRefreshListener(this);
