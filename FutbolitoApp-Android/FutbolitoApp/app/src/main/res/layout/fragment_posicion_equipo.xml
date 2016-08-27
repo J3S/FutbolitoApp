@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="PosicionEquipoFragment">
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipePosicion"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="PosicionEquipoFragment">
 
-<ListView
-    android:id = "@+id/listviewTablaPosIndividual"
-    android:layout_width = "match_parent"
-    android:layout_height = "wrap_content"
-    android:divider="#757575"
-    android:headerDividersEnabled="false"
-    android:dividerHeight="1dp"
-    android:paddingBottom="60dp"/>
+    <ListView
+        android:id = "@+id/listviewTablaPosIndividual"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:divider="#757575"
+        android:headerDividersEnabled="false"
+        android:dividerHeight="1dp"
+        android:paddingBottom="60dp"/>
 
-<!--android:layout_below="@id/lblUltimosPartidos"-->
+    <!--android:layout_below="@id/lblUltimosPartidos"-->
 
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

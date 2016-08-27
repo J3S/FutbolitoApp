@@ -1,9 +1,13 @@
 package com.example.kevin.futbolitoapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +30,7 @@ import java.net.URL;
 /**
  * Created by j3s on 8/21/16.
  */
-public class PosicionEquipoFragment extends Fragment {
+public class PosicionEquipoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ID_EQUIPO = "";
     private String tabla_pos_equipo_url = "http://futbolitoapp.herokuapp.com/get_ultima_participacion/";
@@ -36,6 +40,7 @@ public class PosicionEquipoFragment extends Fragment {
     private String tablaPosiciones[][];
     private listviewEquipoAdapter adapter;
     private String header_tabla;
+    private SwipeRefreshLayout posicionSwipeRefresh;
 
     public static PosicionEquipoFragment newInstance(String id) {
         Bundle args = new Bundle();
@@ -60,9 +65,36 @@ public class PosicionEquipoFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_posicion_equipo, container, false);
         new TareaWSListarTablaPosiciones().execute(tabla_pos_equipo_url + id_equipo);
+        posicionSwipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipePosicion);
+        posicionSwipeRefresh.setOnRefreshListener(this);
+        posicionSwipeRefresh.setDistanceToTriggerSync(30);
+        posicionSwipeRefresh.setSize(SwipeRefreshLayout.DEFAULT);
+        posicionSwipeRefresh.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
         return rootView;
     }
-
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            new TareaWSListarTablaPosiciones().execute(tabla_pos_equipo_url + id_equipo);
+            posicionSwipeRefresh.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    posicionSwipeRefresh.setRefreshing(false);
+                }
+            }, 1000);
+        }
+    };
+    @Override
+    public void onRefresh() {
+        posicionSwipeRefresh.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                posicionSwipeRefresh.setRefreshing(true);
+                mHandler.sendEmptyMessage(0);
+            }
+        }, 1000);
+    }
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
     private class TareaWSListarTablaPosiciones extends AsyncTask<String, Integer, Boolean> {
 

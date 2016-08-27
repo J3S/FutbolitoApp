@@ -60,8 +60,6 @@ public class JugadorActivity extends AppCompatActivity implements SwipeRefreshLa
             jugadorSwipeRefresh.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(),
-                            "Datos actualizados", Toast.LENGTH_SHORT).show();
                     jugadorSwipeRefresh.setRefreshing(false);
                 }
             }, 1000);

@@ -1,15 +1,20 @@
 package com.example.kevin.futbolitoapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Created by j3s on 8/21/16.
  */
-public class PlantillaEquipoFragment extends Fragment {
+public class PlantillaEquipoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ID_EQUIPO = "";
     private String jugadores_url = "http://futbolitoapp.herokuapp.com/get_jugadores_equipo/";
@@ -35,6 +40,7 @@ public class PlantillaEquipoFragment extends Fragment {
     private View rootView;
     private String[][] infoJugador;
     private String[] roles;
+    private SwipeRefreshLayout plantillaSwipeRefresh;
 
     private listviewJugadorAdapter adapter;
 
@@ -54,6 +60,7 @@ public class PlantillaEquipoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id_equipo = getArguments().getString(ID_EQUIPO);
+
     }
 
     @Override
@@ -62,9 +69,36 @@ public class PlantillaEquipoFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_plantilla_equipo, container, false);
         new TareaWSListarJugadores().execute(jugadores_url + id_equipo);
+        plantillaSwipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeplantilla);
+        plantillaSwipeRefresh.setOnRefreshListener(this);
+        plantillaSwipeRefresh.setDistanceToTriggerSync(30);
+        plantillaSwipeRefresh.setSize(SwipeRefreshLayout.DEFAULT);
+        plantillaSwipeRefresh.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
         return rootView;
     }
-
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            new TareaWSListarJugadores().execute(jugadores_url + id_equipo);
+            plantillaSwipeRefresh.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    plantillaSwipeRefresh.setRefreshing(false);
+                }
+            }, 1000);
+        }
+    };
+    @Override
+    public void onRefresh() {
+        plantillaSwipeRefresh.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                plantillaSwipeRefresh.setRefreshing(true);
+                mHandler.sendEmptyMessage(0);
+            }
+        }, 1000);
+    }
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
     private class TareaWSListarJugadores extends AsyncTask<String, Integer, Boolean> {
 

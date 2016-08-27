@@ -1,8 +1,12 @@
 package com.example.kevin.futbolitoapp;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +28,7 @@ import java.net.URL;
 /**
  * Created by j3s on 8/21/16.
  */
-public class InfoGeneralEquipoFragment extends Fragment {
+public class InfoGeneralEquipoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ID_EQUIPO = "";
 
@@ -38,6 +42,7 @@ public class InfoGeneralEquipoFragment extends Fragment {
     private String[][][] partidos;
     private String[] nombre_torneo;
     private listviewPartidoAdapter adapter;
+    private SwipeRefreshLayout infoEquipoSwipeRefresh;
 
     public static InfoGeneralEquipoFragment newInstance(String id) {
         Bundle args = new Bundle();
@@ -64,9 +69,37 @@ public class InfoGeneralEquipoFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_info_general_equipo, container, false);
         new TareaWSInfoEquipo().execute(equipo_url + id_equipo);
         new TareaWSUltimosPartidos().execute(ultimos_partidos_url + id_equipo);
+        infoEquipoSwipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeinfoequipo);
+        infoEquipoSwipeRefresh.setOnRefreshListener(this);
+        infoEquipoSwipeRefresh.setDistanceToTriggerSync(30);
+        infoEquipoSwipeRefresh.setSize(SwipeRefreshLayout.DEFAULT);
+        infoEquipoSwipeRefresh.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
         return rootView;
     }
-
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            new TareaWSInfoEquipo().execute(equipo_url + id_equipo);
+            new TareaWSUltimosPartidos().execute(ultimos_partidos_url + id_equipo);
+            infoEquipoSwipeRefresh.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    infoEquipoSwipeRefresh.setRefreshing(false);
+                }
+            }, 1000);
+        }
+    };
+    @Override
+    public void onRefresh() {
+        infoEquipoSwipeRefresh.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                infoEquipoSwipeRefresh.setRefreshing(true);
+                mHandler.sendEmptyMessage(0);
+            }
+        }, 1000);
+    }
 
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
     private class TareaWSInfoEquipo extends AsyncTask<String, Integer, Boolean> {
