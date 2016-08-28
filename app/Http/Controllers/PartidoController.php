@@ -319,6 +319,23 @@ class PartidoController extends Controller
             );
         }
 
+        // Verificación si lugar, fecha y hora del partido no genera colisión de horarios.
+        // Existe colisión si existen partidos que se juegan hasta 59 minutos antes o después en la misma cancha.
+        $fechaColisionAdelante = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->addMinutes(59);
+        $fechaColisionAtras    = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->subMinutes(59);
+        $partidosColision      = Partido::where('estado', 1)->where("id", "!=", $id)->whereBetween('fecha', array($fechaColisionAtras, $fechaColisionAdelante))->where('lugar', $request->lugar)->get();
+        $errorColisiones       = [];
+
+        if (count($partidosColision) > 0) {
+            foreach ($partidosColision as $partidoColision) {
+                $errorColision = "Colisión de horarios: ".$partidoColision->equipo_local." y ".$partidoColision->equipo_visitante." juegan a las ".$partidoColision->fecha." en la cancha: ".$partidoColision->lugar;
+                array_push($errorColisiones, $errorColision);
+            }
+
+            array_push($errorColisiones, "Debe existir por lo menos 1 hora de separación entre partidos en la misma cancha");
+            return redirect()->route('partido.create')->withInput()->withErrors($errorColisiones);
+        }
+
         // Encuentro el partido seleccionado por el usuario y modifico todos sus valores por los valores ingresados por el usuario desde la vista 'partidoe'.
         $partido            = Partido::find($id);
         $partido->lugar     = $request->lugar;
