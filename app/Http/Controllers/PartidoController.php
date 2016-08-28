@@ -333,7 +333,7 @@ class PartidoController extends Controller
             }
 
             array_push($errorColisiones, "Debe existir por lo menos 1 hora de separación entre partidos en la misma cancha");
-            return redirect()->route('partido.create')->withInput()->withErrors($errorColisiones);
+            return back()->withInput()->withErrors($errorColisiones);
         }
 
         // Encuentro el partido seleccionado por el usuario y modifico todos sus valores por los valores ingresados por el usuario desde la vista 'partidoe'.
