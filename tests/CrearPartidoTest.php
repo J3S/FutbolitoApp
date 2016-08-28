@@ -713,5 +713,59 @@ class CrearPartidoTest extends TestCase
             ->press('Guardar')
             ->seePageIs(route('partido.create'));
     }
+
+    /**
+     * Comprueba el funcionamiento para crear un partido.
+     * Se ingresan los datos del partido. Solo con datos requeridos.
+     * Se ingresa fecha, hora y lugar del partido para que generen una colisión de horarios.
+     * Existe colisión de horarios si existe un partido hasta 59 minutos antes o despues en el mismo lugar.
+     * Corresponde al caso de prueba testCrearPartido: post-condition 18.
+     *
+     * @return void
+     */
+    public function testCrearPartido18()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2016)->first();
+        $date = Carbon::create(2016, 1, 1, 12, 0, 0);
+        $jornada = 1;
+        $lugar = "Cancha #1";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0];
+        $equipoV = $equipos[1];
+        $golLocal = 0;
+        $golVisitante = 0;
+        Session::start();
+        $parametros = [
+                        '_token'           => csrf_token(),
+                        'torneo'           => $torneo->id,
+                        'fecha'            => $date->format('Y-m-d H:i:s'),
+                        'jornada'          => $jornada,
+                        'lugar'            => $lugar,
+                        'equipo_local'     => $equipoL->id,
+                        'equipo_visitante' => $equipoV->id,
+                        'gol_local'        => $golLocal,
+                        'gol_visitante'    => $golVisitante,
+                    ];
+        $response = $this->call('POST', 'partido', $parametros);
+
+        $date2 = Carbon::create(2016, 1, 1, 12, 55, 0);
+        $equipoL2 = $equipos[2]['id'];
+        $equipoV2 = $equipos[3]['id'];
+
+        $this->visit(route('partido.create'))
+            ->select($torneo->id, 'torneo')
+            ->type($jornada, 'jornada')
+            ->select($date2, 'fecha')
+            ->type($lugar, 'lugar')
+            ->select($equipoL2, 'equipo_local')
+            ->select($equipoV2, 'equipo_visitante')
+            ->type($golLocal, 'gol_local')
+            ->type($golVisitante, 'gol_visitante')
+            ->press('Guardar')
+            ->seePageIs(route('partido.create'));
+    }
 }
 
