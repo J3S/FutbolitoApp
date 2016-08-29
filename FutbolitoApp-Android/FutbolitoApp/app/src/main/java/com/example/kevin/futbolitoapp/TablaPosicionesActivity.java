@@ -1,12 +1,17 @@
 package com.example.kevin.futbolitoapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -27,7 +32,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class TablaPosicionesActivity extends AppCompatActivity {
+public class TablaPosicionesActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private String torneos_url = "http://futbolitoapp.herokuapp.com/get_torneos";
     private String tabla_posiciones_url = "http://futbolitoapp.herokuapp.com/get_tablasposicionesanio/";
@@ -42,6 +47,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
+    private SwipeRefreshLayout tablasSwipeRefresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +61,32 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
         cmbAnio = (Spinner)findViewById(R.id.cmbAnio);
         cmbCategoria = (Spinner)findViewById(R.id.cmbCategoria);
-
         equipoList = new ArrayList<ModelEquipo>();
+        final ListView mListView = (ListView) findViewById(R.id.listview);
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+          private boolean scrollEnabled;
 
+          @Override
+          public void onScrollStateChanged(AbsListView view, int scrollState) {
+          }
+
+          @Override
+          public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+              int topRowVerticalPosition =
+                      (mListView == null || mListView.getChildCount() == 0) ?
+                              0 : mListView.getChildAt(0).getTop();
+
+              boolean newScrollEnabled =
+                      (firstVisibleItem == 0 && topRowVerticalPosition >= 0) ?
+                              true : false;
+
+              if (null != tablasSwipeRefresh && scrollEnabled != newScrollEnabled) {
+                  // Start refreshing....
+                  tablasSwipeRefresh.setEnabled(newScrollEnabled);
+                  scrollEnabled = newScrollEnabled;
+              }
+          }
+        });
         new TareaWSListarTorneos().execute(torneos_url);
 
         cmbAnio.setOnItemSelectedListener(
@@ -98,8 +128,35 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                     }
                 }
         );
+        tablasSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipetablasposiciones);
+        tablasSwipeRefresh.setOnRefreshListener(this);
+        tablasSwipeRefresh.setDistanceToTriggerSync(30);
+        tablasSwipeRefresh.setSize(SwipeRefreshLayout.DEFAULT);
+        tablasSwipeRefresh.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
     }
-
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            new TareaWSListarTablaPosiciones().execute(tabla_posiciones_url + cmbAnio.getSelectedItem().toString());
+            tablasSwipeRefresh.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tablasSwipeRefresh.setRefreshing(false);
+                }
+            }, 1000);
+        }
+    };
+    @Override
+    public void onRefresh() {
+        tablasSwipeRefresh.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tablasSwipeRefresh.setRefreshing(true);
+                mHandler.sendEmptyMessage(0);
+            }
+        }, 1000);
+    }
     //Tarea Asincrona para llamar al WS de listado de torneos en segundo plano
     private class TareaWSListarTorneos extends AsyncTask<String, Integer, Boolean> {
 

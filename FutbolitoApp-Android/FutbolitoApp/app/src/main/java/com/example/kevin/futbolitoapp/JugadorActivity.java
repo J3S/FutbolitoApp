@@ -1,14 +1,19 @@
 package com.example.kevin.futbolitoapp;
 
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,26 +26,55 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 
-public class JugadorActivity extends AppCompatActivity {
+public class JugadorActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private String jugador_url = "http://futbolitoapp.herokuapp.com/get_jugador/";
-    private String nombre, fecha_nac, rol, peso, camiseta, equipo, categoria;
+    private String nombre, fecha_nac, rol, peso, camiseta, equipo, categoria, id_jugador;
     private Toolbar toolbar;
+    private SwipeRefreshLayout jugadorSwipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jugador);
-
+        jugadorSwipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipejugador);
+        jugadorSwipeRefresh.setOnRefreshListener(this);
+        jugadorSwipeRefresh.setDistanceToTriggerSync(30);
+        jugadorSwipeRefresh.setSize(SwipeRefreshLayout.DEFAULT);
+        jugadorSwipeRefresh.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        id_jugador = getIntent().getStringExtra("ID_J");
+        new TareaWSInfoJugador().execute(jugador_url + id_jugador);
 
-        new TareaWSInfoJugador().execute(jugador_url + getIntent().getStringExtra("ID_J"));
     }
-
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            new TareaWSInfoJugador().execute(jugador_url + id_jugador);
+            jugadorSwipeRefresh.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    jugadorSwipeRefresh.setRefreshing(false);
+                }
+            }, 1000);
+        }
+    };
+    @Override
+    public void onRefresh() {
+        jugadorSwipeRefresh.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                jugadorSwipeRefresh.setRefreshing(true);
+                mHandler.sendEmptyMessage(0);
+            }
+        }, 1000);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
