@@ -71,7 +71,7 @@ V2.0 Branny
                     </div>
                     <div class="form-group col-xs-12">
                         <label id="press" for="fecha_nac">Fecha Nacimiento</label>
-                        <input type="date" min="1900-01-01" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento" value="{{ old('fecha_nac') }}">
+                        <input type="date"  class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Ingrese fecha de nacimiento" value="{{ old('fecha_nac') }}">
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="inputCedula">C&eacute;dula</label>
@@ -152,10 +152,13 @@ V2.0 Branny
 @section('scriptsPersonales')
     <script type="text/javascript">
         var edadMinima = 12;
+        var hoy = new Date();
         var curr = new Date();
+        var currmin = new Date();
         curr.setFullYear(curr.getFullYear() - 10)
-        var strM = curr.getMonth()+"";
-        var strD = curr.getDay()+"";
+        currmin.setFullYear(currmin.getFullYear() - 80)     
+        var strM = hoy.getMonth()+"";
+        var strD = hoy.getDay()+"";
         if (strD.length == 1) {
             strD = "0"+strD
         }
@@ -163,6 +166,8 @@ V2.0 Branny
             strM = "0"+strM
         }
         var dataStr = curr.getFullYear() + "-" + strM + "-" + strD;
+        var dataStrmin = currmin.getFullYear() + "-" + strM + "-" + strD;
         $("#fecha_nac").attr('max', dataStr);
+        $("#fecha_nac").attr('min', dataStrmin);
     </script>
 @endsection
