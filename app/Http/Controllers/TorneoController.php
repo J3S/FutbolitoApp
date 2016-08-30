@@ -273,8 +273,11 @@ class TorneoController extends Controller
         $equiposAgregados = [];
         foreach ($torneoEquipos as $torneoEquipo) {
             $infoEquipo = Equipo::where('id', $torneoEquipo->id_equipo)
+                                ->where('estado',1)
                                 ->get();
-            array_push($equiposAgregados, $infoEquipo[0]);
+            if (count($infoEquipo) !== 0) {
+                array_push($equiposAgregados, $infoEquipo[0]);
+            }
         }
 
         /*
