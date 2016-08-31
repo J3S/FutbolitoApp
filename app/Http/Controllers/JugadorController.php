@@ -95,13 +95,14 @@ class JugadorController extends Controller
     public function store(Request $request)
      {
 
+        
         $validator = Validator::make($request->all(), [
                 'nombres' => 'required|regex:/^[\pL\s\-]+$/u',
                 'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
                 'identificacion' => 'numeric|unique:jugadors,identificacion|digits_between:10,13',
                 'rol' => 'alpha',
-                'peso' => 'numeric',
-                'num_camiseta' => 'numeric',
+                'peso' => 'numeric|between:50,150',
+                'num_camiseta' => 'numeric|between:1,90',
                 'telefono' => 'numeric',
                 'email' => 'email',
                 'fecha_nac' => 'date'
@@ -228,10 +229,10 @@ class JugadorController extends Controller
             'apellidos' => 'required|regex:/^[\pL\s\-]+$/u',
             'identificacion' => 'numeric|digits_between:10,13|unique:jugadors,identificacion,'.$jugador->id,
             'rol' => 'alpha',
-            'peso' => 'numeric',
+            'peso' => 'numeric|between:50,150',
             'telefono' => 'numeric',
             'email' => 'email',
-            'num_camiseta' => 'numeric',
+            'num_camiseta' => 'numeric|between:1,90',
             'fecha_nac' => 'date'
             )
         );
