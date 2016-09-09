@@ -30,6 +30,6 @@ class Equipo extends Model
     }
 
     public static function getEquiposxCategoria($categoria) {
-        return Equipo::where('categoria', $categoria->nombre)->get();
+        return Equipo::where('categoria', $categoria->nombre)->where('estado', 1)->get();
     }
 }
