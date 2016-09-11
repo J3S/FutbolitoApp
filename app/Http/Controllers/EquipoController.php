@@ -302,7 +302,7 @@ class EquipoController extends Controller
         $this->validate(
             $request,
             array(
-             'nombre'     => 'required|unique:equipos,nombre,'.$equipoNew->id.',id',
+             'nombre'     => 'required|unique:equipos,nombre,'.$equipoNew->id.',id,estado,1',
              'entrenador' => 'alpha_spaces',
              'categoria'  => 'required|exists:categorias,nombre',
              'id'         => 'exists:equipos,id',
