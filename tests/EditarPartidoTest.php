@@ -65,6 +65,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -75,6 +76,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -87,6 +89,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -98,6 +101,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -110,6 +114,7 @@ class EditarPartidoTest extends TestCase
         $equipos2 = Equipo::where('estado', 1)->where('categoria', $categoria2->nombre)->get();
         $equipoL2 = $equipos2[0];
         $equipoV2 = $equipos2[1];
+        $estado2 = 1;
         $golLocal2 = 3;
         $golVisitante2 = 1;
         $parametros2 = [
@@ -121,6 +126,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado2,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -137,6 +143,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar2,
                  'equipo_local' => $equipoL2->nombre,
                  'equipo_visitante' => $equipoV2->nombre,
+                 'estado' => $estado2,
                  'gol_local' => $golLocal2,
                  'gol_visitante' => $golVisitante2,
                 ]
@@ -170,6 +177,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -180,6 +188,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -192,6 +201,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -203,6 +213,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -226,6 +237,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -244,6 +256,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -274,6 +287,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -284,6 +298,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -296,6 +311,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -307,6 +323,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -330,6 +347,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -348,6 +366,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -378,6 +397,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -388,6 +408,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -400,6 +421,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -411,6 +433,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -434,6 +457,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -452,6 +476,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -483,6 +508,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -493,6 +519,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -505,6 +532,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -516,6 +544,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -539,6 +568,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -557,6 +587,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -587,6 +618,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -597,6 +629,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -609,6 +642,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -620,6 +654,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -643,6 +678,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -661,6 +697,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -691,6 +728,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -701,6 +739,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -713,6 +752,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -724,6 +764,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -747,6 +788,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -765,6 +807,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -795,6 +838,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -805,6 +849,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -817,6 +862,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -828,6 +874,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -851,6 +898,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -869,6 +917,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -899,6 +948,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -909,6 +959,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -921,6 +972,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -932,6 +984,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -956,6 +1009,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -974,6 +1028,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -1004,6 +1059,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -1014,6 +1070,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)->delete();
 
@@ -1026,6 +1083,7 @@ class EditarPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -1037,6 +1095,7 @@ class EditarPartidoTest extends TestCase
         						->where('lugar', $lugar)
         						->where('equipo_local', $equipoL->nombre)
         						->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
         						->where('gol_local', $golLocal)
         						->where('gol_visitante', $golVisitante)
         						->first();
@@ -1061,6 +1120,7 @@ class EditarPartidoTest extends TestCase
 			'lugar'            => $lugar2,
 			'equipo_local'     => $equipoL2->id,
 			'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
 			'gol_local'        => $golLocal2,
 			'gol_visitante'    => $golVisitante2,
         ];
@@ -1079,6 +1139,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -1109,6 +1170,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -1119,6 +1181,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)->delete();
 
@@ -1131,6 +1194,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1142,6 +1206,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)
                                 ->first();
@@ -1165,6 +1230,7 @@ class EditarPartidoTest extends TestCase
             'lugar'            => $lugar2,
             'equipo_local'     => $equipoL2->id,
             'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
             'gol_local'        => $golLocal2,
             'gol_visitante'    => $golVisitante2,
         ];
@@ -1183,6 +1249,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -1213,6 +1280,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -1223,6 +1291,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)->delete();
 
@@ -1235,6 +1304,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1246,6 +1316,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)
                                 ->first();
@@ -1269,6 +1340,7 @@ class EditarPartidoTest extends TestCase
             'lugar'            => $lugar2,
             'equipo_local'     => $equipoL2->id,
             'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
             'gol_local'        => $golLocal2,
             'gol_visitante'    => $golVisitante2,
         ];
@@ -1287,6 +1359,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -1317,6 +1390,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -1327,6 +1401,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)->delete();
 
@@ -1339,6 +1414,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1350,6 +1426,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)
                                 ->first();
@@ -1373,6 +1450,7 @@ class EditarPartidoTest extends TestCase
             'lugar'            => $lugar2,
             'equipo_local'     => $equipoL2->id,
             'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
             'gol_local'        => $golLocal2,
             'gol_visitante'    => $golVisitante2,
         ];
@@ -1391,6 +1469,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -1421,6 +1500,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -1431,6 +1511,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)->delete();
 
@@ -1443,6 +1524,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1454,6 +1536,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)
                                 ->first();
@@ -1477,6 +1560,7 @@ class EditarPartidoTest extends TestCase
             'lugar'            => $lugar2,
             'equipo_local'     => $equipoL2->id,
             'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
             'gol_local'        => $golLocal2,
             'gol_visitante'    => $golVisitante2,
         ];
@@ -1495,6 +1579,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -1525,6 +1610,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -1535,6 +1621,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)->delete();
 
@@ -1547,6 +1634,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1558,6 +1646,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)
                                 ->first();
@@ -1581,6 +1670,7 @@ class EditarPartidoTest extends TestCase
             'lugar'            => $lugar2,
             'equipo_local'     => $equipoL2->id,
             'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
             'gol_local'        => $golLocal2,
             'gol_visitante'    => $golVisitante2,
         ];
@@ -1599,6 +1689,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -1629,6 +1720,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -1639,6 +1731,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)->delete();
 
@@ -1651,6 +1744,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1662,6 +1756,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)
                                 ->first();
@@ -1685,6 +1780,7 @@ class EditarPartidoTest extends TestCase
             'lugar'            => $lugar2,
             'equipo_local'     => $equipoL2->id,
             'equipo_visitante' => $equipoV2->id,
+            'estado'           => $estado,
             'gol_local'        => $golLocal2,
             'gol_visitante'    => $golVisitante2,
         ];
@@ -1703,6 +1799,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -1730,6 +1827,7 @@ class EditarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 0;
         $golVisitante = 0;
         Session::start();
@@ -1741,6 +1839,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1758,6 +1857,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar2,
                         'equipo_local'     => $equipoL2->id,
                         'equipo_visitante' => $equipoV2->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1769,6 +1869,7 @@ class EditarPartidoTest extends TestCase
                                 ->where('lugar', $lugar2)
                                 ->where('equipo_local', $equipoL2->nombre)
                                 ->where('equipo_visitante', $equipoV2->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)
                                 ->first();
@@ -1782,6 +1883,7 @@ class EditarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL2->id,
                         'equipo_visitante' => $equipoV2->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -1800,6 +1902,7 @@ class EditarPartidoTest extends TestCase
                  'lugar' => $lugar2,
                  'equipo_local' => $equipoL2->nombre,
                  'equipo_visitante' => $equipoV2->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]

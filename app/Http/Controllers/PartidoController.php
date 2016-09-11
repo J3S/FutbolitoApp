@@ -150,15 +150,23 @@ class PartidoController extends Controller
 
         // Verificación si fecha del partido está en el rango adecuado.
         // Rango: (año del torneo)-enero-1 00:00:00 hasta (año del torneo)-diciembre-31 23:59:59.
-        $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
-        $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
-        $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
 
-        if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
-            return redirect()->route('partido.create')->withInput()->withErrors(
-                'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
-            );
+        if($request->fecha == ""){
+            $request->fecha = null;
         }
+
+        if($request->fecha != null){
+            $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
+            $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
+            $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+
+            if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
+                return redirect()->route('partido.create')->withInput()->withErrors(
+                    'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
+                );
+            }
+        }
+        
 
         // Verificación si lugar, fecha y hora del partido no genera colisión de horarios.
         // Existe colisión si existen partidos que se juegan hasta 59 minutos antes o después en la misma cancha.
@@ -189,7 +197,7 @@ class PartidoController extends Controller
         $partido->gol_visitante    = $request->gol_visitante;
         $partido->equipo_local     = $equipoLocalNombre;
         $partido->equipo_visitante = $equipoVisitanteNombre;
-        $partido->estado           = 1;
+        $partido->estado           = $request->estado;
 
         // Guardo el partido creado en la base de datos.
         $partido->save();
@@ -309,14 +317,20 @@ class PartidoController extends Controller
 
         // Verificación si fecha del partido está en el rango adecuado.
         // Rango: (año del torneo)-enero-1 00:00:00 hasta (año del torneo)-diciembre-31 23:59:59.
-        $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
-        $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
-        $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+        if($request->fecha == ""){
+            $request->fecha = null;
+        }
 
-        if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
-            return back()->withInput()->withErrors(
-                'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
-            );
+        if($request->fecha != null){
+            $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
+            $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
+            $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+
+            if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
+                return back()->withInput()->withErrors(
+                    'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
+                );
+            }
         }
 
         // Verificación si lugar, fecha y hora del partido no genera colisión de horarios.
@@ -348,7 +362,7 @@ class PartidoController extends Controller
         $partido->gol_visitante    = $request->gol_visitante;
         $partido->equipo_local     = $equipoLocalNombre;
         $partido->equipo_visitante = $equipoVisitanteNombre;
-        $partido->estado           = 1;
+        $partido->estado           = $request->estado;
 
         // Actualizo la información del partido en la base de datos.
         $partido->save();
@@ -480,7 +494,7 @@ class PartidoController extends Controller
         $torneosConPartidos = [];
 
         // Encuentro todos los partidos activos.
-        $partidos = Partido::where('estado', 1)->orderBy('jornada', 'asc')->orderBy('fecha', 'asc')->get();
+        $partidos = Partido::where('estado', 1)->orwhere('estado', 2)->orderBy('jornada', 'asc')->orderBy('fecha', 'asc')->get();
 
         // Filtro los partidos activos por fecha inicial y final (si fueron ingresados por el usuario).
         $partidos = $this->getPartidosByFecha($request->ini_partido, $request->fin_partido, $partidos);

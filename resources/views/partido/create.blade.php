@@ -84,12 +84,12 @@
                         <input type="text" class="form-control" id="arbitro" value="{{ old('arbitro') }}" name="arbitro" placeholder="Ingrese arbitro">
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label class="required" for="fecha">Fecha del partido</label>
+                        <label for="fecha">Fecha del partido</label>
                         <input type="datetime-local" class="form-control" id="fecha" value="{{ old('fecha') }}" name="fecha" placeholder="Ingrese fecha del partido">
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label class="required" for="lugar">Lugar</label>
+                            <label for="lugar">Lugar</label>
                             <input type="text" class="form-control" id="lugar" name="lugar" value="{{ old('lugar') }}" placeholder="Ingrese lugar del partido">
                         </div>
                     </div>
@@ -118,16 +118,23 @@
                             @endforeach
                         </select>
                     </div>
-                   <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-12 text-center">
                         <div class="form-group">
-                            <label class="required" for="gol_local">Goles local</label>
-                            <input type="number" class="form-control" value="{{ old('gol_local') }}" id="gol_local" name="gol_local" min="0" max="100" placeholder="Ingrese goles de equipo local">
+                            <label for="estado">Partido jugado</label><br>
+                            <input type="hidden" name="estado" value="2">
+                            <input type="checkbox" name="estado" id="estado" value="1">
                         </div>
                     </div>
                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label class="required" for="gol_visitante">Goles visitante</label>
-                            <input type="number" class="form-control" value="{{ old('gol_visitante') }}" id="gol_visitante" min="0" max="100" name="gol_visitante" placeholder="Ingrese goles de equipo visitante">
+                            <label id="lbl_local" for="gol_local">Goles local</label>
+                            <input type="number" class="form-control" value="{{ old('gol_local') }}" id="gol_local" name="gol_local" min="0" max="100" placeholder="Ingrese goles - default 0">
+                        </div>
+                    </div>
+                   <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label id="lbl_visitante" for="gol_visitante">Goles visitante</label>
+                            <input type="number" class="form-control" value="{{ old('gol_visitante') }}" id="gol_visitante" min="0" max="100" name="gol_visitante" placeholder="Ingrese goles - default 0">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
@@ -156,6 +163,30 @@
         document.getElementById("torneo").addEventListener("change", llenarEquiposSelect);
         // Funcion que filtra los equipos locales y visitantes dependiendo del torneo seleccionado
         function llenarEquiposSelect() {
+            if($('#estado').is(':checked')){
+                $('#gol_local').prop('disabled', false);
+                $('#gol_visitante').prop('disabled', false);
+                $('#lbl_local').addClass('required');
+                $('#lbl_visitante').addClass('required');
+            }else {
+                $('#gol_local').prop('disabled', true);
+                $('#gol_visitante').prop('disabled', true);
+                $('#lbl_local').removeClass('required');
+                $('#lbl_visitante').removeClass('required');
+            }
+            $('#estado').change(function(){
+                if(this.checked){
+                    $('#gol_local').prop('disabled', false);
+                    $('#gol_visitante').prop('disabled', false);
+                    $('#lbl_local').addClass('required');
+                    $('#lbl_visitante').addClass('required');
+                }else {
+                    $('#gol_local').prop('disabled', true);
+                    $('#gol_visitante').prop('disabled', true);
+                    $('#lbl_local').removeClass('required');
+                    $('#lbl_visitante').removeClass('required');
+                }
+            });
             var equipos = <?php echo json_encode($equipos); ?>;
             var torneoEquipos = <?php echo json_encode($torneoEquipos); ?>;
             var torneo = $("#torneo option:selected").attr("value");

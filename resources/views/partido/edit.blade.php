@@ -89,12 +89,12 @@
                         <input type="text" value="{{ $partido['arbitro'] }}" class="form-control" id="arbitro" name="arbitro" placeholder="Ingrese arbitro">
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
-                        <label class="required" for="fecha">Fecha del partido</label>
+                        <label for="fecha">Fecha del partido</label>
                         <input type="datetime-local" value="{{ $date }}" class="form-control" id="fecha" name="fecha" >
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label class="required" for="lugar">Lugar</label>
+                            <label for="lugar">Lugar</label>
                             <input type="text" value="{{ $partido['lugar'] }}" class="form-control" id="lugar" name="lugar" placeholder="Ingrese lugar del partido">
                         </div>
                     </div>
@@ -117,15 +117,22 @@
                         <select class="form-control" id="equipo_visitante" name="equipo_visitante">
                         </select>
                     </div>
+                    <div class="col-xs-12 col-sm-12 text-center">
+                        <div class="form-group">
+                            <label for="estado">Partido jugado</label><br>
+                            <input type="hidden" name="estado" value="2">
+                            <input type="checkbox" name="estado" id="estado" value="1">
+                        </div>
+                    </div>
                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label class="required" for="gol_local">Goles local</label>
+                            <label for="gol_local">Goles local</label>
                             <input type="number" value="{{ $partido['gol_local'] }}" min="0" max="100" class="form-control" id="gol_local" name="gol_local">
                         </div>
                     </div>
                    <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                            <label class="required" for="gol_visitante">Goles visitante</label>
+                            <label for="gol_visitante">Goles visitante</label>
                             <input type="number" value="{{ $partido['gol_visitante'] }}" min="0" max="100" class="form-control" id="gol_visitante" name="gol_visitante">
                         </div>
                     </div>
@@ -162,8 +169,37 @@
 
             // Funcion que filtra los equipos locales y visitantes dependiendo del torneo seleccionado
             function llenarEquiposSelect() {
-
                 var partido = <?php echo json_encode($partido); ?>;
+                if(partido['estado'] == 1){
+                    $('#estado').prop('checked', true);
+                }else{
+                    $('#estado').prop('checked', false);
+                }
+                if($('#estado').is(':checked')){
+                    $('#gol_local').prop('disabled', false);
+                    $('#gol_visitante').prop('disabled', false);
+                    $('#lbl_local').addClass('required');
+                    $('#lbl_visitante').addClass('required');
+                }else {
+                    $('#gol_local').prop('disabled', true);
+                    $('#gol_visitante').prop('disabled', true);
+                    $('#lbl_local').removeClass('required');
+                    $('#lbl_visitante').removeClass('required');
+                }
+                $('#estado').change(function(){
+                    if(this.checked){
+                        $('#gol_local').prop('disabled', false);
+                        $('#gol_visitante').prop('disabled', false);
+                        $('#lbl_local').addClass('required');
+                        $('#lbl_visitante').addClass('required');
+                    }else {
+                        $('#gol_local').prop('disabled', true);
+                        $('#gol_visitante').prop('disabled', true);
+                        $('#lbl_local').removeClass('required');
+                        $('#lbl_visitante').removeClass('required');
+                    }
+                });
+                
                 var equipos = <?php echo json_encode($equipos); ?>;
                 var torneoEquipos = <?php echo json_encode($torneoEquipos); ?>;
                 var torneo = $("#torneo option:selected").attr("value");
@@ -223,8 +259,13 @@
                 }
 
                 llenarEquiposSelect();
-                $('#gol_local').val(partido['gol_local']);
-                $('#gol_visitante').val(partido['gol_visitante']);
+                if(partido['estado'] == 1){
+                    $('#estado').prop('checked', true);
+                    $('#gol_local').val(partido['gol_local']);
+                    $('#gol_visitante').val(partido['gol_visitante']);
+                }else{
+                    $('#estado').prop('checked', false);
+                }
                 $('#observaciones').val(partido['observacion']);
                 $('#lugar').val(partido['lugar']);
                 var fecha = partido['fecha'].replace(" ", "T");
