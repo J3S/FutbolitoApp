@@ -120,6 +120,7 @@ class DesactivarTorneoTest extends TestCase
         $arbitro = "John Doe";
         $equipoL = $equipoSuperJunior1;
         $equipoV = $equipoSuperJunior2;
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -132,6 +133,7 @@ class DesactivarTorneoTest extends TestCase
             ->type($observacion, 'observaciones')
             ->select($equipoL->id, 'equipo_local')
             ->select($equipoV->id, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar');

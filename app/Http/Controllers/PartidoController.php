@@ -150,31 +150,54 @@ class PartidoController extends Controller
 
         // Verificación si fecha del partido está en el rango adecuado.
         // Rango: (año del torneo)-enero-1 00:00:00 hasta (año del torneo)-diciembre-31 23:59:59.
-        $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
-        $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
-        $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+        if ($request->fecha === "") {
+            $request->fecha = null;
+        }
 
-        if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
-            return redirect()->route('partido.create')->withInput()->withErrors(
-                'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
-            );
+        if ($request->lugar === "") {
+            $request->lugar = null;
+        }
+
+        if ($request->fecha !== null) {
+            $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
+            $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
+            $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+
+            if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
+                return redirect()->route('partido.create')->withInput()->withErrors(
+                    'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
+                );
+            }
         }
 
         // Verificación si lugar, fecha y hora del partido no genera colisión de horarios.
         // Existe colisión si existen partidos que se juegan hasta 59 minutos antes o después en la misma cancha.
-        $fechaColisionAdelante = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->addMinutes(59);
-        $fechaColisionAtras    = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->subMinutes(59);
-        $partidosColision      = Partido::where('estado', 1)->whereBetween('fecha', array($fechaColisionAtras, $fechaColisionAdelante))->where('lugar', $request->lugar)->get();
-        $errorColisiones       = [];
+        if ($request->lugar !== null && $request->fecha !== null) {
+            $fechaColisionAdelante = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->addMinutes(59);
+            $fechaColisionAtras    = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->subMinutes(59);
+            $partidosColision      = Partido::where('estado', '>', 0)->whereBetween('fecha', array($fechaColisionAtras, $fechaColisionAdelante))->where('lugar', $request->lugar)->get();
+            $errorColisiones       = [];
 
-        if (count($partidosColision) > 0) {
-            foreach ($partidosColision as $partidoColision) {
-                $errorColision = "Colisión de horarios: ".$partidoColision->equipo_local." y ".$partidoColision->equipo_visitante." juegan a las ".$partidoColision->fecha." en la cancha: ".$partidoColision->lugar;
-                array_push($errorColisiones, $errorColision);
+            if (count($partidosColision) > 0) {
+                foreach ($partidosColision as $partidoColision) {
+                    $errorColision = "Colisión de horarios: ".$partidoColision->equipo_local." y ".$partidoColision->equipo_visitante." juegan a las ".$partidoColision->fecha." en la cancha: ".$partidoColision->lugar;
+                    array_push($errorColisiones, $errorColision);
+                }
+
+                array_push($errorColisiones, "Debe existir por lo menos 1 hora de separación entre partidos en la misma cancha");
+                return redirect()->route('partido.create')->withInput()->withErrors($errorColisiones);
+            }
+        }
+
+        // Verifica si el partido esta jugado, que tenga un resultado valido.
+        if ($request->estado === 1) {
+            if ($request->gol_local === null || $request->gol_local === "") {
+                $request->gol_local = 0;
             }
 
-            array_push($errorColisiones, "Debe existir por lo menos 1 hora de separación entre partidos en la misma cancha");
-            return redirect()->route('partido.create')->withInput()->withErrors($errorColisiones);
+            if ($request->gol_visitante === null || $request->gol_visitante === "") {
+                $request->gol_visitante = 0;
+            }
         }
 
         // Creo nueva instancia de partido y le asigno todos los valores ingresados por el usuario desde la vista 'partidoc'.
@@ -189,7 +212,7 @@ class PartidoController extends Controller
         $partido->gol_visitante    = $request->gol_visitante;
         $partido->equipo_local     = $equipoLocalNombre;
         $partido->equipo_visitante = $equipoVisitanteNombre;
-        $partido->estado           = 1;
+        $partido->estado           = $request->estado;
 
         // Guardo el partido creado en la base de datos.
         $partido->save();
@@ -309,31 +332,54 @@ class PartidoController extends Controller
 
         // Verificación si fecha del partido está en el rango adecuado.
         // Rango: (año del torneo)-enero-1 00:00:00 hasta (año del torneo)-diciembre-31 23:59:59.
-        $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
-        $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
-        $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+        if ($request->fecha === "") {
+            $request->fecha = null;
+        }
 
-        if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
-            return back()->withInput()->withErrors(
-                'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
-            );
+        if ($request->lugar === "") {
+            $request->lugar = null;
+        }
+
+        if ($request->fecha !== null) {
+            $fechaPartido        = new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha)));
+            $fechaInicialPartido = Carbon::create($torneo->anio, 1, 1, 0, 0, 0);
+            $fechaFinalPartido   = Carbon::create($torneo->anio, 12, 31, 23, 59, 59);
+
+            if ($fechaPartido < $fechaInicialPartido || $fechaPartido > $fechaFinalPartido) {
+                return back()->withInput()->withErrors(
+                    'Fecha inválida. La fecha del partido debe coincidir con el año del torneo seleccionado.'
+                );
+            }
         }
 
         // Verificación si lugar, fecha y hora del partido no genera colisión de horarios.
         // Existe colisión si existen partidos que se juegan hasta 59 minutos antes o después en la misma cancha.
-        $fechaColisionAdelante = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->addMinutes(59);
-        $fechaColisionAtras    = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->subMinutes(59);
-        $partidosColision      = Partido::where('estado', 1)->where("id", "!=", $id)->whereBetween('fecha', array($fechaColisionAtras, $fechaColisionAdelante))->where('lugar', $request->lugar)->get();
-        $errorColisiones       = [];
+        if ($request->lugar !== null && $request->fecha !== null) {
+            $fechaColisionAdelante = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->addMinutes(59);
+            $fechaColisionAtras    = (new Carbon(date("Y-m-d H:i:s", strtotime($request->fecha))))->subMinutes(59);
+            $partidosColision      = Partido::where('estado', '>', 0)->where("id", "!=", $id)->whereBetween('fecha', array($fechaColisionAtras, $fechaColisionAdelante))->where('lugar', $request->lugar)->get();
+            $errorColisiones       = [];
 
-        if (count($partidosColision) > 0) {
-            foreach ($partidosColision as $partidoColision) {
-                $errorColision = "Colisión de horarios: ".$partidoColision->equipo_local." y ".$partidoColision->equipo_visitante." juegan a las ".$partidoColision->fecha." en la cancha: ".$partidoColision->lugar;
-                array_push($errorColisiones, $errorColision);
+            if (count($partidosColision) > 0) {
+                foreach ($partidosColision as $partidoColision) {
+                    $errorColision = "Colisión de horarios: ".$partidoColision->equipo_local." y ".$partidoColision->equipo_visitante." juegan a las ".$partidoColision->fecha." en la cancha: ".$partidoColision->lugar;
+                    array_push($errorColisiones, $errorColision);
+                }
+
+                array_push($errorColisiones, "Debe existir por lo menos 1 hora de separación entre partidos en la misma cancha");
+                return back()->withInput()->withErrors($errorColisiones);
+            }
+        }
+
+        // Verifica si el partido esta jugado, que tenga un resultado valido.
+        if ($request->estado === 1) {
+            if ($request->gol_local === null || $request->gol_local === "") {
+                $request->gol_local = 0;
             }
 
-            array_push($errorColisiones, "Debe existir por lo menos 1 hora de separación entre partidos en la misma cancha");
-            return back()->withInput()->withErrors($errorColisiones);
+            if ($request->gol_visitante === null || $request->gol_visitante === "") {
+                $request->gol_visitante = 0;
+            }
         }
 
         // Encuentro el partido seleccionado por el usuario y modifico todos sus valores por los valores ingresados por el usuario desde la vista 'partidoe'.
@@ -348,7 +394,7 @@ class PartidoController extends Controller
         $partido->gol_visitante    = $request->gol_visitante;
         $partido->equipo_local     = $equipoLocalNombre;
         $partido->equipo_visitante = $equipoVisitanteNombre;
-        $partido->estado           = 1;
+        $partido->estado           = $request->estado;
 
         // Actualizo la información del partido en la base de datos.
         $partido->save();
@@ -383,16 +429,40 @@ class PartidoController extends Controller
 
     }//end destroy()
 
-    public function getPartidosByFecha($ini, $fin, $partidos){
+
+    /**
+     * Función que se encarga de filtrar partidos por fecha inicial y final.
+     *
+     * @param datetime   $ini      fecha inicial
+     * @param datetime   $fin      fecha final
+     * @param Collection $partidos partidos a filtrar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPartidosByFecha($ini, $fin, $partidos)
+    {
         if ($ini !== '' && $fin !== '') {
             $partidosFecha = Partido::whereBetween('fecha', array($ini, $fin))
-            ->where('estado', 1)->get();
+            ->where('estado', '>', 0)->get();
             $partidos      = $partidos->intersect($partidosFecha);
         }
-        return $partidos;
-    }
 
-    public function getPartidosByCategoriaYAnio($anio, $categoriaReq, $partidos){
+        return $partidos;
+
+    }//end getPartidosByFecha()
+
+
+    /**
+     * Función que se encarga de filtrar partidos por categoria y anio.
+     *
+     * @param int        $anio         anio del torneo
+     * @param string     $categoriaReq categoria del torneo
+     * @param Collection $partidos     partidos a filtrar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPartidosByCategoriaYAnio($anio, $categoriaReq, $partidos)
+    {
         if ($categoriaReq !== '' && $anio !== '') {
             $categoria = Categoria::where('nombre', $categoriaReq)->first();
             try {
@@ -403,11 +473,25 @@ class PartidoController extends Controller
                 $partidos = $partidos->intersect([]);
             }
         }
-        return $partidos;
-    }
 
-    public function getPartidosByCategoria($anio, $categoriaReq, $partidos){
-       if ($categoriaReq !== '' && $anio === '') {
+        return $partidos;
+
+    }//end getPartidosByCategoriaYAnio()
+
+
+    /**
+     * Función que se encarga de filtrar partidos por categoria.
+     *
+     * @param int        $anio         anio del torneo
+     * @param string     $categoriaReq categoria del torneo
+     * @param Collection $partidos     partidos a filtrar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPartidosByCategoria($anio, $categoriaReq, $partidos)
+    {
+
+        if ($categoriaReq !== '' && $anio === '') {
             $partidosCategoria = [];
             $categoria         = Categoria::where('nombre', $categoriaReq)->first();
             $torneosCategoria  = Torneo::where('id_categoria', $categoria->id)->get();
@@ -418,12 +502,26 @@ class PartidoController extends Controller
                     }
                 }
             }
+
             $partidos = $partidos->intersect($partidosCategoria);
         }
-        return $partidos;
-    }
 
-    public function getPartidosByAnio($anio, $categoriaReq, $partidos){
+        return $partidos;
+
+    }//end getPartidosByCategoria()
+
+
+    /**
+     * Función que se encarga de filtrar partidos por anio.
+     *
+     * @param int        $anio         anio del torneo
+     * @param string     $categoriaReq categoria del torneo
+     * @param Collection $partidos     partidos a filtrar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPartidosByAnio($anio, $categoriaReq, $partidos)
+    {
         if ($categoriaReq === '' && $anio !== '') {
             $partidosAnio = [];
             $torneosAnio  = Torneo::where('anio', $anio)->get();
@@ -437,34 +535,73 @@ class PartidoController extends Controller
 
             $partidos = $partidos->intersect($partidosAnio);
         }
-        return $partidos;
-    }
 
-    public function getPartidosByJornada($jornada, $partidos){
+        return $partidos;
+
+    }//end getPartidosByAnio()
+
+
+    /**
+     * Función que se encarga de filtrar partidos por jornada.
+     *
+     * @param int        $jornada  jornada del partido
+     * @param Collection $partidos partidos a filtrar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPartidosByJornada($jornada, $partidos)
+    {
         if ($jornada !== '') {
             $partidosJornada = Partido::where('jornada', $jornada)->get();
             $partidos        = $partidos->intersect($partidosJornada);
         }
-        return $partidos;
-    }
 
-    public function getPartidosByEquipoLocal($equipo_local, $partidos){
+        return $partidos;
+
+    }//end getPartidosByJornada()
+
+
+    /**
+     * Función que se encarga de filtrar partidos por equipo local.
+     *
+     * @param int        $equipo_local equipo local
+     * @param Collection $partidos     partidos a filtrar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPartidosByEquipoLocal($equipo_local, $partidos)
+    {
         if ($equipo_local !== '') {
             $equipo = Equipo::find($equipo_local);
             $partidosEquipoLocal = Partido::where('equipo_local', $equipo->nombre)->get();
             $partidos            = $partidos->intersect($partidosEquipoLocal);
-        }   
-        return $partidos;   
-    }
+        }
 
-    public function getPartidosByEquipoVisitante($equipo_visitante, $partidos){
+        return $partidos;
+
+    }//end getPartidosByEquipoLocal()
+
+
+    /**
+     * Función que se encarga de filtrar partidos por equipo visitante.
+     *
+     * @param int        $equipo_visitante equipo visitante
+     * @param Collection $partidos         partidos a filtrar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPartidosByEquipoVisitante($equipo_visitante, $partidos)
+    {
         if ($equipo_visitante !== '') {
             $equipo = Equipo::find($equipo_visitante);
             $partidosEquipoVisitante = Partido::where('equipo_visitante', $equipo->nombre)->get();
             $partidos = $partidos->intersect($partidosEquipoVisitante);
         }
+
         return $partidos;
-    }
+
+    }//end getPartidosByEquipoVisitante()
+
 
     /**
      * Función que se encarga de filtrar los partidos activos utilizando los datos ingresados por el
@@ -480,7 +617,7 @@ class PartidoController extends Controller
         $torneosConPartidos = [];
 
         // Encuentro todos los partidos activos.
-        $partidos = Partido::where('estado', 1)->orderBy('jornada', 'asc')->orderBy('fecha', 'asc')->get();
+        $partidos = Partido::where('estado', '>', 0)->orderBy('jornada', 'asc')->orderBy('fecha', 'asc')->get();
 
         // Filtro los partidos activos por fecha inicial y final (si fueron ingresados por el usuario).
         $partidos = $this->getPartidosByFecha($request->ini_partido, $request->fin_partido, $partidos);
@@ -490,7 +627,7 @@ class PartidoController extends Controller
 
         // Filtro los partidos activos por categoria del torneo (si fue ingresado por el usuario).
         $partidos = $this->getPartidosByCategoria($request->anio, $request->categoria, $partidos);
- 
+
         // Filtro los partidos activos por año del torneo (si fue ingresado por el usuario).
         $partidos = $this->getPartidosByAnio($request->anio, $request->categoria, $partidos);
 

@@ -38,6 +38,7 @@ class DesactivarPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -48,6 +49,7 @@ class DesactivarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)->delete();
 
@@ -60,6 +62,7 @@ class DesactivarPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -71,6 +74,7 @@ class DesactivarPartidoTest extends TestCase
                                 ->where('lugar', $lugar)
                                 ->where('equipo_local', $equipoL->nombre)
                                 ->where('equipo_visitante', $equipoV->nombre)
+                                ->where('estado', $estado)
                                 ->where('gol_local', $golLocal)
                                 ->where('gol_visitante', $golVisitante)
                                 ->first();
@@ -87,6 +91,7 @@ class DesactivarPartidoTest extends TestCase
                  'lugar' => $lugar,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado'           => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                  'estado' => 0,

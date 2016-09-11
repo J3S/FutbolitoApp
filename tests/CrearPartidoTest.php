@@ -40,6 +40,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado  = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -52,6 +53,7 @@ class CrearPartidoTest extends TestCase
             ->type($observacion, 'observaciones')
             ->select($equipoL->id, 'equipo_local')
             ->select($equipoV->id, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -66,6 +68,7 @@ class CrearPartidoTest extends TestCase
                  'observacion' => $observacion,
                  'equipo_local' => $equipoL->nombre,
                  'equipo_visitante' => $equipoV->nombre,
+                 'estado' => $estado,
                  'gol_local' => $golLocal,
                  'gol_visitante' => $golVisitante,
                 ]
@@ -93,6 +96,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
         Session::start();
@@ -104,6 +108,7 @@ class CrearPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -118,6 +123,7 @@ class CrearPartidoTest extends TestCase
 			 'lugar'            => $lugar,
 			 'equipo_local'     => $equipoL->nombre,
 			 'equipo_visitante' => $equipoV->nombre,
+             'estado'           => $estado,
 			 'gol_local'        => $golLocal,
 			 'gol_visitante'    => $golVisitante,
             ]
@@ -145,6 +151,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -155,6 +162,7 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL->id, 'equipo_local')
             ->select($equipoV->id, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -182,6 +190,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -192,6 +201,7 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL->id, 'equipo_local')
             ->select($equipoV->id, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -219,6 +229,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = "aaa";
         $golVisitante = 0;
 
@@ -229,6 +240,7 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL->id, 'equipo_local')
             ->select($equipoV->id, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -256,6 +268,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = "aaa";
 
@@ -266,6 +279,7 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL->id, 'equipo_local')
             ->select($equipoV->id, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -293,6 +307,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -305,6 +320,7 @@ class CrearPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL->id,
 						'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -333,6 +349,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = 5000;
         $equipoV = $equipos[1]['id'];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -345,6 +362,7 @@ class CrearPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL,
 						'equipo_visitante' => $equipoV,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -375,6 +393,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0]['id'];
         $equipoV = 5000;
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -387,6 +406,7 @@ class CrearPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL,
 						'equipo_visitante' => $equipoV,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -418,6 +438,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equiposError[0]['id'];
         $equipoV = $equipos[0]['id'];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -430,6 +451,7 @@ class CrearPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL,
 						'equipo_visitante' => $equipoV,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -461,6 +483,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0]['id'];
         $equipoV = $equiposError[0]['id'];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -473,6 +496,7 @@ class CrearPartidoTest extends TestCase
 						'lugar'            => $lugar,
 						'equipo_local'     => $equipoL,
 						'equipo_visitante' => $equipoV,
+                        'estado'           => $estado,
 						'gol_local'        => $golLocal,
 						'gol_visitante'    => $golVisitante,
 				    ];
@@ -503,6 +527,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[0];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -513,6 +538,7 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL->id, 'equipo_local')
             ->select($equipoV->id, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -540,6 +566,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0]['id'];
         $equipoV = $equipos[1]['id'];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -552,6 +579,7 @@ class CrearPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL,
                         'equipo_visitante' => $equipoV,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -582,6 +610,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0]['id'];
         $equipoV = $equipos[1]['id'];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -594,6 +623,7 @@ class CrearPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL,
                         'equipo_visitante' => $equipoV,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -624,6 +654,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0]['id'];
         $equipoV = $equipos[1]['id'];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 0;
 
@@ -634,6 +665,7 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL, 'equipo_local')
             ->select($equipoV, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -661,6 +693,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0]['id'];
         $equipoV = $equipos[1]['id'];
+        $estado = 1;
         $golLocal = 5000;
         $golVisitante = 0;
 
@@ -671,6 +704,7 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL, 'equipo_local')
             ->select($equipoV, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -698,6 +732,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0]['id'];
         $equipoV = $equipos[1]['id'];
+        $estado = 1;
         $golLocal = 1;
         $golVisitante = 5000;
 
@@ -708,6 +743,7 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL, 'equipo_local')
             ->select($equipoV, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
@@ -735,6 +771,7 @@ class CrearPartidoTest extends TestCase
         $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
         $equipoL = $equipos[0];
         $equipoV = $equipos[1];
+        $estado  = 1;
         $golLocal = 0;
         $golVisitante = 0;
         Session::start();
@@ -746,6 +783,7 @@ class CrearPartidoTest extends TestCase
                         'lugar'            => $lugar,
                         'equipo_local'     => $equipoL->id,
                         'equipo_visitante' => $equipoV->id,
+                        'estado'           => $estado,
                         'gol_local'        => $golLocal,
                         'gol_visitante'    => $golVisitante,
                     ];
@@ -762,10 +800,66 @@ class CrearPartidoTest extends TestCase
             ->type($lugar, 'lugar')
             ->select($equipoL2, 'equipo_local')
             ->select($equipoV2, 'equipo_visitante')
+            ->check('estado')
             ->type($golLocal, 'gol_local')
             ->type($golVisitante, 'gol_visitante')
             ->press('Guardar')
             ->seePageIs(route('partido.create'));
+    }
+
+        /**
+     * Comprueba el funcionamiento para crear un partido.
+     * Se ingresan los datos del partido. Con todos los datos, requeridos y no requeridos.
+     * Es exitoso si en la base de datos se encuentra el torneo con esos datos
+     * registrado. 
+     * Corresponde al caso de prueba testCrearPartido: post-condition 1.
+     *
+     * @return void
+     */
+    public function testCrearPartido19()
+    {
+        $user = new Usuario(['user' => 'admin']);
+        $this->be($user);
+        $categoria = Categoria::where('nombre', "Rey Master")->first();
+        $torneo = Torneo::where('id_categoria', $categoria->id)->where('anio', 2014)->first();
+        $jornada = 1;
+        $lugar = "Cancha #3";
+        $observacion = "No hay observaciones.";
+        $arbitro = "John Doe";
+        $equipos = Equipo::where('estado', 1)->where('categoria', $categoria->nombre)->get();
+        $equipoL = $equipos[0];
+        $equipoV = $equipos[1];
+        $estado  = 1;
+        $golLocal = 1;
+        $golVisitante = 0;
+
+        $this->visit(route('partido.create'))
+            ->select($torneo->id, 'torneo')
+            ->type($jornada, 'jornada')
+            ->type($arbitro, 'arbitro')
+            ->type($lugar, 'lugar')
+            ->type($observacion, 'observaciones')
+            ->select($equipoL->id, 'equipo_local')
+            ->select($equipoV->id, 'equipo_visitante')
+            ->check('estado')
+            ->type($golLocal, 'gol_local')
+            ->type($golVisitante, 'gol_visitante')
+            ->press('Guardar')
+            ->seeInDatabase(
+                'partidos',
+                [
+                 'id_torneo' => $torneo->id,
+                 'jornada' => $jornada,
+                 'arbitro' => $arbitro,
+                 'lugar' => $lugar,
+                 'observacion' => $observacion,
+                 'equipo_local' => $equipoL->nombre,
+                 'equipo_visitante' => $equipoV->nombre,
+                 'estado' => $estado,
+                 'gol_local' => $golLocal,
+                 'gol_visitante' => $golVisitante,
+                ]
+            );
     }
 }
 

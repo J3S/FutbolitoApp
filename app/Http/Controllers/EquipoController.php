@@ -121,7 +121,7 @@ class EquipoController extends Controller
         $this->validate(
             $request,
             array(
-             'nombre'     => 'required|unique:equipos,nombre',
+             'nombre'     => 'required|unique:equipos,nombre,NULL,id,estado,1',
              'entrenador' => 'alpha_spaces',
              'categoria'  => 'required|exists:categorias,nombre',
             )
@@ -186,7 +186,8 @@ class EquipoController extends Controller
     {
 
         $equipo   = Equipo::findOrFail($id);
-        $jugadors = Jugador::where('id_equipo', $id)
+        $jugadors = Jugador::where('estado', 1)
+                           -> where('id_equipo', $id)
                            ->get(
                                [
                                 'id',
@@ -238,6 +239,8 @@ class EquipoController extends Controller
                                           'apellidos',
                                          ]
                                      );
+        $jugadoresActivos = Jugador::where('estado', 1)->get();
+        $jugadoresCategoria = $jugadoresCategoria->intersect($jugadoresActivos);
         $arrJugs = $jugadoresCategoria->toArray();
         // Ya no hay jugadores disponibles en la DB?
         if (empty($arrJugs) === false) {
@@ -278,6 +281,8 @@ class EquipoController extends Controller
                                  'categoria',
                                 ]
                             );
+
+        //dd($jugadors);
         $categorias = Categoria::all();
         $equipo     = Equipo::find($id);
         return view('equipo.equipoe')->with('equipo', $equipo)
@@ -302,7 +307,7 @@ class EquipoController extends Controller
         $this->validate(
             $request,
             array(
-             'nombre'     => 'required|unique:equipos,nombre,'.$equipoNew->id.',id',
+             'nombre'     => 'required|unique:equipos,nombre,'.$equipoNew->id.',id,estado,1',
              'entrenador' => 'alpha_spaces',
              'categoria'  => 'required|exists:categorias,nombre',
              'id'         => 'exists:equipos,id',
