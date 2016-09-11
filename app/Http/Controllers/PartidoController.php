@@ -371,6 +371,16 @@ class PartidoController extends Controller
                 return back()->withInput()->withErrors($errorColisiones);
             }
         }
+
+        // Verifica si el partido esta jugado, que tenga un resultado valido
+        if($request->estado == 1){
+            if($request->gol_local == null || $request->gol_local == ""){
+                $request->gol_local = 0;
+            }
+            if($request->gol_visitante == null || $request->gol_visitante == ""){
+                $request->gol_visitante = 0;
+            }
+        }
         
         // Encuentro el partido seleccionado por el usuario y modifico todos sus valores por los valores ingresados por el usuario desde la vista 'partidoe'.
         $partido            = Partido::find($id);
